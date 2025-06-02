@@ -1,0 +1,280 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+          aria-hidden="true"></i>Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> Discount Approve List </li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+    <div class="d-flex justify-content-start">
+      <h5 class="mb-0 headers"> Discount Approve List</h5>
+    </div>
+    <div class="buttonBox ml-auto">
+      <button  class="btn btn-success saveButton" style="padding: 3px 6px !important;font-size: 13px !important;" (click)="onClickApproveList()">Approve</button>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid"> 
+  <div class="card">
+    <p-table   [value]="APPROVAL_LIST"  [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="100vh"  
+    [globalFilterFields]="['REQUEST_ID','REQUEST_DATE','HQ','FM','RSM','SM','REQUEST_NO','REQUEST_NO','HQ_CODE','DOCTOR_ID',
+    'PRODUCT_CODE','SALE_QTY','FREE_QTY','STATUS','DOCTOR_NAME','FREE_QTY_DATA','PRODUCT_DESC','representative.name','statuses.label']" 
+    stateStorage="session" stateKey="statedemo-session2" (onLazyLoad)="loadDataLazily($event)" #dt11 >
+      <ng-template pTemplate="caption">
+
+        <div class="table-header text-right">
+          <button pButton label="Clear" class="p-button-outlined mr-2" icon="pi pi-filter-slash" (click)="clear(dt11)"></button>
+            <span class="p-input-icon-right mr-2 ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" class="form-control" (input)="dt11.filterGlobal($event.target.value, 'contains')"  />
+            </span>
+
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+              <!-- <th class=" text-center" > 
+                <input type="checkbox" [(ngModel)]="selectAll" [ngModelOptions]="{standalone: true}"
+                 (change)="toggleCheckboxAll($event)">
+                
+              </th> -->
+              <th class="text-center"> 
+                <p-tableHeaderCheckbox (click)="toggleCheckboxAll($event)"></p-tableHeaderCheckbox>
+              </th>
+
+              <th class="header width-11" pSortableColumn="REQUEST_NO">REQUEST NO <p-sortIcon field="REQUEST_NO"></p-sortIcon></th>
+              <th pSortableColumn="HQ_CODE">HQ 
+                
+                <!-- <p-columnFilter class="column-filter" field="HQ_CODE" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="HQ_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')"  placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'"  >
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+
+              <p-columnFilter class="column-filter" field="HQ_CODE" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="HQ_LIST" (onChange)="filter($event.value)"
+                      [showClear]="true" appendTo="body"
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+            </p-columnFilter>
+
+              </th>
+              <th class="header" pSortableColumn="FM">FM
+
+                <!-- <p-columnFilter class="column-filter" field="FM" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="FM_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+
+              <p-columnFilter class="column-filter" field="FM" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="FM_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+            </p-columnFilter>
+  
+              </th>
+              <th class="header" pSortableColumn="RSM">RSM 
+                <!-- <p-columnFilter class="column-filter" field="RSM" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="RSM_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+
+              <p-columnFilter class="column-filter" field="RSM" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="RSM_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+              </th>
+              <th class="header" pSortableColumn="SM" >SM 
+
+                <!-- <p-columnFilter class="column-filter" field="SM" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="SM_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+
+              <p-columnFilter class="column-filter" field="SM" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="SM_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+
+              </th>
+              <th pSortableColumn="REQUEST_DATE" class="width-12"> DATE <p-sortIcon field="REQUEST_DATE"></p-sortIcon></th>
+              <th pSortableColumn="DOCTOR_NAME">DOCTOR
+
+                <!-- <p-columnFilter class="column-filter" field="DOCTOR_NAME" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="DOC_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+
+              <p-columnFilter class="column-filter" field="DOCTOR_NAME" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="DOC_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+
+              
+              </th>
+              <th pSortableColumn="PRODUCT_DESC">PRODUCT
+
+                <!-- <p-columnFilter class="column-filter" field="PRODUCT_DESC" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="PROC_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter>  -->
+
+              <p-columnFilter class="column-filter" field="PRODUCT_DESC" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="PROC_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+              
+              </th>
+              <th pSortableColumn="UPDATED_SALE_QTY" class=" text-right width-11">SALE </th>
+              <th pSortableColumn="UPDATED_FREE_QTY" class=" text-right width-11">FREE </th>
+              <th pSortableColumn="FREE_QTY" class="width-free">FREE %
+
+                <!-- <p-columnFilter class="column-filter" field="FREE_QTY" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown appendTo="body" [ngModel]="dt11.filters['global']?.value" [options]="FREE_QTY_LIST" 
+                      (onChange)="dt11.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                      [showClear]="true" [filter]="true" [filterBy]="'label'">
+                          <ng-template let-option pTemplate="item">
+                              <span>{{option.label}}</span>
+                          </ng-template>
+                      </p-dropdown>
+                  </ng-template>
+              </p-columnFilter> -->
+              
+              <p-columnFilter class="column-filter" field="FREE_QTY_DATA" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="FREE_QTY_LIST" (onChange)="filter($event.value)"
+                     [showClear]="true" appendTo="body" 
+                     placeholder="Select" [filter]="true" [filterBy]="'label'">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+
+              </th>
+              <th pSortableColumn="STATUS" class="width-10" > STATUS </th>
+            
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+            <tr [ngClass]="{'bg-doc':data.DOC_FLAG == 1,'':data.DOC_FLAG == 0}">
+              <!-- <td>
+                <div class="text-center">
+                  <input type="checkbox" [(ngModel)]="data.SELECTED" (click)="singleCheckbox($event,data,rowIndex)">
+                </div>
+              </td> -->
+              <td>
+                <p-tableCheckbox [value]="data" (click)="singleCheckbox($event,data,rowIndex)"></p-tableCheckbox>
+              </td>
+              <td (click)="onDiscountDitails(data)" class="width-11" >{{data.REQUEST_NO}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.HQ_CODE}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.FM}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.RSM}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.SM}}</td>
+              <td (click)="onDiscountDitails(data)" class="width-12" >{{data.REQUEST_DATE | date:'dd-MM-yyy'}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.DOCTOR_NAME}}</td>
+              <td (click)="onDiscountDitails(data)">{{data.PRODUCT_DESC}}</td>
+              <td (click)="onDiscountDitails(data)" class=" text-right width-11">{{data.UPDATED_SALE_QTY}}</td>
+              <td (click)="onDiscountDitails(data)" class=" text-right width-11">{{data.UPDATED_FREE_QTY}}</td>
+              <!-- <td (click)="onDiscountDitails(data)">{{ ((data.UPDATED_FREE_QTY/data.UPDATED_SALE_QTY)*100).toFixed(2) <= 0 ? 0 : ((data.UPDATED_FREE_QTY/data.UPDATED_SALE_QTY)*100).toFixed(2) }}  %</td> -->
+              <!-- <td class=" text-right"  (click)="onDiscountDitails(data)">{{ checkNaN(((data.UPDATED_FREE_QTY/data.UPDATED_SALE_QTY)*100).toFixed(2)) ? 0 : ((data.UPDATED_FREE_QTY/data.UPDATED_SALE_QTY)*100).toFixed(2) }} %</td> -->
+              <td class=" text-right width-free"   (click)="onDiscountDitails(data)">{{ data.FREE_QTY_DATA }} %</td>
+
+              <td class="width-10" (click)="onDiscountDitails(data)"><span class="status-indicator"
+                  [ngClass]="{'is-red':data.STATUS === 'Rejected','is-orange':data.STATUS ==='Pending','is-green':data.STATUS === 'Approved'}"><i
+                    class="fa fa-circle" aria-hidden="true"
+                    [ngClass]="{'is-red-i':data.STATUS === 'Rejected','is-orange-i':data.STATUS ==='Pending','is-green-i':data.STATUS === 'Approved'}"></i>
+                  {{data.STATUS}}</span></td>
+            
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+  </div>
+
+

@@ -1,0 +1,28 @@
+h5{
+    color: #000;
+}
+.sample{
+    cursor: pointer;
+}
+
+.isHighlight{
+    border-color: #ebb8c2d9 !important;
+    background: #e4002b !important;
+    color: #fff !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown{
+    border-color: #E4002B !important;
+}
+
+.width-100{
+    width: 170px;
+}
+.modal-content{
+    width: 132%;
+}
+
+
+  

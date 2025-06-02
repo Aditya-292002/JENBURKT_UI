@@ -1,0 +1,112 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Volume Incentive</li>
+    </ol>
+</nav>
+
+<div class="container-fluid ">
+    <div class="col-md-12">
+        <div class="d-flex mb-2">
+            <div class="d-flex justify-content-start">
+                <h5 class="mb-0 headers">Volume Incentive</h5>
+            </div>
+            <div class="buttonBox ml-auto">
+
+                <!-- <button type="submit" class="btn-primary formButton" *ngIf="isExport"(click)="exportExcel()"><i class="fa fa-upload mr-2"
+                aria-hidden="true"></i>Export</button> -->
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid ">
+        <app-loader *ngIf="isLoaded"></app-loader>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card" id="card">
+                    <p-table [value]="CURR_INCENTIVE_MONTH" responsiveLayout="scroll" scrollHeight="420px" #dt1>
+
+                        <ng-template pTemplate="caption">
+                            <div class="target-section">
+                                <p class="mb-0">Current Month Details</p>
+                            </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Details</th>
+                                <th>Value</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-rowData>
+                            <tr>
+                                <td>{{ rowData.field }}</td>
+                                <td>  {{ rowData.format== 'S'? rowData.value : (rowData.value | number:'1.0-0') }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card">
+                    <p-table [value]="INCENTIVE_LIST" responsiveLayout="scroll" scrollHeight="420px"
+                        [globalFilterFields]="['PERIOD_DESC']" #dt1>
+                        <ng-template pTemplate="caption">
+                            <div class="table-header text-right">
+                                  <div class="target-section">
+                             <p class="mb-0">All Months Details </p>
+                             </div>
+                                <!-- <div class="table-header text-left">
+                                    Previous Months Details:-
+                                </div> -->
+                                <!-- </div> -->
+                                <!-- <span class="p-input-icon-right ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" class="form-control" (input)="dt1.filterGlobal($event.target.value, 'contains')"  />
+              </span> -->
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <!-- <th class="text-center"> 
+                   <p-tableHeaderCheckbox  (click)="toggleCheckboxAll($event)"></p-tableHeaderCheckbox>
+               </th> -->
+                                <th pSortableColumn="PERIOD_DESC">Month
+                                </th>
+                                <th pSortableColumn="PERIOD_SALES" class="width-12">PCPM </th>
+                                <th pSortableColumn="CM_INC" class="width-12">INCENTIVE</th>
+                                <th pSortableColumn="NM_ACHV">NEXT MONTH ACHIEVED
+                                </th>
+                                <th pSortableColumn="ACHV_INC">ACHIEVED INCENTIVE </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                            <tr>
+                                <!-- <td class="text-center">
+                  <p-tableCheckbox [value]="data" (click)="singleCheckbox($event,data,rowIndex)"></p-tableCheckbox>
+                </td> -->
+                                <!-- <td (click)="GetPreviewCmeReqForCmeNo(data)" >{{ data.CME_NO }}</td>
+                <td (click)="GetPreviewCmeReqForCmeNo(data)"  class="width-12">{{ data.CME_DATE | date:'dd-MM-yyy' }}</td>
+                <td (click)="GetPreviewCmeReqForCmeNo(data)" >{{ data.USER_NAME }}</td>
+                <td (click)="GetPreviewCmeReqForCmeNo(data)" >{{ data.HQ_DESC }}</td>
+                <td (click)="GetPreviewCmeReqForCmeNo(data)" >{{ data.TOPIC }}</td> -->
+                                <td >{{ data.PERIOD_DESC }}</td>
+                                <td >{{ data.PERIOD_SALES | number:'1.0-0'}}</td>
+                                <td class="width-12">{{ data.CM_INC | number:'1.0-0' }}</td>
+                                <td >{{ data.NM_ACHV }}</td>
+                                <td >{{ data.ACHV_INC }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

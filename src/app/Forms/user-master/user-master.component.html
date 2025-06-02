@@ -1,0 +1,236 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">User Master</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">{{userMasterMode}}</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveUserMasterClick()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Login ID</label>
+                            <div class="" [ngClass]="{'required-field':isHighLightLogin === 'Yes'}">
+                                <input type="text" class="form-control mr-2"[disabled]="true" [(ngModel)]="loginId"
+                                [ngModelOptions]="{standalone:true}" placeholder="Login ID" [disabled]="isAddUserMaster">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                      <div class="mb-2">
+                          <label>Emp Code</label>
+                          <div>
+                              <input type="text" class="form-control" [(ngModel)]="empCode" [ngModelOptions]="{standalone:true}" placeholder="Emp Code"
+                              >
+                          </div>
+                      </div>
+                  </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-5">
+                        <div class="mb-2">
+                            <label>User Name</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="userName" [ngModelOptions]="{standalone:true}" placeholder="User Name">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <div class="mb-2">
+                            <label>Address</label>
+                            <div>
+                                <textarea name="" id="" cols="3" rows="" class="form-control"[(ngModel)]="Address" [ngModelOptions]="{standalone:true}"
+                                    placeholder="Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="mb-2">
+                        <label>State</label>
+                        <div>
+                            <p-dropdown [options]="STATE_LIST" appendTo="body"  optionLabel="STATE_DESC"
+                            [(ngModel)]="stateCode" [filter]="true" filterBy="STATE_DESC" [ngModelOptions]="{standalone:true}"  placeholder="Please Select...">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Mobile</label>
+                            <div>
+                                <input type="text" class="form-control"[(ngModel)]="MobileNo" [ngModelOptions]="{standalone:true}" placeholder="Mobile">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Email</label>
+                            <div>
+                                <input type="text" class="form-control"[(ngModel)]="Email" [ngModelOptions]="{standalone:true}" placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Role</label>
+                            <div [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                                <p-dropdown [options]="ROLE_LIST" [(ngModel)]="roleId" [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="ROLE_NAME"
+                                placeholder="Please Select..." [filter]="true" filterBy="ROLE_NAME" (onChange)="onRoleChange()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Sales Role</label>
+                            <div [ngClass]="{'required-field':isHighLightSalesRole=== 'Yes'}">
+                                <p-dropdown [options]="SALEROLE_LIST" [(ngModel)]="salesRoleId"  [filter]="true" filterBy="SALESROLE_NAME" [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="SALESROLE_NAME"
+                                placeholder="Please Select..." [disabled]="isValidSalesRoleId" (onChange)="onSalesRoleChange('')">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4" *ngIf="isEdit">
+                        <div class="mb-2">
+                            <label>HQ/Area</label>
+                            <div >
+                                <p-dropdown [options]="HQ_AREA_LIST" [(ngModel)]="hqAreaCode"  [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="AREA_NAME" [filter]="true" filterBy="AREA_NAME"
+                                placeholder="Please Select..." [disabled]="isValidSalesRoleId">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>WEF</label>
+                            <div [ngClass]="{'required-field':isHighLightWEF=== 'Yes'}">
+                                <p-dropdown [options]="WEF_LIST" [(ngModel)]="wefId" [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="PERIOD_DESC" [filter]="true" filterBy="PERIOD_DESC" placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <div class="form-group form-check mb-0 mt-4">
+                                <input type="checkbox" class="form-check-input"  [(ngModel)]="Active" [ngModelOptions]="{standalone:true}" id="Active">
+                                <label class="form-check-label" for="Active">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveUserMasterClick()">Save</button>
+                            <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isUserPopUp">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">User Master</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 mt-8 p-4">
+                <div class="card">
+                    <div class="">
+                        <p-table [value]="userList" [autoLayout]="true" styleClass="p-datatable-lg" responsiveLayout="scroll"
+                        scrollDirection="both" [scrollable]="true" scrollHeight="400px" #dt
+                        [globalFilterFields]="['LOGIN_ID','ROLE_NAME','SALESROLE_NAME','AREA_NAME','STATE_NAME','PERIOD_DESC']">
+                            <ng-template pTemplate="caption">
+                                <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                        aria-label="Search" size="20"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="LOGIN_ID" class="width-130">
+                                        Login Id
+                                    </th>
+                                    <th pSortableColumn="ROLE_NAME" class="width-130">
+                                        Role Name
+                                    </th>
+                                    <th pSortableColumn="SALESROLE_NAME" class="width-130">
+                                        Sales Role Name
+                                    </th>
+                                    <th pSortableColumn="AREA_NAME" class="width-130">
+                                        Area Name
+                                    </th>
+                                    <th pSortableColumn="STATE_NAME" class="width-130">
+                                        State Name
+                                    </th>
+                                    <th pSortableColumn="PERIOD_DESC" class="width-130">
+                                        WEF
+                                    </th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.LOGIN_ID}}</a>
+                                    </td>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.ROLE_NAME}}</a>
+                                    </td>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.SALESROLE_NAME}}</a>
+                                    </td>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.AREA_NAME}}</a>
+                                    </td>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.STATE_NAME}}</a>
+                                    </td>
+                                    <td class="width-130">
+                                        <a class="click" (click)="onUserSelected(rowData)"> {{rowData.PERIOD_DESC}}</a>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

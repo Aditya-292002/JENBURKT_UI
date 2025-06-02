@@ -1,0 +1,170 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Expense Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Expense Report</h5>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>From</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="fromDate" [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>To</label>
+                            <div>
+                                <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [filter]="true" filterBy="PERIOD_DESC" [(ngModel)]="toDate" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Under</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="underEmployeeList" appendTo="body" optionLabel="USER_NAME" [(ngModel)]="underEmployee" [filter]="true" filterBy="USER_NAME" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-6 col-lg-3 p-0">
+                        <div class="buttonBox mt-4">
+                            <button *ngIf="isLoaded" type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                            </button>
+                            <button *ngIf="!isLoaded"  type="submit" class="btn-primary viewButton mr-2">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>Loading...
+                            </button>
+                            <button type="submit" class="btn-primary formButton" (click)="exportExcel()"><i class="fa fa-upload mr-2"
+                                    aria-hidden="true"></i>Export</button>
+                        </div>
+                    </div>
+                </div>
+                <hr class="hrStyle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox mt-4"*ngIf="counter > 0">
+                            <button  type="submit" class="btn-primary viewButton mr-2" (click)="OnBackClick()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>back
+                            </button>
+                        </div>
+                        <p>Last Date On:- <b style="color: #191616; font-weight: 600;">{{LAST_DATE_ON | date :'dd-MMM-YYYY HH:MM'}}</b> </p>
+                        <p-table [value]="SalesReportList" responsiveLayout="scroll" [paginator]="true" class="prime-table"
+                            [showCurrentPageReport]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="Keyfigure_Name">Key Figure
+                                        <p-columnFilter type="text" field="Keyfigure_Name" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="Keyfigure_Name"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="NET_SALES" >NET SALES
+                                        <p-columnFilter type="text" field="NET_SALES" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="NET_SALES"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="COGS" >COGS
+                                        <p-columnFilter type="text" field="COGS" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="COGS"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="HQ_SALARY" >HQ Salary
+                                        <p-columnFilter type="text" field="HQ_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="HQ_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="FM_SALARY" >FM Salary
+                                        <p-columnFilter type="text" field="FM_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="FM_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="RSM_SALARY" >RSM Salary
+                                        <p-columnFilter type="text" field="RSM_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="RSM_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="SM_SALARY" >SM Salary
+                                        <p-columnFilter type="text" field="SM_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="SM_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="GSM_SALARY" >GSM SALARY
+                                        <p-columnFilter type="text" field="GSM_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="GSM_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="VP_SALARY">VP SALARY
+                                        <p-columnFilter type="text" field="VP_SALARY" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="VP_SALARY"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="TOTAL_EXPENSE" >TOTAL EXPENSE
+                                        <p-columnFilter type="text" field="TOTAL_EXPENSE" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="TOTAL_EXPENSE"></p-sortIcon>
+
+                                    </th>
+                                    <th pSortableColumn="MARGIN_PER">SAMPLE EXPENSE
+                                        <p-columnFilter type="text" field="SAMPLE_EXPENSE" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="SAMPLE_EXPENSE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="MARGIN" >MARGIN
+                                        <p-columnFilter type="text" field="MARGIN" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="MARGIN"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="MARGIN_PER">MARGIN_PER
+                                        <p-columnFilter type="text" field="MARGIN_PER" display="menu"></p-columnFilter>
+                                        <p-sortIcon field="MARGIN_PER"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-report>
+                                <tr>
+                                    <td>
+                                        <a class="click" (click)="FilterList(report.Keyfigure_Code)">
+                                            {{report.Keyfigure_Name}}
+                                        </a></td>
+                                        <td >{{report.NET_SALES}}</td>
+                                    <td >{{report.COGS}}</td>
+                                    <td >{{report.HQ_SALARY}}</td>
+                                    <td >{{report.FM_SALARY}}</td>
+                                    <td >{{report.RSM_SALARY}}</td>
+                                    <td >{{report.SM_SALARY}}</td>
+                                    <td >{{report.GSM_SALARY}}</td>
+                                    <td >{{report.VP_SALARY}}</td>
+                                    <td >{{report.TOTAL_EXPENSE}}</td>
+                                    <td >{{report.SAMPLE_EXPENSE}}</td>
+                                    <td >{{report.MARGIN}}</td>
+                                    <td >{{report.MARGIN_PER}}</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

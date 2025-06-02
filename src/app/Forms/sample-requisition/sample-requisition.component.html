@@ -1,0 +1,209 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sample Requisition</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Sample Requisition</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearForm()">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>RSM</label>
+                            <div [ngClass]="{'required-field':isHighLightRsm === 'Yes'}">
+                                <input type="text" [(ngModel)]="RSM_CODE" class="form-control" placeholder="RSM">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="co  l-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div [ngClass]="{'required-field':isHighLightPeriod === 'Yes'}">
+                                <input type="text" [(ngModel)]="PERIOD" class="form-control" placeholder="Period">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="co  l-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Target</label>
+                            <div [ngClass]="{'required-field':isHighLightTotalTarget === 'Yes'}">
+                                <input type="text" [(ngModel)]="TOTAL_TARGET" class="form-control"
+                                    placeholder="Total Target">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="co  l-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Max Sample Value</label>
+                            <div [ngClass]="{'required-field':isHighLightMaxSampleValue === 'Yes'}">
+                                <input type="text" [(ngModel)]="MAX_SAMPEL_VALUE" class="form-control" name="pincode"
+                                    placeholder="Max Sample Value" maxlength="4" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Req. Value</label>
+                            <div [ngClass]="{'required-field':isHighLightReqValue === 'Yes'}">
+                                <input type="text" [(ngModel)]="REQ_VALUE" class="form-control" name="pincode"
+                                    placeholder="Req. Value" maxlength="4" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-2">
+                            <label> </label>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Pool</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Inner Pack</th>
+                                            <th scope="col">HQ Qty</th>
+                                            <th scope="col">Total Req.</th>
+                                            <th scope="col">Req. Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let list of PREDEFINE_LIST_RANGE; let i=index;">
+                                            <th class="width-2">{{i+1}}</th>
+                                            <td class="width-2">
+                                                <div [ngClass]="{'required-field':isHighLightFrom === 'Yes'}">
+                                                    <input type="text" class="form-control text-right" placeholder="0"
+                                                        [(ngModel)]="list.FROM_RANGE"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="onFromRange(event ,i,list)">
+                                                </div>
+                                            </td>
+                                            <td class="width-2">
+                                                <div [ngClass]="{'required-field':isHighLightTo === 'Yes'}">
+                                                    <input type="text" class="form-control text-right" placeholder="0"
+                                                        [(ngModel)]="list.TO_RANGE"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td style="width: 88px;">
+                                                <div>
+                                                    <button class="btn-primary formButton text-success mr-2"
+                                                        (click)="addSampleProduct(list,i)"><i class="fa fa-plus"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn-primary formButton text-danger"
+                                                        (click)="deleteSampleProduct(i)"><i class="fa fa-trash-o "
+                                                            aria-hidden="true"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isShowEditPopup">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Sample Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mt-8 p-4">
+                    <div class="card">
+                        <div class="">
+                            <p-table [value]="PRODUCT_LIST" scrollDirection="both" [scrollable]="true"
+                                styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                                [globalFilterFields]="['SAMPLE_PRODUCT_CODE','DESCRIPTION','PACK_INFO']"
+                                scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <!-- <div style="text-align: right">
+                                    <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div> -->
+                                    <div class="input-group search-group px-3"
+                                        style="width: 250px; margin-left: 440px;">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search keyword" aria-label="Search" size="20"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fa fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100">
+                                            PRODUCT CODE
+                                        </th>
+                                        <th pSortableColumn="DESCRIPTION" class="width-100">
+                                            DESCRIPTION
+                                        </th>
+                                        <th pSortableColumn="PACK_INFO" class="width-100">
+                                            PACK INFO
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData>
+                                    <tr>
+
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.SAMPLE_PRODUCT_CODE}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.DESCRIPTION}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.PACK_INFO}}</a>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+        </div> -->
+        </div>
+    </div>
+</div>

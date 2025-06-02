@@ -1,0 +1,25 @@
+.width-10{
+    min-width: 100px !important;
+  }
+  .width-20{
+    min-width: 312px !important;
+  }
+  .width-30{
+    min-width: 150px !important;
+  }
+  .width-5{
+    min-width: 10px !important;
+  }
+  .width-40{
+    min-width: 101px !important;
+  }
+.width-50{
+  min-width: 175px !important;
+}
+:host ::ng-deep {
+  #childTable {
+     .p-datatable-thead {
+          z-index: 0;
+     }
+  }
+}

@@ -1,0 +1,97 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"> <i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Invoice Update to YS2 Expiry</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Invoice Update to YS2 Expiry</h5>
+        </div>
+        <!-- <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary formButton saveButton mr-2" (click)="onSaveInvoiceClick()">Save</button>
+            <button type="submit" class="btn-primary formButton cancelButton">Cancel</button>
+        </div> -->
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Invoice No.</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightInvoice === 'Yes'}">
+                                <p-dropdown class="" [options]="invoiceList" [virtualScroll]="true" [itemSize]="30" appendTo="body" optionLabel="BILL_DOC_NAME"
+                                    [filter]="true" filterBy="BILL_DOC_NAME" placeholder="Please Select..."
+                                    [(ngModel)]="invoiceNumber" [ngModelOptions]="{standalone: true}"
+                                    (onChange)="onInvoiceChange()"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Date</label>
+                            <div>
+                                <p-calendar [ngModel]="BANK_DATE| date :'dd.MM.yyyy'" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="{{BANK_DATE}}"
+                                    disabled="isDisabled"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Customer</label>
+                            <div>
+                                <p class="mb-0" *ngIf="customerPool != undefined">{{customerPool}}</p>
+                                <p class="mb-0" *ngIf="customerPool == undefined">N/A</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Old Pool</label>
+                            <div>
+                                <p class="mb-0" *ngIf="oldPool != undefined">{{oldPool}}</p>
+                                <p class="mb-0" *ngIf="oldPool == undefined">N/A</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary formButton saveButton mr-2"
+                                (click)="onSaveInvoiceClick()">Update</button>
+                            <button type="submit" class="btn-primary formButton cancelButton"
+                                (click)="onClearData()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog header="Update Invoice to YS2 Expiry" [(visible)]="isUpdateInvoiceDetails" [style]="{width: '35vw'}" >
+    <div class="">
+        <div class="">
+            <div class="row">
+                <p style="padding: 8px">Are you Sure you want to update the Invoice No. - <b>{{invoiceNumber?.BILL_DOC_NAME}}</b> Billing type to <b>YS2 Expiry</b>?</p>
+              
+                <div class="col-sm-12 col-md-12 ">
+                    <button type="submit" class="btn-primary  saveButton mr-2"
+                        (click)="SaveInvoiceMatser()">Update</button>
+                        <button type="submit" class="btn-primary  cancelButton mr-2"
+                        (click)="closePopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

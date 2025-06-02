@@ -1,0 +1,315 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Claim Details</li>
+  </ol>
+</nav>
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Claim Details :-</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+        <button  class="btn-primary  formButton mr-2" (click)="onBackClick()">Back</button>
+        <button type="submit" class="btn-success  saveButton mr-2" (click)="onSaveClaimRequest()">Submit</button>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <app-loader *ngIf="isLoaded" ></app-loader>
+  <!-- <div class="card">
+    <div class="card-body">
+      <div class="">
+        <div class="row mb-2">
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Request No:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8" >
+                <p>{{ClaimDetails.REQUEST_NO}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Doctor:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.DOCTOR_NAME}}</p>
+              </div>
+            </div>
+               <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Sale Qty:-</label>
+
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.FINAL_SALE_QTY}}</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Approve Date:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.REQUEST_DATE | date:'dd-MM-yyyy'}}</p>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Chemist:-</label>
+
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.CHEMIST_NAME}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Free Qty:-</label>
+                <h5 class=" header"></h5>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.FINAL_FREE_QTY}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">HQ:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.HQ_DESC}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Product:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <div class="d-flex">
+                  <p>{{ClaimDetails.PRODUCT_DESC}}</p>
+
+                </div>
+              </div>
+            </div>
+             <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <label class="header">Stockist:-</label>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-8">
+                <p>{{ClaimDetails.STOCKIST_NAME}}</p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        </div>
+
+      </div>
+
+    </div> -->
+    <div class="card mt-2">
+      <div class="card-body">
+      <div class="">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Invoice No</label>
+              <div [ngClass]="{'required-field':isHighLightInvoiceNo=== 'Yes'}">
+                <input type="text" class="form-control mr-2" [(ngModel)]="INVOICE_NO"  [ngModelOptions]="{standalone:true}" placeholder="Please Enter...">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Invoice Date</label>
+              <div [ngClass]="{'required-field':isHighLightDate=== 'Yes'}">
+                <p-calendar [(ngModel)]="DATE" appendTo="body" [showIcon]="true"
+                dateFormat="dd.mm.yy" inputId="icon" [maxDate]="ToDate"></p-calendar>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Stockist</label>
+              <div >
+                <input type="text" class="form-control mr-2" [(ngModel)]="STOCKIST_CODE" placeholder="Please Enter..."  [ngModelOptions]="{standalone:true}" disabled="true">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Chemist</label>
+              <div >
+                <input type="text" class="form-control mr-2" [(ngModel)]="CHEMIST_CODE" placeholder="Please Enter..."  [ngModelOptions]="{standalone:true}" disabled="true">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Sale Qty</label>
+              <div [ngClass]="{'required-field':isHighLightSaleQty=== 'Yes'}">
+                <input type="text" class="form-control mr-2" [(ngModel)]="SALE_QTY" placeholder="Please Enter..."  [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-3">
+            <div class="mb-2">
+              <label class=" header">Scheme Free Qty</label>
+              <div [ngClass]="{'required-field':isHighLightSchemeFreeqty=== 'Yes'}">
+                <input type="text" class="form-control mr-2" [(ngModel)]="SCHEME_FREE_QTY" placeholder="Please Enter..." [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+              <label class=" header">Claim Free Qty</label>
+              <div [ngClass]="{'required-field':isHighLightClaimFreeqty=== 'Yes'}">
+                <input type="text" class="form-control mr-2" [(ngModel)]="CLAIM_FREE_QTY"  placeholder="Please Enter..." [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+              <label class=" header">Super Stockist Name</label>
+              <div  [ngClass]="{'required-field':isHighLightSuperStockistName=== 'Yes'}">
+                <p-dropdown
+                appendTo="body" [options]="SUPERSTOCKIST_LIST" optionLabel="SUPERSTOCKIST_NAME" optionValue="SUPERSTOCKIST_CODE"
+                 placeholder="Please Select..." [(ngModel)]="SUPERSTOCKIST_CODE"  [filter]="true" filterBy="SUPER_STOCKIST_NAME"  [ngModelOptions]="{standalone:true}"
+                  >
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+              <label class=" header">MRP</label>
+              <div  [ngClass]="{'required-field':isHighLightMRP=== 'Yes'}">
+                <p-dropdown
+                appendTo="body" [options]="MRP_LIST" optionLabel="MRP_RATE" optionValue="MRP_ID"
+                 placeholder="Please Select..."   [(ngModel)]="MRP" [filter]="true" filterBy="MRP"  [ngModelOptions]="{standalone:true}">
+                </p-dropdown>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <!-- <div class="mb-2">
+              <label class=" header">Upload Image</label>
+              <div class="input-group" [ngClass]="{'required-field':isHighLightImageSrc=== 'Yes'}">
+                <img [src]="imageSrc" [ngClass]="imageSrc==''?'':'imgSrcCss'" />
+                <input type="file" accept=".jpg,.png,.jpeg" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" [(ngModel)]="UPLOAD" (change)="handleInputChange($event)"
+                >
+              </div>
+            </div> -->
+            <div class="mb-2">
+              <div >
+                <label for="docs">Upload Image</label>
+                <div [ngClass]="{'required-field':isHighLightImageSrc=== 'Yes'}">
+                  <div class="file-upload">
+                    <span class="input-group-btn uploadbtn mr-3">
+                        <a href="#javascript:;">
+                            <div class="btn btn-default  custom-file-uploader">
+                              <img [src]="imageSrc" [ngClass]="imageSrc==''?'':'imgSrcCss'" />
+                                <input type="file" class="form-control-file" id="docs" name="file" accept=".jpg,.png,.jpeg"
+                                (change)="handleInputChange($event)" [(ngModel)]="UPLOAD"
+                                    >
+                                <b >Upload File</b>
+                            </div>
+                        </a>
+                    </span>
+                    <a class="" >{{UPLOAD | slice:-100}}</a>
+
+                </div>
+                </div>
+
+              </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+    <div class="bg-white" >
+     <table class="table">
+     <thead>
+       <tr>
+         <th >Sr No</th>
+         <th >Req No</th>
+         <th >Doctor</th>
+         <th >Product</th>
+         <th class="width-21">Req Sale</th>
+         <th class="width-21">Req Free</th>
+         <th class="width-20">Invoice Sale </th>
+         <th class="width-20">Claim Free </th>
+         <!-- <th class="width-20">Scheme Free </th> -->
+         <th  class="width-10">MRP</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let list of SelectCheckboxData; let i=index;">
+         <th class="width-2">{{i+1}}</th>
+         <td class="width-2">
+          {{list.REQUEST_NO}}
+         </td>
+         <td class="width-2">
+          {{list.DOCTOR_NAME}}
+         </td>
+         <td >
+          {{list.PRODUCT_DESC}}
+         </td>
+         <td class="width-21 text-right">
+          {{list.FINAL_SALE_QTY}}
+         </td>
+         <td class="width-21 text-right">
+          {{list.FINAL_FREE_QTY}}
+         </td>
+         <td class="width-20">
+           <div [ngClass]="{'required-field':list.isHighLightInvoiceClaimSale=== 'Yes'}">
+            <input type="text" class="form-control  text-right" [(ngModel)]="list.INVOICE_SALE_QTY" placeholder="0"  [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+           </div>
+         </td>
+         <td class="width-20">
+          <div [ngClass]="{'required-field':list.isHighLightClaimFree=== 'Yes'}">
+            <input type="text" class="form-control  text-right" [(ngModel)]="list.CLAIM_FREE_QTY" placeholder="0"   [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+           </div>
+         </td>
+         <!-- <td class="width-20">
+          <div [ngClass]="{'required-field':list.isHighLightSchemeFree=== 'Yes'}">
+            <input type="text" class="form-control  text-right" [(ngModel)]="list.SCHEME_FREE_QTY"  placeholder="0"    [ngModelOptions]="{standalone:true}" appTwoDigitDecimaNumber>
+           </div>
+         </td> -->
+         <td class="width-10">
+          <div  [ngClass]="{'required-field':list.isHighLightMRP=== 'Yes'}">
+            <p-dropdown
+            appendTo="body" [options]="list.MRP_LIST" optionLabel="MRP_RATE" optionValue="MRP_ID"
+             placeholder="Please Select..."   [(ngModel)]="list.MRP" [filter]="true" filterBy="MRP"  [ngModelOptions]="{standalone:true}">
+            </p-dropdown>
+          </div>
+         </td>
+
+       </tr>
+
+     </tbody>
+   </table>
+
+   </div>
+  </div>
+
+
+

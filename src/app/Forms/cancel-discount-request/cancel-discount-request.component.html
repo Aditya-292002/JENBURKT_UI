@@ -1,0 +1,86 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Cancel Discount Request List</li>
+    </ol>
+  </nav>    
+  
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Cancel Discount Request List:-</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+          <button  class="btn btn-danger formbutton" (click)="CANCELDISCOUNTREQUEST()"
+           style="padding: 3px 6px !important;font-size: 13px !important;" >Cancel</button>
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+      <p-table   [value]="CANCEL_DISCOUNT_REQUEST_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
+      [globalFilterFields]="['REQUEST_NO','REQUEST_DATE','HQ_CODE','DOCTOR','PRODUCT']"
+      stateStorage="session" stateKey="statedemo-session5" (onLazyLoad)="loadDataLazily($event)"  #dt1 >
+        <ng-template pTemplate="caption">
+          <div class="table-header text-right">
+            <button pButton label="Clear" class="p-button-outlined mr-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+              <span class="p-input-icon-right ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" class="form-control" (input)="dt1.filterGlobal($event.target.value, 'contains')"  />
+              </span>
+          </div>  
+      </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                <th class="text-center"> 
+                   <p-tableHeaderCheckbox  (click)="toggleCheckboxAll($event)"></p-tableHeaderCheckbox>
+               </th>
+                <th pSortableColumn="REQUEST_NO">REQUEST NO
+                  <!-- <p-columnFilter field="CME" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="HQ_LIST" 
+                        (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                        [showClear]="true" [filter]="true" [filterBy]="'label'">
+                            <ng-template let-option pTemplate="item">
+                                <span>{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter> -->
+                </th>
+                <th pSortableColumn="REQUEST_DATE" class="width-12">DATE <p-sortIcon field="REQUEST_DATE"></p-sortIcon></th>
+                <th pSortableColumn="HQ_CODE" class="width-12">HQ CODE <p-sortIcon field="HQ_CODE"></p-sortIcon></th>
+                <th pSortableColumn="DOCTOR">DOCTOR 
+                  <!-- <p-columnFilter field="PRODUCT_DESC" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="PROC_LIST" 
+                        (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                        [showClear]="true" [filter]="true" [filterBy]="'label'">
+                            <ng-template let-option pTemplate="item">
+                                <span>{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>   -->
+                </th>
+                <th pSortableColumn="PRODUCT">PRODUCT </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+              <tr>
+                <td >{{ data.CME_NO }}</td>
+                <td  class="width-12">{{ data.CME_DATE | date:'dd-MM-yyy' }}</td>
+                <td  >{{ data.USER_NAME }}</td>
+                <td >{{ data.HQ_DESC }}</td>
+                <td  >{{ data.TOPIC }}</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+    </div>
+  

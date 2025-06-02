@@ -1,0 +1,283 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">HQ Master</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">{{HQMasterMode}}</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnFormValidateHQMasterClick()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>HQ Code</label>
+                            <div class="d-flex" [ngClass]="{'required-field':isHighLightHQCode=== 'Yes'}">
+                                <input type="text" class="form-control" [(ngModel)]="HQCode" [ngModelOptions]="{standalone: true}"
+                                placeholder="HQ Code" [disabled]="isAddHQMaster">
+                                <!-- <button type="submit" class="btn-primary  formButton">List</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>HQ Description</label>
+                            <div class="d-flex" [ngClass]="{'required-field':isHighLightHQDescription=== 'Yes'}">
+                                <input type="text" class="form-control mr-2" [(ngModel)]="HQDescription" [ngModelOptions]="{standalone: true}"
+                                 placeholder="HQ Description" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="mb-2">
+                          <label>Pool HQ</label>
+                          <div class="search-dropdown" [ngClass]="{'required-field':isHighLightPoolHQ === 'Yes'}">
+                              <p-dropdown class="" [options]="poolHQList" [(ngModel)]="poolHQCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="DisplayName"
+                              placeholder="Please Select.."   optionValue="POOL_CODE" [filter]="true" filterBy="DisplayName" (ngModelChange)="getsalesChanges()">
+                              </p-dropdown>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Pool HQ</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightPoolHQ === 'Yes'}">
+                                <p-dropdown class="" [options]="poolHQList" [(ngModel)]="poolHQCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="DisplayName"
+                                placeholder="Please Select.."   optionValue="POOL_CODE" [filter]="true" filterBy="DisplayName" (ngModelChange)="getsalesChanges()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Under FM</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnderFM === 'Yes'}">
+                                <p-dropdown class="" [options]="FMHQList" appendTo="body" optionLabel="FM_NAME" [(ngModel)]="underFMCode" optionValue="FM_CODE" [filter]="true" filterBy="FM_NAME" (ngModelChange)="getsalesChanges()" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select..">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-3">
+                            <label>Under MR</label>
+                            <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightMR === 'Yes'}">
+                                <p-autoComplete [(ngModel)]="MRCode" class="p-autoComplete"
+                                    [suggestions]="filterUnderMRCode"
+                                    (completeMethod)="filteredUnderMRCode($event)" field="MR_NAME"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setUnderMRCode(filterUnderMRCode,MRCode)">
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.MR_NAME}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Under MR</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightMR === 'Yes'}">
+                                <p-dropdown class="" [options]="MRHQList" appendTo="body" optionLabel="MR_NAME" [(ngModel)]="MRCode" [ngModelOptions]="{standalone: true}"
+                                   placeholder="Under MR">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <!-- <div class="mb-3">
+                            <label>WEF</label>
+                            <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightWEF === 'Yes'}">
+                                <p-autoComplete [(ngModel)]="WEFCode" class="p-autoComplete"
+                                    [suggestions]="filterWEFCode"
+                                    (completeMethod)="filteredWEFCode($event)" field="PERIOD_DESC"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setWEFCode(filterWEFCode,WEFCode)">
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.PERIOD_DESC}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div> -->
+
+                        <div class="mb-2">
+                            <label>WEF</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightWEF === 'Yes'}">
+                                <p-dropdown class="" [options]="WEFHQList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="WEFCode" optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC" (ngModelChange)="getsalesChanges()" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select..">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3" *ngIf="isShowdropdown">
+                        <!-- <div class="mb-3">
+                            <label>Old WEF</label>
+                            <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                                <p-autoComplete [(ngModel)]="oldWEFCode"
+                                    [suggestions]="filterWEFCode"
+                                    (completeMethod)="filteredPeriodId($event)" field="PERIOD_DESC"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setPeriodId(filterWEFCode,oldWEFCode)" [disabled]="true">
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.PERIOD_DESC}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+
+                        </div> -->
+                        <div class="mb-2">
+                          <label>Old WEF</label>
+                          <div class="search-dropdown" [ngClass]="{'required-field':isHighLightWEF === 'Yes'}">
+                              <p-dropdown class="" [options]="oldWEFHQList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="oldWEFCode" optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC" (ngModelChange)="getsalesChanges()" [ngModelOptions]="{standalone: true}"
+                              placeholder="Please Select.." [disabled]="true">
+                              </p-dropdown>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <div class="form-group form-check mb-0 mt-4" style="margin-top: 29px;" [ngClass]="{'required-field':isHighLightActive === 'Yes'}">
+                                <input type="checkbox" class="form-check-input" id="Active" [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
+                                <label class="form-check-label" for="Active">Active</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnFormValidateHQMasterClick()">Save</button>
+                            <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isHQPopUp">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">HQ Master List</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 mt-8 p-4">
+                <div class="card">
+                    <div class="">
+                        <p-table [value]="HQMasterList" [autoLayout]="true"
+                        scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                        [globalFilterFields]="['HQ_CODE','HQ_DESC','POOL_DESC','MR_NAME','FM_NAME','PERIOD_DESC']"  scrollHeight="400px">
+                            <ng-template pTemplate="caption">
+                                <!-- <div style="text-align: right">
+                                    <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div> -->
+                                <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                        aria-label="Search" size="20"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="HQ_CODE" class="width-100">
+                                        HQ Code
+                                    </th>
+                                    <th pSortableColumn="HQ_DESC" class="width-130">
+                                        HQ Name
+                                    </th>
+                                    <th pSortableColumn="POOL_DESC" class="width-130">
+                                        Pool Name
+                                    </th>
+                                    <th pSortableColumn="MR_NAME" class="width-130">
+                                        MR Name
+                                    </th>
+                                    <th pSortableColumn="FM_NAME" class="width-130">
+                                        FM Name
+                                    </th>
+                                    <th pSortableColumn="PERIOD_DESC" class="width-130">
+                                        Period
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr>
+                                    <td class="width-100" (click)="onHQSelected(rowData)">
+                                        <a class="click" > {{rowData.HQ_CODE}}</a>
+                                    </td>
+                                    <td class="width-130" (click)="onHQSelected(rowData)">
+                                        <a class="click" > {{rowData.HQ_DESC}}</a>
+                                    </td>
+                                    <td class="width-130"  (click)="onHQSelected(rowData)">
+                                        <a class="click"> {{rowData.POOL_DESC}}</a>
+                                    </td>
+                                    <td class="width-130" (click)="onHQSelected(rowData)">
+                                        <a class="click" > {{rowData.MR_NAME}}</a>
+                                    </td>
+                                    <td class="width-130" (click)="onHQSelected(rowData)">
+                                        <a class="click" > {{rowData.FM_NAME}}</a>
+                                    </td>
+                                    <td class="width-130" (click)="onHQSelected(rowData)">
+                                        <a class="click" > {{rowData.PERIOD_DESC}}</a>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+        </div> -->
+      </div>
+    </div>
+</div>
+
+<p-dialog header="HQ Master Save" [(visible)]="ConfirmationModal" [style]="{width: '40vw'}" *ngIf="ConfirmationModal"
+    id="ConfirmationModal" [dismissableMask]="true" [closeOnEscape]="true" [closable]="true" [modal]="true">
+
+    <label>Updating values will have an impact on Sales Reports !! Please Confirm !!
+    </label>
+    <div class="col-md-12 mt-2 p-0">
+        <div class="d-flex mb-1 justify-content-end">
+
+            <div class="buttonBox">
+                <button type="submit" class="btn btn-primary mr-2 " (click)="OnYesClick('Y')" pAutoFocus [autofocus]="true">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="OnYesClick('N')">No</button>
+            </div>
+        </div>
+
+    </div>
+</p-dialog>

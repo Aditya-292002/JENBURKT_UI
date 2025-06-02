@@ -1,0 +1,131 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Update User Address Details</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Update User Address Details</h5>
+      </div>
+
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="card">
+    <p-table   [value]="userList" responsiveLayout="scroll" scrollHeight="420px"
+    [globalFilterFields]="['LOGIN_ID','USER_NAME','ROLE_NAME','EMP_CODE']" #dt1 >
+      <ng-template pTemplate="caption">
+        <div class="table-header text-right">
+            <span class="p-input-icon-right ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" class="form-control" (input)="dt1.filterGlobal($event.target.value, 'contains')"  />
+            </span>
+
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="header" pSortableColumn="LOGIN_ID" >LOGIN ID </th>
+                <th pSortableColumn="USER_NAME" >USER NAME </th>
+                <th pSortableColumn="ROLE_NAME" >ROLL NAME</th>
+                <th pSortableColumn="EMP_CODE" >EMPLOYEE CODE </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr (click)="onUpdateUserDetails(data)">
+                <td>{{data.LOGIN_ID}}</td>
+                <td>{{data.USER_NAME}}</td>
+                <td>{{data.ROLE_NAME}}</td>
+                <td>{{data.EMP_CODE}}</td>
+
+
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+  </div>
+
+  <p-dialog header="Update User Address Details" [(visible)]="updateDispatchedDetailsHideShow" [style]="{width: '60vw'}">
+    <div class="">
+      <div class="">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-4 ">
+        <div class="mb-2">
+          <label>Login Id</label>
+          <div >
+            <input type="text"  class="form-control mr-2" [(ngModel)]="LOGIN_ID"
+            [ngModelOptions]="{standalone:true}" placeholder="Login Id"  disabled>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4 ">
+        <div class="mb-2">
+          <label>User Name</label>
+          <div >
+            <input type="text"  class="form-control mr-2" [(ngModel)]="USERNAME"
+            [ngModelOptions]="{standalone:true}" placeholder="User Name"  disabled>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4 ">
+        <div class="mb-2">
+          <label>Emp Code</label>
+          <div >
+            <input type="text"  class="form-control mr-2" [(ngModel)]="EMP_CODE"
+            [ngModelOptions]="{standalone:true}" placeholder="Emp Code"  disabled="true">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>State</label>
+          <div class="search-dropdown" >
+            <p-dropdown [options]="STATE_LIST" appendTo="body" optionLabel="STATE_DESC" [filter]="true" filterBy="STATE_DESC"
+                optionValue="STATE_CODE" appendTo="body" placeholder="Please Select.."
+                [(ngModel)]="STATE" [ngModelOptions]="{standalone:true}" >
+            </p-dropdown>
+        </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>Mobile</label>
+          <div >
+            <input type="text"  class="form-control mr-2" [(ngModel)]="MOBILE_NO"
+            [ngModelOptions]="{standalone:true}" placeholder="Mobile"  appTwoDigitDecimaNumber>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>Emial Id</label>
+          <div >
+            <input type="email"  class="form-control mr-2" [(ngModel)]="EMAIL_ID"
+            [ngModelOptions]="{standalone:true}" placeholder="Email"  >
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-8">
+        <div class="mb-2">
+          <label>Address</label>
+          <div >
+            <textarea type="text" [(ngModel)]="ADDRESS" class="form-control"
+            [ngModelOptions]="{standalone:true}" placeholder="Address"
+             ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <button type="submit" class="btn-primary  saveButton mr-2 " (click)="onSaveUpadteDispatchedClick()">Update</button>
+        <button type="submit" class="btn-primary  cancelButton mr-2 " (click)="onClearData()">Cancel</button>
+      </div>
+    </div>
+      </div>
+    </div>
+</p-dialog>
+

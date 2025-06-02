@@ -1,0 +1,49 @@
+.col-form-label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 400;
+    color: #898484 ;
+    font-size: 14px;
+}
+.print-page .card-box{
+    border: 1px solid #000;
+    position: inherit; 
+    padding: 5px 10px;
+}
+.print-page .card-box b{
+    color: #060606 !important;
+}
+
+.requisition-table table th{
+    background-color: transparent;
+    border: 1px solid #060606;
+}
+.requisition-table table td{
+    background-color: transparent;
+    border: 1px solid #060606;
+    padding: 2.92rem 0.2rem;
+}
+.equipment-table {
+    border: 1px solid #060606;
+}
+.equipment-table td{
+    border: 0;
+}
+.feedback-table td{
+    border: 0;
+}
+.isHighlight{
+    border-color: #ebb8c2d9 !important;
+    background: #e4002b !important;
+    color: #fff !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}
+.width-100{
+    width: 238px;
+}

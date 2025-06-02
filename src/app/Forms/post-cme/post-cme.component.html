@@ -1,0 +1,556 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Post CME</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex justify-content-between mb-2">
+        <div class="">
+            <h5 class="mb-0 headers">Post CME Report</h5>
+        </div>
+        <div>
+            <button type="submit" class="btn-primary  formButton " *ngIf="isAdd" (click)="OnBackClick()">Back</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" *ngIf="!isAdd">
+<div class="card">
+    <p-table #dt1 [value]="POST_CME_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll"
+        scrollHeight="420px" [globalFilterFields]="['CME_DATE', 'CME_NO', 'TOPIC']" stateStorage="session"
+        stateKey="statedemo-session5" (onLazyLoad)="loadDataLazily($event)" >
+
+        <ng-template pTemplate="caption">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex  mt-2" >
+                    <div class="form-check form-check-inline mr-3">
+                        <input type="radio" id="inlineRadio1" name="status" value="P" (click)="GETPOSTCMELISTBYUSERID('P')"
+                            [checked]='true'>
+                        <label class="form-check-label ml-2" for="inlineRadio1"> Pending</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="inlineRadio3" name="status" value="C" (click)="GETPOSTCMELISTBYUSERID('C')">
+                        <label class="form-check-label ml-2" for="inlineRadio3">Completed/Draft</label>
+                    </div>
+                </div>
+                <div class="table-header text-right">
+                    <span class="p-input-icon-right ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" class="form-control"
+                            (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                    </span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="CME">CME NO</th>
+                <th pSortableColumn="CME_DATE" class="width-12">DATE <p-sortIcon field="CME_DATE"></p-sortIcon></th>
+                <th pSortableColumn="USER_NAME" class="width-12">REQ_BY <p-sortIcon field="USER_NAME"></p-sortIcon>
+                </th>
+                <th pSortableColumn="HQ_DESC">HQ_CODE</th>
+                <th pSortableColumn="TOPIC">SM NAME</th>
+                <th pSortableColumn="TOPIC">TOPIC</th>
+                <th pSortableColumn="STATUS" *ngIf="this.IsView == 'C'">Status</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+            <tr *ngIf="this.IsView == 'P'" (click)="GetPreviewCmeReqFromCmeNo(data)">
+                <td>{{ data.CME_NO }}</td>
+                <td class="width-12">{{ data.CME_DATE | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ data.USER_NAME }}</td>
+                <td>{{ data.HQ_DESC }}</td>
+                <td>{{ data.SM_NAME }}</td>
+                <td>{{ data.TOPIC }}</td>
+            </tr>
+            <tr *ngIf="this.IsView == 'C'" (click)="ViewPostList(data)">
+                <td>{{ data.CME_NO }}</td>
+                <td class="width-12">{{ data.CME_DATE | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ data.USER_NAME }}</td>
+                <td>{{ data.HQ_DESC }}</td>
+                <td>{{ data.SM_NAME }}</td>
+                <td>{{ data.TOPIC }}</td>
+                <td>{{ data.POST_CMESTATUS }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+
+<div class="container-fluid" *ngIf="isAdd">
+    <div class="row">
+        <div class="col-md-8 pr-0">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>CME No. </label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="CME_NO"
+                                        placeholder="Please Enter CME No" [ngModelOptions]="{standalone: true}"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Date</label>
+                                <div>
+                                    <p-calendar [(ngModel)]="DATE" appendTo="body" [showIcon]="true"
+                                        dateFormat="dd.mm.yy" placeholder="Please Select Date" inputId="icon"
+                                        placeholder="{{DATE}}" disabled></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Req By</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="REQ_BY"
+                                        placeholder="Please Enter Req By" [ngModelOptions]="{standalone: true}"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>HQ Code</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="HQ_DESC"
+                                        (ngModelChange)="GETCMEDOCTORLIST(HQ_CODE)" placeholder="Please Enter HQ Code"
+                                        [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>CME Type</label>
+                                <div>
+                                    <p-dropdown [options]="CME_TYPE_LIST" [(ngModel)]="CME_TYPE_ID"
+                                        [ngModelOptions]="{standalone:true}"
+                                        placeholder="Please Select CME Type" appendTo="body" optionValue="CME_TYPE_ID"
+                                        [filter]="true" optionLabel="CME_DESC" filterBy="CME_DESC" [disabled]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isCampTypeView">
+                            <div class="mb-2">
+                                <label>Camp Type</label>
+                                <div>
+                                    <p-dropdown [options]="CAMP_TYPE_LIST" [(ngModel)]="CAMP_TYPE_ID"
+                                        [ngModelOptions]="{standalone:true}" placeholder="Please Select Camp Type"
+                                        appendTo="body" optionValue="CAMP_TYPE_ID" [filter]="true"
+                                        optionLabel="CAMP_DESC" filterBy="CAMP_DESC" [disabled]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label>Institution</label>
+                            <div class="d-flex">
+                                <div class="form-check form-check-inline">
+                                    <p-checkbox [(ngModel)]="INSTITUTION" binary="true" inputId="Institution"
+                                        [disabled]="areButtonsDisabled"></p-checkbox>
+                                    <label for="Institution">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <p-checkbox [(ngModel)]="NON_INSTITUTION" binary="true" inputId="Non_Institution"
+                                        [disabled]="areButtonsDisabled"></p-checkbox>
+                                    <label for="Non_Institution">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-12 col-md-12 col-lg-7" *ngIf="this.InstName == true">
+                            <div>
+                                <label>Inst Name</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="INST_NAME"
+                                        placeholder="Please Enter HQ Code" [ngModelOptions]="{standalone: true}"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isCampTypeView">
+                            <div class="mb-2">
+                                <label>No. of Patients</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="NO_OF_PATIENTS"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Please Enter No. of Patients"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isCampTypeView">
+                            <div class="mb-2">
+                                <label>Vendors</label>
+                                <div>
+                                    <p-dropdown [options]="VENDOR_LIST" [(ngModel)]="VENDOR" optionValue="USER_ID"
+                                        [ngModelOptions]="{standalone:true}" placeholder="Please Select Vendors" appendTo="body" 
+                                        [filter]="true" optionLabel="USER_NAME"  filterBy="USER_NAME"
+                                        disabled>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'P'">
+                            <div class="mb-2">
+                                <label>Amount Req</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="AMOUNT"
+                                     placeholder="Please Enter Amount Req" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'P'">
+                            <div class="mb-2">
+                                <label>GST</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="GST"
+                                     placeholder="Please Enter GST" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'P'">
+                            <div class="mb-2">
+                                <label>Received Amt</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="RECEIVED_AMOUNT"
+                                     placeholder="Please Enter Received Amt" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'C'">
+                            <div class="mb-2">
+                                <label>Actual Amount</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="AMOUNT"
+                                     placeholder="Please Enter Actual Amt" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'C'">
+                            <div class="mb-2">
+                                <label>Actual Outstanding</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="ACTUAL_OUTSTANDING"
+                                     placeholder="Please Enter Actual Outstanding" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="mb-2">
+                                <label>Venue</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="VENUE"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Please Enter Venue" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="">
+                                <label>Topic</label>
+                                <div>
+                                    <textarea type="text" class="form-control" rows="4" [(ngModel)]="TOPIC"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Please Enter Topic" disabled>
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+                <div class="">
+                    <h6 class="modal-title">Attended Doctors<span  *ngIf="IsAction" style="color: red;">*</span></h6>
+                </div>
+                <div class="">
+                    <button  type="button" class="btn btn-primary formButton" (click)="SpeakerView()"
+                     *ngIf="IsAction" >
+                        Doctor's List
+                    </button>
+                </div>
+            </div>
+            <p-table [value]="ATTENDING_DOCTOR_LIST" responsiveLayout="scroll" [paginator]="false"
+                class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50, 100]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [autoLayout]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Doctor Name</th>
+                        <th> Doctor Qualification</th>
+                        <th> Doctor Specialization</th>
+                        <th>Email ID</th>
+                        <th>Phone</th>
+                        <th *ngIf="IsAction">Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-last="last">
+                    <tr *ngFor="let item of AttendingDoctorList; let i = index,let last = last">
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="item.DOCTOR_NAME"
+                                [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select Doctor Name" [disabled]="formFieldsDisabled">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="item.DOCTOR_QUALIFICATION"
+                                [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Enter Doctor Qualification "
+                                [disabled]="formFieldsDisabled">
+                        </td>
+                        <td>
+                            <p-dropdown [options]="DOCTOR_SPECIALIZATION_LIST"
+                                [(ngModel)]="item.DOCTOR_SPECIALIZATION"
+                                [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select Doctor Specialization" appendTo="body"
+                                optionValue="SPL_ID" optionLabel="SPL_DESCRIPTION" [filter]="true"
+                                [disabled]="formFieldsDisabled">
+                            </p-dropdown>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="item.EMAIL_ID"
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Email ID"
+                                [disabled]="formFieldsDisabled"  >
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="item.MOBILE_NO"
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Phone"
+                                pattern="[0-9]{10}" maxlength="10" minlength="10" required
+                                (input)="validateNumber($event)" [disabled]="formFieldsDisabled">
+                        </td>
+                        <td *ngIf="IsAction">
+                            <div class="d-flex gap-2" >
+                            <button class="btn-primary formButton ml-2" *ngIf="last"
+                                (click)="addAttendingDoctor()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn-danger cancelButton ml-2"  *ngIf="i >= 1"
+                                  (click)="removeAttendingDoctor(i)" >
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6 pr-0">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <h6 class="modal-title">Bill Details<span  *ngIf="IsAction" style="color: red;">*</span></h6>
+                        <p-table [value]="BILL_DETAILS_LIST" responsiveLayout="scroll" [paginator]="false"
+                            class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                            [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="Bill_No"> Bill No </th>
+                                    <th pSortableColumn="Particulars"> Particulars </th>
+                                    <th pSortableColumn="Amount"> Amount </th>
+                                    <th *ngIf="IsAction">Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-data>
+                                <tr *ngFor="let item of BillDetailsList;let i = index,let last = last">
+                                    <td>
+                                        <input type="text" class="form-control" [(ngModel)]="item.BILL_NO" 
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter "
+                                            [disabled]="formFieldsDisabled">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" [(ngModel)]="item.PARTICULARS"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter"
+                                            [disabled]="formFieldsDisabled">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" [(ngModel)]="item.AMOUNT" numbersOnly
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter"
+                                            [disabled]="formFieldsDisabled" (ngModelChange)="GetCalculateBillDetailsAmount()">
+                                    </td>
+                                    <td *ngIf="IsAction">
+                                        <div class="d-flex gap-2" >
+                                            <button class="btn-primary formButton  ml-2" *ngIf="last" (click)="addBillDetail()">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn-danger cancelButton ml-2" *ngIf="i >= 1" (click)="removeBillDetail(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer" *ngIf="this.IsView == 'P'">
+                                <tr> 
+<td></td>
+<td></td>
+                                    <td>
+                                       Total: &#8377;{{BILL_DETAILS_TOTAL_AMOUNT | number : '1.2-2' }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="">
+                                <h6 class="modal-title">Document Details</h6>
+                            </div>
+                            <div *ngIf="IsAction" >
+                                <button type="submit" class="btn-primary  formButton " (click)="OpenUploadDocumentPopUp()"
+                                    [disabled]="formFieldsDisabled"  *ngIf="!formFieldsDisabled" >
+                                    Upload Document
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <p-table [value]="UploadDocumentdetails" class="prime-table">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th> Document Type </th>
+                                <th> Document Name </th>
+                                <th > Action </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                            <tr>
+                                <td>{{ data.DOCUMENT_DESC }}</td>
+                                <td>{{ data.FILE_NAME }}</td>
+                                <td>
+                                    <button class="btn-primary formButton  mr-2" *ngIf="this.CME_ID != null"
+                                        (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn-danger cancelButton mr-2" (click)="RemoveDocument(rowIndex)"
+                                        [disabled]="formFieldsDisabled"  *ngIf="IsAction" >
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="d-flex justify-content-end mb-2">
+            <div *ngIf="IsDraft">
+                <button type="submit" class="btn-success saveButton mr-2" (click)="SAVEREPORTFILE(0)">Save as
+                    Draft</button>
+            </div>
+            <div *ngIf="IsAction">
+                <button type="submit" class="btn-success saveButton" (click)="SAVEREPORTFILE(1)">Save</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Upload Document" [modal]="true" [(visible)]="UploadDocumentPopUp" [style]="{ width: '40rem' }">
+    <div class="d-flex gap-3 justify-content-around">
+        <div>
+            <label>Document Type<span style="color: red;">*</span></label>
+            <div>
+                <p-dropdown [options]="DOCUMENT_TYPE_LIST" [(ngModel)]="POST_CME_DOC_TYPE_CODE" appendTo="body"
+                    optionLabel="DOCUMENT_DESC" optionValue="DOCUMENT_TYPE_ID" [filter]="true" filterBy="DOCUMENT_DESC"
+                    placeholder="Please Select..." [ngModelOptions]="{standalone:true}">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <label for="docs">Upload PAN/CANC CHQ/LETTER<span style="color: red;">*</span></label>
+            <div>
+                <div class="file-upload  ">
+                    <span class="input-group-btn uploadbtn mr-3">
+                        <a>
+                            <div class="btn btn-default  custom-file-uploader">
+                                <input type="file" class="form-control-file" id="docs" name="file"
+                                accept=".jpg,.png,.jpeg,.pdf.JPG,.PNG,.JPEG,.PDF" [(ngModel)]="UPLOAD" (change)="GetfileUpload($event)">
+                                <!-- accept=".jpg,.png,.jpeg,.pdf" [(ngModel)]="UPLOAD" (change)="NewUpload($event)"> -->
+                                <b>Upload File</b>
+                            </div>
+                        </a>
+                    </span>
+                    <a class="">{{ FILE_NAME }}</a>
+                </div>
+            </div>
+            <b>Note:- Accept only .jpg,.png,.jpeg,.pdf</b><br>
+            <b> (Max File size limit 4 mb)</b>
+        </div>
+        <div>
+            <button type="submit" class="btn-primary  formButton " (click)="SaveAttachDocument()">
+                Attach Document
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Doctor List" [modal]="true" [(visible)]="SpeakerViewPopUp" [style]="{ width: '50rem' }">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+            <input type="text" class="form-control" [(ngModel)]="SearchInput" placeholder="Search"
+                (input)="SearchFilterDoctorList()" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+    <div class="mt-2">
+        <!-- <h6 class="modal-title">Promotional Material Req</h6> -->
+        <p-table [value]="FILTERED_DOCTORS_LIST" responsiveLayout="scroll" [paginator]="true" class="prime-table"
+            [showCurrentPageReport]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th> Sr No. </th>
+                    <th> Doctor Name </th>
+                    <th> Doctor Qualification </th>
+                    <th> Doctor Specialization </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                <tr (click)="GetDoctorInfo(data)">
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{data.DOCTOR_NAME}}</td>
+                    <td>{{data.QUALIFICATION}}</td>
+                    <td>{{data.SPL_DESCRIPTION}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>

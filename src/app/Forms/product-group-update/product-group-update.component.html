@@ -1,0 +1,104 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Product Group Update</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Product Group Update</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="UpdateData()" >Update</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearData()" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Request No.</label>
+                            <div class="search-dropdown">
+                                <p-dropdown [options]="requestList" appendTo="body" [filter]="true"  optionLabel="REQUEST_NO" filterBy="REQUEST_NO,PRODUCT_DESC"
+                                    optionValue="REQUEST_ID" appendTo="body" placeholder="Please Select.." (onChange)="onreqestchange()" 
+                                    [(ngModel)]="requestId" [ngModelOptions]="{standalone:true}">
+                                    <ng-template let-item pTemplate="item" >
+                                        <span >
+                                            <div class="d-flex">
+                                                <p class="w-25 mb-0 mr-2">{{item.REQUEST_NO }}</p>
+                                                <p class="w-75 mb-0">  {{item.PRODUCT_DESC}} </p>
+                                            </div>
+                                        </span>
+                                
+                                    </ng-template>
+                                </p-dropdown>
+                             
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Product Name</label>
+                            <div class="search-dropdown">
+                                <p-dropdown [options]="productGroupList" appendTo="body" optionLabel="PRODUCT_DESC" [filter]="true" filterBy="PRODUCT_DESC"
+                                    optionValue="PRODUCT_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="productCode" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2" *ngIf="cleardata">
+        <div class="card-body">
+            <div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Request No. :-  {{requestdata.REQUEST_NO}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>HQ Desc. :-  {{requestdata.HQ_DESC}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Product Name :- {{requestdata.PRODUCT_DESC}}</label>
+                           
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Doctor Name :- {{requestdata.DOCTOR_NAME}}</label>
+                           
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Chemist Name. :-  {{requestdata.CHEMIST_NAME}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Stockist Name. :-  {{requestdata.STOCKIST_NAME}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

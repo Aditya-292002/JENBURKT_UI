@@ -1,0 +1,78 @@
+<div class="container-fluid">
+        <div class="card mt-2">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>Financial Year</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>Description</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>From Date</label>
+                                <div>
+                                    <p-calendar [(ngModel)]="FROM_DATE" [showIcon]="true" inputId="icon"></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>To Date</label>
+                                <div>
+                                    <p-calendar [(ngModel)]="TO_DATE" [showIcon]="true" inputId="icon"></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input" id="Active">
+                                <label class="form-check-label" for="Active">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="col-md-12">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fyear</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Form Date</th>
+                                <th scope="col">To Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>6/5/2022</td>
+                                <td>8/6/2022</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>6/5/2022</td>
+                                <td>8/6/2022</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="buttonBox text-right mt-2">
+            <button type="submit" class="btn-primary formButton "><i class="fa fa-caret-right mr-2"
+                    aria-hidden="true"></i>Next</button>
+        </div>
+</div>

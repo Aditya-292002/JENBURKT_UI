@@ -1,0 +1,169 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Discount Details List </li>
+    </ol>
+  </nav>
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Discount Details List :-</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+          <!-- <button  class="btn-primary  formButton mr-2" (click)="onMyClaimRequest()">My Claim Request</button>
+          <button  class="btn btn-success  saveButton"  style="padding: 3px 7px !important;font-size: 13px !important;" (click)="onAddRequestDetails()">Add</button> -->
+        </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+      <p-table   [value]="DISCOUNT_DETAILS_LIST" responsiveLayout="scroll" scrollHeight="420px"
+      [globalFilterFields]="['REQUEST_NO','HQ_DESC','DOCTOR_NAME','STOCKIST_NAME']"
+      stateStorage="session" stateKey="statedemo-session3" (onLazyLoad)="loadDataLazily($event)" #dt1 >
+        <ng-template pTemplate="caption">
+  
+        <div class="d-flex justify-content-end">
+
+            <div class="table-header text-left">
+                <!-- <button pButton label="Clear" class="p-button-outlined mr-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+                <div class="d-flex justify-content-end">
+                    <div  style="width: 25%;margin-right: 10px;">
+                        <label>HQ Code</label>
+                        <div>
+                            <p-dropdown [options]="HQ_LIST" [(ngModel)]="HQ_CODE"
+                                [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="HQ_DESC"
+                                [disabled]="false" [filter]="true" filterBy="HQ_DESC" placeholder="Please Select HQ Code">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                  <div style="width: 25%;margin-right: 10px;">
+                      <label>From Date </label>
+                      <div>
+                          <p-calendar [(ngModel)]="DISCOUNT_DETAILS_FROM_DATE" appendTo="body" [showIcon]="true"
+                              dateFormat="dd-mm-yy" placeholder="Please Select Date" [maxDate]="Today"
+                              inputId="icon" placeholder="{{DISCOUNT_DETAILS_FROM_DATE}}"></p-calendar>
+                      </div>
+                  </div>
+                  <div style="width: 25%;margin-right: 10px;">
+                      <label>To Date </label>
+                      <div>
+                          <p-calendar [(ngModel)]="DISCOUNT_DETAILS_TO_DATE" appendTo="body" [showIcon]="true"
+                              dateFormat="dd-mm-yy" placeholder="Please Select Date" [maxDate]="Today"
+                               inputId="icon" placeholder="{{DISCOUNT_DETAILS_TO_DATE}}"></p-calendar>
+                      </div>
+                  </div>
+                  <div  style="width: 15%;">
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn-primary formButton mr-2"
+                        (click)="ViewDiscountList()">View</button>
+                        <button pButton label="Clear" class="p-button-outlined mr-2" icon="pi pi-filter-slash" 
+                        (click)="localstorageclear()"></button>
+                    </div>
+                </div>
+                  <div style="width: 25%;">
+                      <span class="p-input-icon-right ml-auto">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text" class="form-control"
+                              (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                      </span>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+               
+                  <th class="header" pSortableColumn="REQUEST_NO" >REQUEST NO <p-sortIcon field="REQUEST_NO"></p-sortIcon></th>
+                  <th pSortableColumn="REQUEST_DATE" >REQUEST DATE <p-sortIcon field="REQUEST_DATE"></p-sortIcon></th>
+                  <th pSortableColumn="HQ_CODE" >HQ
+                    <!-- <p-columnFilter field="HQ_CODE" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value"  [options]="HQ_LIST" 
+                          (onChange)="dt1.filterGlobal($event.value,'contains')"   placeholder="Select" 
+                          [showClear]="true" [filter]="true" [filterBy]="'label'"
+                      >
+                              <ng-template let-option pTemplate="item">
+                                  <span>{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                          
+                      </ng-template>
+                  </p-columnFilter> -->
+                  </th>
+                  <th pSortableColumn="DOCTOR_NAME" >DOCTOR 
+                    <!-- <p-columnFilter field="DOCTOR_NAME" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="DOC_LIST" 
+                          (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                          [showClear]="true" [filter]="true" [filterBy]="'label'">
+                              <ng-template let-option pTemplate="item">
+                                  <span>{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                      </ng-template>
+                  </p-columnFilter> -->
+                  </th>
+  
+                  <th pSortableColumn="STOCKIST_NAME" >STOCKIST 
+                    <!-- <p-columnFilter field="STOCKIST_NAME" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="STOC_LIST" 
+                          (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                          [showClear]="true" [filter]="true" [filterBy]="'label'">
+                              <ng-template let-option pTemplate="item">
+                                  <span>{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                      </ng-template>
+                  </p-columnFilter> -->
+                  </th>
+  
+                  <th pSortableColumn="CHEMIST_NAME" >CHEMIST 
+                    <!-- <p-columnFilter field="CHEMIST_NAME" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="CHEM_LIST" 
+                          (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                          [showClear]="true" [filter]="true" [filterBy]="'label'" [ngModelOptions]="{standalone: true}">
+                              <ng-template let-option pTemplate="item">
+                                  <span>{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                      </ng-template>
+                  </p-columnFilter> -->
+                  </th>
+                  <th pSortableColumn="PRODUCT_DESC">PRODUCT 
+                      <!-- <p-columnFilter field="PRODUCT_DESC" matchMode="equals" [showMenu]="false">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown appendTo="body" [ngModel]="dt1.filters['global']?.value" [options]="PROC_LIST" 
+                              (onChange)="dt1.filterGlobal($event.value, 'contains')" placeholder="Select" 
+                              [showClear]="true" [filter]="true" [filterBy]="'label'">
+                                  <ng-template let-option pTemplate="item">
+                                      <span>{{option.label}}</span>
+                                  </ng-template>
+                              </p-dropdown>
+                          </ng-template>
+                      </p-columnFilter> -->
+                    </th>
+  
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+              <tr>
+              
+                  <td (click)="onDiscountDitails(data)">{{data.REQUEST_NO}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.REQUEST_DATE | date:'dd-MM-yyy'}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.HQ_DESC}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.DOCTOR_NAME}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.STOCKIST_NAME}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.CHEMIST_NAME}}</td>
+                  <td (click)="onDiscountDitails(data)">{{data.PRODUCT_DESC}}</td>
+  
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+    </div>
+  

@@ -1,0 +1,82 @@
+.header {
+  color: #44484e;
+  /* font-weight: 500;
+  font-size: 17px; */
+
+}
+span.badge {
+  display: inline-block;
+  padding: 5px 8px !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  margin-top: 5px !important;
+}
+/* .width-100{
+  width: 230px;
+} */
+.checkbox:focus, input:focus{
+  outline: none;
+}
+.border_right{
+  border-width: 0 0 0 2px;
+  border-style: solid;
+  border-image: radial-gradient(rgb(58 61 60), rgb(244 243 239)) 1;
+  /* border-image: linear-gradient(to bottom #fff 0%,#c4c4c4 50% ,#fff 100%);
+  padding-left: 575px;
+  height: 166px; */
+  border-image-slice: 1;
+}
+
+.Approved{
+  background-color: #28a745!important;
+}
+.Pending{
+background-color: #ffc107!important;
+}
+.Rejected{
+  background-color: #dc3545;
+}
+.width-9{
+  width: 83px;
+}
+.form-check-input {
+  position: absolute;
+  /* margin-top: 4px !important; */
+  /* margin-left: -1.25rem !important; */
+}
+.form-check {
+  position: relative;
+  display: block;
+  padding-left: 1.25rem;
+  margin-top: -10px !important;
+}
+/* .width-10{
+  min-width: 100px;
+}
+.width-11{
+  width: 10px;
+}
+.width-12{
+  width: 80px;
+}
+.width-13{
+  width: 80px;
+} */
+.p-datatable-wrapper {
+  min-height: calc(100vh - 90px);
+}
+.bg-doc{
+  background-color: #88ffa3 !important;
+}
+/* .width-free{
+  width: 50px;
+
+} */
+.width-10{
+  min-width: 100px;
+}

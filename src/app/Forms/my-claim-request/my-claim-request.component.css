@@ -1,0 +1,18 @@
+.Approved{
+  background-color: #28a745!important;
+}
+.Pending{
+background-color: #ffc107!important;
+}
+.Rejected{
+  background-color: #dc3545;
+}
+.width-10{
+  min-width: 100px;
+}
+
+
+  /* .is-blue-i{
+   color:  #d76f4f;
+   border-radius: 10px;
+  } */

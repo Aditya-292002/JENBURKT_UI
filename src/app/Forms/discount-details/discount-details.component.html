@@ -1,0 +1,1011 @@
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Discount Details </li>
+    </ol>
+  </nav>
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Discount Details:- {{REQUEST_DETAILS[0]?.REQUEST_NO}}</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+          <button  class="btn btn-primary  formButton"  
+          style="padding: 3px 7px !important;font-size: 13px !important;" 
+          (click)="BackToDiscountDetailsList()">Back</button>
+        </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div id="accordion1" class="accordion">
+        <div class="card-accrodion mb-0">
+            <div class="card-header" data-toggle="collapse" aria-expanded="true" href="#collapseOne">
+                <a class="card-title ">
+                  <i class="fa fa-line-chart mr-2"></i>  Discount Details ({{REQUEST_DETAILS[0]?.REQUEST_NO}})
+                </a>
+            </div>
+            <div id="collapseOne" class="accordion-collapse  collapse show p-0" data-parent="#accordion1">
+            <div class="card">
+              <div class="card-body">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Request By:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8" >
+                          <p>{{REQUEST_DETAILS[0]?.REQUESTED_NAME}}</p>
+                        </div>
+                      </div>
+    
+    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Doctor:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.DOCTOR_NAME}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Product:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <div class="d-flex">
+                            <p>{{REQUEST_DETAILS[0]?.PRODUCT_DESC}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-5">
+                          <label class="header">Request Date:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-7">
+                          <p>{{REQUEST_DETAILS[0]?.REQUEST_DATE | date:'dd/MM/yyyy'}}</p>
+                        </div>
+                      </div>
+    
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">HQ:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.HQ_DESC}} ({{REQUEST_DETAILS[0]?.HQ_CODE}})</p>
+                        </div>
+                      </div>
+    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Specialization:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.SPL_DESCRIPTION}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Req Sale Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.SALE_QTY}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Stockist:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.STOCKIST_NAME}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Chemist:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.CHEMIST_NAME}}</p>
+                        </div>
+                      </div>
+    
+    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Req Free Qty:-</label>
+                          <h5 class=" header"></h5>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{REQUEST_DETAILS[0]?.FREE_QTY}}</p>
+                        </div>
+                      </div>
+    
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            </div>
+    
+            <div class="card-header mt-2 " data-toggle="collapse" aria-expanded="true" data-parent="#accordion2"
+                href="#collapseTwo" >
+                <a class="card-title">
+                  <i class="fa fa-refresh mr-2"></i> Discount  Track ({{REQUEST_DETAILS[0]?.REQUEST_NO}})
+                </a>
+            </div>
+            <div id="collapseTwo" class="accordion-collapse  collapse show " data-parent="#accordion2">
+             <div class="card">
+                 <div class="card-body">
+                  <div class="col-md-12">
+                    <div class="row ">
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Req By:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.REQUESTED_NAME}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Sale Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Free Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-3">
+                            <label class="header">Approval Date:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-9">
+                            <p>{{REQUEST_DETAILS[0]?.CREATEDON | date :'dd/MM/yyyy h:mm a'}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+    
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Remark:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.REMARKS}}</p>
+                          </div>
+                        </div>
+                      </div>
+    
+                    </div>
+    
+                    <div class="row border_Top mt-2" *ngIf="OnFMShowHide">
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">App By:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FM_NAME}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Sale Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FM_SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Free Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FM_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-3">
+                            <label class="header">Approval Date:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-9">
+                            <p>{{REQUEST_DETAILS[0]?.FMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+    
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Remark:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FM_REMARKS}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Satus:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p  class="text-warning" *ngIf="REQUEST_DETAILS[0]?.FMSTATUS == null">Pending</p>
+                            <p  class="text-success" *ngIf="REQUEST_DETAILS[0]?.FMSTATUS == 1">Approved</p>
+                            <p  class="text-danger" *ngIf="REQUEST_DETAILS[0]?.FMSTATUS == 2">Rejected</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row border_Top mt-2" *ngIf="OnRSMShowHide">
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">App By:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.RSM_NAME}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Sale Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.RSM_SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Free Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.RSM_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Approval Date :</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.RSMUPDATEDON |date :'dd/MM/yyyy h:mm a'}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+    
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Remark:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.RSM_REMARKS}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Satus:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p  class="text-warning" *ngIf="REQUEST_DETAILS[0]?.RSMSTATUS == null">Pending</p>
+                            <p  class="text-success" *ngIf="REQUEST_DETAILS[0]?.RSMSTATUS == 1">Approved</p>
+                            <p  class="text-danger" *ngIf="REQUEST_DETAILS[0]?.RSMSTATUS == 2">Rejected</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row border_Top mt-2" *ngIf="OnSMShowHide">
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">App By:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SM_NAME}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Sale Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SM_SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Free Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SM_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Approval Date :</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SMPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+    
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Remark:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.SM_REMARKS}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Satus:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p  class="text-warning" *ngIf="REQUEST_DETAILS[0]?.SMSTATUS == null">Pending</p>
+                            <p  class="text-success" *ngIf="REQUEST_DETAILS[0]?.SMSTATUS == 1">Approved</p>
+                            <p  class="text-danger" *ngIf="REQUEST_DETAILS[0]?.SMSTATUS == 2">Rejected</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row border_Top mt-2" *ngIf="OnPMTShowHide">
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">App By:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.PMT_NAME}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Sale Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FINAL_SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Free Qty:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.FINAL_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12-sm col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Approval Date :</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.PMTUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                          </div>
+                        </div>
+    
+                      </div>
+    
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Remark:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{REQUEST_DETAILS[0]?.PMT_REMARKS}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-4">
+                            <label class="header">Satus:</label>
+                          </div>
+                          <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p  class="text-warning" *ngIf="REQUEST_DETAILS[0]?.PMTSTATUS == null">Pending</p>
+                            <p  class="text-success" *ngIf="REQUEST_DETAILS[0]?.PMTSTATUS == 1">Approved</p>
+                            <p  class="text-danger" *ngIf="REQUEST_DETAILS[0]?.PMTSTATUS == 2">Rejected</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                 </div>
+             </div>
+    
+            </div>
+     </div>
+    </div>
+    <div *ngFor="let data of CLAIM_DETAILS;; let i = index"  class="accordion" >
+        <div class="card-accrodion mb-0 mt-2" >
+            <div class="card-header" (click)="toggleCollapse(i)" aria-expanded="isCollapsed[i]" [attr.data-toggle]="'collapse'" [attr.data-parent]="'#accordion3'">
+                <a class="card-title ">
+                  <i class="fa fa-line-chart mr-2"></i>  Claim Details ({{data.CLAIM_NO}})
+                </a>
+            </div>
+            <div [id]="'collapse' + i" [class]="isCollapsed[i] ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'" [attr.data-parent]="'#accordion3'">
+            <div class="card " >
+              <div class="card-body">
+                <div class="col-md-12" *ngIf="data.CLAIM_NO != null">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Claim No:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8" >
+                          <p>{{data.CLAIM_NO}}</p>
+                        </div>
+                      </div>
+    
+                      <!-- <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Final Sale Qty:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <div class="d-flex">
+                            <p>{{data.FINAL_SALE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                          -->
+                      <!-- <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Trade Discount Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{data.CLAIM_TRADE_DISCOUNT_QUANTITY}}</p>
+                        </div>
+                      </div> -->
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Invoice Sale Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{data.INVOICE_SALE_QTY}}</p>
+    
+                        </div>
+                      </div>
+                       <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Trade Discount Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{data.CLAIM_TRADE_DISCOUNT_QUANTITY}}</p>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Claim Date:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{data.CLAIM_DATE | date:'dd/MM/yyyy'}}</p>
+                        </div>
+                      </div>
+
+                      <!-- <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Final Free Qty:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <div class="d-flex">
+                            <p>{{data.CLAIM_FINAL_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div> -->
+<!--                    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Approved Sale Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8" >
+                          <p>{{data.CLAIM_APPROVED_SALE_QUANTITY}}</p>
+        
+                        </div>
+                      </div> -->
+                 
+                    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Claim free Qty:-</label>
+    
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{data.CLAIM_FREE_QTY}}</p>
+    
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Claim Final Free Qty:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <div class="d-flex">
+                            <p>{{data.CLAIM_FINAL_FREE_QTY}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Superstockist:-</label>
+
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                            <p>{{data.SUPERSTOCKIST_NAME}}</p>
+
+                        </div>
+                      </div>
+                    
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Negotiated Discount Qty:-</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>{{data.CLAIM_NEGOTIATED_DISCOUNT_QUANTITY}}</p>
+
+                        </div>
+                      </div>
+                      <!-- <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                          <label class="header">Mrp:-</label>
+                          <h5 class=" header"></h5>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                          <p>&#8377;{{data.MRP | number : '1.2-2'}}</p>
+                        </div>
+                      </div> -->
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <div class="card-header mt-2 " (click)="toggleCollapse2(i)" aria-expanded="isCollapsed1[i]" [attr.data-toggle]="'collapse'" [attr.data-parent]="'#accordion4'">
+            <a class="card-title"  >
+              <i class="fa fa-refresh mr-2"></i> Claim  Track ({{data.CLAIM_NO}})
+            </a>
+            </div>
+            <div  [id]="'collapse' + i" [class]="isCollapsed1[i] ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'" [attr.data-parent]="'#accordion4'">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="col-md-12" *ngIf="data.CLAIM_NO != null">
+                        <div class="row ">
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Req By:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_REQUESTED_NAME}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Sale Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_UPDATED_SALE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Free Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-3">
+                                <label class="header">Date:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-9">
+                                <p>{{data.CLAIM_CREATEDON | date :'dd/MM/yyyy h:mm a'}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Remark:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_REMARKS}}</p>
+                            </div>
+                            </div>
+                        </div>
+
+                        </div>
+
+                        <div class="row border_Top mt-2" *ngIf="OnClaimFMShowHide">
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">App By:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_FM_NAME}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Sale Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_FM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Free Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_FM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-3">
+                                <label class="header">Date:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-9">
+                                <p>{{data.CLAIM_FMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Remark:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_FM_REMARKS}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Satus:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p  class="text-warning" *ngIf="data.CLAIM_FMSTATUS == null">Pending</p>
+                                <p  class="text-success" *ngIf="data.CLAIM_FMSTATUS == 1">Approved</p>
+                                <p  class="text-danger" *ngIf="data.CLAIM_FMSTATUS == 2">Rejected</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row border_Top mt-2" *ngIf="OnClaimRSMShowHide">
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">App By:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_RSM_NAME}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Sale Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_RSM_SALE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Free Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_RSM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Date :</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_RSMUPDATEDON |date :'dd/MM/yyyy h:mm a'}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Remark:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_RSM_REMARKS}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Satus:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p  class="text-warning" *ngIf="data.CLAIM_RSMSTATUS == null">Pending</p>
+                                <p  class="text-success" *ngIf="data.CLAIM_RSMSTATUS == 1">Approved</p>
+                                <p  class="text-danger" *ngIf="data.CLAIM_RSMSTATUS == 2">Rejected</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row border_Top mt-2" *ngIf="OnClaimSMShowHide">
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">App By:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_SM_NAME}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Sale Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_SM_SCHEME_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Free Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_SM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Date :</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_SMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Remark:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{data.CLAIM_SM_REMARKS}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Satus:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p  class="text-warning" *ngIf="data.CLAIM_SMSTATUS == null">Pending</p>
+                                <p  class="text-success" *ngIf="data.CLAIM_SMSTATUS == 1">Approved</p>
+                                <p  class="text-danger" *ngIf="data.CLAIM_SMSTATUS == 2">Rejected</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- <div class="row border_Top mt-2" *ngIf="OnClaimPMTShowHide">
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">App By:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{REQUEST_DETAILS[0].CLAIM_PMT_NAME}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Sale Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{REQUEST_DETAILS[0].CLAIM_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Free Qty:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{REQUEST_DETAILS[0].CLAIM_FINAL_FREE_QTY}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12-sm col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Date :</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{REQUEST_DETAILS[0].CLAIM_PMTUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Remark:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p>{{REQUEST_DETAILS[0].CLAIM_PMT_REMARKS}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <label class="header">Satus:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                <p  class="text-warning" *ngIf="REQUEST_DETAILS[0].CLAIM_PMT_STATUS == null">Pending</p>
+                                <p  class="text-success" *ngIf="REQUEST_DETAILS[0].CLAIM_PMT_STATUS == 1">Approved</p>
+                                <p  class="text-danger" *ngIf="REQUEST_DETAILS[0].CLAIM_PMT_STATUS == 2">Rejected</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="accordion3" class="accordion" *ngIf="this.CLAIM_DETAILS.length == 0;">
+      <div class="card-accrodion mb-0 mt-2" >
+          <div class="card-header" data-toggle="collapse" aria-expanded="true" href="#collapseThree">
+              <a class="card-title ">
+                <i class="fa fa-line-chart mr-2"></i>  Claim Details 
+              </a>
+          </div>
+          <div id="collapseThree" class="accordion-collapse  collapse show p-0" data-parent="#accordion3">
+          <div class="card " >
+            <div class="card-body">
+              <div class="col-md-12" >
+                  <div class="row" >
+                      No Claim Found 
+                  </div>
+              </div>
+            </div>
+          </div>
+  
+          </div>
+
+          <div class="card-header mt-2 " data-toggle="collapse" aria-expanded="true" data-parent="#accordion4"
+          href="#collapseFour" >
+          <a class="card-title">
+            <i class="fa fa-refresh mr-2"></i> Claim  Track 
+          </a>
+          </div>
+          <div id="collapseFour" class="accordion-collapse  collapse show " data-parent="#accordion4">
+              <div class="card">
+                  <div class="card-body">
+                  <div class="col-md-12" >
+                      <div class="row" >
+                          No Claim Found 
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>

@@ -1,0 +1,132 @@
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Claim Report</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Claim/Discount Report</h5>
+      </div>
+
+  </div>
+</div>
+
+<div class="container-fluid">
+<div class="card">
+  <div class="card-body">
+    <div class="">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+                <label>From</label>
+                <div>
+                  <p-calendar [(ngModel)]="fromDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                  inputId="icon"  placeholder="{{fromDate}}"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4">
+
+            <div class="mb-2">
+                <label>To</label>
+                <div>
+                  <p-calendar [(ngModel)]="toDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                  inputId="icon" placeholder="{{toDate}}" ></p-calendar>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+                <label>Report Type</label>
+                <div>
+                    <div>
+                        <p-dropdown  appendTo="body"  [(ngModel)]="reportType" [filter]="true" filterBy="REPORT_NAME" [ngModelOptions]="{standalone: true}"
+                            placeholder="Please Select..." [options]="reportTypeList" optionLabel="REPORT_NAME" optionValue="SP_NAME"
+                            >
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-4">
+          <div class="mb-2">
+              <label>Status</label>
+              <div>
+                  <div>
+                      <p-dropdown  appendTo="body"  [(ngModel)]="STATUS" [filter]="true" filterBy="REPORT_NAME" [ngModelOptions]="{standalone: true}"
+                          placeholder="Please Select..." [options]="StatusList" optionLabel="STATUS_NAME"
+                          optionValue="STATUS_ID" >
+                      </p-dropdown>
+                  </div>
+              </div>
+          </div>
+      </div>
+     
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+            <div class="buttonBox mt-4 ">
+                <button  type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                    <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                </button>
+
+                <button type="submit" class="btn-primary formButton" (click)="exportExcel()"><i class="fa fa-upload mr-2"
+                        aria-hidden="true"></i>Export</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="mb-2">
+                    <label>Role</label>
+                    <div>
+                        <div>
+                            <p-dropdown  appendTo="body"  [(ngModel)]="ROLE" [filter]="true" filterBy="LIST" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select..." [options]="DATA_LIST" optionLabel="LIST" (ngModelChange)="onrolechange()"
+                                optionValue="LIST" >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+          <div class="mb-2">
+            <label>Role Name</label>
+            <div>
+                <div>
+                    <p-dropdown  appendTo="body"  [(ngModel)]="USER_ROLE" [filter]="true" filterBy="label" [ngModelOptions]="{standalone: true}"
+                        placeholder="Please Select..." [options]="ROLE_USERLIST" optionLabel="label" (ngModelChange)="onuserrolechange()"
+                        optionValue="label" >
+                    </p-dropdown>
+                </div>
+            </div>
+         </div>
+       </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="bg-white" *ngIf="onShowGrid">
+  <div class=" table-responsive card-responsive mt-2">
+    <table class="table opening-table">
+        <thead>
+            <tr>
+                <th *ngFor="let col of Header">{{col}}</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr *ngFor="let col of Values">
+                <td *ngFor="let row of col">
+                {{row}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>

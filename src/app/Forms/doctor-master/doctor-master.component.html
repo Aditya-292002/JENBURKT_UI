@@ -1,0 +1,199 @@
+<app-loader *ngIf="isLoaded" ></app-loader>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Doctor Master</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Doctor Master</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+        <button type="submit" class="btn-primary  formButton mr-2" (click)="onDownlodTemplate()">Download Template</button>
+          <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+          <button type="submit" class="btn-primary  saveButton mr-2" (click)="validateDoctorData()">Save</button>
+          <button type="submit" class="btn-primary  cancelButton" (click)="clearing_rest()">Cancel</button>
+      </div>
+  </div>
+</div>
+
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="mb-2">
+                    <label>HQ</label>
+                    <div class="search-dropdown" >
+                        <p-dropdown [disabled]="!enabler"  [(ngModel)]="HQ_CODE" [options]="HQ_codes_list" optionLabel="HQ_DESC" optionValue="HQ_CODE" [ngModelOptions]="{standalone: true}" appendTo="body"
+                        [filter]="true" filterBy="HQ_DESC" placeholder="Please Select..." [disabled]="Excel == 1">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-4">
+              <div class="mb-2">
+                  <label>Doctor Code</label>
+                  <div >
+                      <input type="text" [disabled]="!enabler" class="form-control " [(ngModel)]="DOCTOR_CODE" [ngModelOptions]="{standalone: true}"
+                      placeholder="Doctor Code"  [disabled]="Excel == 1">
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-4">
+            <div class="mb-2">
+                <label>Doctor Name</label>
+                <div>
+                    <input type="text" class="form-control" [(ngModel)]="DOCTOR_NAME" [ngModelOptions]="{standalone: true}"
+                    placeholder="Doctor Name" [disabled]="Excel == 1">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <div class="mb-2">
+              <label>Doctor Specialization</label>
+              <div class="search-dropdown" >
+                  <p-dropdown   [(ngModel)]="DOCTOR_SPECIALIZATION" [ngModelOptions]="{standalone: true}" [options]="Specialization_list" optionLabel="SPL_DESCRIPTION"
+                  appendTo="body" optionValue="SPL_DESCRIPTION" [filter]="true" filterBy="SPL_DESCRIPTION" placeholder="Please Select..." [disabled]="Excel == 1">
+                  </p-dropdown>
+              </div>
+          </div>
+      </div>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <div class="mb-2">
+              <label>Doctor Qualification</label>
+              <div>
+                  <input type="text" class="form-control" [(ngModel)]="DOCTOR_QUALIFICATION" [ngModelOptions]="{standalone: true}" [disabled]="Excel == 1"
+                  placeholder="Doctor Qualification" >
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <div class="mb-2">
+              <label>MDL Number</label>
+              <div>
+                  <input type="text" class="form-control" [(ngModel)]="MDL_NUMBER" [ngModelOptions]="{standalone: true}"[disabled]="Excel == 1"
+                  appTwoDigitDecimaNumber  placeholder="MDL Number" >
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6">
+          <!-- <div class="mb-3">
+              <div class="input-group mt-4">
+                  <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" [(ngModel)]="UPLOAD"
+                  (change)="selectFile($event.target)" *ngIf="enabler">
+                </div>
+          </div> -->
+          <div class="mb-2">
+            <div >
+              <label for="docs">Upload Document (Please Provide sheet name as "DOCTOR")</label>
+              <div >
+                <div class="file-upload">
+                  <span class="input-group-btn uploadbtn mr-3">
+                      <a href="javascript:;">
+                          <div class="btn btn-default  custom-file-uploader">
+                              <input type="file" class="form-control-file" id="docs" name="file"
+                              (change)="selectFile($event.target)" [(ngModel)]="UPLOAD" *ngIf="enabler"
+                                  >
+                              <b >Upload File</b>
+                          </div>
+                      </a>
+                  </span>
+                  <a class="" >{{UPLOAD}}</a>
+
+              </div>
+              </div>
+
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isShowEditPopup">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Doctor Master List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 mt-8 p-4">
+          <div class="card">
+            <div class="">
+              <p-table #table [value]="DOCTOR_LIST" scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg"
+                responsiveLayout="scrol" #dt [globalFilterFields]="['DOCTOR_NAME','DOCTOR_CODE','QUALIFICATION','MDL_NUMBER']"
+                scrollHeight="400px"  [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]">
+                <ng-template pTemplate="caption">
+                  <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                      aria-label="Search" size="20" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fa fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="DOCTOR_CODE" class="width-100">
+                      DOCTOR CODE
+                    </th>
+                    <th pSortableColumn="DOCTOR_NAME" class="width-100">
+                      DOCTOR NAME
+                    </th>
+                    <th pSortableColumn="QUALIFICATION" class="width-100">
+                      QUALIFICATION
+                    </th>
+                    <th pSortableColumn="DOCTOR_SPECIALIZATION" class="width-100">
+                      DOCTOR SPECIALIZATION
+                    </th>
+                    <th pSortableColumn="HQ_NAME" class="width-100">
+                      HQ NAME
+                    </th>
+                  </tr>
+                </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.DOCTOR_CODE}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.DOCTOR_NAME}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.QUALIFICATION}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.SPL_NAME}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.HQ_CODE}}</a>
+                      </td>
+                    </tr>
+                  </ng-template>
+
+
+              </p-table>
+              <!-- <p-paginator [rows]="10" [first]="first" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+                (onPageChange)="onPageChange($event)" #table>
+              </p-paginator> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

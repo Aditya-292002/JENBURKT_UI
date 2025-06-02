@@ -1,0 +1,446 @@
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+
+        <ul class="sidebar-nav ">
+            <li class="sidebar-brand ">
+                <a>
+                    <h4>Sales App</h4>
+                    <!-- <img src="assets/images/logo/logo-white.png" alt="" class="w-100 "> -->
+                </a>
+            </li>
+            <div class="card-responsive1">
+                <li>
+                    <a class="nav-link  px-2" routerLink="/dashboard"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Dashboard</a>
+                </li>
+                <li *ngIf="salesRoleId == 1 || salesRoleId == 2 || salesRoleId == 3">
+                    <a class="nav-link  px-2" routerLink="/incentives"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Volume Incentive</a>
+                </li>
+                <li *ngIf="roleID == 1 || roleID == 3 || roleID == 4">
+                    <a class="nav-link px-2" href="#submenu4" data-toggle="collapse" data-target="#submenu4"><i
+                            class="fa fa-magic mr-2"></i>Masters</a>
+                    <div class="collapse" id="submenu4">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Area')"
+                                [ngClass]="customMenuArea == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/areamaster">Area Master</a></li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('HQ')"
+                                [ngClass]="customMenuHQ == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/hqmaster">HQ Master</a></li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('User')"
+                                [ngClass]="customMenuUser == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/usermaster">User Master</a></li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('User_Password')"
+                                [ngClass]="customMenuUser_Password == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/updateuserpassword">Update User Password</a></li>
+                            <li class="nav-item userDispatched" *ngIf="roleID == 1"
+                                (click)="isSelectedMenu('Update_Invoice_Dispatched_Details')"
+                                [ngClass]="customMenuDispatchedInvoiceDetails == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/updateDispatchedDetails">Update User Address
+                                    Details</a></li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Product')"
+                                [ngClass]="customMenuProduct == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/product">Product</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Doctor')"
+                                [ngClass]="customMenuDoctor == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/doctormaster">Doctor Master</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Chemist')"
+                                [ngClass]="customMenuChemist == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/chemistmaster">Chemist Master</a></li>
+
+                            <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" routerLink="/productdetails"> Product Details</a></li> -->
+                        </ul>
+                    </div>
+                </li>
+                <li *ngIf="roleID == 1">
+                    <a class="nav-link px-2" href="#submenu3" data-toggle="collapse" data-target="#submenu3"><i
+                            class="fa fa-inr mr-2"></i>Transaction</a>
+                    <div class="collapse" id="submenu3">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Invoice')"
+                                [ngClass]="customMenuInvoice == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/invoiceupdate">Invoice Update</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Invoice_Update_Expiry')"
+                                [ngClass]="customMenuInvoiceUpdateExpiry == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/invoiceupdatetoexpiry">Invoice Update to YS2
+                                    Expiry</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('ITD')"
+                                [ngClass]="customMenuITD == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/itd">ITD</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Pool_To_Pool')"
+                                [ngClass]="customMenuPool_To_Pool == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/pooltopool">Pool To Pool</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Upload_Document')"
+                                [ngClass]="customMenuUpload_Document == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/uploaddocumnettype">Upload Document </a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Upload_Mkt_Report')"
+                                [ngClass]="Upload_Mkt_Report == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/uploadmktreport">Upload Mkt Report </a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li *ngIf="roleID == 1">
+                    <a class="nav-link px-2" href="#submenu5" data-toggle="collapse" data-target="#submenu5"><i
+                            class="fa fa-file-text mr-2"></i>Sample Invoice</a>
+                    <div class="collapse" id="submenu5">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Sample_Product')"
+                                [ngClass]="customMenuSample_Product == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Upload_Sample_Stock')"
+                                [ngClass]="customMenuUpload_Sample_Stock == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/uploadsamplestock">Upload Sample Stock</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Sample_Requisition')"
+                                [ngClass]="customMenuSample_Requisition == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Sample_Requisition_Approval')"
+                                [ngClass]="customMenuSample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/samplerequisitionapproval"> Sample Requisition
+                                    Approval</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
+                                [ngClass]="customMenuPMT_Sample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/PMTsamplerequisitionapproval"> PMT Sample
+                                    Requisition Approval</a></li>
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Allocation')"  [ngClass]="customMenuSample_Allocation == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/productdetails"> Sample Allocation</a></li> -->
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Allocation_Approval')"  [ngClass]="customMenuSample_Allocation_Approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/sampleallocationapproval">Sample Allocation Approval</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/generateinvoice">Generate Invoice</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/printinvoice">Print Invioce</a></li>
+                     -->
+                            <li class="nav-item" (click)="isSelectedMenu('Print_Invoice')"
+                                [ngClass]="customMenuPrint_Invoice == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/editInvoice">Edit Invoice</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Sample_Invoice')"
+                                [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li>
+                            <!-- <li class="nav-item userDispatched" (click)="isSelectedMenu('Update_Invoice_Dispatched_Details')"  [ngClass]="customMenuDispatchedInvoiceDetails == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/updateDispatchedDetails">Update User Dispatched Details</a></li> -->
+                        </ul>
+                    </div>
+                </li>
+                <!-- <li  *ngIf="roleID == 2 || roleID == 3 || roleID == 4">
+              <a class="nav-link px-2" href="#submenu5" data-toggle="collapse" data-target="#submenu5"><i class="fa fa-file-text mr-2"></i>Sample Invoice</a>
+              <div class="collapse" id="submenu5">
+                <ul class="flex-column sub-sidebar-nav nav">
+                   <li class="nav-item" (click)="isSelectedMenu('Sample_Invoice')"  [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li>
+                </ul>
+              </div>
+           </li> -->
+
+                <li *ngIf="roleID == 1 || roleID == 2 || roleID == 3 || roleID == 4">
+                    <a class="nav-link px-2" href="#submenu6" data-toggle="collapse" data-target="#submenu6"><i
+                            class="fa fa-calculator mr-2"></i>Discount</a>
+                    <div class="collapse" id="submenu6">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Discount_Request')"
+                                [ngClass]="customMenuDiscount_Request == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adddiscount">Discount Request</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Discount_Approval')"
+                                [ngClass]="customMenuDiscount_Approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" *ngIf="salesRoleId != 1"
+                                    routerLink="/approvaldiscount">Discount Approval</a></li>
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Cancel_Discount_Request')"  [ngClass]="CancelDiscountRequest == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" *ngIf="salesRoleId != 1" routerLink="/canceldiscountrequest">Cancel Discount Request</a></li> -->
+                            <li class="nav-item" (click)="isSelectedMenu('Claim_Request')"
+                                [ngClass]="customMenuClaim_Request == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/claimrequest">Claim Request</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Claim_Approval')"
+                                [ngClass]="customMenuClaim_Approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" *ngIf="salesRoleId != 1" routerLink="/claimapprove">Claim
+                                    Approval</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Product_Group_update')"
+                                [ngClass]="Product_Group_update == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"
+                                    routerLink="/productgroupupdate">Product Request Update</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('disocunt_claim_update')"
+                                [ngClass]="disocunt_claim_update == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"
+                                    routerLink="/discountclaimupdate">Reject Reversal</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Claim_Settlement')"
+                                [ngClass]="customMenuClaim_Settlement == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/claimsettlement" *ngIf="roleID == 4">Claim
+                                    Settlement</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Discount_Details')"
+                                [ngClass]="Discount_Details == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/discountdetailslist"
+                                    *ngIf="roleID == 1 || salesRoleId == 3 || salesRoleId == 4 || salesRoleId == 6|| salesRoleId == 7 || roleID == 4 || roleID == 5">
+                                    Discount Details
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li *ngIf="roleID == 1">
+                    <a class="nav-link px-2" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i
+                            class="fa fa-download mr-2"></i>Download</a>
+                    <div class="collapse" id="submenu1">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Download')"
+                                [ngClass]="customMenuDownload == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/downloadreport">Download Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link px-2" href="#submenu2" data-toggle="collapse" data-target="#submenu2"><i
+                            class="fa fa-folder-open-o mr-2"></i>Report</a>
+                    <div class="collapse" id="submenu2">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Sales')"
+                                [ngClass]="customMenuSales == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/salesreport">Sales Report</a>
+                            </li>
+                            <li class="nav-item" (click)="isSelectedMenu('DivisionSales')" *ngIf="salesRoleId != 1"
+                                [ngClass]="customDivisionWiseMenuSales == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/DivisionWisesalesreport">Division wise Sales
+                                    Report</a>
+                            </li>
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Incentive')" 
+                        [ngClass]="customMenuIncentive == true ? 'isSelectedMenu' : ''">
+                        <a class="nav-link py-0" routerLink="/incentivereport">Incentive Report</a>
+                    </li> -->
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Expense')"
+                                [ngClass]="customMenuExpense == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/expensereport">Expense Report</a>
+                            </li>
+                            <li class="nav-item" (click)="isSelectedMenu('Claim')"
+                                [ngClass]="customMenuClaim == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/claimreport">Claim Report</a>
+                            </li>
+                            <li class="nav-item"
+                                *ngIf="roleID == 1 || roleID == 4 || salesRoleId == 2 || salesRoleId == 3 || salesRoleId == 4"
+                                (click)="isSelectedMenu('FinalClaim')"
+                                [ngClass]="finalClaim == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/finalclaimreport">Final Claim Report</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('UpdateClaim')"
+                                [ngClass]="UpdateClaim == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/updateclaimreport">Update Claim Report</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Moereport')"
+                                [ngClass]="IsMoeReport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/moereport">MOE Report</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Moetargetreport')"
+                                [ngClass]="IsMoeTargetReport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/moetargetreport">MOE Target Report</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
+                                (click)="isSelectedMenu('cmereport')"
+                                [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li
+                    *ngIf="roleID == 1 || salesRoleId == 3 || salesRoleId == 4 || salesRoleId == 6|| salesRoleId == 7 || roleID == 4 || roleID == 5">
+                    <a class="nav-link px-2" href="#cmesubmenu" data-toggle="collapse" data-target="#cmesubmenu"><i
+                            class="fa fa-file mr-2"></i>CME</a>
+                    <div class="collapse" id="cmesubmenu">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item"
+                                *ngIf="roleID == 1 || salesRoleId == 3 || salesRoleId == 4 || salesRoleId == 6|| salesRoleId == 7"
+                                (click)="isSelectedMenu('requestcme')"
+                                [ngClass]="Requestcme == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/requestcme">Request CME</a>
+                            </li>
+                            <li class="nav-item"
+                                *ngIf="roleID == 1 || salesRoleId == 4 || salesRoleId == 6 || roleID == 4"
+                                (click)="isSelectedMenu('requestapprovalcme')"
+                                [ngClass]="Requestapprovalcme == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/requestapprovalcme">Request Approval CME</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 4" (click)="isSelectedMenu('approvalcme')"
+                                [ngClass]="Approvalcme == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/approvalcme">Download CME Request</a>
+                            </li>
+                            <li class="nav-item" *ngIf="roleID == 5 || roleID == 1"
+                                (click)="isSelectedMenu('paymentcme')"
+                                [ngClass]="Paymentcme == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/paymentcme">Payment</a>
+                            </li>
+                            <!-- <li class="nav-item"
+                        *ngIf="roleID == 1" (click)="isSelectedMenu('recoverycme')"  
+                        [ngClass]="Recoverycme == true ? 'isSelectedMenu' : ''">
+                        <a class="nav-link py-0" routerLink="/recoverycme">Recovery</a>
+                    </li>  -->
+                            <li class="nav-item" *ngIf="salesRoleId == 3" (click)="isSelectedMenu('postcme')"
+                                [ngClass]="PostCme == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/postcme">Post CME</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- <li *ngFor="let data of menuList; let i=index;"
+                (click)=" highLightSubMenu(data.name,i,'','',data.url)">
+                <a class="nav-link mainMenuText px-2" attr.href="#submenu1{{i}}" data-toggle="collapse"
+                    attr.aria-controls="submenu1{{i}}"> -->
+                <!-- [ngClass]="{'selected-mainmenu':data.IS_SELECTED == 1} " -->
+                <!-- <i class="fa fa-cogs mr-2" aria-hidden="true"></i>{{data.name}}</a>
+                <div class="collapse" attr.id="submenu1{{i}}" aria-expanded="false">
+                    <ul class="flex-column sub-sidebar-nav nav">
+                        <li class="nav-item" *ngFor="let item of data.submenu; let j=index;"> -->
+                <!-- [ngClass]="menuList[i].IS_SELECTED == 1 ? 'show' : ''" -->
+                <!-- [ngClass]="{'selected-mainmenu':item.IS_SUBSELECTED == 1}" -->
+                <!-- <a class="nav-link py-0" (click)="selectedSurveyMenuItem(j);">{{item.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li> -->
+            </div>
+        </ul>
+
+        <div class="sidebar-footer">
+            <img src="assets/images/logo/comflexLogo.png " alt="">
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    <nav class="navbar sticky-top navbar-light  app-header">
+        <div class="app-header__content">
+            <div class="app-header-left">
+                <a href="#menu-toggle" class="navbar-brand" id="menu-toggle">
+                    <img src="assets/images/icons/menu.png" alt="">
+                    <img src="assets/images/logo/logo-white.png" alt="" class="logo">
+                </a>
+            </div>
+            <div class="app-header-right">
+                <!-- <div class="nav-item">
+                    <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i id="gear1" class="fa fa-5x fa-gear spin"></i>
+                        <div tabindex="-1" role="menu" aria-hidden="true"
+                            class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right" style="top: 11px ;">
+                            <div class="dropdown-menu-header">
+                                <div class="dropdown-menu-header-inner">
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading ml-3">
+                                                        <h6 class="mb-0"><i class="fa fa-gear mr-2 mb-0"></i>Settings
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div> -->
+
+                <!-- <div class="my-moon"></div> -->
+                <!-- <div class="nav-item">
+                    <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="notification-box">
+                            <span class="notification-count">6</span>
+                            <div class="notification-bell">
+                                <span class="bell-top"></span>
+                                <span class="bell-middle"></span>
+                                <span class="bell-bottom"></span>
+                                <span class="bell-rad"></span>
+                            </div>
+                        </div>
+                        <div tabindex="-1" role="menu" aria-hidden="true"
+                            class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right" style="top: 11px ;">
+                            <div class="dropdown-menu-header">
+                                <div class="dropdown-menu-header-inner">
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading ml-3">
+                                                        <h6><i class="fa fa-bell mr-2 mb-0"></i>Notification</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ember497" class="list-item clearfix cursor-pointer unread ember-view d-flex p-3">
+                                <div class="type-section float-left mr-2">
+                                    <span class="action-img">
+                                        <span class="announcement hv-centered">
+                                            <i class="fa fa-bullhorn text-warning" aria-hidden="true"
+                                                style="font-size: 20px;"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="desc-section float-left">
+                                    <div class="desc" style="font-size: 12px;">The timer started for the task task 10
+                                        for Project has reached the maximum limit for today (24:00).</div>
+                                    <div class="text-muted date-sec" style="font-size: 12px;"> 15/03/2022 03:12 PM
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div> -->
+                <div class="nav-item">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <div class="login-text-secion">
+                                            <label class="mb-1">{{userName}}</label>
+                                            <p class="mb-0">{{roleName}}</p>
+                                        </div>
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            class="p-0 btn">
+                                            <img width="30" class="rounded-circle" src="assets/images/icons/profile.png"
+                                                alt="">
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right"
+                                            style="min-width: 14rem;
+                                            position: absolute;
+                                            transform: translate3d(-63px,45px,0);">
+                                            <div class="dropdown-menu-header">
+                                                <div class="dropdown-menu-header-inner">
+                                                    <div class="menu-header-content text-left">
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left w-100 text-center">
+                                                                    <div class="widget-heading">{{userName}}</div>
+                                                                    <div class="widget-subheading opacity-8">
+                                                                        {{roleName}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="user-detail-container">
+                                                <div (click)="changePassword()">
+                                                    <a class=""><i class="fa fa-key mr-2" aria-hidden="true"></i>Change
+                                                        Password</a>
+                                                </div>
+                                            </div>
+                                            <div class="user-detail-container">
+                                                <div (click)="Logout()">
+                                                    <a class=""><i class="fa fa-sign-out mr-2"
+                                                            aria-hidden="true"></i>Logout</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    <div id="page-content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

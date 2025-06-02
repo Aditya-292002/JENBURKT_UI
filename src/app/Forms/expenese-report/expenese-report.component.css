@@ -1,0 +1,36 @@
+.formButton{
+    font-weight: 600;
+    border: 1px solid #2b6cb0;
+    color: #2b6cb0;
+    background-color: transparent;
+    /* padding: 0.35rem 0.75rem; */
+    padding: 3px 10px;
+}
+
+.viewButton{
+    font-weight: 600;
+    border: 1px solid #2b6cb0;
+    color: #fff;
+    background-color: #2b6cb0;
+    /* padding: 0.35rem 0.75rem; */
+    padding: 3px 10px;
+}
+.content-enabled .form-check-label {
+    color: #060606;
+    font-weight: 500;
+}
+.content-disabled .form-check-label {
+    color: #c5c5c5;
+    font-weight: 500;
+}
+input[type="radio" i]:disabled {
+    cursor: not-allowed;
+}
+b{
+  font-weight: 700;
+}
+.hrStyle{
+  /* border-top: 1px dashed #c5c9cd; */
+  border-top: 1px dashed #999ea3;
+  margin: 4px 4px;
+}

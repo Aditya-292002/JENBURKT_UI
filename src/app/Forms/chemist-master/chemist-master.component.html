@@ -1,0 +1,148 @@
+<app-loader *ngIf="isLoaded" ></app-loader>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Chemist Master</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Chemist Master</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+          <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+          <button type="submit" class="btn-primary  saveButton mr-2" (click)="validateChemistData()">Save</button>
+          <button type="submit" class="btn-primary  cancelButton" (click)="clearing_rest()">Cancel</button>
+      </div>
+  </div>
+</div>
+
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="mb-2">
+                    <label>HQ</label>
+                    <div class="search-dropdown" >
+                        <p-dropdown [disabled]=""  [(ngModel)]="HQ_CODE" [options]="HQ_codes_list" optionLabel="HQ_DESC" optionValue="HQ_CODE" [ngModelOptions]="{standalone: true}" appendTo="body"
+                        [filter]="true" filterBy="HQ_DESC" placeholder="Please Select..." [disabled]="Excel == 1" [disabled]="isDisabled">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-4">
+              <div class="mb-2">
+                  <label>Chemist Code</label>
+                  <div >
+                      <input type="text" [disabled]="" class="form-control " [(ngModel)]="CHEMIST_CODE" [ngModelOptions]="{standalone: true}"
+                      placeholder="Chemist Code"  [disabled]="isAddChemistMaster"[disabled]="Excel == 1" [disabled]="isDisabled">
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-4">
+            <div class="mb-2">
+                <label>Chemsit Name</label>
+                <div>
+                    <input type="text" class="form-control" [(ngModel)]="CHEMIST_NAME" [disabled]="Excel == 1" [ngModelOptions]="{standalone: true}"
+                    placeholder="Chemsit Name" >
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+          <div >
+            <label for="docs">Upload Document (Please Provide sheet name as "CHEMIST")</label>
+            <div >
+              <div class="file-upload">
+                <span class="input-group-btn uploadbtn mr-3">
+                    <a href="javascript:;">
+                        <div class="btn btn-default  custom-file-uploader">
+                            <input type="file" class="form-control-file" id="docs" name="file"
+                            (change)="selectFile($event.target)" [(ngModel)]="UPLOAD" *ngIf="enabler"
+                                >
+                            <b >Upload File</b>
+                        </div>
+                    </a>
+                </span>
+                <a class="" >{{UPLOAD | slice:-100}}</a>
+
+            </div>
+            </div>
+
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isShowEditPopup">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chemist Master List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 mt-8 p-4">
+          <div class="card">
+            <div class="">
+              <p-table #table [value]="CHEMIST_LIST" scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg"
+                responsiveLayout="scrol" #dt [globalFilterFields]="['CHEMSIT_NAME','HQ_CODE','CHEMIST_NAME']"
+                scrollHeight="400px"  [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]">
+                <ng-template pTemplate="caption">
+                  <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                      aria-label="Search" size="20" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fa fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="HQ_CODE" class="width-100">
+                      HQ CODE
+                    </th>
+                    <th pSortableColumn="CHEMIST_NAME" class="width-100">
+                      CHEMIST NAME
+                    </th>
+                    <th pSortableColumn="CHEMIST_CODE" class="width-100">
+                      CHEMIST CODE
+                    </th>
+                  </tr>
+                </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.HQ_CODE}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.CHEMIST_NAME}}</a>
+                      </td>
+                      <td (click)="onAreaSelected(rowData)" class="width-100">
+                        <a class="click">{{rowData.CHEMIST_CODE}}</a>
+                      </td>
+                    </tr>
+                  </ng-template>
+              </p-table>
+              <!-- <p-paginator [rows]="10" [first]="first" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
+                (onPageChange)="onPageChange($event)" #table>
+              </p-paginator> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+@media print {
+  .url {
+    display: none;
+  }
+  @page {
+ 
+  /* Adjust styles for printing */
+  size: A4 landscape;
+  /* size: A4; */
+
+  }
+
+  .print-horizontal {
+    width: 100% !important; 
+    float: left !important;
+  }
+  body {
+      visibility: hidden;
+      padding-top: 72px;
+      padding-bottom: 72px ;
+    
+
+    }
+    #section-to-print {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    
+
+
+  }
+
+  .table_new {
+    width: 100%;
+    max-width: 100%;
+    /* background-color: transparent; */
+    margin-bottom: 0;
+    font-size: 9px !important;
+
+  }
+  
+  .table_new thead th {
+    vertical-align: baseline;
+    border-bottom: 0;
+    /* background: #bec5d3; */
+    font-weight: 500;
+    font-size: 8px !important;
+    /* border-width: 0px ; */
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+  }
+  .table_new tbody th,.table td {
+    font-weight: 500;
+    font-size: 8px !important;
+  }
+  
+  .table_new td,
+  .table_new th {
+    vertical-align: top;
+    border: 1px solid #bfc1c3;
+    padding: 4px 8px;
+    color: #000;
+  }
+  
+  .table_new td i {
+    font-size: 8px !important;
+  }
+  .table_new .width-10{
+    width: 100px !important;
+  }
+
+  .table_new .width-11{
+    width: 100px !important;
+  }
+
+ .width-10{
+    width: 100px !important;
+  }
+  .width-11{
+    width: 100px !important;
+  }

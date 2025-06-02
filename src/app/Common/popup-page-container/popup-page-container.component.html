@@ -1,0 +1,305 @@
+<!-- <div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="showFormUrl != formUrl && showForm != ''">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pop-Up</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="mb-2">
+                                        <label>Role Code</label>
+                                        <input type="text" class="form-control"  [(ngModel)]="role" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mb-2">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control"  [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="form-group form-check mb-0 mt-4">
+                                        <input type="checkbox" class="form-check-input" id="Active"  [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
+                                        <label class="form-check-label" for="Active">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-5">
+                            <div class="card">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" >Module</th>
+                                        <th scope="col" class="width-20">Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of moduleList,let i=index">
+                                            <th scope="row" title="{{data.ModuleName}}"><a (click)="showModuleListData(data.ModuleCode,data.ModuleName)">{{data.ModuleName}}</a></th>
+                                            <td class="width-20">{{data.Description}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-7">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" >Function</th>
+                                            <th scope="col" class="width-20">Description</th>
+                                            <th scope="col" class="width-10">Create</th>
+                                            <th scope="col" class="width-10">Edit</th>
+                                            <th scope="col" class="width-10">Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of newFunctionList,let i=index">
+                                                <th scope="row" >{{data.functionName}}</th>
+                                                <td class="width-20">{{data.Description}}</td>
+                                                <td class="width-10">
+                                                    <div class="form-group form-check mb-0">
+                                                        <input type="checkbox" class="form-check-input" id="Create" >
+                                                        <label class="form-check-label" for="Create"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="width-10">
+                                                    <div class="form-group form-check mb-0 ">
+                                                        <input type="checkbox" class="form-check-input" id="Edit" >
+                                                        <label class="form-check-label" for="Edit"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="width-10">
+                                                    <div class="form-group form-check mb-0 ">
+                                                        <input type="checkbox" class="form-check-input" id="Delete" >
+                                                        <label class="form-check-label" for="Delete"></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <app-party-ledger-report></app-party-ledger-report>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+        </div>
+      </div>
+
+  </div> -->
+
+  <div class="container-fluid ">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a >Details </a>
+            <ng-template ngbNavContent>
+                <div class="card">
+                    <div class="card-body">
+                            <app-party-ledger-report></app-party-ledger-report>
+                    </div>
+                </div>
+            </ng-template>
+        </li>              
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    
+</div>
+
+  <!-- <div class="modal " tabindex="0" style="display: block;"  *ngIf="showData != 'U'">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">User Pop-Up</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp('U')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"> -->
+          
+            <!-- <div class="container-fluid ">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="mb-2">
+                                        <label>Login</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userLogin" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-9"></div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mb-2">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-9"></div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mb-2">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" [(ngModel)]="userEmail" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6"></div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="mb-2">
+                                        <label>Mobile No</label>
+                                        <input type="text" class="form-control" [(ngModel)]="mobileNumber" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="form-group form-check mb-0 mt-4">
+                                        <input type="checkbox" class="form-check-input" id="Active1" [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
+                                        <label class="form-check-label" for="Active1">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="card mt-2 h-100">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="width-20">Company</th>
+                                                    <th scope="col">Unit</th>
+                                                    <th scope="col" class="width-10">Allow</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="width-20">Company 1</th>
+                                                    <td>Mark</td>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Company">
+                                                            <label class="form-check-label" for="Company"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="width-20">Company 1</th>
+                                                    <td>Mark</td>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Company">
+                                                            <label class="form-check-label" for="Company"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="width-20">Company 2</th>
+                                                    <td>Mark</td>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Company">
+                                                            <label class="form-check-label" for="Company"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <div class="card mt-2 h-100">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Role</th>
+                                                    <th scope="col" class="width-10">Select</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Admin</th>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Role">
+                                                            <label class="form-check-label" for="Role"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Super Admin</th>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Role">
+                                                            <label class="form-check-label" for="Role"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">User Role 1</th>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Role">
+                                                            <label class="form-check-label" for="Role"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">User Role 2</th>
+                                                    <td class="width-10">
+                                                        <div class="form-group form-check mb-0">
+                                                            <input type="checkbox" class="form-check-input" id="Role">
+                                                            <label class="form-check-label" for="Role"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <app-user-master *ngIf="showData != page_name"></app-user-master> -->
+        <!-- </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->

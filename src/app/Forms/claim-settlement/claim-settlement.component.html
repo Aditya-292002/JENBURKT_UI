@@ -1,0 +1,183 @@
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Claim Settlement</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Claim Settlement</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+        <button  type="submit" class="btn-primary  saveButton mr-2" (click)="saveClaimSettlementData()">Save</button>
+        <button  type="submit" class="btn-primary  cancelButton mr-2" (click)="onClearData()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+              <label>Superstockist</label>
+              <div class="search-dropdown" [ngClass]="{'required-field':isHighLightSuperStockist=== 'Yes'}">
+                <p-dropdown  [options]="STOCKIST_LIST" optionLabel="SUPERSTOCKIST_NAME"  optionValue="SUPERSTOCKIST_CODE" [(ngModel)]="SUPERSTOCKIST_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
+                placeholder="Please Select..."   (onChange)="onSuperstockistList()">
+                </p-dropdown>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-2" *ngIf="IsShowGrid">
+    <div class="card">
+      <div class="card-body">
+        <div class=" table-responsive card-responsive mt-2">
+          <table class="table opening-table">
+              <thead>
+                  <tr  >
+                      <th>
+                        <label class="form-check-label" >Select</label>
+                      </th>
+                      <th class="width-10">Claim No</th>
+                      <th class="width-20">Claim Date</th>
+                      <th class="width-10">Invoice Sale Qty</th>
+                      <th class="width-10">Scheme Free</th>
+                      <th class="width-10">Claim Free Qty</th>
+                      <th class="width-10">MRP</th>
+                      <th>Total</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let list of SETTLEMENT_LIST; let i=index;">
+                      <td class="text-center">
+                        <div [ngClass]="{'required-field':isHighLightSelected=== 'Yes'}">
+                          <input type="checkbox" class="form-check-input" [checked]="SELECTED" [(ngModel)]="list.IS_SELECTED" >
+                        </div>
+
+                      </td>
+                      <td class="width-10">
+                     {{list.CLAIM_NO }}
+                      </td>
+                      <td class="width-20">
+                        {{list.CLAIM_DATE | date:'dd-MM-YYYY'}}
+                      </td>
+                      <td class="width-20 text-right">
+                        {{list.INVOICE_SALE_QTY}}
+                      </td>
+                      <td class="width-20 text-right">
+                        {{list.SCHEME_FREE_QTY}}
+                      </td>
+                      <td class="width-20 text-right">
+                        {{list.CLAIM_FREE_QTY}}
+                      </td>
+                      <td class="width-20 text-right">
+                        {{list.MRP}}
+                      </td>
+                      <td class="text-right">
+                        {{list.Total}}
+                      </td>
+                  </tr>
+
+                  <tr>
+                    <td class="space-20 text-right bg_color_e2efeb" colspan="7">
+                      <b>Total :-</b>
+                  </td>
+                  <td class="space-10 bg_color_e2efeb">
+                      <div>
+                          <input type="text" class="form-control text-right" placeholder="0.00"
+                              [(ngModel)]="totalMRP" [ngModelOptions]="{standalone: true}" disabled="true">
+                      </div>
+                  </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+
+    <div class="card mt-2">
+      <div class="card-body">
+        <div class="">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-3">
+              <div class="mb-2">
+                <label>Product</label>
+                <div class="search-dropdown" [ngClass]="{'required-field':isHighLightProduct=== 'Yes'}">
+                  <p-dropdown  [options]="PRODUCT_LIST" optionLabel="PRODUCT_DESC"  optionValue="PRODUCT_CODE" [(ngModel)]="PRODUCT_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="PRODUCT_DESC"
+                  placeholder="Please Select..."  (ngModelChange)="onClickProduct()" >
+                  </p-dropdown>
+              </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-3">
+              <div class="mb-2">
+                <label>MRP</label>
+                <div class="search-dropdown" [ngClass]="{'required-field':isHighLightProduct=== 'Yes'}">
+                  <p-dropdown  [options]="MRP_LIST" optionLabel="MRP_RATE"  [(ngModel)]="MRP"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="MRP_RATE"
+                  placeholder="Please Select..."   (ngModelChange)="onChangeCalc()">
+                  </p-dropdown>
+              </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-3">
+             <div class="mb-2">
+              <label>Final Free Qty</label>
+              <div [ngClass]="{'required-field':isHighLightFinalFreeQty=== 'Yes'}">
+                <input type="text" class="form-control" [(ngModel)]="FINAL_FREE_QTY"
+                [ngModelOptions]="{standalone:true}" placeholder="Final Free Qty" (ngModelChange)="onChangeCalc()">
+              </div>
+             </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3">
+              <div class="mb-2">
+               <label>Total Amount</label>
+               <div >
+                 <input type="text" class="form-control" [(ngModel)]="TOTAL_AMOUNT"
+                 [ngModelOptions]="{standalone:true}" placeholder="Total Amount" disabled>
+               </div>
+              </div>
+             </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="mb-2 ">
+                <label>Invoice Img Upload</label>
+                <div [ngClass]="{'required-field':isHighLightInvoiceImgUpload=== 'Yes'}">
+                  <div class="input-group">
+                    <img [src]="imageSrc" style="max-width:300px;max-height:300px" />
+                    <input type="file" class="form-control" id="inputGroupFile04"
+                    aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                     [(ngModel)]="INVOICE_IMG_UPLOAD"  (change)="handleInputChange($event)"   >
+                  </div>
+                </div>
+              </div>
+            </div>
+           <div class="col-sm-12 col-md-12 col-lg-8">
+            <div class="mb-2">
+              <label>Remark</label>
+              <div [ngClass]="{'required-field':isHighLightRemark=== 'Yes'}">
+                <textarea name="" id="" style="resize: none;" cols="3" class="form-control" [(ngModel)]="REMARK"
+                  [ngModelOptions]="{standalone:true}" placeholder="Remark" ></textarea>
+              </div>
+            </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+

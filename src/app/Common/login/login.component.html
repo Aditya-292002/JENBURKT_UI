@@ -1,0 +1,79 @@
+<div class="login-background">
+    <div class="login-container">
+        <div class="p-5 ">
+            <div class="row">
+                <div class="login-building w-100 text-center mt-4">
+                    <h2 style="color: #fff;letter-spacing: 2px;">Jenburkt Sales</h2>
+                    <h6 style="color: #fff;font-weight: 400;">Login to your Account</h6>
+                </div>
+                <div class="form-wrapper">
+                    <div class="col-md-12 login-box">
+                        <img src="assets/images/logo/logo-white.png" alt="" class="w-100 ">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label>Username</label>
+                            <input type="text" class="form-control" [(ngModel)]="UserName"
+                                [ngModelOptions]="{standalone : true}" placeholder="Enter Username">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label>Password</label>
+                            <input type="password" class="form-control" [(ngModel)]="Password"
+                                [ngModelOptions]="{standalone : true}" placeholder="Enter Password">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group form-check ">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="isAgree" [ngModelOptions]="{standalone : true}" id="Check1">
+                            <label class="form-check-label" for="Check1">I agree to <a class="text-primary" (click)="showTermModel()">Terms &
+                                    Condition</a></label>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex mb-1   mt-5 justify-content-between">
+                        <a class="text-danger" href="javascript:void(0);">Forgot Password?</a>
+
+                    </div> -->
+                    <button type="submit" class="btn btn-primary mb-4" (click)="logInClick()"[disabled]="!isAgree">LOG IN</button>
+                    <div class="copyright mt-2">
+                        <p class="terms text-center">© Comflex Technologies Pvt. Ltd.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="page-content-wrapper">
+            <app-layout-page *ngIf="isPopUp" [Menu_List]="menulist"></app-layout-page>
+        </div> -->
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isTermsPopUp">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Standard Terms and condition.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mt-8 p-4">
+                    <div class="">
+                        <div class="">
+                            <ol>
+                                <li>Data will be stored at the headquarter since employees may choose to stay or leave the firm, however the headquarter will stay.</li>
+                                <li>Due to the rounding of data down to the material level, pool headquarter may experience some modifications</li>
+                                <li>The figures/calculation is only for your information in terms of a approximate incentive calculation. The actual computation will vary depending on several additional parameters, like base year, the subsequent month's average sale, and many other elements.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+        </div> -->
+        </div>
+    </div>
+</div>

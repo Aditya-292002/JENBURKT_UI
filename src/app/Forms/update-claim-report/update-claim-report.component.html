@@ -1,0 +1,323 @@
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Update Claim Report</li>
+    </ol>
+  </nav>
+  
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Update Claim Report</h5>
+        </div>
+  
+    </div>
+  </div>
+  
+  <div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="mb-2">
+                  <label>Invoice From Date</label>
+                  <div>
+                    <p-calendar [(ngModel)]="fromDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                    inputId="icon"  placeholder="{{fromDate}}"></p-calendar>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+  
+              <div class="mb-2">
+                  <label>Invoice To Date</label>
+                  <div>
+                    <p-calendar [(ngModel)]="toDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                    inputId="icon" placeholder="{{toDate}}" ></p-calendar>
+  
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="mb-2">
+                  <label>Super Stockist Name</label>
+                  <div>
+                      <div>
+                          <p-dropdown  appendTo="body"  [options]="superStockistList" [(ngModel)]="superStockist" [filter]="true" filterBy="SUPERSTOCKIST_NAME" [ngModelOptions]="{standalone: true}"
+                              placeholder="Please Select..."  optionLabel="SUPERSTOCKIST_NAME" optionValue="SUPERSTOCKIST_CODE"
+                              >
+                          </p-dropdown>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+                <label>FM</label>
+                <div>
+                    <div>
+                        <p-dropdown  appendTo="body"  [(ngModel)]="FM" [filter]="true" filterBy="FM_NAME" [ngModelOptions]="{standalone: true}"
+                            placeholder="Please Select..." [options]="FM_LIST" optionLabel="FM_NAME"
+                           >
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+          <div class="col-sm-12 col-md-12 col-lg-4 ">
+              <div class="buttonBox mt-4 ">
+                  <button  type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport(1)">
+                      <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                  </button>
+                 <!-- <button *ngIf="userDetails.ROLE_ID == 1 || userDetails.ROLE_ID == 4" type="submit" class="btn-primary formButton mr-2 " (click)="exportExcel()"><i class="fa fa-upload mr-2"
+                          aria-hidden="true"></i>Export</button> -->
+                  <button type="submit" *ngIf="REPORT_DATA.length > 0" class="btn-primary formButton" (click)="DowloadInExcel()"><i class="fa fa-download mr-2"
+                            aria-hidden="true"></i>Download in Excel</button> 
+              </div>
+          </div>
+      </div>
+   
+      </div>
+    </div>
+  </div>
+  <div class="bg-white" *ngIf="onShowGrid">
+    <div class="table-responsive card-responsive mt-2">
+      <table class="table opening-table">
+          <thead > 
+              <!-- <tr>
+                  <th *ngFor="let col of Header" [ngClass]="{'width-10': col == 'Claim_Date','width-11':col=='Invoice_Date'}">{{col}}</th>
+              </tr> -->
+              <tr>
+                <th class=" text-center" > 
+                    <input type="checkbox" [(ngModel)]="selectAll" [ngModelOptions]="{standalone: true}"
+                     (change)="toggleCheckboxAll($event)">
+                  </th>
+                    <!-- <th class="text-center"> 
+                        <p-tableHeaderCheckbox (click)="toggleCheckboxAll($event)"></p-tableHeaderCheckbox>
+                      </th> -->
+        
+                <th> SrNo  </th>
+                <th> Claim No </th>
+                <th> Claim Date </th>
+                <th> Head Quarter Code </th>
+                <th> Head Quarter Name</th>
+                <th> Stockist Name </th>
+                <th> Invoice No </th>
+                <th> Invoice Date </th>  
+                <th> Chemist/Hospital Name </th>
+                <th> Doctor Name </th>
+                <th> Product Name </th>
+                <th> Approved Sale Quantity </th>
+                <th> Trade Discount Quantity </th>
+                <th> Negotiated Discount Quantity </th>
+                <th> MRP </th>
+                <th> DISC Percentage </th>
+                <th> Remarks </th>
+                <th> MRP Value </th>
+                <th> PTR Value </th>
+                <th> PTS Value </th>
+                <th> PTSS Value </th>
+              </tr>
+          </thead>
+          <tbody *ngFor="let data of REPORT_DATA">
+              <!-- <tr *ngFor="let col of Values">
+                  <td *ngFor="let row of col">
+                     {{row}} 
+                  </td>
+              </tr> -->
+            <tr [ngClass]="data.SELECTED == true ? 'yellowList' : ''"> 
+                <td >
+                    <div class="text-center">
+                      <input type="checkbox"  [(ngModel)]="data.SELECTED"
+                              
+                                (change)="singleCheckbox($event,data)"
+                                [disabled]="data.IS_DISABLED" >
+                    </div>
+                  </td>
+                <td > {{ data.SrNo }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Claim_No }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)" style="width: 5rem;"> {{ data.Claim_Date }} </td>
+                <td> {{ data.Head_Quarter_Code }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"style="width: 6rem;"> {{ data.Head_Quarter_Name }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Stockist_Name }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)" style="width: 5rem;"> {{ data.Invoice_No }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)" style="width: 5rem;"> {{ data.Invoice_Date }} </td>  
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Chemist_And_Hospital_Name }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Doctor_Name }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Product_Name }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Approved_Sale_Quantity }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Trade_Discount_Qty }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.Negotiated_Discount_Quantity }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.MRP | number : '1.2-2' }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.DISC }}%</td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.UPDATED_REMARKS }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.MRP_VALUE | number : '1.2-2' }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.PTR_VALUE | number : '1.2-2' }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.PTS_VALUE | number : '1.2-2' }} </td>
+                <td (click)="OpenUpdateClaimPopUp(data)"> {{ data.PTSS_VALUE | number : '1.2-2' }} </td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+</div>
+
+ 
+<div class="container-fluid print-horizontal"  id="print-new" [hidden]="true">
+    <div class="bg-white ">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td  style="vertical-align: bottom;text-align: center; " colspan="17">
+                       <b>Invoice Date: {{fromDate | date: 'dd-MM-yyyy'}} To {{toDate | date: 'dd-MM-yyyy'}}</b> </td>
+
+                </tr>
+                <tr>
+                    <td  style="color:red;text-align: center;" colspan="17">
+                       <b>Negotiated Discount Evaluation - {{this.superStockistName}}</b> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>FM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.FM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.FM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <b>RSM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.RSM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.RSM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td>
+                        <b>SM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.SM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.SM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td> </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <b>FM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td> </td>
+                     <td>
+                        <b>RSM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td>
+                        <b>SM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td> </td>
+
+                     
+                </tr>
+                <tr>
+                    <td colspan="17">
+                        <b>Remarks:</b> 
+                     </td>
+                </tr>
+                <tr></tr>
+            </tbody>  
+        </table>
+    </div>
+
+    <div class="bg-white mt-1" > 
+        <table class="table_new ">
+            <thead >
+                <tr >
+                    <th *ngFor="let col of Header" [ngClass]="{'width-10': col == 'Claim Date','width-11':col=='Invoice Date'}">{{col}}</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr   *ngFor="let col of Values">
+                    <td   *ngFor="let row of col">
+                    {{row}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p-dialog header="Update Claim Report" [modal]="true"  [(visible)]="UpdateClaimPopUp" [style]="{ width: '25rem' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem"> Product Name </label>
+        <input type="text" class="form-control mr-2" [(ngModel)]="PRODUCT_NAME" 
+        placeholder="Please Enter Product Name "  [ngModelOptions]="{standalone:true}" disabled >
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem"> Invoice No</label>
+        <input type="text" class="form-control mr-2" [(ngModel)]="INVOICE_NO" 
+        placeholder="Please Enter Invoice No"  [ngModelOptions]="{standalone:true}" >
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem"> Invoice Date</label>
+        <div>
+          <p-calendar [(ngModel)]="INVOICE_DATE" appendTo="body" [showIcon]="true" dateFormat="dd-mm-yy"
+          inputId="icon"  placeholder="{{INVOICE_DATE}}" [maxDate]="ToDate"></p-calendar>
+        </div>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem"> Approved Sale Quantity</label>
+        <input type="number" class="form-control mr-2" [(ngModel)]="APPROVED_SALE_QUANTITY" 
+        placeholder="Please Enter Approved Sale Quantity" numbersOnly [ngModelOptions]="{standalone:true}" >
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Trade Discount Quantity </label>
+        <input type="number" class="form-control mr-2" [(ngModel)]="TRADE_DISCOUNT_QUANTITY" 
+        placeholder="Please Enter Trade Discount Quantity " numbersOnly [ngModelOptions]="{standalone:true}" >
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Negotiated Discount Quantity </label>
+        <input type="number" class="form-control mr-2" [(ngModel)]="NEGOTIATED_DISCOUNT_QUANTITY" 
+        placeholder="Please Enter Negotiated Discount Quantity" numbersOnly [ngModelOptions]="{standalone:true}" >
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">MRP</label>
+        <p-dropdown  appendTo="body" [options]="MRP_LIST"   [(ngModel)]="MRP_ID" [filter]="true" filterBy="" [ngModelOptions]="{standalone: true}"
+            placeholder="Please Select..." optionLabel="MRP_RATE" optionValue="MRP_ID"
+            >
+        </p-dropdown>
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Remarks </label>
+        <input type="text" class="form-control mr-2" [(ngModel)]="UPDATED_REMARKS" 
+        placeholder="Please Enter Remarks"  [ngModelOptions]="{standalone:true}" >
+    </div>
+    <div class="flex justify-content-start gap-2">
+        <button  type="submit" class="btn-primary viewButton mr-2" (click)="CloseUpdateClaimPopUp()">
+            Cancel
+        </button>   
+        <button  type="submit" class="btn-primary updateButton mr-2" (click)="onUpdateReport()">
+            Update
+        </button>
+    </div>
+</p-dialog>
+  

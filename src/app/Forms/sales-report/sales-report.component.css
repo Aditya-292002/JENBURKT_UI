@@ -1,0 +1,52 @@
+.formButton{
+    font-weight: 600;
+    border: 1px solid #2b6cb0;
+    color: #2b6cb0;
+    background-color: transparent;
+    /* padding: 0.35rem 0.75rem; */
+    padding: 3px 10px;
+}
+
+.viewButton{
+    font-weight: 600;
+    border: 1px solid #2b6cb0;
+    color: #fff;
+    background-color: #2b6cb0;
+    /* padding: 0.35rem 0.75rem; */
+    padding: 3px 10px;
+}
+.content-enabled .form-check-label {
+    color: #060606;
+    font-weight: 500;
+}
+.content-disabled .form-check-label {
+    color: #c5c5c5;
+    font-weight: 500;
+}
+input[type="radio" i]:disabled {
+    cursor: not-allowed;
+}
+.border_top{
+  border-width: 2px 0 0 0;
+  border-style: solid;
+  border-image: radial-gradient(rgb(58 61 60), rgb(244 243 239)) 1;
+
+  border-image-slice: 1;
+  padding-top: 10px;
+}
+.hrStyle{
+  /* border-top: 1px dashed #c5c9cd; */
+  border-top: 1px dashed #999ea3;
+  margin: 4px 4px;
+}
+.pi-search{
+  font-size: 10px !important;
+  margin-top: -5px;
+}
+.p-input-icon-right .form-control{
+  padding: 2px 5px !important;
+}
+b{
+  font-weight: 700;
+}
+

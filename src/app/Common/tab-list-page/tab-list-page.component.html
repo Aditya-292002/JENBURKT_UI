@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <ul ngbNav #nav="ngbNav" [activeId]="commonService.getActiveItem()" class="nav-tabs">
+    <li [ngbNavItem]="link.fragment" *ngFor="let link of commonService.tabList,let i = index">
+      <a ngbNavLink href="javascript:;">{{ link.title }} <i class="fa fa-times ml-4"
+          (click)="commonService.deleteTab(link.path,i)"></i></a>
+      <ng-template ngbNavContent class="mt-4">
+        <div class="" [hidden]="link.path !== 'Role Master'">
+          <app-rolemaster></app-rolemaster>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'User Master'">
+          <app-user-master></app-user-master>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Customer Master'">
+          <app-customer-master></app-customer-master>
+        </div>
+        <div class="" [hidden]="link.path !== 'Bank Opening'">
+          <app-bank-opening></app-bank-opening>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'GL Opening'">
+          <app-gl-opening></app-gl-opening>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Party Opening'">
+          <app-party-opening></app-party-opening>
+        </div>
+        <div class="" [hidden]="link.path !== 'Stock Opening'">
+          <app-opening-stock></app-opening-stock>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Sarafi IN/OUT'">
+          <app-sarafi-in-out></app-sarafi-in-out>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Interest Process'">
+          <app-interest-process></app-interest-process>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Metal IN'">
+          <app-metal-in-transaction></app-metal-in-transaction>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Metal OUT'">
+          <app-metal-out-transaction></app-metal-out-transaction>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Jewellery IN'">
+          <app-jewellery-in></app-jewellery-in>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Jewellery OUT'">
+          <app-jewellery-out></app-jewellery-out>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Purchase Order'">
+          <app-purchase></app-purchase>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Sales'">
+          <app-sales></app-sales>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Bank Payment'">
+          <app-bank-payment></app-bank-payment>
+        </div>
+        <div class="mt-4" [hidden]="link.path !== 'Bank Receipt'">
+          <app-bank-receipt></app-bank-receipt>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class=" mt-4"></div>
+</div>

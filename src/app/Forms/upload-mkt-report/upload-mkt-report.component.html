@@ -1,0 +1,132 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Upload MKT Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Upload MKTG Target</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+          <button type="submit"  (click)="exportToExcel()" class="btn-primary  saveButton mr-2">Download Template</button>
+          <button type="submit" class="btn-primary  cancelButton" (click)="OnSaveUpdateClick()">Update</button>
+      </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div >
+                            <label>Target Year</label>
+                            <div [ngClass]="{'required-field':isHighLightPeriod=== 'Yes'}">
+                                <p-dropdown [options]="periodList" appendTo="body" optionLabel="FYEAR" [filter]="true" filterBy="FYEAR" placeholder="Please Select..."
+                                     [(ngModel)]="period" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="flex flex-wrap mt-3 mr-2">
+                            <div class="flex align-items-center mr-2">
+                              <p-radioButton name="Pending" value="Overwrite" [(ngModel)]="selectedValue"
+                                inputId="ingredient1">
+                              </p-radioButton>
+                             <span><label for="ingredient1" class="m-2"> Overwrite </label></span> 
+                              <p-radioButton  name="Completed" value="Partial_Update " [(ngModel)]="selectedValue" inputId="ingredient2">
+                            </p-radioButton>
+                            <span><label for="ingredient2" class="m-2"> Partial Update </label></span>
+                            </div>
+                          </div>
+                    </div> -->
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                      <div class="mb-2">
+                        <div [ngClass]="{'required-field':isHighLightUploadDocument=== 'Yes'}">
+                          <label for="docs">Upload Document</label>
+                          <div >
+                            <div class="file-upload">
+                              <span class="input-group-btn uploadbtn mr-3">
+                                  <a href="#javascript:;">
+                                      <div class="btn btn-default  custom-file-uploader">
+                                          <input type="file" class="form-control-file" id="docs" name="file"
+                                          (change)="onChangeUploadDocument($event)" [(ngModel)]="uploadDocument"
+                                              >
+                                          <b >Upload File</b>
+                                      </div>
+                                  </a>
+                              </span>
+                              <a class="" >{{uploadDocument}}</a>
+
+                          </div>
+                          </div>
+
+                        </div>
+                    </div>
+
+                        <!-- <div class="d-flex" [ngClass]="{'required-field':isHighLightUploadDocument=== 'Yes'}"> -->
+
+                      <!-- new code by priyanka -->
+                      <!-- <div class="UploadFile">
+                        <div class="">
+                          <label for="docs">Documents Upload</label>
+
+                          <div class=" file-upload">
+                              <span class="input-group-btn uploadbtn mr-3">
+                                  <a href="#javascript:;">
+                                      <div class="btn btn-default  custom-file-uploader">
+
+                                        <input type="file" class="form-control" id="docs"
+                                        [(ngModel)]="inputTextFile"
+                                        (change)="onChangeUploadDocument($event)">
+                                          <b>Upload File</b>
+                                      </div>
+                                  </a>
+                              </span>
+                              <input type="text" name="filename" class="form-control"
+                              placeholder="No file selected"
+                              [(ngModel)]="uploadDocument"  style="height:30px; width: 190px;  margin-top: 28px;"
+                              [ngModelOptions]="{standalone: true}" readonly>
+                              <a class="" *ngIf="inputfilelength != 0"><i
+                                      class='fas fa-file-download mr-1'></i>{{inputfilelength}} Files</a>
+                              <a class="" *ngIf="inputfilelength == 0"><i
+                                      class='fas fa-file-download mr-1'></i>0 Files</a>
+                          </div>
+
+                      </div>
+                    </div> -->
+                      <!-- close -->
+                            <!-- <input type="text" name="filename" class="form-control"
+                                placeholder="No file selected"
+                                [(ngModel)]="uploadDocument"  style="height:30px; width: 150px;  margin-top: 28px;"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                            <span class="input-group-btn " style="margin-top: 20px;">
+                                <div class="btn btn-default ">
+                                    <input type="file" name="file" placeholder="" title=""
+                                    (change)="onChangeUploadDocument($event)" [(ngModel)]="inputTextFile" />
+                                    <p>Upload File</p>
+                                </div>
+                            </span>
+
+
+                        </div> -->
+                    </div>
+
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveUploadClick()">Upload</button>
+                            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

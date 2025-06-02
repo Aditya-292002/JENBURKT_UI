@@ -1,0 +1,198 @@
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                        aria-hidden="true"></i>Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Product</li>
+        </ol>
+    </nav>
+
+    <div class="col-md-12">
+        <div class="d-flex mb-2">
+            <div class="d-flex justify-content-start">
+                <h5 class="mb-0 headers">{{productMasterMode}}</h5>
+            </div>
+            <div class="buttonBox ml-auto">
+                <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+                <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveProductMasterClick()">Save</button>
+                <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid ">
+        <div class="card">
+            <div class="card-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>Product Code</label>
+                                <div class="" [ngClass]="{'required-field':isHighLightProductCode=== 'Yes'}">
+                                    <input type="text" class="form-control mr-2" [(ngModel)]="ProductCode" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Product Code"  [disabled]="isAddProductMaster">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="co  l-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>Product Name</label>
+                                <div class= "d-flex" [ngClass]="{'required-field':isHighLightProductName === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="ProductName" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Product Name"  [disabled]="isAddProductMaster">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                          <div class="mb-2">
+                              <label>Group Code</label>
+                              <div class="search-dropdown" [ngClass]="{'required-field':isHighLightGroupCode === 'Yes'}">
+                                  <p-dropdown class="" [options]="GROUPCODE_LIST" [(ngModel)]="groupCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="GROUP_DESC" [filter]="true" filterBy="GROUP_DESC" placeholder="Please Select...">
+                                  </p-dropdown>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>Div</label>
+                                <div class="search-dropdown" [ngClass]="{'required-field':isHighLightDiv=== 'Yes'}">
+                                    <p-dropdown class="" [options]="DIV_LIST" [(ngModel)]="divCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="DIV_DESC" [filter]="true" filterBy="DIV_DESC" placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>Brand </label>
+                                <div class="search-dropdown" [ngClass]="{'required-field':isHighLightBrand=== 'Yes'}">
+                                    <p-dropdown [options]="BRAND_LIST" [(ngModel)]="brandCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="BRAND_CODE_DESC" [filter]="true" filterBy="BRAND_CODE_DESC"
+                                    placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>MOE Rate</label>
+                                <div [ngClass]="{'required-field':isHighLightMOERate=== 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="moeRate" [ngModelOptions]="{standalone: true}"
+                                    placeholder="MOE Rate" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="mb-2">
+                                <label>WEF</label>
+                                <div class="search-dropdown" [ngClass]="{'required-field':isHighLightWEF=== 'Yes'}">
+                                    <p-dropdown [options]="WEF_LIST" [(ngModel)]="wefCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="PERIOD_DESC" optionValue="PERIOD_NO" [filter]="true" filterBy="PERIOD_DESC" placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="buttonBox">
+                                <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveProductMasterClick()">Save</button>
+                                <button type="submit" class="btn-primary  cancelButton" (click)="OnCancelClick()">Cancel</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isProductPopUp">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Product Master</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mt-8 p-4">
+                    <div class="card">
+                        <div class="">
+                            <p-table [value]="ProductMasterList" [autoLayout]="true" responsiveLayout="scroll"
+                            scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg" scrollWidth="400px" scrollHeight="200px" #dt
+                            [globalFilterFields]="['PRODUCT_CODE','WFM_CODE','BRAND_NAME','DIVISION_NAME','GROUP_DESC','MOE_RATE','PERIOD_DESC']">
+                                <ng-template pTemplate="caption">
+                                    <!-- <div style="text-align: right">
+                                        <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
+                                        <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                    </div> -->
+                                    <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                            aria-label="Search" size="20"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fa fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="PRODUCT_CODE" class="width-100">
+                                            Product Code
+                                        </th>
+                                        <th pSortableColumn="PRODUCT_DESC" class="width-130">
+                                            Product Name
+                                        </th>
+                                        <th pSortableColumn="BRAND_NAME" class="width-130">
+                                            Brand Name
+                                        </th>
+                                        <th pSortableColumn="DIVISION_NAME" class="width-130">
+                                            Division Name
+                                        </th>
+                                        <th pSortableColumn="GROUP_DESC" class="width-130">
+                                            Group Name
+                                        </th>
+                                        <th pSortableColumn="MOE_RATE" class="width-130">
+                                            Moe Rate
+                                        </th>
+                                        <th pSortableColumn="WFM_CODE" class="width-130">
+                                            WEF
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData>
+                                    <tr>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.PRODUCT_CODE}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.PRODUCT_DESC}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.BRAND_NAME}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.DIVISION_NAME}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.GROUP_DESC}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.MOE_RATE}}</a>
+                                        </td>
+                                        <td class="width-130">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.WFM_CODE}}</a>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-primary formButton">Save </button>
+              <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+            </div> -->
+          </div>
+        </div>
+      </div>

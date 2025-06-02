@@ -1,0 +1,247 @@
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Final Claim Report</li>
+    </ol>
+  </nav>
+  
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Final Claim Report</h5>
+        </div>
+  
+    </div>
+  </div>
+  
+  <div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="mb-2">
+                  <label>Invoice From Date</label>
+                  <div>
+                    <p-calendar [(ngModel)]="fromDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                    inputId="icon"  placeholder="{{fromDate}}"></p-calendar>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+  
+              <div class="mb-2">
+                  <label>Invoice To Date</label>
+                  <div>
+                    <p-calendar [(ngModel)]="toDate" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                    inputId="icon" placeholder="{{toDate}}" ></p-calendar>
+  
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="mb-2">
+                  <label>Super Stockist Name</label>
+                  <div>
+                      <div>
+                          <p-dropdown  appendTo="body"  [options]="superStockistList" [(ngModel)]="superStockist" [filter]="true" filterBy="SUPERSTOCKIST_NAME" [ngModelOptions]="{standalone: true}"
+                              placeholder="Please Select..."  optionLabel="SUPERSTOCKIST_NAME" optionValue="SUPERSTOCKIST_CODE"
+                              >
+                          </p-dropdown>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+                <label>FM</label>
+                <div>
+                    <div>
+                        <p-dropdown  appendTo="body"  [(ngModel)]="FM" [filter]="true" filterBy="FM_NAME" [ngModelOptions]="{standalone: true}"
+                            placeholder="Please Select..." [options]="FM_LIST" optionLabel="FM_NAME"
+                           >
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+          <div class="col-sm-12 col-md-12 col-lg-4 ">
+              <div class="buttonBox mt-4 ">
+                  <button  type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                      <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                  </button>
+                 <button *ngIf="userDetails.ROLE_ID == 1 || userDetails.ROLE_ID == 4" type="submit" class="btn-primary formButton mr-2 " (click)="exportExcel()"><i class="fa fa-upload mr-2"
+                          aria-hidden="true"></i>Export</button> 
+                  <button type="submit" class="btn-primary formButton" (click)="printReport('print-new')"><i class="fa fa-upload mr-2"
+                            aria-hidden="true"></i>Print</button>
+              </div>
+          </div>
+      </div>
+   
+      </div>
+    </div>
+  </div>
+  <div class="bg-white" *ngIf="onShowGrid">
+    <div class="table-responsive card-responsive mt-2">
+      <table class="table opening-table">
+          <thead>
+              <tr>
+                  <th *ngFor="let col of Header" [ngClass]="{'width-10': col == 'Claim Date','width-11':col=='Invoice Date'}">{{col}}</th>
+              </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let col of Values">
+                  <td *ngFor="let row of col">
+                  {{row}}
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+  </div>
+
+ 
+<div class="container-fluid print-horizontal" id="print-new" [hidden]="true">
+    <div class="bg-white ">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td  style="vertical-align: bottom;text-align: center; " colspan="17">
+                       <b>Invoice Date: {{fromDate | date: 'dd-MM-yyyy'}} To {{toDate | date: 'dd-MM-yyyy'}}</b> </td>
+
+                </tr>
+                <tr>
+                    <td  style="color:red;text-align: center;" colspan="17">
+                       <b>Negotiated Discount Evaluation - {{this.superStockistName}}</b> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>FM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.FM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.FM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <b>RSM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.RSM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.RSM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td>
+                        <b>SM Headquarter:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.SM_CODE}}</b> 
+                    </td>
+                    <td  style="color:red;text-align: center;">
+                        <b>{{this.FM?.SM_NAME}}</b> 
+                    </td>
+                    <td></td>
+                    <td> </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <b>FM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td> </td>
+                     <td>
+                        <b>RSM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td>
+                        <b>SM Signature:</b> 
+                     </td>
+                     <td colspan="2"> </td>
+                     <td> </td>
+                     <td> </td>
+
+                     
+                </tr>
+                <tr>
+                    <td colspan="17">
+                        <b>Remarks:</b> 
+                     </td>
+                </tr>
+                <tr></tr>
+            </tbody>  
+        </table>
+    </div>
+
+    <div class="bg-white mt-1" > 
+        <table class="table_new ">
+            <thead >
+                <tr >
+                    <th *ngFor="let col of Header" [ngClass]="{'width-10': col == 'Claim Date','width-11':col=='Invoice Date'}">{{col}}</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr   *ngFor="let col of Values">
+                    <td   *ngFor="let row of col">
+                    {{row}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+<!-- 
+        <table class="table" >
+            <thead>
+                <tr >
+                    <th class="width-3">No.</th>
+                    <th class="width-3">HSN Code</th>
+                    <th class="width-3">Product</th>
+                    <th class="width-3">Quantity</th>
+                    <th class="width-3">Unit</th>
+                    <th class="width-3">Rate / Unit</th>
+                    <th class="width-3">Taxable Value</th>
+                    <th class="width-3">Rate of Tax</th>
+                    <th class="width-3">Type of Tax</th>
+                    <th class="width-3"> Tax Amt.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of this.reportGrid.v_detail" >
+                    <td class="width-5" >{{data.SR_NO}}</td>
+                    <td class="width-5">{{data.HSN_CODE}}</td>
+
+                    <td class="width-5">{{data.Product}}</td>
+                    <td class="width-5">{{data.Quantity}}</td>
+                    <td class="width-5">{{data.Unit}}</td>
+                    <td class="width-5">{{data.Rate}}</td>
+                    <td class="width-5">{{data.Taxable_Value}}</td>
+                    <td class="width-5">{{data.Rate_of_Tax}}</td>
+                    <td class="width-5">{{data.Type_of_Tax}}</td>
+                    <td class="width-5">{{data.Tax_Amt}}</td>
+                </tr>
+                 <tr>
+                
+            </tr>
+
+            </tbody>
+        </table> -->
+
+       
+
+    </div>
+</div>
+
+  

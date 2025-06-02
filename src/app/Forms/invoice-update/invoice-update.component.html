@@ -1,0 +1,87 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"> <i class="fa fa-home mr-2" aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Invoice Update</li>
+    </ol>
+  </nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Invoice Update</h5>
+        </div>
+        <!-- <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary formButton saveButton mr-2" (click)="onSaveInvoiceClick()">Save</button>
+            <button type="submit" class="btn-primary formButton cancelButton">Cancel</button>
+        </div> -->
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Invoice No.</label>
+                            <div class="search-dropdown"  [ngClass]="{'required-field':isHighLightInvoice === 'Yes'}">
+                                <p-dropdown  class="" [options]="invoiceList" appendTo="body" optionLabel="BILL_DOC_NAME" [filter]="true" filterBy="BILL_DOC_NAME" placeholder="Please Select..."
+                                [(ngModel)]="invoiceNumber" [ngModelOptions]="{standalone: true}"
+                                (onChange)="onInvoiceChange()"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Date</label>
+                            <div>
+                                <p-calendar [ngModel]="BANK_DATE| date :'dd.MM.yyyy'" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                                    inputId="icon" placeholder="{{BANK_DATE}}" disabled="isDisabled"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Customer</label>
+                            <div>
+                                <p class="mb-0" *ngIf="customerPool != undefined">{{customerPool}}</p>
+                                <p class="mb-0" *ngIf="customerPool == undefined">N/A</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Old Pool</label>
+                            <div>
+                                <p class="mb-0" *ngIf="oldPool != undefined">{{oldPool}}</p>
+                                <p class="mb-0" *ngIf="oldPool == undefined">N/A</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>New Pool</label>
+                            <div class="search-dropdown"  [ngClass]="{'required-field':isHighLightNewPool === 'Yes'}">
+                                <p-dropdown  class="" [options]="poolMasterList" optionLabel="DisplayName" [filter]="true" filterBy="DisplayName" placeholder="Please Select..."
+                                 [(ngModel)]="newPool" [ngModelOptions]="{standalone: true}"
+                                 ></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary formButton saveButton mr-2" (click)="onSaveInvoiceClick()">Save</button>
+                            <button type="submit" class="btn-primary formButton cancelButton" (click)="onClearData()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

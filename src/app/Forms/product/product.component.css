@@ -1,0 +1,22 @@
+table .width-10{
+    width: 110px;
+    padding: 4px;
+}
+.width-100{
+    width: 100px;
+}
+.width-130{
+    width: 130px;
+}
+.required-field input.form-control {
+    border-color: #E4002B !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}
+/* .formButton{
+    width: 80px;
+} */

@@ -1,0 +1,48 @@
+
+/* check box */
+.form-group {
+    display: block;
+    margin-bottom: 15px;
+    padding: 0;
+  }
+  
+  .form-group .form-check-input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+  }
+  
+  .form-group label {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .form-group label:before {
+    content: '';
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 1px solid #c5c9cd;
+    padding: 8px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .form-group input:checked+label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    width: 5px;
+    height: 8px;
+    border: solid #3f6ad8;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  

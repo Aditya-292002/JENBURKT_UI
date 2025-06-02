@@ -1,0 +1,85 @@
+<div class="container-fluid">
+        <div class="card mt-2">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>State code</label>
+                                <div class="">
+                                    <p-dropdown appendTo="body" [options]="STATE_CODE" optionLabel="">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>GST Class</label>
+                                <div class="">
+                                    <p-dropdown appendTo="body" [options]="GST_CLASS" optionLabel="">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="mb-2">
+                                <label>GST No.</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <button type="submit" class="btn-primary formButton mt-4"><i
+                                    class="fa fa-plus mr-2"></i>Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="col-md-12">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr.No.</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">GST No.</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td>
+                                    <div>
+                                        <i class="fa fa-pencil-square-o text-primary" aria-hidden="true"></i>
+                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>
+                                    <div>
+                                        <i class="fa fa-pencil-square-o text-primary" aria-hidden="true"></i>
+                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="buttonBox text-right mt-2">
+            <button type="submit" class="btn-primary formButton "><i class="fa fa-caret-right mr-2"
+                    aria-hidden="true"></i>Next</button>
+        </div>
+</div>

@@ -1,0 +1,93 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">PMT Sample Requisition Approval</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">PMT Sample Requisition Approve</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="Approved()">Approved</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div [ngClass]="{'required-field':isHighLightPeriod === 'Yes'}">
+                                <input type="text" [(ngModel)]="PERIOD" class="form-control" placeholder="Period">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Product</label>
+                            <div [ngClass]="{'required-field':isHighLightProduct === 'Yes'}">
+                                <input type="text" [(ngModel)]="PRODUCT" class="form-control"
+                                    placeholder="Product">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Inner Pack</label>
+                            <div [ngClass]="{'required-field':isHighLightInnerPack === 'Yes'}">
+                                <input type="text" [(ngModel)]="INNER_PACK" class="form-control" name="pincode"
+                                    placeholder="Inner Pack" maxlength="4" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Stock Avail</label>
+                            <div [ngClass]="{'required-field':isHighLightStockAvail === 'Yes'}">
+                                <input type="text" [(ngModel)]="STOCK_AVAILABLE" class="form-control" name="pincode"
+                                    placeholder="Stock Avail" maxlength="4" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-2">
+                            <label> </label>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">HQ</th>
+                                            <th scope="col">HQ Qty</th>
+                                            <th scope="col">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let list of PREDEFINE_LIST_RANGE; let i=index;">
+                                            <th class="width-2">{{i+1}}</th>
+                                            <td class="width-2">
+                                            </td>
+                                            <td class="width-2">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

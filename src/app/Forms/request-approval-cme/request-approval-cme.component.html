@@ -1,0 +1,759 @@
+<nav aria-label="breadcrumb" id="ONE">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Request Approval CME List</li>
+    </ol>
+  </nav>
+  
+  <div class="col-md-12" id="TWO">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Request Approval CME</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+          <button  class="btn btn-success  saveButton" (click)="APPROVECMEREQUEST()" 
+           style="padding: 3px 6px !important;font-size: 13px !important;" >Approve</button>
+        </div>
+    </div>
+  </div>
+  <!-- (click)="APPROVECMEREQUEST()" -->
+  
+  
+  <div class="container-fluid" id="THREE">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+      <p-table   [value]="REQUEST_APPROVAL_CME_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
+      [globalFilterFields]="['CME_DATE','CME_NO','TOPIC','SM_NAME','USER_NAME']"
+      (onLazyLoad)="loadDataLazily($event)"  #dt1 >
+        <ng-template pTemplate="caption">
+          <div class="table-header text-right">
+          <span class="p-input-icon-right ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" class="form-control" (input)="dt1.filterGlobal($event.target.value, 'contains')"  />
+              </span>
+          </div>  
+      </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                <th class="text-center"> 
+                   <p-tableHeaderCheckbox  (click)="toggleCheckboxAll($event)"></p-tableHeaderCheckbox>
+               </th>
+                <th pSortableColumn="CME">CME NO
+
+                    
+              <p-columnFilter class="column-filter" field="CME_NO" matchMode="equals" [showMenu]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="CME_NO_LIST" (onChange)="filter($event.value)"
+                      [showClear]="true" appendTo="body"
+                     placeholder="Select" [filter]="true" [filterBy]="label">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+            </p-columnFilter>
+                </th>
+                <th pSortableColumn="CLAIM_DATE" class="width-12">DATE <p-sortIcon field="CLAIM_DATE"></p-sortIcon></th>
+                <th pSortableColumn="REQ_BY" class="width-12">REQ_BY <p-sortIcon field="CLAIM_DATE">
+                </p-sortIcon></th>
+                <th pSortableColumn="HQ_CODE">HQ_CODE 
+                </th>
+                <th pSortableColumn="INVOICE_SALE_QTY">SM NAME 
+
+                    <p-columnFilter class="column-filter" field="SM_NAME" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="value" [options]="SM_NAME_LIST" (onChange)="filter($event.value)"
+                              [showClear]="true" appendTo="body"
+                             placeholder="Select" [filter]="true" [filterBy]="label">
+                                <ng-template let-option pTemplate="item">
+                                    <span>{{option.label}}</span>
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+
+                </th>
+                <th pSortableColumn="INVOICE_SALE_QTY">TOPIC </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+              <tr>
+                <td class="text-center">
+                  <p-tableCheckbox [value]="data" (click)="singleCheckbox($event,data,rowIndex)"></p-tableCheckbox>
+                </td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.CME_NO }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)"  class="width-12">{{ data.CME_DATE  }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.USER_NAME }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.HQ_DESC }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.SM_NAME }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.TOPIC }}</td>
+             
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+    </div>
+  
+    
+<div style=" padding: 5px; display: none;" id="DownloadPDF" #DownloadPDF >
+  <div style="background-color: white;border-radius: 5px; border:1px solid #ddd"   >
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align: center; padding: 8px; font-weight: 600; color: #4a4848;"><h6 style="color: #4a4848; font-weight: 600;">CME Request</h6></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows and content here -->
+        </tbody>
+    </table>
+    
+ <div style="display: flex !important; flex-wrap: wrap !important; margin: 8px !important;"> 
+          <!-- <div style="padding: 4px  !important; width: 100%  !important;">
+              <h6 style="margin-bottom: 2px  !important; color: #09135e !important;font-weight: 600 !important;">Details</h6>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800 !important;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important; ;
+  margin-bottom: 4px !important;">CME No. </label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_NO}}</span>
+                  </div>
+              </div>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">Date</label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DATE}}</span>
+                  </div>
+              </div>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800 !important;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">Req By</label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{REQ_BY_USER_NAME}}</span>
+                  </div>
+              </div>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800 !important;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">HQ Code </label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{HQ_DESC}} - {{HQ_CODE}} </span>
+                  </div>
+              </div>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">CME Type </label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DESC}}</span>
+                  </div>
+              </div>
+          </div>
+          <div *ngIf="this.InstName == true" style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">Institution Name </label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{INST_NAME}}</span>
+                  </div>
+              </div>
+          </div>
+          <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+              <div >
+                  <label style="font-weight: 800;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">Topic </label>
+                  <div>
+                      <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{TOPIC}}</span>
+                  </div>
+              </div>
+          </div> -->
+          <!-- <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   
+                        <td style="padding: 8px; width: 100%; font-weight: 800; font-size: 13px; color: #4a4848; display: flex; justify-content: space-evenly;
+                        grid-template-columns: repeat(3, 1fr);
+                        grid-gap: 10px;">
+                            <div style="padding: 8px !important; width: 50%; justify-content: space-evenly;">
+                                <div >
+                                    <label style="font-weight: 800 !important;
+                 
+                    font-size: 13px !important;
+                    color: #4a4848 !important; ;
+                    margin-bottom: 4px !important;">CME No. </label>
+                                    <div>
+                                        <span style=" font-size: 12px !important;font-weight:700 !important;color:#82838b !important; ">{{CME_NO}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px !important; width: 50%;">
+                                <div >
+                                    <label style="font-weight: 800;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">Date</label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DATE}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px !important; ">
+                                <div >
+                                    <label style="font-weight: 800 !important;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">Req By</label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{REQ_BY_USER_NAME}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px !important; ">
+                                <div >
+                                    <label style="font-weight: 800 !important;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">HQ Code </label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{HQ_DESC}} - {{HQ_CODE}} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px !important; ">
+                                <div >
+                                    <label style="font-weight: 800;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">CME Type </label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DESC}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="this.InstName == true" style="padding: 8px !important;">
+                                <div >
+                                    <label style="font-weight: 800;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">Institution Name </label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{INST_NAME}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px !important; ">
+                                <div >
+                                    <label style="font-weight: 800;
+                    display: block !important;
+                    font-size: 13px !important;
+                    color: #4a4848 !important;;
+                    margin-bottom: 4px !important;">Topic </label>
+                                    <div>
+                                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{TOPIC}}</span>
+                                    </div>
+                                </div>
+                            </div> 
+                        </td>
+                       
+                   
+                </tr>
+                 </tbody>
+        </table>
+         -->
+         <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;"><h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Details</h6></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Flex container to display items, 3 per row -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- CME No. Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">CME No.</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_NO}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Date Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Date</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_DATE}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Req By Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Req By</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{REQ_BY_USER_NAME}}</span>
+                                </div>
+                            </div>
+
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">HQ Code</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{HQ_DESC}} - {{HQ_CODE}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Another row for the remaining items -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- HQ Code Column -->
+                            <!-- <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">HQ Code</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{HQ_DESC}} - {{HQ_CODE}}</span>
+                                </div>
+                            </div> -->
+        
+                            <!-- CME Type Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">CME Type</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_DESC}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Topic Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Topic</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{TOPIC}}</span>
+                                </div>
+                            </div>
+
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+          <div style="width: 25% !important;" ></div>
+          <div style="border-bottom: 1px solid #ddd !important;height: 2px !important; width: 100%!important;"></div>
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;"><h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Speaker</h6></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Flex container to display items, 3 per row -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!--Name Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Name</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_NAME}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Date Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Qualification</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_QUALIFICATION}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Req By Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Specialization</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_SPECIALIZATION_NAME}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+          
+
+          <!-- <div style="padding: 4px !important; width: 100% !important;margin-top: 6px !important;">
+              <h6 style="margin-bottom: 2px !important; color: #09135e !important;font-weight: 600 !important;">Speaker</h6>
+          </div>
+          <div style=" width: 100% !important;display: flex !important; flex-wrap: wrap !important;">
+              <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                  <div >
+                      <label style="font-weight: 800 !important;
+display: block;
+font-size: 13px;
+color: #4a4848;;
+margin-bottom: 4px;">Name</label>
+                      <div>
+                          <span style="display: block; font-size: 12px;font-weight:700;color:#82838b">{{SPEAKER_NAME}}</span>
+                      </div>
+                  </div>
+              </div>
+              <div style="padding: 8px; width: 100%; max-width: 25%">
+                  <div >
+                      <label style="font-weight: 800;
+display: block;
+font-size: 13px;
+color: #4a4848;;
+margin-bottom: 4px;">Qualification </label>
+                      <div>
+                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{SPEAKER_QUALIFICATION}}</span>
+                      </div>
+                  </div>
+              </div>
+              <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                  <div >
+                      <label style="font-weight: 800;
+display: block !important;
+font-size: 13px !important;
+color: #4a4848 !important;;
+margin-bottom: 4px !important;">Specialization</label>
+                      <div>
+                          <span style="display: block; font-size: 12px;font-weight:700;color:#82838b">{{SPEAKER_SPECIALIZATION_NAME}}</span>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+          <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;"> <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Payment Details</h6></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Flex container to display items, 3 per row -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- Venue Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Venue</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{VENUE}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Date Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Date</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                        <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px; padding-left:3px; padding-right:3px">from</label>{{CME_DATE_FROM}}
+                                    </span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                        <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px; padding-left:3px; padding-right:3px">To</label>{{CME_TO_DATE}}
+                                    </span>
+                                </div>
+                            </div>
+        
+                            <!-- Time Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Time</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                        <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px; padding-left:3px; padding-right:3px">from</label>{{CME_TIME_FROM}}
+                                    </span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                        <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px; padding-left:3px; padding-right:3px">to</label>{{CME_TO_TIME}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Another row for the remaining items -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- Amount Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Amount</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">&#8377;{{AMOUNT | number : '1.2-2'}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- GST Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">GST</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">&#8377;{{GST | number : '1.2-2'}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Whom to Pay Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Whom to Pay</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{WHOM_TO_PAY_USER_NAME}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Division Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Division</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{DIVISION_NAME}}</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Another row for the remaining items -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- Pay By Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Pay By</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{PAY_BY_DATE}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Advance Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Advance</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{IS_ADVANCE_DESC}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Expected Doctors Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Expected Doctors</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{EXPECTED_DOCTORS}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Empty Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                        <!-- Another row for the remaining items -->
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <!-- Pay By Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Slide Deck Reqd</label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{SLIDE_DEC_REQD_DESC}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Advance Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Art Work Reqd
+                                </label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{ART_WORK_REQD_DESC}}</span>
+                                </div>
+                            </div>
+        
+                            <!-- Expected Doctors Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+        
+                            <!-- Empty Column -->
+                            <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                <div>
+                                    <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+         
+          <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+          
+          <div style=" width: 100%;display: flex; flex-wrap: wrap;">
+          <div style="flex: 1 0 23%;padding: 8px;">
+              <div style="margin-bottom: 10px;">
+                  <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                      <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Attending Team</h6>
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr>
+                          <th style="width: 12%;font-size: 13px; color: #4a4848;; border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">Sr No</th>
+                          <th style=" font-size: 13px; color: #4a4848;; border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">Attending Team Name</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let user of ATTENDING_TEAM;let i = index;">
+                        <tr style="background-color: #f9f9f9;">
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{ i + 1}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{user.USER_NAME}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+          </div>
+          <div style="flex: 1 0 23% ;padding: 8px" >
+              <div style="margin-bottom: 10px;">
+                  <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                      <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Brands</h6>
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr>
+                          <th style="width: 12%;font-size: 13px; color: #4a4848;;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">Sr No</th>
+                          <th style="font-size: 13px; color: #4a4848;;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">Brand Name</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let product of BRANDS;let i = index;">
+                        <tr style="background-color: #f9f9f9;">
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{ i + 1}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{product.PRODUCT_DESC}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+          </div>
+          </div>
+
+          <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+          
+          <div style="padding: 8px; width: 100%; ">
+              <div style="margin-bottom: 10px;">
+                  <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                      <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Promotional Material Req</h6>
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr>
+                          <th style="width: 6%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Sr No</th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Item</th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Remarks</th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let mat of PROM_MAT_REQ_ITEM;let i = index;">
+                        <tr style="background-color: #f9f9f9;">
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.ITEM_DESC}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.REMARKS}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.QUANTITY}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
+          <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+          <div style="padding: 8px; width: 100%; ">
+              <div style="margin-bottom: 10px;">
+                  <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                      <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Approval Details </h6>
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr>
+                          <th style="width: 6%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Sr No</th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">User Name </th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">User Role</th>
+                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;"> Approval Date </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let mat of REQ_UPDATED_USER_DETAILS;let i = index;">
+                        <tr style="background-color: #f9f9f9;">
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.userName}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.role}}</td>
+                          <td style="border: 1px solid #ddd; padding: 8px;">{{mat.updatedOn | date:'dd-MM-yyy, h:mm a'}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div> 
+ 
+ 
+ 
+    </div>
+</div>

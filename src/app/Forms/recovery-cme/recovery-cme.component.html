@@ -1,0 +1,184 @@
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Recovery CME</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Recovery CME Report</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2" >Save</button>
+            <button type="submit" class="btn-primary  cancelButton" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="card ">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>CME No. </label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="CME_NO"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter CME NO">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Date </label>
+                            <div >
+                                <p-calendar [(ngModel)]="DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="{{DATE}}"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Req By. </label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="REQ_BY"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Req By">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>HQ Code</label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="HQ_CODE"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter HQ Code">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>CME Type</label>
+                            <div >
+                                <p-dropdown [options]="" [(ngModel)]="CME_TYPE" [ngModelOptions]="{standalone:true}"
+                                    appendTo="body" optionLabel="" [filter]="true" filterBy=""
+                                    placeholder="Please Select CME Type">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Camp Type</label>
+                            <div >
+                                <p-dropdown [options]="" [(ngModel)]="CAMP_TYPE"
+                                    [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel=""
+                                    [filter]="true" filterBy="" placeholder="Please Select Camp Type">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Amt</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="AMOUNT"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Amount">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>GST</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="GST"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Gst">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Old Paid</label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="OLD_PAID"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Paid">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Old TDS</label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="OLD_TDS"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Tds">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Excess</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="EXCESS"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Excess">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Paid Amount</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAID_AMOUNT"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Paid Amount">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Pay Mode</label>
+                            <div >
+                                <p-dropdown [options]="" [(ngModel)]="PAY_MODE" [ngModelOptions]="{standalone:true}"
+                                    appendTo="body" optionLabel="" [filter]="true" filterBy=""
+                                    placeholder="Please Select Pay Mode">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Ref</label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="REF"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

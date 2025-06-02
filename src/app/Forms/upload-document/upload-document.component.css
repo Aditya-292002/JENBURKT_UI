@@ -1,0 +1,9 @@
+.required-field input.form-control {
+    border-color: #E4002B !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}

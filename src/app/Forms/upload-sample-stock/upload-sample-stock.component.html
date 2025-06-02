@@ -1,0 +1,89 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Upload Sample Stock</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Upload Sample Stock</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton  mr-2" (click)="downloadTemplate()">Download Template</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()" >Upload</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearData()" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div >
+                            <label>Cycle</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC" [filter]="true" filterBy="CYCLE_DESC"
+                                    optionValue="CYCLE_NO" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="CYCLE_CODE" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div>
+                            <label>Unit</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                <p-dropdown appendTo="body" [options]="UNIT_LIST" appendTo="body" [filter]="true" filterBy="UNIT_DESC"
+                                optionLabel="UNIT_DESC" optionValue="UNIT_CODE"
+                                placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
+                                [ngModelOptions]="{standalone:true}" >
+                            </p-dropdown>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <!-- <div>
+                            <div class="input-group mt-4">
+                                <input type="file" class="form-control uploadinput" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" [(ngModel)]="UPLOAD"
+                                (change)="selectFile($event.target)">
+                              </div>
+                        </div> -->
+                        <div class="mb-2">
+                          <div >
+                            <label for="docs">Upload Document</label>
+                            <div >
+                              <div class="file-upload">
+                                <span class="input-group-btn uploadbtn mr-3">
+                                    <a href="#javascript:;">
+                                        <div class="btn btn-default  custom-file-uploader">
+                                            <input type="file" class="form-control-file" id="docs" name="file"
+                                            (change)="selectFile($event.target)" [(ngModel)]="UPLOAD"
+                                                >
+                                            <b >Upload File</b>
+                                        </div>
+                                    </a>
+                                </span>
+                                <a class="" >{{UPLOAD | slice:-100}}</a>
+
+                            </div>
+                            </div>
+
+                          </div>
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

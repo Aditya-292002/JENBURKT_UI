@@ -1,0 +1,48 @@
+<div class="login-background">
+    <div class="login-container">
+        <div class="p-5">
+            <div class="row">
+                <div class="login-building d-none d-lg-block">
+                </div>
+                <div class="form-wrapper ">
+                    <h5 class="mb-5 text-center"><i class="fa fa-diamond logoicon" aria-hidden="true"></i> Change Company</h5>
+                  
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label>Change Company</label>
+                                <div class="company-container">
+                                    <p-dropdown appendTo="body" [options]="COMPANY_LIST" optionLabel="COMPANY_NAME" [(ngModel)]="COMPANY_CODE">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label>Unit</label>
+                                <div class="company-container">
+                                    <p-dropdown appendTo="body" [options]="UNIT_LIST" optionLabel="UNIT_NAME" [(ngModel)]="UNIT_CODE"  >
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label>Financial Year</label>
+                                <div class="company-container">
+                                    <p-dropdown appendTo="body" [options]="FINANCIAL_YEAR_LIST" optionLabel="FYEAR_DESC" [(ngModel)]="FYEAR"  
+                                    (onChange)="OnFinacialYearChange()">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    <button type="submit" class="btn btn-primary mb-4 mt-5" (window:keypress)="onSomeAction($event)" (click)="continueBtnClick()">Continue</button>
+                    <p id="socialSignUp">&emsp;Account&emsp;</p>
+                    <div class="d-flex mb-1  justify-content-between">
+                        <p>Want to create company?</p>
+                         <a class="" style="color: #fdc559;" href="javascript:void(0);" (click)="createCompany()">Create Company</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

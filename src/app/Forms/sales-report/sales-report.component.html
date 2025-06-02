@@ -1,0 +1,238 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sales Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Sales Report</h5>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>From</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="fromDate" [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>To</label>
+                            <div>
+                                <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC"  [(ngModel)]="toDate" [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-2">
+                            <label>Key Figure</label>
+                            <div>
+                                <p-dropdown [options]="keyFigureList" appendTo="body" optionLabel="NAME"  [(ngModel)]="keyFigure"  [filter]="true" filterBy="NAME"  [ngModelOptions]="{standalone: true}"
+                                    placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Under</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="underEmployeeList" appendTo="body" optionLabel="USER_NAME" [(ngModel)]="underEmployee" [filter]="true" filterBy="USER_NAME" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Qty/Value</label>
+                            <div>
+                                <p-dropdown [options]="QTY_VALUE_LIST" appendTo="body" optionLabel="NAME" [(ngModel)]="QTY_VALUE" [filter]="true" filterBy="NAME" [ngModelOptions]="{standalone: true}"
+                                 placeholder="Please Select..." (onChange)="changeQtyValue()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Figure In</label>
+                            <div>
+                                <div class="form-check form-check-inline"    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="option1" (change)="getFigureIn(1)" checked  [disabled]="isDisabled">
+                                    <label class="form-check-label" for="inlineRadio1">Actual</label>
+                                </div>
+                                <div class="form-check form-check-inline"     [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="option2" (change)="getFigureIn(2)" [disabled]="isDisabled">
+                                    <label class="form-check-label" for="inlineRadio2">Thousands</label>
+                                </div>
+                                <div class="form-check form-check-inline"    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio3" value="option3" (change)="getFigureIn(3)" [disabled]="isDisabled">
+                                    <label class="form-check-label" for="inlineRadio3">Lakhs</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3 p-0">
+                        <div class="buttonBox mt-4">
+                            <button *ngIf="isLoaded" type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                            </button>
+                            <button *ngIf="!isLoaded"  type="submit" class="btn-primary viewButton mr-2">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>Loading...
+                            </button>
+                            <button type="submit" class="btn-primary formButton" (click)="exportExcel()"><i class="fa fa-upload mr-2"
+                                    aria-hidden="true"></i>Export</button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="hrStyle">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="buttonBox mt-4"*ngIf="counter > 0">
+                            <button  type="submit" class="btn-primary viewButton mr-2" (click)="OnBackClick()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>back
+                            </button>
+                        </div>
+                        <div class="row" style="justify-content: space-between; margin-left: 6px; margin-right: 12px; align-items: center;">
+
+                            <p>Last   On:- <b style="color: #191616; font-weight: 600;">{{LAST_DATE_ON | date :'dd-MMM-YYYY HH:MM'}}</b> </p>
+                            <th>
+                                <span class="p-input-icon-right ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'Keyfigure_Name', 'contains')">
+                                </span>
+
+
+                            </th>
+                        </div>
+
+                        <!-- [rowsPerPageOptions]="[10, 25, 50, 100]" -->
+                        <p-table #dt [value]="SalesReportList" responsiveLayout="scroll" [paginator]="true"  class="prime-table"
+                        [showCurrentPageReport]="true"  [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"  [totalRecords]="totalRecords"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true" (onPageChange)="onPageChange($event)">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th >Key Figure
+                                        <p-columnFilter type="text" field="Keyfigure_Name" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Keyfigure_Name"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Sales Qty
+                                        <p-columnFilter type="text" field="Sales_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Return Qty
+                                        <p-columnFilter type="text" field="Return_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Expiry Qty
+                                        <p-columnFilter type="text" field="Expiry_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th *ngIf="!isQualitySelected">Sales Value
+                                        <p-columnFilter type="text" field="Sales_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="!isQualitySelected">Return Value
+                                        <p-columnFilter type="text" field="Return_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="!isQualitySelected">Expiry Value
+                                        <p-columnFilter type="text" field="Expiry_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th >Expiry %
+                                        <p-columnFilter type="text" field="Expiry_Per" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Per"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Net Qty
+                                        <p-columnFilter type="text" field="Net_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Net_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Target Qty
+                                        <p-columnFilter type="text" field="Target_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Target_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="isQualitySelected">Pending Qty
+                                        <p-columnFilter type="text" field="Pending_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Pending_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="!isQualitySelected">Net Value
+                                        <p-columnFilter type="text" field="Net_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Net_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th  *ngIf="!isQualitySelected">Target Value
+                                        <p-columnFilter type="text" field="Target_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Target_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th   *ngIf="!isQualitySelected">Pending Value
+                                        <p-columnFilter type="text" field="Pending_Val" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Pending_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th >Achievement %
+                                        <p-columnFilter type="text" field="ACHIEVE_PERk" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="ACHIEVE_PER"></p-sortIcon> -->
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-report>
+                                <tr>
+                                    <td>
+                                        <a class="click"  *ngIf="report.Keyfigure_Name == 'GRAND TOTAL'" >
+                                            {{report.Keyfigure_Name}}
+                                        </a>
+                                        <a class="click" *ngIf="report.Keyfigure_Name != 'GRAND TOTAL'" (click)="FilterList(report.Keyfigure_Code)">
+                                            {{report.Keyfigure_Name}}
+                                        </a>
+                                    </td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Sales_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Return_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Expiry_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{ getValue(report.Sales_Val).toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{getValue(report.Return_Val).toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{getValue(report.Expiry_Val).toFixed(2) | number}}</td>
+                                    <!-- <td *ngIf="isQualitySelected">{{report.Expiry_Qty}}</td> -->
+                                    <td class="text-right">{{report.Expiry_Per.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Net_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Target_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="isQualitySelected">{{report.Pending_Qty.toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{getValue(report.Net_Val).toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{getValue(report.Target_Val).toFixed(2) | number}}</td>
+                                    <td  class="text-right" *ngIf="!isQualitySelected">{{getValue(report.Pending_Val).toFixed(2) | number}}</td>
+                                    <td class="text-right">{{report.ACHIEVE_PER.toFixed(2) | number}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

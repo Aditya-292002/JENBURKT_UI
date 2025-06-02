@@ -1,0 +1,196 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sample Allocation Approval</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Sample Allocation Approval</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()" >Approval</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearForm()" >Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Cycle</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC" [filter]="true" filterBy="CYCLE_DESC"
+                                    optionValue="CYCLE_NO" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="CYCLE_CODE" [ngModelOptions]="{standalone:true}" >
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Unit</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                <p-dropdown [options]="UNIT_LIST" appendTo="body" optionLabel="UNIT_DESC" [filter]="true" filterBy="UNIT_DESC"
+                                    optionValue="UNIT_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="UNIT_CODE" [ngModelOptions]="{standalone:true}" >
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-1">
+                        <div class=" mt-4">
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                            (click)="onCycleChange()">Show</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white" *ngIf="isShowSampleAllocationApprovalList">
+                    <div class="mt-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sample Product Code</th>
+                                    <th>Description</th>
+                                    <th>Allocate QTY</th>
+                                    <th>Sample Stock</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let list of SAMPLE_ALLOCATION_APPROVAL_LIST; let i=index;">
+                                    <td>
+                                        <div  (click)="onSampleProductcode(list.SAMPLE_PRODUCT_CODE)" class="sample">
+                                            {{list.SAMPLE_PRODUCT_CODE}}
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div >
+                                            {{list.DESCRIPTION}}
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div > {{list.ALLOC_QTY}}
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{list.STOCK}}
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- popup table -->
+
+  <div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isShowSampleAllocDetailsList">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}} <span>{{ProductName}}</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mt-2 p-0">
+                    <div class="card">
+
+                            <p-table [value]="SAMPLE_ALLOC_DETAILS_LIST" scrollDirection="both" [scrollable]="true"
+                                styleClass="p-datatable-lg" responsiveLayout="scroll" #dt class="card-responsive"
+                                [globalFilterFields]="['SAMPLE_PRODUCT_CODE','FROM_RANGE','TO_RANGE','NO_OF_MRS','ALLOC_OF_MRS','TOTAL_ALLOC']"
+                                scrollHeight="800px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100">
+                                            SAMPLE PRODUCT CODE
+                                        </th>
+                                        <th pSortableColumn="FROM_RANGE" class="width-100">
+                                            FROM RANGE
+                                        </th>
+                                        <th pSortableColumn="TO_RANGE" class="width-100">
+                                            TO RANGE
+                                        </th>
+                                        <th pSortableColumn="NO_OF_MRS" class="width-100">
+                                            NO OF MRS
+                                        </th>
+                                        <th pSortableColumn="ALLOC_OF_MRS" class="width-100">
+                                            ALLOC OF MRS
+                                        </th>
+                                        <th pSortableColumn="TOTAL_ALLOC" class="width-100">
+                                            TOTAL ALLOC
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData>
+                                    <tr>
+                                        <td class="width-100">
+                                            <a class="click" >
+                                                {{rowData.SAMPLE_PRODUCT_CODE}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" >
+                                                {{rowData.FROM_RANGE}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" > {{rowData.TO_RANGE}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" >
+                                                {{rowData.NO_OF_MRS }}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" >
+                                                {{rowData.ALLOC_OF_MRS }}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" >
+                                                {{rowData.TOTAL_ALLOC }}</a>
+                                        </td>
+
+
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

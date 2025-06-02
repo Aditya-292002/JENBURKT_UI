@@ -1,0 +1,84 @@
+.saveButton{
+    margin-top: 6px;
+}
+
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}
+.isHighlight{
+    border-color: #ebb8c2d9 !important;
+    background: #e4002b !important;
+    color: #fff !important;
+}
+.mb-3{
+    margin-bottom: 0.25rem!important;
+}
+
+/* accrodion css */
+/* .card-header {
+    padding: 0.35rem 1.25rem;
+    background-color: #ebf3fc;
+    color: #0061a7;
+    border-color: #d8ecfb;
+
+    border-radius: 0 !important;
+}
+
+.card-header.collapsed{
+    margin-bottom: 0px;
+    border-bottom: 0;
+    background-color: #ebf3fc;
+    color: #0061a7;
+    border-color: #d8ecfb;
+
+}
+.card-header.collapse.show {
+    display: flex;
+    flex-wrap: wrap;
+}
+.accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f107";
+    float: right;
+    font-size: 25px;
+    margin-top: -8px;
+}
+.accordion .card-header.collapsed:after {
+
+    content: "\f105";
+    font-size: 25px;
+    margin-top: -8px;
+}
+.accordion .card-header .card-title{
+
+    font-family: 'Noto Sans', sans-serif !important;
+    font-size: 14px;
+    font-weight: 500;
+} */
+.header {
+  color: #44484e;
+  font-weight: 600;
+}
+
+.is-checking-i{
+  background: #dcedc8;
+  border: 1px solid #8bc34a;
+  padding: 2px 6px;
+  border-radius: 12px;
+  /* font-size: 10px;
+  font-weight: 500; */
+
+  color:  #000000;
+}
+
+
+.from1 input:checked+label:after {
+
+  top: 7px !important;
+  left: 13px !important;
+
+}
+

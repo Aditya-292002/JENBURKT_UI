@@ -1,0 +1,193 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Print Invoice</li>
+    </ol>
+</nav>
+
+<div class="container-fluid " id="print-new">
+    <div class="bg-white ">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td  style="width:50%;vertical-align: bottom; font-size: 20px; ">
+                       <b>JENBURKT</b> </td>
+                    <td  style="width:50%;vertical-align: bottom;text-align: right;font-size: 20px;"><b>Jenburkt Pharmaceuticals Ltd.</b> </td>
+
+                </tr>
+                <tr>
+                    <td class="width-2 " colspan="2" style="font-size: 14px;">Regd . office: J.P. Road, Andheri (w), Mumbai 400 058. Tel(022)
+                        66943121 (8 lines), Fax : (022) 66943127
+                        Plant: Plot No. 11-12, GIDC, Phase-1, Bhavnagr Road , Silhor 364240, District :
+                        Bhavnagr(Gujarat) Tel : (02846)222861/62/63. </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white mt-1">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td style="width:25%;border:none;vertical-align: bottom; font-size: 12px;">
+                        <b>DELIVERY CHALLAN NO: F22232081</b>
+                    </td>
+                    <td style="width:50%;border:none;vertical-align: top;text-align: center; font-size: 14px;" colspan="2">
+                        <h4>DELIVERY CHALLAN </h4>
+                        <p>PHYSICIAN SAMPLE</p>
+                    </td>
+                    <td style="width:25%;border:none;vertical-align: bottom;text-align: right; font-size: 12px;">
+                        <b>DATE:05/07/2022</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:50%;text-align: center; font-size: 12px;" colspan="2">CONSIGNEE DETAILS</td>
+                    <td style="width:50%;text-align: center; font-size: 12px;" colspan="2">CONSIGNOR DETAILS</td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" style="width:50%">
+                        <ul  style="list-style-type:none; font-size: 12px;">
+                            <li>MR. MANISH SINGH,</li>
+                            <li>A-412, AKASH GREEN,</li>
+                            <li>NEAR C.L GUPTA EYE INSTITUTE,</li>
+                            <li>MORADABAD-244001</li>
+                        </ul>
+                    </td>
+                    <td style="width:25%">
+                        <ul  style="list-style-type:none; font-size: 12px;">
+                            <li>GSTIN NO.</li>
+                            <li>State Code and State</li>
+                            <li>DRUG LIC NO.</li>
+                            <li>FOOD LIC. NO.</li>
+                        </ul>
+                    </td>
+                    <td style="width:25%">
+                        <ul style="list-style-type:none;font-size: 12px;">
+                            <li>24AAACJ 0256E1Z5</li>
+                            <li>24-GUJARAT</li>
+                            <li>20B-G-BN-574 w.e.f.09-05-1994</li>
+                            <li>21B-G-BN-529 w.e.f.09-05-1994</li>
+                            <li>1071200600326</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr style="font-size: 12px;">
+                    <td>STATE CODE:9</td>
+                    <td>PLACE OF SUPPLY:UTTAR PRADESH</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul  style="list-style-type:none;font-size: 12px;">
+                            <li>MR MO.NO</li>
+                            <li> RSM NAME</li>
+                            <li>RSM MO.NO</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul  style="list-style-type:none;font-size: 12px;">
+                            <li>8756892586</li>
+                            <li>RAVI SHANKAR PANDEY</li>
+                            <li>93199763004</li>
+                        </ul>
+                    </td>
+                    <td colspan="2" style="font-size: 12px;">
+                        <u>Declaration:</u>
+                        <p>Physician Samples have been cleared with reversal of input Tax Credit.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center" style="font-size: 12px;"><b>PYSICIAN SAMPLE FOR THE CYCLE:1 <sup>st</sup> JUNE TO <sup>st</sup>
+                        JULY -2022</b> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table" >
+            <thead>
+                <tr >
+                    <th class="width-3">No.</th>
+                    <th class="width-3">HSN Code</th>
+                    <th class="width-3">Product</th>
+                    <th class="width-3">Quantity</th>
+                    <th class="width-3">Unit</th>
+                    <th class="width-3">Rate / Unit</th>
+                    <th class="width-3">Taxable Value</th>
+                    <th class="width-3">Rate of Tax</th>
+                    <th class="width-3">Type of Tax</th>
+                    <th class="width-3"> Tax Amt.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of DataList" >
+                    <td class="width-5" >{{data.SR_NO}}</td>
+                    <td class="width-5">{{data.HSN_CODE}}</td>
+
+                    <td class="width-5">{{data.Product}}</td>
+                    <td class="width-5">{{data.Quantity}}</td>
+                    <td class="width-5">{{data.Unit}}</td>
+                    <td class="width-5">{{data.Rate}}</td>
+                    <td class="width-5">{{data.Taxable_Value}}</td>
+                    <td class="width-5">{{data.Rate_of_Tax}}</td>
+                    <td class="width-5">{{data.Type_of_Tax}}</td>
+                    <td class="width-5">{{data.Tax_Amt}}</td>
+                </tr>
+                 <tr>
+                <td class="width-5" colspan="10">
+                   <u>Declaration:</u> This is Physician Samples for free Distribution having ZERO Value, hence is no Requirenent of E-Way Bill.
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table mt-3">
+
+           <tr>
+            <td>
+                <ul class="width-3" style="list-style-type:none">
+                    <li>Total Case</li>
+                    <li>Gross Wt.(In kgs)</li>
+                    <li>Dispatched Through</li>
+                </ul>
+            </td>
+            <td>
+                <ul class="width-3" style="list-style-type:none">
+                    <li>5</li>
+                    <li>38</li>
+                    <li>GATIKWE LTD. BHAVNAGAR</li>
+                </ul>
+            </td>
+            <td  class="text-center" class="width-3"><u>For, Jenburkt Pharmaceuticals Ltd., Sihor</u> </td>
+           </tr>
+           <tr>
+            <td>
+                <ul  class="width-3" style="list-style-type:none">
+                    <li>Docket No.</li>
+                    <li>Docket Dt.</li>
+                </ul>
+            </td>
+            <td>
+                <ul  class="width-3" style="list-style-type:none">
+                    <li>294441339</li>
+                    <li>05/07/2022</li>
+                </ul>
+            </td>
+            <td class="text-center" class="width-3"><u> (Authorizes Signature)</u></td>
+           </tr>
+
+
+        </table>
+        <table class="table">
+             <tr>
+            <td style="width:100%;border:none;text-align: center;" class="width-3">
+                <b>Subject to Mumbai Jurisdiction</b>
+            </td>
+           </tr>
+        </table>
+
+    </div>
+</div>

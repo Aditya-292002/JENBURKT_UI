@@ -1,0 +1,297 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">MOE Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">MOE Report</h5>
+        </div>
+
+    </div>
+</div>
+<app-loader *ngIf="isLoaded" ></app-loader>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <div>
+                                    <p-dropdown appendTo="body" [options]="periodList" [(ngModel)]="period"
+                                        [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select..." optionLabel="PERIOD_DESC"
+                                        optionValue="PERIOD_ID">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-12 col-md-12 col-lg-2 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatePDFdata()">
+                                <i class="fa fa-spinner mr-2" aria-hidden="true"></i>Generate
+                            </button>
+                            <!-- <button  type="submit" class="btn-primary viewButton mr-2" (click)="UploadPdf()">
+                    <i class="fa fa-spinner mr-2" aria-hidden="true"></i>download
+                </button> -->
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-1 align-content-center pt-2" >
+                        <!-- <button type="button" class="btn btn-primary" (click)="getStatus()"  pTooltip="Refresh" tooltipPosition="top"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16" >
+                                <path fill-rule="evenodd"
+                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                                <path
+                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                            </svg></button> -->
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-5 pt-2" >
+                        <label>{{PeriodHeading}} 
+                            <!-- <span class="bold" *ngIf="instruFlag">{{instru}}</span> -->
+                        </label>
+                        <!-- <p-progressBar [value]="PROGRESS"></p-progressBar> -->
+                            <!-- <div class="progress">
+                               
+                                <div class="progress-bar" role="progressbar" [style.width]="PROGRESS + '%'"   aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">{{this.PROGRESS +'%'}}</div>
+
+                                    
+                            </div> -->
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                               aria-valuemin="0" aria-valuemax="100" [style.width]="PROGRESS + '%'" >
+                                {{this.PROGRESS +'%'}}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="col-md-12 pt-2">
+        <div class="d-flex mb-2">
+            <div class="d-flex justify-content-start">
+                <h5 class="mb-0 headers">Download MOE Report</h5>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="">
+        <div class="card">
+            <div class="card-body">
+                <div class="">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Period</label>
+                                <div>
+                                    <div>
+                                        <p-dropdown appendTo="body" [options]="periodList"
+                                            [(ngModel)]="periodForDetails" [filter]="true" filterBy="PERIOD_DESC"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Select..."
+                                            optionLabel="PERIOD_DESC" optionValue="PERIOD_DESC">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 col-md-12 col-lg-4 ">
+                            <div class="buttonBox mt-4 ">
+                                <button type="submit" class="btn-primary viewButton mr-2" (click)="folder()">
+                                    <i class="fa fa-arrow-down mr-2" aria-hidden="true"></i>Download
+                                </button>   
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="col-md-12 pt-2">
+        <div class="d-flex mb-2">
+            <div class="d-flex justify-content-start">
+                <h5 class="mb-0 headers">Click on folder to download</h5>
+            </div>
+
+        </div>
+    </div> -->
+<!-- 
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <span></span>
+                            <div  (click)="folder()" class="headfolder"><span>📁</span> {{ periodForDetails
+                                }}</div>
+                            <div *ngFor="let node of detailListToDownload">
+                             
+                                <div class="node" (click)="subFolder(node)">
+                                    <span *ngIf="node.Type === 'folder'">
+                                        <span>{{ isExpanded(node) ? '-' : '+' }}</span> 📁 {{ node.Name }}
+                                    </span>
+                                    <span *ngIf="node.Type === 'file'">📄 {{ node.Name }}</span>
+                                </div>
+
+                                <div *ngIf="isExpanded(node)" class="children" [style.paddingLeft.px]="20"
+                                    (click)="subFolder(node)">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+    <!-- 
+   
+<div  >
+    <div style="background-color: rgb(255, 255, 255);">
+        <table class="table" style="width: 100%;
+        max-width: 100%;
+        background-color: transparent;
+        margin-bottom: 0;
+        ">
+            <thead style=" vertical-align: baseline;
+            border-bottom: 0;
+          
+            font-weight: 500;
+            font-size: 12px ;
+            border-width: 0px ;
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;">
+                <tr>
+                    <td  style="vertical-align: bottom;text-align: center; " colspan="17">
+                        <span style="float: left;">{{currDate | date: 'dd-MMM-yyyy'}}</span>
+                       <b><u>JENBURKT PHARMACEUTICALS LIMITED</u></b>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <b>RAJENDRA KUMAR:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>SIRSA</b> 
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <b>NC012</b> 
+                    </td>
+                    <td colspan="11"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <b>SANDEEP SEN:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>AMBALA FM</b> 
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <b>NC020</b> 
+                    </td>
+                    <td colspan="11"></td>
+
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <b>SANJEEV SHARMA:</b> 
+                     </td>
+                     <td  style="color:red;text-align: center;">
+                        <b>AMBALA RSM</b> 
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <b>NC036</b> 
+                    </td>
+                    <td style="text-align: center;"><b><u>MONTHLY OBJECTIVE EVALUATION (MOE) DOCUMENT AS ON </u></b>
+                        </td>
+                    <td><span>{{currDate | date: 'dd-MMM-yyyy'}}</span></td>
+                    <td colspan="10"></td>
+                   
+                </tr>
+                <tr>
+                    <td colspan="6"> 
+                        Current Month of Feburary 2024
+                    </td>
+                    <td >
+                        Current From 01-04-2023 To 29-Feb-2024
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <table class="" style="border: 1px solid #080809;">
+                    <thead style=" vertical-align: baseline;
+                    border-bottom: 0;
+                  
+                    font-weight: 500;
+                    font-size: 12px ;
+                    border-width: 0px ;
+                    position: sticky;
+                    position: -webkit-sticky;
+                    top: 0;">
+                        <th style="vertical-align: top;
+                        border: 1px solid #080809;
+                        padding: 4px 8px;
+                        color: #000;">CNS</th>
+                        <th style="vertical-align: top;
+                        border: 1px solid #080809;
+                        padding: 4px 8px;
+                        color: #000;">ITT</th>
+                        <th style="vertical-align: top;
+                        border: 1px solid #080809;
+                        padding: 4px 8px;
+                        color: #000;">ACH</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;font-weight:bold;">{{0}}</td>
+                            <td style="text-align: center;">{{0}}</td>
+                            <td style="text-align: center;">{{0}}</td>
+
+                        </tr>
+                    </tbody>
+                
+                </table>
+            </tbody>  
+        </table>
+    </div>
+
+  
+</div> -->

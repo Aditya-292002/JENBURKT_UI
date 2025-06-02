@@ -1,0 +1,77 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2" aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Pool to Pool</li>
+    </ol>
+  </nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Pool to Pool</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <!-- <button type="submit" class="btn-primary formButton saveButton mr-2" (click)="OnSavePoolMasterClick()">Save</button>
+            <button type="submit" class="btn-primary formButton cancelButton">Cancel</button> -->
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSavePoolMasterClick()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="">
+                            <label>Period</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightPeriod=== 'Yes'}">
+                                <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="period" [filter]="true" filterBy="PERIOD_DESC" placeholder="Please Select..." [ngModelOptions]="{standalone: true}"
+                                 ></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="">
+                            <label>Form Pool</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightFromPool=== 'Yes'}">
+                                <p-dropdown [options]="poolMasterList" optionLabel="DisplayName" [(ngModel)]="fromPool" [filter]="true" filterBy="DisplayName" placeholder="Please Select..." [ngModelOptions]="{standalone: true}"
+                                 ></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                      <div class="">
+                          <label>To Pool</label>
+                          <div class="search-dropdown" [ngClass]="{'required-field':isHighLightToPool=== 'Yes'}">
+                              <p-dropdown  [options]="poolMasterList" optionLabel="DisplayName" [(ngModel)]="toPool" [filter]="true" filterBy="DisplayName" placeholder="Please Select..." [ngModelOptions]="{standalone: true}"
+                             ></p-dropdown>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-3">
+                            <label>To Pool</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightToPool=== 'Yes'}">
+                                <p-dropdown  [options]="poolMasterList" optionLabel="DisplayName" [(ngModel)]="toPool" [filter]="true" filterBy="DisplayName" placeholder="Please Select..." [ngModelOptions]="{standalone: true}"
+                               ></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSavePoolMasterClick()">Save</button>
+                            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

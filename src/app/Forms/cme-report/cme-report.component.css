@@ -1,0 +1,26 @@
+.border_right{
+    border-width: 0 0 0 2px;
+    border-style: solid;
+    border-image: radial-gradient(rgb(58 61 60), rgb(244 243 239)) 1;
+  
+    border-image-slice: 1;
+  }
+  .Approved{
+    background-color: #28a745!important;
+  }
+  .Pending{
+  background-color: #ffc107!important;
+  }
+  .header {
+    color: #44484e;
+    font-weight: 600;
+  }
+  .Rejected{
+    background-color: #dc3545;
+  }
+  
+  .form-check-label{
+    display: block
+  
+  }
+  

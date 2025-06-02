@@ -1,0 +1,103 @@
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Role Master</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary formButton "><i class="fa fa-save mr-2"></i>Save</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="">
+                            <label>Role Code</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="">
+                            <label>Description</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group form-check mb-0 mt-4">
+                            <input type="checkbox" class="form-check-input" id="Active">
+                            <label class="form-check-label" for="Active">Active</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-5">
+                <div class="card">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Module</th>
+                                <th scope="col" class="width-20">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of moduleList,let i=index">
+                                <th scope="row" title="{{data.ModuleName}}"><a
+                                        (click)="showModuleListData(data.ModuleCode,data.ModuleName)">{{data.ModuleName}}</a>
+                                </th>
+                                <td class="width-20">{{data.Description}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-7">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Function</th>
+                                    <th scope="col" class="width-20">Description</th>
+                                    <th scope="col" class="width-10">Create</th>
+                                    <th scope="col" class="width-10">Edit</th>
+                                    <th scope="col" class="width-10">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of newFunctionList,let i=index">
+                                    <th scope="row">{{data.functionName}}</th>
+                                    <td class="width-20">{{data.Description}}</td>
+                                    <td class="width-10">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="checkbox" class="form-check-input" id="Create">
+                                            <label class="form-check-label" for="Create"></label>
+                                        </div>
+                                    </td>
+                                    <td class="width-10">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="checkbox" class="form-check-input" id="Edit">
+                                            <label class="form-check-label" for="Edit"></label>
+                                        </div>
+                                    </td>
+                                    <td class="width-10">
+                                        <div class="form-group form-check mb-0">
+                                            <input type="checkbox" class="form-check-input" id="Delete">
+                                            <label class="form-check-label" for="Delete"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

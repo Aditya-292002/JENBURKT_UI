@@ -1,0 +1,72 @@
+
+/* p-calendar */
+.p-calendar {
+    width: 100%;
+  }
+
+  .p-calendar .p-inputtext {
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 0.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5c9cd;
+    width: 100%;
+    border-radius:5px;
+  }
+
+  .p-button.p-button-icon-only {
+    padding: 0 !important;
+    border-radius: 5px;
+  }
+
+  .p-datepicker table td>span {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 50%;
+    transition: box-shadow 0.2s;
+    border: 1px solid transparent;
+  }
+  .p-datepicker table td > span.p-highlight {
+    background: #3f6ad8 !important;
+    color: #EFF6FF !important;
+  }
+  .p-datepicker .p-yearpicker .p-yearpicker-year {
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .p-datepicker .p-monthpicker .p-monthpicker-month {
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .p-datatable .p-calendar .p-datepicker {
+    width: 310px !important;
+  }
+  .p-button {
+    background: #fafafa !important;
+    border: 1px solid #c5c9cd !important;
+    /* width: 2rem !important; */
+    color: #6c757d !important;
+}
+.p-datepicker table th{
+  font-size: 13px !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+.p-datepicker table td {
+  padding: 0 !important;
+}
+.p-link {
+  font-size: 15px !important;
+}
+
+.p-calendar-disabled .p-inputtext  {
+  background: #f5f5f5 !important;
+  cursor: not-allowed !important;
+}
+  /* p-calendar */

@@ -1,0 +1,189 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Download Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Download Report</h5>
+        </div>
+        <!-- <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2">Save</button>
+            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+        </div> -->
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <!-- <div class="mb-4">
+                            <label>Period</label>
+                            <div class="autoCompleteDropdown">
+                                <p-autoComplete [(ngModel)]="periodId"
+                                    [suggestions]="filterPeriodId"
+                                    (completeMethod)="filteredPeriodId($event)" field="PERIOD_DESC"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setPeriodId(filterPeriodId,periodId)" >
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.PERIOD_DESC}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div> -->
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="periodId" [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <!-- <div class="mb-4">
+                            <label>Report Name</label>
+                            <div class="autoCompleteDropdown">
+                                <p-autoComplete [(ngModel)]="reportId"
+                                    [suggestions]="filterReportId"
+                                    (completeMethod)="filteredReportId($event)" field="REPORT_NAME"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setReportId(filterReportId,reportId)" >
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.REPORT_NAME}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div> -->
+                        <div class="mb-2">
+                            <label>Report Name</label>
+                            <div>
+                                <p-dropdown [options]="reportList" appendTo="body" optionLabel="REPORT_NAME" [(ngModel)]="reportId" [filter]="true" filterBy="REPORT_NAME" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="buttonBox mt-4">
+                            <button *ngIf="isLoaded" type="submit" class="btn-primary viewButton mr-2"(click)="onViewDownloadReport()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                            </button>
+                            <button *ngIf="!isLoaded" type="submit" class="btn-primary viewButton mr-2">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>Loading...
+                            </button>
+                            <button type="submit" class="btn-primary formButton"(click)="exportExcel()"><i class="fa fa-upload mr-2"
+                                    aria-hidden="true"></i>Export</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Last Date On:- <b style="color: #191616; font-weight: 600;">{{LAST_DATE_ON | date :'dd/MM/yyyy h:MM'}}</b> </p>
+                        <!-- <p-table [value]="downloadReportList" responsiveLayout="scroll" [paginator]="true" class="prime-table"
+                            [showCurrentPageReport]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true" >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="HQ_CODE">HQ_CODE
+                                        <p-columnFilter type="text" field="HQ_CODE" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="HQ_CODE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="HQ_DESC">HQ_DESC
+                                        <p-columnFilter type="text" field="HQ_DESC" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="HQ_DESC"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="POOL_CODE">POOL_CODE
+                                        <p-columnFilter type="text" field="POOL_CODE" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="POOL_CODE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="FM_CODE">FM_CODE
+                                        <p-columnFilter type="text" field="FM_CODE" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="FM_CODE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="FM_NAME">FM_NAME
+                                        <p-columnFilter type="text" field="FM_NAME" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="FM_NAME"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="RSM_CODE">RSM_CODE
+                                        <p-columnFilter type="text" field="RSM_CODE" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="RSM_CODE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="RSM_NAME">RSM_NAME
+                                        <p-columnFilter type="text" field="RSM_NAME" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="RSM_NAME"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="SM_CODE">SM_CODE
+                                        <p-columnFilter type="text" field="SM_CODE" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="SM_CODE"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="SM_NAME">SM_NAME
+                                        <p-columnFilter type="text" field="SM_NAME" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="SM_NAME"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="NET_SALES">NET_SALES
+                                        <p-columnFilter type="text" field="NET_SALES" display="menu" ></p-columnFilter>
+                                        <p-sortIcon field="NET_SALES"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-report>
+                                <tr>
+                                    <td>{{report.HQ_CODE}}</td>
+                                    <td>{{report.HQ_DESC}}</td>
+                                    <td>{{report.POOL_CODE}}</td>
+                                    <td>{{report.FM_CODE}}</td>
+                                    <td>{{report.FM_NAME}}</td>
+                                    <td>{{report.RSM_CODE}}</td>
+                                    <td>{{report.RSM_NAME}}</td>
+                                    <td>{{report.SM_CODE}}</td>
+                                    <td>{{report.SM_NAME}}</td>
+                                    <td>{{report.NET_SALES}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table> -->
+                        <!-- <p-table [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList" [autoLayout]="true"
+                        scrollDirection="both" [scrollable]="true" scrollHeight="400px" #dt responsiveLayout="scroll"
+                        [globalFilterFields]="showGridData.SearchKey" styleClass="p-datatable-lg">
+                            <ng-template pTemplate="caption">
+                                <div style="text-align: right">
+                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="30" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width:200px" *ngFor="let col of columns">
+                                        {{col.Headers}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td style="width:200px" *ngFor="let col of columns">
+                                        <a class="click" (click)="routeList(rowData)">
+                                            {{rowData[col.Field]}}
+                                          </a>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

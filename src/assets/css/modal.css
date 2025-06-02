@@ -1,0 +1,37 @@
+
+.modal {
+    background: rgb(0 0 0 / 37%);
+  }
+
+  .modal-footer {
+    padding: 7px 10px;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .modal-header {
+    padding: 7px 10px;
+  }
+
+  .modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+
+  .container-footer {
+    position: fixed;
+    bottom: 0;
+    text-align: end;
+    margin: 0 0 0 -67px;
+    box-shadow: 0 -4px 5px -3px rgb(0 0 0 / 10%);
+    background-color: #f7f3f3;
+    width: calc(100% - 200px);
+    z-index: 3;
+    padding: 5px 15px;
+  }
+  .p-dialog .p-dialog-header .p-dialog-title {
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    color: #323943  !important;
+}
+

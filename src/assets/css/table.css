@@ -1,0 +1,181 @@
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+    margin-bottom: 0;
+  }
+
+  .table thead th {
+    vertical-align: baseline;
+    border-bottom: 0;
+    background: #bec5d3;
+    font-weight: 500;
+    font-size: 12px ;
+    border-width: 0px ;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+  }
+  .table tbody th,.table td {
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .table td,
+  .table th {
+    vertical-align: top;
+    border: 1px solid #bfc1c3;
+    padding: 4px 8px;
+    color: #000;
+  }
+
+  .table td i {
+    font-size: 12px;
+  }
+
+/* p-table */
+.p-datatable .p-datatable-thead > tr > th {
+    text-align: left;
+    padding: 0.2rem 0.5rem !important;
+    font-size: 12px !important;
+    border: 1px solid #b5b8bd !important;
+    border-width: 1px !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    background: #e3f2fd !important;
+    height: 35px;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: sticky;
+    position: -webkit-sticky;
+    top: -1px;
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    padding: 0.2rem 0.5rem !important;
+    font-size: 11px !important;
+    border: 1px solid #b5b8bd !important;
+    border-width: 1px !important;
+    color: #322626  !important;
+    /* max-height: 0.5rem; */
+    height: 29px;
+
+  }
+  .p-datatable .p-datatable-tbody > tr > td >a{
+    word-break: break-all;
+  }
+  /* .p-datatable .p-datatable-tbody > tr ,
+  .p-datatable .p-datatable-thead > tr  {
+    border: 1.5px solid #d3d7df !important;
+  } */
+  .p-datatable .p-datatable-tbody > tr:hover{
+    background: #e3f2fd !important
+  }
+
+
+.p-paginator .p-paginator-current {
+  font-size: 0.8rem !important;
+}
+.p-paginator .p-paginator-pages .p-paginator-page {
+  min-width: 1.5rem !important;
+  height: 1.5rem !important;
+  font-size: 0.9rem;
+
+}
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: #2b6cb0 !important;
+  border-color: #2b6cb0 !important;
+  color: #fff !important;
+}
+.p-paginator .p-dropdown {
+  height: 1.7rem !important;
+}
+.p-paginator .p-dropdown .p-dropdown-label,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  font-size: .8rem !important;
+}
+
+.p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+
+  min-width: 1.5rem !important;
+  height: 1.5rem !important;
+
+}
+
+/* filter and sorting css */
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+  font-size: 10px;
+}
+.pi-filter-icon {
+  font-size: 10px !important;
+}
+.p-column-filter-overlay {
+  border: 1px solid #ddd !important;
+}
+
+.p-column-filter-constraint .p-element .p-inputtext{
+  font-size: 13px !important;
+  padding: 5px 10px !important;
+}
+.p-column-filter-overlay-menu .p-column-filter-add-rule {
+  padding: 0rem 1.25rem !important;
+}
+.p-button.p-button-sm {
+  font-size: 12px !important;
+  padding: 0.4rem 1.09375rem !important;
+}
+
+/* scroll css */
+/* width */
+.prime-table::-webkit-scrollbar {
+  height: 10px;
+
+}
+
+/* Track */
+.prime-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.prime-table::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.prime-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.p-checkbox .p-checkbox-box {
+  border: 1px solid #d3d7df !important;
+  background: #ffffff;
+  width: 16px !important;
+  height: 16px !important;
+  /* top:4px !important; */
+  color: #495057;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.p-checkbox {
+  display: inline-flex;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: bottom;
+  position: relative;
+  top: 4px !important;
+}
+/* filter button */
+.column-filter .p-column-filter-clear-button.p-column-filter-clear-button{
+  display: none !important;
+}
+.pi-filter-slash{
+  font-size: 12px !important;
+}
+.p-button-outlined.p-button {
+  padding: 0.2rem 0.25rem !important;
+}

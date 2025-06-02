@@ -1,0 +1,480 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Invoice</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Edit Invoice</h5>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+             <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Cycle</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC" [filter]="true"
+                                    filterBy="CYCLE_DESC" optionValue="CYCLE_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="CYCLE_CODE" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <!-- <div class="mb-3">
+                                        <label>Unit</label>
+                                        <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                            <p-autoComplete [(ngModel)]="UNIT_CODE" class="p-autoComplete"
+                                                [suggestions]="filterUnitCode"
+                                                (completeMethod)="filteredUnitCode($event)" field="UNIT_DESC"
+                                                [dropdown]="true" placeholder="Please Select.."  optionValue="UNIT_CODE"
+                                                (keyup.enter)="setUnitCode(filterUnitCode,UNIT_CODE)">
+                                                <ng-template let-country pTemplate="item">
+                                                    <div class="country-item">
+                                                        <div>{{country.UNIT_DESC}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-autoComplete>
+                                        </div>
+                                    </div> -->
+                        <div class="">
+                            <label>Unit</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                <p-dropdown [options]="UNIT_LIST" appendTo="body" optionLabel="UNIT_DESC" [filter]="true"
+                                    filterBy="UNIT_DESC" optionValue="UNIT_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="UNIT_CODE" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-1">
+                        <div class=" mt-4">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="onPrintInvoiceChange()">Show</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="bg-white   mt-4" *ngIf="isShowPrintInvoiceList">
+
+                <!-- <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>Invoice No</th>
+                            <th>HQ Description</th>
+                           <th class="width-10">Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of INVOICE_DETAILS; let i=index;">
+                            <td style="font-size: 11px;">
+                               {{list.INVOICE_NO}}
+                            </td>
+                            <td style="font-size: 11px;">{{list.HQ_DESC}}</td>
+                            <td *ngIf="list.IS_EDIT == 1" class="width-10"> <span class="status-indicator" [ngClass]="{'is-orange':list.STATUS ==='Pending','is-green':list.STATUS === 'Dispatched'}"><i class="fa fa-circle" aria-hidden="true"  [ngClass]="{'is-orange-i':list.STATUS ==='Pending','is-green-i':list.STATUS === 'Dispatched'}"></i> {{list.STATUS}}</span></td>
+                            <td *ngIf="list.IS_EDIT == 0" class="width-10"><span class="status-indicator" [ngClass]="{'is-orange':list.STATUS ==='Pending','is-green':list.STATUS === 'Dispatched'}"><i class="fa fa-circle" aria-hidden="true"  [ngClass]="{'is-orange-i':list.STATUS ==='Pending','is-green-i':list.STATUS === 'Dispatched'}"></i> {{list.STATUS}}</span></td>
+                            <td>
+                                <div>
+                                    <a  href="javascript:;">
+                                        <span class="badge badge-primary mr-3"  data-toggle="tooltip"
+                                        data-placement="top" (click)="onEditClick(list)"
+                                        >
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a href="javascript:;">
+                                        <span class="badge badge-success" data-toggle="tooltip" data-placement="top"
+                                        (click)="getInvoiceData(list)"
+                                       >
+                                        <i class="fa fa-print" aria-hidden="true"></i></span>
+                                    </a>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+                <p-table [value]="filterInvoiceDetails" responsiveLayout="scroll" scrollHeight="311px"
+                    [globalFilterFields]="['INVOICE_NO','HQ_DESC','UNIT_DESC','DOCKET_NO']" #dt1>
+                    <ng-template pTemplate="caption">
+                        <div class="row" style="justify-content: right;">
+                            <label class="col-form-label">Filter</label>
+                            <div class="col-lg-2">                                
+                                <div class="search-dropdown" >
+                                    <p-dropdown [options]="STATUS_LIST" appendTo="body" optionLabel="STATUS_DESC" 
+                                       optionValue="STATUS_CODE" appendTo="body" placeholder="Please Select.."
+                                        [(ngModel)]="STATUS_CODE"  (ngModelChange)="getFilterStatus()">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <span class="p-input-icon-right ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" class="form-control"
+                                        (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                                </span>                                
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="header" pSortableColumn="INVOICE_NO">INVOICE NO </th>
+                            <th pSortableColumn="HQ_DESC">HQ DESCRIPTION </th>
+                            <th class="width-10">STATUS</th>
+                            <th>ACTION </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                        <tr>
+                            <td style="font-size: 11px;">
+                                {{data.INVOICE_NO}}
+                            </td>
+                            <td style="font-size: 11px;">{{data.HQ_DESC}}</td>
+                            <td *ngIf="data.IS_EDIT == 1" class="width-10 text-center"> <span class="status-indicator"
+                                    [ngClass]="{'is-orange':data.STATUS ==='Pending','is-green':data.STATUS === 'Dispatched'}"><i
+                                        class="fa fa-circle" aria-hidden="true"
+                                        [ngClass]="{'is-orange-i':data.STATUS ==='Pending','is-green-i':data.STATUS === 'Dispatched'}"></i>
+                                    {{data.STATUS}}</span></td>
+                            <td *ngIf="data.IS_EDIT == 0" class="width-10 text-center"><span class="status-indicator"
+                                    [ngClass]="{'is-orange':data.STATUS ==='Pending','is-green':data.STATUS === 'Dispatched'}"><i
+                                        class="fa fa-circle" aria-hidden="true"
+                                        [ngClass]="{'is-orange-i':data.STATUS ==='Pending','is-green-i':data.STATUS === 'Dispatched'}"></i>
+                                    {{data.STATUS}}</span></td>
+                            <td>
+                                <div class="width-2">
+                                    <a href="javascript:;">
+                                        <span class="badge badge-primary mr-3" data-toggle="tooltip" data-placement="top"
+                                            (click)="onEditClick(data)">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a href="javascript:;">
+                                        <span class="badge badge-success" data-toggle="tooltip" data-placement="top"
+                                            (click)="getInvoiceData(data)">
+                                            <i class="fa fa-print" aria-hidden="true"></i></span>
+                                    </a>
+                
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+
+
+
+        </div>
+    </div>
+
+
+<!-- popup start -->
+<!-- <div>
+    <div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+        aria-hidden="true" *ngIf="isShowEditInvoiceDetailsList">
+        <div class="modal-dialog modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Invoice Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closePopup()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+                            <div class="mb-3">
+                                <label>Docket No.</label>
+                                <input type="text" class="form-control" placeholder="Docket No" [(ngModel)]="DOCKET_NO">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+
+
+                            <div>
+                                <label>DC Date</label>
+                                <p-calendar [(ngModel)]="DOCKET_DT" [showIcon]="true" inputId="icon"
+                                    dateFormat="dd-M-yy" readonlyInput="true"
+                                    ></p-calendar>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-primary  saveButton mr-2" (click)="getEditInvoiceUpdateList()">Save</button>
+                    <button type="submit" class="btn-primary  cancelButton" (click)="onCancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- table print -->
+
+<div class="container-fluid d-none"  id="print-new" style="display:none;">
+
+        <div class="header" style="display:table-header-group; ">
+            <div class="bg-white ">
+                <table class="table ">
+                    <header>
+
+                            <tr>
+                                <td  style="width:50%;vertical-align: bottom;">
+                                   <!-- <b>JENBURKT</b>  -->
+                                <img src="../../../assets/images/logo.black.jpg" alt="" width="25%" height="18px">
+                                </td>
+                                <td  style="width:50%;vertical-align: bottom;text-align: right;font-size: 15px; padding: auto;"><b>Jenburkt Pharmaceuticals Ltd.</b> </td>
+
+                            </tr>
+                            <tr>
+                                <td class="width-2 " colspan="2" style="font-size: 12px;">Regd . office: J.P. Road, Andheri (w), Mumbai 400 058. Tel(022)
+                                    66943121 (8 lines), Fax : (022) 66943127
+                                    Plant: {{PLANT_ADDRESS}} District :
+                                    {{DISTRICT}} Tel : {{TEL_NO}} CIN:L24230MH1985PL036541, PAN:AAACJ0256E, Website:www.jenburkt.com, E-Mail : info@jenburkt.com. </td>
+                            </tr>
+
+
+                    </header>
+
+                </table>
+            </div>
+
+
+            <div class="header-space">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%;border:none;vertical-align: bottom; font-size: 12px;">
+                                <b>DELIVERY CHALLAN NO: {{INVOICE_NO_PRINT}}</b>
+                            </td>
+                            <td style="width:50%;border:none;vertical-align: top;text-align: center; font-size: 12px;" colspan="2">
+                                <h4>DELIVERY CHALLAN </h4>
+                                <p>PHYSICIAN SAMPLE</p>
+                            </td>
+                            <td style="width:25%;border:none;vertical-align: bottom;text-align: right; font-size: 12px;">
+                                <b>Dt: {{TODAY_DATE | date: 'dd/MM/YYYY'}}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;text-align: center;" colspan="2">CONSIGNEE DETAILS</td>
+                            <td style="width:50%;text-align: center;" colspan="2">CONSIGNOR DETAILS</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="width:50%">
+                                <ul  style="list-style-type:none">
+                                    <li>{{CON_USER_NAME}},</li>
+                                    <li>{{CON_USER_ADDRESS}}</li>
+
+                                </ul>
+                            </td>
+                            <td style="width:25%">
+                                <ul  style="list-style-type:none">
+                                    <li>GSTIN NO.  </li>
+                                    <li>State Code and State</li>
+                                    <li>DRUG LIC NO.</li>
+                                    <li>FOOD LIC. NO.</li>
+                                </ul>
+                            </td>
+                            <td style="width:25%">
+                                <ul style="list-style-type:none">
+                                    <li>{{GST_IN_NO}}</li>
+                                    <li>{{STATE_CODE}}-{{STATE_NAME}}</li>
+                                    <li>{{DRUG_LIC_NO}}</li>
+                                    <li>{{FOOD_LIC_NO}}</li>
+
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>STATE CODE:{{CON_STATE_CODE}}</td>
+                            <td>PLACE OF SUPPLY:{{CON_STATE_NAME}}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul  style="list-style-type:none">
+                                    <li>MR MO.NO</li>
+                                    <li> RSM NAME</li>
+                                    <li>RSM MO.NO</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul  style="list-style-type:none">
+                                    <li>{{MR_MOBILE_NO}}</li>
+                                    <li>{{RSM_NAME}}</li>
+                                    <li>{{RSM_MOBILE_NO}}</li>
+                                </ul>
+                            </td>
+                            <td colspan="2">
+                                <u>Declaration:</u>
+                                <p>Physician Samples have been cleared with reversal of input Tax Credit.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-center"><b>PYSICIAN SAMPLE FOR THE CYCLE: {{FROM_DATE  | date:'mediumDate' }} TO  {{TO_DATE | date:'mediumDate'}} -{{CALYEAR}}</b> </td>
+                        </tr>
+                    </tbody>
+                </table>
+               </div>
+        </div>
+
+
+        <div class="bg-white mt-1">
+            <div class="content" >
+                <table class=" table_new" style="background: none;">
+                    <thead >
+                        <tr >
+                            <th   >No.</th>
+                            <th >HSN Code</th>
+                            <th >Product</th>
+                            <th >Quantity</th>
+                            <th >Unit</th>
+                            <th >Rate / Unit</th>
+                            <th >Taxable Value</th>
+                            <th >Rate of Tax</th>
+                            <th >Type of Tax</th>
+                            <th >Tax Amt.</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let data of InvoiceDetail, let i = index"
+                        [ngClass]="i == 40 ? 'check' : ''">
+                            <td>{{data.SR_NO}}</td>
+                            <td>{{data.HSM_CODE}}</td>
+
+                            <td>{{data.SAMPLE_PRODUCT_DESC}}</td>
+                            <td>{{data.DC_QTY}}</td>
+                            <td>{{data.UNIT}}</td>
+                            <td>{{data.RATE_UNIT}}</td>
+                            <td>{{data.TAXABLE_VALUE}}</td>
+                            <td>{{data.RATE_TAX}}</td>
+                            <td>{{data.TYPE_TAX}}</td>
+                            <td>{{data.TAX_AMT}}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="10">
+                               <u>Declaration:</u> This is Physician Samples for free Distribution having ZERO Value, hence is no Requirenent of E-Way Bill.
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <!-- <tfoot class="test">
+                        <div class="footer test" style="height: 100px;">
+                            <table class="table mt-2" >
+                                <tfoot class="footer-space">
+                                 <tr>
+                                     <td>
+                                         <ul  style="list-style-type:none">
+                                             <li>Total Case</li>
+                                             <li>Gross Wt.(In kgs)</li>
+                                             <li>Dispatched Through</li>
+                                         </ul>
+                                     </td>
+                                     <td>
+                                         <ul  style="list-style-type:none">
+                                             <li>{{TOTAL_CASE}}</li>
+                                             <li>{{GROSS_WT}}</li>
+                                             <li>{{DISPATCHED_NAME}}</li>
+                                         </ul>
+                                     </td>
+                                     <td  class="text-center"><u>For, Jenburkt Pharmaceuticals Ltd., Sihor</u> </td>
+                                    </tr>
+                                    <tr>
+                                     <td>
+                                         <ul  style="list-style-type:none">
+                                             <li>Docket No.</li>
+                                             <li>Docket Dt.</li>
+                                         </ul>
+                                     </td>
+                                     <td>
+                                         <ul  style="list-style-type:none">
+                                             <li>{{DOCKET_NO_PRINT}}</li>
+                                             <li>{{DOCKET_DT_PRINT | date: 'dd/MM/YYYY'}}</li>
+                                         </ul>
+                                     </td>
+                                     <td class="text-center"><u> (Authorizes Signature)</u></td>
+                                    </tr>
+                                </tfoot>
+                             </table>
+                             <table class="table">
+                                <tfoot class="footer-space">
+                                    <tr>
+                                        <td style="width:100%;border:none;text-align: center; font-size: 10px;">
+                                            <b>Subject to Mumbai Jurisdiction</b>
+                                        </td>
+                                       </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </tfoot> -->
+                </table>
+            </div>
+
+
+            <div class="footer" style="height: 100px;">
+                <table class="table mt-2" >
+                    <tfoot class="footer-space">
+                     <tr>
+                         <td>
+                             <ul  style="list-style-type:none">
+                                 <li>Total Case</li>
+                                 <li>Gross Wt.(In kgs)</li>
+                                 <li>Dispatched Through</li>
+                             </ul>
+                         </td>
+                         <td>
+                             <ul  style="list-style-type:none">
+                                 <li>{{TOTAL_CASE}}</li>
+                                 <li>{{GROSS_WT}}</li>
+                                 <li>{{DISPATCHED_NAME}}</li>
+                             </ul>
+                         </td>
+                         <td  class="text-center"><u>For, Jenburkt Pharmaceuticals Ltd., Sihor</u> </td>
+                        </tr>
+                        <tr>
+                         <td>
+                             <ul  style="list-style-type:none">
+                                 <li>Docket No.</li>
+                                 <li>Docket Dt.</li>
+                             </ul>
+                         </td>
+                         <td>
+                             <ul  style="list-style-type:none">
+                                 <li>{{DOCKET_NO_PRINT}}</li>
+                                 <li>{{DOCKET_DT_PRINT | date: 'dd/MM/YYYY'}}</li>
+                             </ul>
+                         </td>
+                         <td class="text-center"><u> (Authorizes Signature)</u></td>
+                        </tr>
+                    </tfoot>
+                 </table>
+
+                 <table class="table">
+                    <tfoot class="footer-space">
+                        <tr>
+                            <td style="width:100%;border:none;text-align: center; font-size: 10px;">
+                                <b>Subject to Mumbai Jurisdiction</b>
+                            </td>
+                           </tr>
+                    </tfoot>
+                </table>
+            </div>
+            </div>
+            </div>

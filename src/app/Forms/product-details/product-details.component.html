@@ -1,0 +1,246 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sample Allocation</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Sample Allocation</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearForm()">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Product Code</label>
+                            <p-dropdown appendTo="body" [options]="PRODUCT_LIST" appendTo="body"
+                                optionLabel="DESCRIPTION" optionValue="SAMPLE_PRODUCT_CODE" [filter]="true" filterBy="DESCRIPTION"
+                                placeholder="Please Select.." [(ngModel)]="PRODUCT_CODE"
+                                [ngModelOptions]="{standalone:true}" >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Cycle</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC" [filter]="true" filterBy="CYCLE_DESC"
+                                    optionValue="CYCLE_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="CYCLE" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="">
+                            <label>Unit</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="UNIT_LIST" appendTo="body" optionLabel="UNIT_DESC" [filter]="true" filterBy="UNIT_DESC"
+                                    optionValue="UNIT_CODE" appendTo="body" placeholder="Please Select.."
+                                    [(ngModel)]="UNIT_CODE" [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <div class="">
+                            <label>Stock</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightStock === 'Yes'}">
+                                <input type="text" class="form-control" [(ngModel)]="STOCK" placeholder="STOCK"
+                                    disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-1">
+                        <div class=" mt-4">
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="showProductDetailsData()">Show</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white" *ngIf="isShowProductDetailList">
+            <div class="mt-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Range</th>
+                            <th>MR'S</th>
+                            <th>Allocation</th>
+                            <th>Require Stock(MR * Allocation)</th>
+                            <th>Prev Cycle</th>
+                            <th>YTD Allocation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of PRODUCT_DEATAIL_LIST; let i=index;">
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightRange === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.DESC_FROM_TO"
+                                        placeholder="RANGE" disabled>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightMrs === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.MR" placeholder="0"
+                                        disabled>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightAllocation === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.ALLOC_OF_MRS"
+                                        placeholder="0" (ngModelChange)="calculateAllocation(list)">
+                                </div>
+
+                            </td>
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightAllocation === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.TOTAL_ALLOC"
+                                        placeholder="0" disabled>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightPrevCycle === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.PREV_CYCLE"
+                                        placeholder="Prev Cycle" disabled>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div [ngClass]="{'required-field':isHighLightLTDAllocation === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="list.YTD"
+                                        placeholder="LTD Allocation" disabled>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=" text-right" colspan="1" style="background: #ddf2f7;">
+                                <b>Total :-</b>
+                            </td>
+                            <td style="background: #ddf2f7;">
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="totalMrs" placeholder="0"
+                                        disabled>
+                                </div>
+                            </td>
+                            <td style="background: #ddf2f7;">
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="totalAllocation"
+                                        placeholder="0" disabled>
+                                </div>
+
+                            </td>
+                            <td style="background: #ddf2f7;">
+                                <div [ngClass]="{'required-field':isHighLightTotalRequiredStock === 'Yes'}">
+                                    <input type="text" class="form-control" [(ngModel)]="totalRequiredStock"
+                                        placeholder="0" disabled>
+                                </div>
+
+                            </td>
+
+                            <td style="background: #ddf2f7;"></td>
+                            <td style="background: #ddf2f7;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isShowEditPopup">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mt-8 p-4">
+                    <div class="card">
+                        <div class="">
+                            <p-table [value]="SAMPLE_PRODUCT_DETAIL_LIST" scrollDirection="both" [scrollable]="true"
+                                styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                                [globalFilterFields]="['SAMPLE_PRODUCT_CODE','DESCRIPTION','STOCK','TOTAL_ALLOCATION']"
+                                scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <!-- <div style="text-align: right">
+                                    <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div> -->
+                                    <div class="input-group search-group px-3"
+                                        style="width: 250px; margin-left: 440px;">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search keyword" aria-label="Search" size="20"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fa fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100">
+                                            PRODUCT CODE
+                                        </th>
+                                        <th pSortableColumn="DESCRIPTION" class="width-100">
+                                            DESCRIPTION
+                                        </th>
+                                        <th pSortableColumn="STOCK" class="width-100">
+                                            CYCLE CODE
+                                        </th>
+                                        <!-- <th pSortableColumn="TOTAL_ALLOCATION" class="width-100">
+                                            TOTAL_ALLOCATION
+                                        </th> -->
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData>
+                                    <tr>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.SAMPLE_PRODUCT_CODE}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.DESCRIPTION}}</a>
+                                        </td>
+                                        <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)"> {{rowData.CYCLE_CODE
+                                                }}</a>
+                                        </td>
+                                        <!-- <td class="width-100">
+                                            <a class="click" (click)="onProductSelected(rowData)">
+                                                {{rowData.TOTAL_ALLOCATION }}</a>
+                                        </td> -->
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

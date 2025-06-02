@@ -1,0 +1,123 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">ITD</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">ITD</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <!-- <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveITDClick()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton">Cancel</button> -->
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveITDClick()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Date</label>
+                            <div>
+                                <p-calendar [(ngModel)]="BANK_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="{{BANK_DATE}}"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Form Pool</label>
+                            <div [ngClass]="{'required-field':isHighLightFromPool=== 'Yes'}">
+                                <p-dropdown class="" [options]="poolMasterList" optionLabel="DisplayName" [(ngModel)]="fromPool" [filter]="true" filterBy="DisplayName" placeholder="Please Select..." [ngModelOptions]="{standalone: true}"
+                               >
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="buttonBox mt-4">
+                            <button type="submit" class="btn-primary formButton" (click)="ShowPoolTable()"><i class="fa fa-caret-right mr-2"
+                                    aria-hidden="true"></i>Next</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+                        <table class="table" *ngIf="isShowPoolTable">
+                            <tbody>
+                                <tr *ngFor="let list of PRODUCT_TABLE_LIST; let i=index;">
+                                    <td class="width-1 pl-0">
+                                        <div class="search-dropdown" [ngClass]="{'required-field':isHighLightProduct=== 'Yes'}">
+                                            <p-dropdown [options]="periodList" appendTo="body" optionLabel="" [(ngModel)]="list.PRODUCT_CODE" 
+                                                placeholder="Product" [ngModelOptions]="{standalone: true}"(onChange)="onPoolChange(i,list.PRODUCT_CODE)"  [filter]="true" filterBy="">
+                                            </p-dropdown>
+                                        </div>
+                                    </td>
+                                    <td class="width-1 pl-0">
+                                        <div class="search-dropdown"  [ngClass]="{'required-field':isHighLightToPool=== 'Yes'}">
+                                            <p-dropdown [options]="poolList" optionLabel="DisplayName" [(ngModel)]="list.TO_POOL" [ngModelOptions]="{standalone: true}"
+                                            [filter]="true" filterBy="DisplayName"   placeholder="To Pool" appendTo="body">
+                                            </p-dropdown>
+                                        </div>
+                                    </td>
+                                    <td class="width-2">
+                                        <div [ngClass]="{'required-field':isHighLightQuantity=== 'Yes'}">
+                                            <input type="text" class="form-control text-right" placeholder="Qty" [(ngModel)]="list.QTY" [ngModelOptions]="{standalone: true}"
+                                            (change)="onQuantityChange($event,i)">
+                                        </div>
+                                    </td>
+                                    <td class="width-2">
+                                        <div [ngClass]="{'required-field':isHighLightRate=== 'Yes'}">
+                                            <input type="text" class="form-control text-right" placeholder="Rate" [(ngModel)]="list.RATE" [ngModelOptions]="{standalone: true}"
+                                            (change)="onQuantityChange($event,i)">
+                                        </div>
+                                    </td>
+                                    <td class="width-3">
+                                        <div>
+                                            <input type="text" class="form-control text-right" placeholder="Value" [(ngModel)]="list.VALUE" disabled="true">
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div>
+                                            <button  (click)="addProductList(list,i)" class="btn-primary formButton text-success mr-2"><i class="fa fa-plus"
+                                                aria-hidden="true"></i></button>
+                                                <button (click)="deleteProductList(i)"  class="btn-primary formButton text-danger"><i class="fa fa-trash-o "
+                                                    aria-hidden="true"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" ><p class="text-right mb-0"><b>Total</b></p></td>
+                                    <td class="width-3">
+                                        <div>
+                                            <input type="text" class="form-control text-right" placeholder="Value" [(ngModel)]="totalValue"
+                                            [ngModelOptions]="{standalone: true}" disabled="true">
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="OnSaveITDClick()">Save</button>
+                            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

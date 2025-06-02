@@ -1,0 +1,1776 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Request CME</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Request CME</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn btn-primary  formButton mr-2" (click)="GETCMECREATEDLIST()"
+                *ngIf="this.CME_ID == null">Req Cme List</button>
+            <button type="submit" class="btn btn-success  saveButton mr-2" (click)="SAVECMEREQUEST(0)"
+                *ngIf="this.CME_ID == null">Save</button>
+            <button type="submit" class="btn-danger  cancelButton " (click)="CANCElCMEREQUEST()"
+                *ngIf="this.CME_ID == null">Cancel</button>
+            <button type="submit" class="btn btn-success  saveButton mr-2" (click)="SAVECMEREQUEST(1)"
+                *ngIf="(this.CME_ID != null && this.IS_APPROVED != 1)">Update</button>
+            <button type="submit" class="btn btn-primary  formButton mr-2" (click)="BACKTOAPPROVALLIST()"
+                *ngIf="this.IS_APPROVAL == 1">Back</button>
+            <button type="submit" class="btn btn-primary  formButton mr-2" (click)="BACKTOREQUESTLIST()"
+                *ngIf="this.CME_ID != null && this.IS_APPROVAL == 0">Back</button>
+            <button class="btn btn-primary  formButton mr-2" (click)="showDialog()"
+                *ngIf="this.CME_ID != null && this.IS_APPROVAL == 0">History</button>
+            <button class="btn btn-primary  formButton mr-2"
+                *ngIf="this.CME_ID != null && this.POST_CMESTATUS == '0' && this.CME_REQUEST_BY == this.REQ_BY_USER_ID && !this.IS_CANCELLED"
+                (click)="postpone()">Postpone</button>
+            <button class="btn btn-primary cancelButton  formButton mr-2" (click)="cancel()"
+                *ngIf="this.CME_ID != null && this.POST_CMESTATUS == '0' && this.CME_REQUEST_BY == this.REQ_BY_USER_ID && !this.IS_CANCELLED">Cancel</button>
+            <button type="submit" class="btn btn-success  saveButton mr-2" (click)="APPROVECMEREQUEST(1)"
+                *ngIf="this.CME_ID != null && this.IS_VIEW == 0">Approve</button>
+            <button type="submit" class=" btn-danger  cancelButton " (click)="OPENREJECTCMEREQUESTPOPUP()"
+                *ngIf="this.CME_ID != null && this.IS_VIEW == 0">Reject</button>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid" id="PreviewPDF" #PreviewPDF>
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card ">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>CME No. </label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="CME_NO" disabled placeholder="CME No"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Date<span style="color: red;">*</span></label>
+                        <div>
+                            <p-calendar [(ngModel)]="CME_DATE" appendTo="body" [showIcon]="true" dateFormat="dd-mm-yy"
+                                placeholder="Please Select Date" [minDate]="Today" inputId="icon"
+                                placeholder="{{CME_DATE}}"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Req By<span style="color: red;">*</span></label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="REQ_BY_USER_NAME" disabled
+                                placeholder="Please Enter Req By" [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>HQ Code</label>
+                        <div>
+                            <p-dropdown [options]="HQ_CODE_LIST" [(ngModel)]="HQ_CODE"
+                                [ngModelOptions]="{standalone:true}" (ngModelChange)="GETCMEDOCTORLIST($event)"
+                                placeholder="Please Select HQ Code" appendTo="body" optionValue="HQ_CODE"
+                                optionLabel="HQ_DESC" [filter]="true" filterBy="HQ_DESC">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>CME Type<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="CME_TYPE_LIST" [(ngModel)]="CME_TYPE_ID"
+                                [ngModelOptions]="{standalone:true}" (ngModelChange)="GetCampView(CME_TYPE_ID)"
+                                placeholder="Please Select CME Type" appendTo="body" optionValue="CME_TYPE_ID"
+                                optionLabel="CME_DESC" [filter]="true" filterBy="CME_DESC">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isCampTypeView">
+                    <div class="mb-2">
+                        <label>Camp Type<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="CAMP_TYPE_LIST" [(ngModel)]="CAMP_TYPE_ID"
+                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Camp Type"
+                                optionValue="CAMP_TYPE_ID" appendTo="body" optionLabel="CAMP_DESC" [filter]="true"
+                                filterBy="CAMP_DESC">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-4 ">
+                    <div class="d-flex justify-content-around mt-4">
+                        <div class="form-check form-check-inline">
+                            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="INSTITUTION" (click)="CheckInstitution(1)" >
+                                        <label class="form-check-label" for="INSTITUTION">Institution</label> -->
+                            <p-checkbox [(ngModel)]="INSTITUTION" name="InstName" (click)="CheckInstitution(1)"
+                                binary="true" inputId="Institution"></p-checkbox>
+                            <label for="InstName">Institution</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <p-checkbox [(ngModel)]="NON_INSTITUTION" name="InstName" (click)="CheckInstitution(0)"
+                                binary="true" inputId="Non_Institution"></p-checkbox>
+                            <label for="InstName">Non Institution</label>
+                            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="NON_INSTITUTION" (click)="CheckInstitution(0)">
+                                        <label class="form-check-label" for="NON_INSTITUTION">Non Institution</label> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName == true">
+                    <div>
+                        <label>Institution Name<span style="color: red;">*</span></label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="INST_NAME"
+                                placeholder="Please Enter Institution Name" [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-8 ">
+                    <div class="">
+                        <label>Topic<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="TOPIC_LIST" [(ngModel)]="TOPIC_ID"
+                                [ngModelOptions]="{standalone:true}" placeholder="Topic" appendTo="body"
+                                optionValue="TOPIC_ID" optionLabel="TOPIC_DESC" [filter]="true" filterBy="TOPIC_DESC"
+                                (onChange)="changeTOPIC(TOPIC_ID)">
+                            </p-dropdown>
+                            <div class="pt-1">
+                                <textarea *ngIf="DROPDOWNFLAG" type="text" class="form-control" [(ngModel)]="TOPIC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Topic">
+                                    </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-2">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-2 ">
+                            <b>Speaker</b>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-2" *ngIf="this.IS_APPROVED != 1">
+                            <button type="submit" class="btn-primary  formButton " (click)="SpeakerView()">
+                                Doctor's List
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Name<span style="color: red;">*</span></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control" [(ngModel)]="SPEAKER_NAME"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Qual<span style="color: red;">*</span></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control" [(ngModel)]="SPEAKER_QUALIFICATION"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Oual">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <div class="mb-2">
+                                <label>Specialization<span style="color: red;">*</span></label>
+                                <div>
+                                    <!-- <input type="text" class="form-control" [(ngModel)]="SPEAKER_SPECIALIZATION"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Specialization"> -->
+                                    <p-dropdown [options]="SPEAKER_SPECIALIZATION_LIST"
+                                        [(ngModel)]="SPEAKER_SPECIALIZATION_ID" [ngModelOptions]="{standalone:true}"
+                                        placeholder="Please Select Specialization" appendTo="body" optionValue="SPL_ID"
+                                        optionLabel="SPL_DESCRIPTION" [filter]="true" filterBy="SPL_DESCRIPTION">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Venue<span style="color: red;">*</span></label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="VENUE"
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Venue">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-2">
+                    <div class="mb-2">
+                        <label>Dt From<span style="color: red;">*</span></label>
+                        <div>
+                            <p-calendar [(ngModel)]="CME_DATE_FROM" appendTo="body" [showIcon]="true"
+                                dateFormat="dd-mm-yy" inputId="icon" (ngModelChange)="getValidDate()" [minDate]="Today"
+                                placeholder="{{CME_DATE_FROM }}"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-2">
+                    <div class="mb-2">
+                        <label>To<span style="color: red;">*</span></label>
+                        <div>
+                            <p-calendar [(ngModel)]="CME_TO_DATE" appendTo="body" [showIcon]="true"
+                                dateFormat="dd-mm-yy" inputId="icon" [minDate]="Today_cme_to_date"
+                                placeholder="{{CME_TO_DATE}}"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-2">
+                    <div class="mb-2">
+                        <label>Time From<span style="color: red;">*</span></label>
+                        <p-calendar [(ngModel)]="CME_TIME_FROM" appendTo="body" [timeOnly]="true" [showIcon]="true"
+                            [hourFormat]="12" inputId="icon" [stepMinute]="15" placeholder="{{CME_TIME_FROM}}">
+                        </p-calendar>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-2">
+                    <div class="mb-2">
+                        <label>To<span style="color: red;">*</span></label>
+                        <div>
+                            <p-calendar [(ngModel)]="CME_TO_TIME" appendTo="body" [timeOnly]="true" [showIcon]="true"
+                                [hourFormat]="12" inputId="icon" [stepMinute]="15"
+                                placeholder="{{CME_TO_TIME}}"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Amount/Honorarium<span style="color: red;">*</span></label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="AMOUNT" numbersOnly
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Amount">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Gst</label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="GST"
+                                [ngModelOptions]="{standalone: true}" numbersOnly placeholder="Please Enter Gst">
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName == false">
+                    <div class="mb-2">
+                        <label>Whom to Pay<span style="color: red;">*</span></label>
+                        <div class="d-flex justify-content-space ">
+                            <div class="form-check form-check-inline">
+                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_USER" name="isWhomToPayView"
+                                    (click)="CheckisWhomToPay(1)" binary="true" inputId="isWhomToPayUser"></p-checkbox>
+                                <label for="isWhomToPayView">User</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_OTHERS" name="isWhomToPayView"
+                                    (click)="CheckisWhomToPay(0)" binary="true"
+                                    inputId="isWhomToPayOthers"></p-checkbox>
+                                <label for="isWhomToPayView">Others</label>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName != false">
+                    <div class="mb-2">
+                        <label>Division<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="DIV_LIST" [(ngModel)]="DIVISION_CODE"
+                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Division"
+                                appendTo="body" optionValue="DIVISION_CODE" optionLabel="DIVISION_NAME" [filter]="true"
+                                filterBy="DIVISION_NAME">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row " *ngIf="this.InstName == false">
+                                <div class="col-sm-12 col-md-12 col-lg-2" *ngIf="this.InstName == false">
+                    <div class="mb-2">
+                        <label>Whom to Pay<span style="color: red;">*</span></label>
+                        <div class="d-flex justify-content-space ">
+                            <div class="form-check form-check-inline">
+                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_USER" name="isWhomToPayView"
+                                    (click)="CheckisWhomToPay(1)" binary="true" inputId="isWhomToPayUser"></p-checkbox>
+                                <label for="isWhomToPayView">User</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_OTHERS" name="isWhomToPayView"
+                                    (click)="CheckisWhomToPay(0)" binary="true"
+                                    inputId="isWhomToPayOthers"></p-checkbox>
+                                <label for="isWhomToPayView">Others</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.isWhomToPayView == 'U'">
+                    <div class="mb-2">
+                        <label>User<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="WHOM_TO_PAY_LIST" [(ngModel)]="WHOM_TO_PAY_USER_ID"
+                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Whom to Pay"
+                                appendTo="body" optionValue="USER_ID" optionLabel="USER_NAME" [filter]="true"
+                                filterBy="USER_NAME">
+                            </p-dropdown>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.isWhomToPayView == 'O'">
+                    <div class="mb-2">
+                        <label>Others<span style="color: red;">*</span></label>
+                        <!-- <div *ngIf="WHOM_TO_PAY_USER_ID">
+                            <input type="text" class="form-control" [(ngModel)]="WHOM_TO_PAY_USER_NAME"
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Whom to Pay">
+                        </div> -->
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="SPEAKER_NAME"
+                                [ngModelOptions]="{standalone: true}" placeholder="Name" dissabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Division<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="DIV_LIST" [(ngModel)]="DIVISION_CODE"
+                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Division"
+                                appendTo="body" optionValue="DIVISION_CODE" optionLabel="DIVISION_NAME" [filter]="true"
+                                filterBy="DIVISION_NAME">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>Bank Name<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>Bank Account Number<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"  (keypress)="keyPressNumbers($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>IFSC code<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+
+ <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName == true">
+                    <div>
+                        <label>Institution Name<span style="color: red;">*</span></label>
+                        <div>
+                            <input type="text" class="form-control" [(ngModel)]="INST_NAME"
+                                placeholder="Please Enter Institution Name" [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Pay By<span style="color: red;">*</span></label>
+                            <div>
+                                <p-calendar [(ngModel)]="PAY_BY_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                    inputId="icon" placeholder="{{PAY_BY_DATE}}"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Advance</label>
+                            <div class="d-flex justify-content-space ">
+                                <div class="form-check form-check-inline">
+                                    <!-- <input class="form-check-input" type="radio" name="isAddvance"
+                                                id="isAddvanceYes"   (click)="CheckisAddvance(1)" >
+                                            <label class="form-check-label" for="isAddvanceYes">Yes</label> -->
+                                    <p-checkbox [(ngModel)]="IS_ADVANCE_YES" name="isAddvanceView"
+                                        (click)="CheckisAddvance(1)" binary="true" inputId="isAddvanceYes"></p-checkbox>
+                                    <label for="isAddvanceView">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <p-checkbox [(ngModel)]="IS_ADVANCE_NO" name="isAddvanceView"
+                                        (click)="CheckisAddvance(0)" binary="true" inputId="isAddvanceNo"></p-checkbox>
+                                    <label for="isAddvanceView">No</label>
+                                    <!-- <input class="form-check-input" type="radio" name="isAddvance"
+                                                id="isAddvanceNo" checked (click)="CheckisAddvance(0)">
+                                            <label class="form-check-label" for="isAddvanceNo">No</label> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isAddvanceView == true">
+                        <div class="">
+                            <label>Advance Amount<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="ADVANCE" numbersOnly
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Advance">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <div class="mb-2">
+                        <h6 class="modal-title">Attending Team<span style="color: red;">*</span></h6>
+                        <p-table [value]="ATTENDING_TEAM_DROPDOWN" responsiveLayout="scroll" [paginator]="false"
+                            class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                            [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="col-sm-12 col-md-12 col-lg-4"> Attending Team Name </th>
+                                    <th class="col-sm-12 col-md-12 col-lg-1" *ngIf="this.IS_APPROVED != 1"> Action </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body">
+                                <tr *ngFor="let dropdown of AttendingDropdowns; let i = index,let last = last">
+                                    <td>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <p-dropdown [options]="ATTENDING_TEAM_LIST" [(ngModel)]="dropdown.USER_ID"
+                                                [ngModelOptions]="{standalone:true}"
+                                                placeholder="Please Select Attending Team" appendTo="body"
+                                                optionValue="USER_ID" optionLabel="USER_NAME" [filter]="true"
+                                                filterBy="USER_NAME">
+                                            </p-dropdown>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="this.IS_APPROVED != 1">
+                                        <div class="d-flex gap-2">
+                                            <button class="btn-primary formButton ml-2"
+                                                *ngIf="last && !this.isViewAddAttending"
+                                                (click)="addAttendingTeamList()">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn-danger cancelButton ml-2" *ngIf="i >= 1"
+                                                (click)="removeAttendingTeamList(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Expected Doctors<span style="color: red;">*</span></label>
+                        <div class="d-flex">
+                            <input type="text" class="form-control" [(ngModel)]="EXPECTED_DOCTORS" numbersOnly
+                                [ngModelOptions]="{standalone: true}" placeholder="Please Enter Expected Doctors">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Slide Deck Reqd</label>
+                        <div class="d-flex justify-content-space ">
+                            <div class="form-check form-check-inline">
+                                <!-- <input class="form-check-input" type="radio" name="isSlideDeckReqd"
+                                            id="isSlideDeckReqdYes" (click)="CheckisSlideDeckReqd(1)" >
+                                        <label class="form-check-label" for="isSlideDeckReqdYes">Yes</label> -->
+                                <p-checkbox [(ngModel)]="IS_SLIDE_DECK_REQD_YES" name="isSlideDeckReqd"
+                                    (click)="CheckisSlideDeckReqd(1)" binary="true" inputId="isSlideDeckReqdYes">
+                                </p-checkbox>
+                                <label for="isSlideDeckReqd">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <p-checkbox [(ngModel)]="IS_SLIDE_DECK_REQD_NO" name="isSlideDeckReqd"
+                                    (click)="CheckisSlideDeckReqd(0)" binary="true" inputId="isSlideDeckReqdNo">
+                                </p-checkbox>
+                                <label for="isSlideDeckReqd">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="mb-2">
+                        <label>Art Work Reqd</label>
+                        <div class="d-flex justify-content-space ">
+                            <div class="form-check form-check-inline">
+                                <!-- <input class="form-check-input" type="radio" name="isArtWorkReqd"
+                                            id="isArtWorkReqdYes" (click)="CheckisArtWorkReqd(1)">
+                                        <label class="form-check-label" for="isArtWorkReqdYes">Yes</label> -->
+                                <p-checkbox [(ngModel)]="IS_ART_WORK_REQD_YES" name="isArtWorkReqd"
+                                    (click)="CheckisArtWorkReqd(1)" binary="true" inputId="isArtWorkReqdYes">
+                                </p-checkbox>
+                                <label for="isArtWorkReqd">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <!-- <input class="form-check-input" type="radio" name="isArtWorkReqd"
+                                            id="isArtWorkReqdNo" checked (click)="CheckisArtWorkReqd(0)">
+                                        <label class="form-check-label" for="isArtWorkReqdNo">No</label> -->
+                                <p-checkbox [(ngModel)]="IS_ART_WORK_REQD_NO" name="isArtWorkReqd"
+                                    (click)="CheckisArtWorkReqd(0)" binary="true" inputId="isArtWorkReqdNo">
+                                </p-checkbox>
+                                <label for="isArtWorkReqd">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="mb-2">
+                        <h6 class="modal-title">Promotional Material Req</h6>
+                        <p-table [value]="PROMOTION_MATERIAL_REQUEST" responsiveLayout="scroll" [paginator]="false"
+                            class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                            [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="col-sm-12 col-md-12 col-lg-4"> Item </th>
+                                    <th class="col-sm-12 col-md-12 col-lg-4"> Remarks </th>
+                                    <th class="col-sm-12 col-md-12 col-lg-2"> Qty </th>
+                                    <th class="col-sm-12 col-md-12 col-lg-2" *ngIf="this.IS_APPROVED != 1"> Action </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-data>
+                                <tr *ngFor="let item of PromotionalMaterialReq; let i = index,let last = last">
+                                    <td>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <p-dropdown [options]="PROM_MAT_REQ_ITEM_LIST" [(ngModel)]="item.ITEM_ID"
+                                                [ngModelOptions]="{standalone:true}"
+                                                placeholder="Please Select Promotional Material Item" appendTo="body"
+                                                optionValue="ITEM_ID" optionLabel="ITEM_DESC" [filter]="true"
+                                                filterBy="ITEM_DESC">
+                                            </p-dropdown>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <input type="text" class="form-control" [(ngModel)]="item.REMARKS"
+                                                [ngModelOptions]="{standalone: true}"
+                                                placeholder="Please Enter Remarks">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <input type="text" class="form-control" [(ngModel)]="item.QUANTITY"
+                                                numbersOnly [ngModelOptions]="{standalone: true}"
+                                                placeholder="Please Enter Quantity">
+                                        </div>
+                                    </td>
+                                    <td *ngIf="this.IS_APPROVED != 1">
+                                        <button class="btn-primary formButton ml-2"
+                                            *ngIf="last && !this.isViewPromMAterialReq" (click)="addPromMaterialReq()">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn-danger cancelButton ml-2" *ngIf="i >= 1"
+                                            (click)="removePromMaterialReq(i)">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <div class="mb-2">
+                        <h6 class="modal-title">Brands<span style="color: red;">*</span></h6>
+                        <p-table [value]="BRANDS_DROPDOWN" responsiveLayout="scroll" [paginator]="false"
+                            class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                            [rowsPerPageOptions]="[10, 25, 50, 100]"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="col-sm-12 col-md-12 col-lg-4"> Brand Name </th>
+                                    <th class="col-sm-12 col-md-12 col-lg-1" *ngIf="this.IS_APPROVED != 1"> Action </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body">
+                                <tr *ngFor="let dropdown of BrandDropdowns; let i = index,let last = last">
+                                    <td>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <p-dropdown [options]="BRAND_LIST" [(ngModel)]="dropdown.PRODUCT_CODE"
+                                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Brands"
+                                                appendTo="body" optionValue="PRODUCT_CODE" optionLabel="PRODUCT_DESC"
+                                                [filter]="true" filterBy="PRODUCT_DESC">
+                                            </p-dropdown>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="this.IS_APPROVED != 1">
+                                        <div class="d-flex gap-2">
+                                            <button class="btn-primary formButton  ml-2"
+                                                *ngIf="last && !this.isViewAddBrand" (click)="addBrandList()">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn-danger cancelButton ml-2" *ngIf="i >= 1"
+                                                (click)="removeBrandList(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 mt-4">
+                    <div>
+                        <button type="submit" class="btn-primary  formButton " (click)="OpenUploadDocumentPopUp()">
+                            Upload Document
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h6 class="modal-title">Document Details<span *ngIf="this.isDocumentMandatory == true"
+                            style="color: red;">*</span></h6>
+                    <p-table [value]="UPLOAD_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false"
+                        class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                        [rowsPerPageOptions]="[10, 25, 50, 100]"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [autoLayout]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th> Sr No </th>
+                                <th> Document Type </th>
+                                <th> Document Name </th>
+                                <th *ngIf="this.CME_ID != null"> Download Document </th>
+                                <th *ngIf="this.IS_APPROVED != 1"> Action </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                            <tr>
+                                <td>{{ rowIndex + 1 }}</td>
+                                <td>{{ data.DOCUMENT_DESC }}</td>
+                                <td>{{ data.FILE_NAME }}</td>
+                                <td *ngIf="this.CME_ID != null">
+                                    <!-- <a style="color: rgb(55, 111, 156);cursor: pointer;text-decoration: underline;"
+                                            (click)="Imageview.toggle($event)" >View</a>
+                                            <p-overlayPanel #Imageview>
+                                                <img [src]="data.FILE_BASE64" alt="No Documnet Found" style="width: 100%;
+                                                 height: 200px;" />
+                                            </p-overlayPanel> -->
+                                    <button class="btn-primary formButton "
+                                        (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td *ngIf="this.IS_APPROVED != 1">
+                                    <button class="btn-danger cancelButton " (click)="RemoveDocument(rowIndex)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog header="Doctor List" [modal]="true" [(visible)]="SpeakerViewPopUp" [style]="{ width: '50rem' }">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 ">
+            <input type="text" class="form-control" [(ngModel)]="SearchInput" placeholder="Search"
+                (input)="SearchFilterDoctorList()" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+    <div class="mt-2">
+        <!-- <h6 class="modal-title">Promotional Material Req</h6> -->
+        <p-table [value]="FILTERED_DOCTORS_LIST" responsiveLayout="scroll" [paginator]="true" class="prime-table"
+            [showCurrentPageReport]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th> Sr No. </th>
+                    <th> Name </th>
+                    <th> Qual </th>
+                    <th> Specialization </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                <tr (click)="GetDoctorInfo(data)">
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{data.DOCTOR_NAME}}</td>
+                    <td>{{data.QUALIFICATION}}</td>
+                    <td>{{data.SPL_DESCRIPTION}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+
+
+<p-dialog header="Upload Document" [modal]="true" [(visible)]="UploadDocumentPopUp" [style]="{ width: '40rem' }">
+    <div class="d-flex gap-3 justify-content-around">
+        <div>
+            <label>Document Type<span style="color: red;">*</span></label>
+            <div>
+                <p-dropdown [options]="DOCUMENT_TYPE_LIST" [(ngModel)]="CME_DOC_TYPE_CODE" appendTo="body"
+                    optionLabel="DOCUMENT_DESC" optionValue="DOCUMENT_TYPE_ID" [filter]="true" filterBy="DOCUMENT_DESC"
+                    placeholder="Please Select..." [ngModelOptions]="{standalone:true}">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <label for="docs">Upload PAN/CANC CHQ/LETTER<span style="color: red;">*</span></label>
+            <div>
+                <div class="file-upload  ">
+                    <span class="input-group-btn uploadbtn mr-3">
+                        <a>
+                            <div class="btn btn-default  custom-file-uploader">
+                                <input type="file" class="form-control-file" id="docs" name="file"
+                                    accept=".jpg,.png,.jpeg,.pdf.JPG,.PNG,.JPEG,.PDF" [(ngModel)]="UPLOAD"
+                                    (change)="GetfileUpload($event)">
+                                <!-- accept=".jpg,.png,.jpeg,.pdf" [(ngModel)]="UPLOAD" (change)="NewUpload($event)"> -->
+                                <b>Upload File</b>
+                            </div>
+                        </a>
+                    </span>
+                    <a class="">{{ FILE_NAME }}</a>
+                </div>
+            </div>
+            <b>Note:- Accept only .jpg,.png,.jpeg,.pdf</b><br>
+            <b> (Max File size limit 4 mb)</b>
+        </div>
+        <div>
+            <button type="submit" class="btn-primary  formButton " (click)="SaveAttachDocument()">
+                Attach Document
+            </button>
+        </div>
+    </div>
+
+    <!-- <div class="mt-2">
+        <h6 class="modal-title">Document Details</h6>
+        <p-table [value]="UPLOAD_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false" class="prime-table"
+            [showCurrentPageReport]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th> Sr No </th>
+                    <th> Document Type </th>
+                    <th> Document Name </th>
+                    <th> Image </th> 
+                    <th> Action </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{ data.DOCUMENT_DESC }}</td>
+                    <td>{{ data.FILE_NAME }}</td>
+                    <td >
+                        <a class="text-blue-800 cursor-pointer underline"
+                        (click)="view.toggle($event)">View</a>
+                        <p-overlayPanel #view>
+                            <img src="{{data.IMAGE_PATH}}" alt="No Image Found" style="width: 100%;
+                        height: 200px;" />
+                        </p-overlayPanel>
+                    </td> 
+                    <td>
+                        <button class="btn-danger cancelButton " (click)="RemoveDocument(rowIndex)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div> -->
+</p-dialog>
+
+
+<p-dialog header="CME Request Reject" [modal]="true" [(visible)]="RejectCMERequestPopUp" [style]="{ width: '40rem' }">
+    <div class=" gap-3 ">
+        <div>
+            <div class="mb-2">
+                <label>Remarks<span style="color: red;">*</span></label>
+                <div>
+                    <input type="text" class="form-control" [(ngModel)]="REQUEST_REJECT_REMARKS"
+                        placeholder="Enter Remarks" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="float-right">
+                <button type="submit" class="btn-primary  saveButton mr-2" (click)="APPROVECMEREQUEST(2)">
+                    Save
+                </button>
+                <button type="submit" class="btn-primary  formButton mr-2" (click)="CLOSEREJECTCMEREQUESTPOPUP()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<div style=" padding: 5px; display: none;" id="DownloadPDF" #DownloadPDF>
+    <div style="background-color: white;border-radius: 5px; border:1px solid #ddd">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align: center; padding: 8px; font-weight: 600; color: #4a4848;">
+                        <h6 style="color: #4a4848; font-weight: 600;">CME Request</h6>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows and content here -->
+            </tbody>
+        </table>
+
+        <div style="display: flex !important; flex-wrap: wrap !important; margin: 8px !important;">
+            <!-- <div style="padding: 4px  !important; width: 100%  !important;">
+                <h6 style="margin-bottom: 2px  !important; color: #09135e !important;font-weight: 600 !important;">Details</h6>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800 !important;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important; ;
+    margin-bottom: 4px !important;">CME No. </label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_NO}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">Date</label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DATE}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800 !important;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">Req By</label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{REQ_BY_USER_NAME}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800 !important;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">HQ Code </label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{HQ_DESC}} - {{HQ_CODE}} </span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">CME Type </label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DESC}}</span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="this.InstName == true" style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">Institution Name </label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{INST_NAME}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                <div >
+                    <label style="font-weight: 800;
+    display: block !important;
+    font-size: 13px !important;
+    color: #4a4848 !important;;
+    margin-bottom: 4px !important;">Topic </label>
+                    <div>
+                        <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{TOPIC}}</span>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                  <tr>
+                      <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;">Details</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                     
+                          <td style="padding: 8px; width: 100%; font-weight: 800; font-size: 13px; color: #4a4848; display: flex; justify-content: space-evenly;
+                          grid-template-columns: repeat(3, 1fr);
+                          grid-gap: 10px;">
+                              <div style="padding: 8px !important; width: 50%; justify-content: space-evenly;">
+                                  <div >
+                                      <label style="font-weight: 800 !important;
+                   
+                      font-size: 13px !important;
+                      color: #4a4848 !important; ;
+                      margin-bottom: 4px !important;">CME No. </label>
+                                      <div>
+                                          <span style=" font-size: 12px !important;font-weight:700 !important;color:#82838b !important; ">{{CME_NO}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div style="padding: 8px !important; width: 50%;">
+                                  <div >
+                                      <label style="font-weight: 800;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">Date</label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DATE}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div style="padding: 8px !important; ">
+                                  <div >
+                                      <label style="font-weight: 800 !important;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">Req By</label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{REQ_BY_USER_NAME}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div style="padding: 8px !important; ">
+                                  <div >
+                                      <label style="font-weight: 800 !important;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">HQ Code </label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{HQ_DESC}} - {{HQ_CODE}} </span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div style="padding: 8px !important; ">
+                                  <div >
+                                      <label style="font-weight: 800;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">CME Type </label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{CME_DESC}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div *ngIf="this.InstName == true" style="padding: 8px !important;">
+                                  <div >
+                                      <label style="font-weight: 800;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">Institution Name </label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{INST_NAME}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div style="padding: 8px !important; ">
+                                  <div >
+                                      <label style="font-weight: 800;
+                      display: block !important;
+                      font-size: 13px !important;
+                      color: #4a4848 !important;;
+                      margin-bottom: 4px !important;">Topic </label>
+                                      <div>
+                                          <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{TOPIC}}</span>
+                                      </div>
+                                  </div>
+                              </div> 
+                          </td>
+                         
+                     
+                  </tr>
+                   </tbody>
+          </table>
+           -->
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;">
+                            <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Details</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Flex container to display items, 3 per row -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- CME No. Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">CME
+                                        No.</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_NO}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Date</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_DATE}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Req By Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Req
+                                        By</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{REQ_BY_USER_NAME}}</span>
+                                    </div>
+                                </div>
+
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">HQ
+                                        Code</label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{HQ_DESC}} -
+                                            {{HQ_CODE}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Another row for the remaining items -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- HQ Code Column -->
+                                <!-- <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                  <label style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">HQ Code</label>
+                                  <div>
+                                      <span style="font-size: 12px; font-weight: 700; color: #82838b;">{{HQ_DESC}} - {{HQ_CODE}}</span>
+                                  </div>
+                              </div> -->
+
+                                <!-- CME Type Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">CME
+                                        Type</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{CME_DESC}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Topic Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Topic</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{TOPIC}}</span>
+                                    </div>
+                                </div>
+
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="width: 25% !important;"></div>
+            <div style="border-bottom: 1px solid #ddd !important;height: 2px !important; width: 100%!important;"></div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;">
+                            <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Speaker</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Flex container to display items, 3 per row -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!--Name Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Name</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_NAME}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Qualification</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_QUALIFICATION}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Req By Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Specialization</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{SPEAKER_SPECIALIZATION_NAME}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <!-- <div style="padding: 4px !important; width: 100% !important;margin-top: 6px !important;">
+                <h6 style="margin-bottom: 2px !important; color: #09135e !important;font-weight: 600 !important;">Speaker</h6>
+            </div>
+            <div style=" width: 100% !important;display: flex !important; flex-wrap: wrap !important;">
+                <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                    <div >
+                        <label style="font-weight: 800 !important;
+  display: block;
+  font-size: 13px;
+  color: #4a4848;;
+  margin-bottom: 4px;">Name</label>
+                        <div>
+                            <span style="display: block; font-size: 12px;font-weight:700;color:#82838b">{{SPEAKER_NAME}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 8px; width: 100%; max-width: 25%">
+                    <div >
+                        <label style="font-weight: 800;
+  display: block;
+  font-size: 13px;
+  color: #4a4848;;
+  margin-bottom: 4px;">Qualification </label>
+                        <div>
+                            <span style="display: block !important; font-size: 12px !important;font-weight:700 !important;color:#82838b !important">{{SPEAKER_QUALIFICATION}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 8px !important; width: 100% !important; max-width: 25% !important">
+                    <div >
+                        <label style="font-weight: 800;
+  display: block !important;
+  font-size: 13px !important;
+  color: #4a4848 !important;;
+  margin-bottom: 4px !important;">Specialization</label>
+                        <div>
+                            <span style="display: block; font-size: 12px;font-weight:700;color:#82838b">{{SPEAKER_SPECIALIZATION_NAME}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="padding: 4px; text-align: left; font-weight: 600; color: #09135e;">
+                            <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Payment Details</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Flex container to display items, 3 per row -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- Venue Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Venue</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{VENUE}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Date</label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                            <label
+                                                style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 3px; padding-left:4px; padding-right:3px">from</label>{{CME_DATE_FROM}}
+                                        </span>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                            <label
+                                                style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px; padding-left:3px; padding-right:3px">To</label>{{CME_TO_DATE}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Time Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Time</label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                            <label
+                                                style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;padding-left:3px; padding-right:3px">from</label>{{CME_TIME_FROM}}
+                                        </span>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">
+                                            <label
+                                                style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;padding-left:3px; padding-right:3px">to</label>{{CME_TO_TIME}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Another row for the remaining items -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- Amount Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Amount</label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">&#8377;{{AMOUNT
+                                            | number : '1.2-2'}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- GST Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">GST</label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;">&#8377;{{GST |
+                                            number : '1.2-2'}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Whom to Pay Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Whom
+                                        to Pay</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{WHOM_TO_PAY_USER_NAME}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Division Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Division</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{DIVISION_NAME}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Another row for the remaining items -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- Pay By Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Pay
+                                        By</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{PAY_BY_DATE}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Advance Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Advance</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{IS_ADVANCE_DESC}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Expected Doctors Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Expected
+                                        Doctors</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{EXPECTED_DOCTORS}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Empty Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 8px; font-weight: 800; font-size: 13px; color: #4a4848;">
+                            <!-- Another row for the remaining items -->
+                            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                <!-- Pay By Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Slide
+                                        Deck Reqd</label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{SLIDE_DEC_REQD_DESC}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Advance Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;">Art
+                                        Work Reqd
+                                    </label>
+                                    <div>
+                                        <span
+                                            style="font-size: 12px; font-weight: 700; color: #82838b;">{{ART_WORK_REQD_DESC}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Expected Doctors Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Empty Column -->
+                                <div style="flex: 1 0 23%; padding: 8px; box-sizing: border-box;">
+                                    <label
+                                        style="font-weight: 800; font-size: 13px; color: #4a4848; margin-bottom: 4px;"></label>
+                                    <div>
+                                        <span style="font-size: 12px; font-weight: 700; color: #82838b;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+
+            <div style=" width: 100%;display: flex; flex-wrap: wrap;">
+                <div style="flex: 1 0 23%;padding: 8px;">
+                    <div style="margin-bottom: 10px;">
+                        <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                            <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Attending Team</h6>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th
+                                        style="width: 12%;font-size: 13px; color: #4a4848;; border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">
+                                        Sr No</th>
+                                    <th
+                                        style=" font-size: 13px; color: #4a4848;; border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">
+                                        Attending Team Name</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let user of ATTENDING_TEAM;let i = index;">
+                                <tr style="background-color: #f9f9f9;">
+                                    <td style="border: 1px solid #ddd; padding: 8px;">{{ i + 1}}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">{{user.USER_NAME}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="flex: 1 0 23% ;padding: 8px">
+                    <div style="margin-bottom: 10px;">
+                        <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                            <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Brands</h6>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th
+                                        style="width: 12%;font-size: 13px; color: #4a4848;;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">
+                                        Sr No</th>
+                                    <th
+                                        style="font-size: 13px; color: #4a4848;;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;">
+                                        Brand Name</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let product of BRANDS;let i = index;">
+                                <tr style="background-color: #f9f9f9;">
+                                    <td style="border: 1px solid #ddd; padding: 8px;">{{ i + 1}}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">{{product.PRODUCT_DESC}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+
+            <div style="padding: 8px; width: 100%; ">
+                <div style="margin-bottom: 10px;">
+                    <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                        <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Promotional Material Req</h6>
+                    </div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="width: 6%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Sr No</th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Item</th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Remarks</th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let mat of PROM_MAT_REQ_ITEM;let i = index;">
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.ITEM_DESC}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.REMARKS}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.QUANTITY}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #ddd;height: 2px; width: 100%;"></div>
+            <div style="padding: 8px; width: 100%; ">
+                <div style="margin-bottom: 10px;">
+                    <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                        <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Approval Details </h6>
+                    </div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="width: 6%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Sr No</th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    User Name </th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    User Role</th>
+                                <th
+                                    style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                                    Approval Date </th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let mat of REQ_UPDATED_USER_DETAILS;let i = index;">
+                            <tr style="background-color: #f9f9f9;">
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.userName}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.role}}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{mat.updatedOn | date:'dd-MM-yyy,
+                                    h:mm a'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- <div class="card flex justify-center"> -->
+<!-- <p-button (click)="showDialog()" label="Show" /> -->
+<p-dialog header="History" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem' }">
+    <div style="padding: 8px; width: 100%; ">
+        <div style="margin-bottom: 10px;">
+            <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Approval Details </h6>
+            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th
+                            style="width: 7%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Sr No</th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            User Name </th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            User Role</th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Action Date </th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Status </th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let mat of REQ_UPDATED_USER_DETAILS;let i = index;">
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.userName}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.role}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.updatedOn | date:'dd-MM-yyy, h:mm a'}}
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="padding: 8px; width: 100%; ">
+        <div style="margin-bottom: 10px;">
+            <div style="padding: 4px; width: 100%;margin-top: 6px;">
+                <h6 style="margin-bottom: 2px; color: #09135e;font-weight: 600;">Payment Details </h6>
+            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th
+                            style="width: 7%;border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Sr No.</th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Bill No </th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Particular</th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Amount </th>
+                        <!-- <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Payment Mode </th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Payment Amt</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;"> TDS Amt</th> -->
+                    </tr>
+                </thead>
+                <tbody *ngFor="let mat of CME_REQ_PAYMENT_DETAILS;let i = index;">
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.BILL_NO}}</td>
+                        <!-- <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAYMENT_DATE | date:'dd-MM-yyy, h:mm a'}}</td> -->
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PARTICULARS}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.AMOUNT.toFixed(2) | number }}</td>
+                        <!-- <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAYMENT_MODE}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAY_AMOUNT }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.TDS_AMOUNT }}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</p-dialog>
+<!-- </div> -->
+
+
+<p-dialog header="PostPone Request" [modal]="true" [(visible)]="vissiblepostpone" [style]="{ width: '70rem' }">
+    <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="mb-2">
+                <label>Venue<span style="color: red;">*</span></label>
+                <div>
+                    <input type="text" class="form-control" [(ngModel)]="VENUE" [ngModelOptions]="{standalone: true}"
+                        placeholder="Please Enter Venue">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-2">
+            <div class="mb-2">
+                <label>Dt From<span style="color: red;">*</span></label>
+                <div>
+                    <p-calendar [(ngModel)]="CME_DATE_FROM" appendTo="body" [showIcon]="true" dateFormat="dd-mm-yy"
+                        inputId="icon" (ngModelChange)="getValidDate()" [minDate]="Today"
+                        placeholder="{{CME_DATE_FROM}}"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-2">
+            <div class="mb-2">
+                <label>To<span style="color: red;">*</span></label>
+                <div>
+                    <p-calendar [(ngModel)]="CME_TO_DATE" appendTo="body" [showIcon]="true" dateFormat="dd-mm-yy"
+                        inputId="icon" [minDate]="Today_cme_to_date" placeholder="{{CME_TO_DATE}}"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-2">
+            <div class="mb-2">
+                <label>Time From<span style="color: red;">*</span></label>
+                <p-calendar [(ngModel)]="CME_TIME_FROM" appendTo="body" [timeOnly]="true" [showIcon]="true"
+                    [hourFormat]="12" inputId="icon" [stepMinute]="15" placeholder="{{CME_TIME_FROM}}">
+                </p-calendar>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-2">
+            <div class="mb-2">
+                <label>To<span style="color: red;">*</span></label>
+                <div>
+                    <p-calendar [(ngModel)]="CME_TO_TIME" appendTo="body" [timeOnly]="true" [showIcon]="true"
+                        [hourFormat]="12" inputId="icon" [stepMinute]="15" placeholder="{{CME_TO_TIME}}"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-md-8 col-md-12 pt-4">
+            <div class="float-right ml-auto">
+                <button type="submit" class="btn-primary  saveButton mr-2" (click)="updatePostPoneCmeRequest(1)">
+                    Update
+                </button>
+                <button type="submit" class="btn-primary  formButton mr-2" (click)="cancelForPostpone()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Cancel Cme Request" [modal]="true" [(visible)]="vissibleCancel" [style]="{ width: '40rem' }">
+
+    <div class="col-sm-8 col-md-8 col-md-12 pt-2">
+        Are You Sure?
+    </div>
+    <div class="col-sm-8 col-md-8 col-md-12 pt-4">
+
+        <div class="float-right ml-auto">
+            <button type="submit" class="btn-primary  cancelButton mr-2" (click)="updatePostPoneCmeRequest(2)">
+                Cancel
+            </button>
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="cancelForCancel()">
+                Close
+            </button>
+        </div>
+    </div>
+</p-dialog>

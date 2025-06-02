@@ -1,0 +1,482 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> My Claim Request Details</li>
+  </ol>
+</nav>
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers"> My Claim Request Details :-</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+        <button  class="btn-primary  formButton mr-2" (click)="onBackClick()">Back</button>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <app-loader *ngIf="isLoaded" ></app-loader>
+  <div id="accordion1" class="accordion">
+    <div class="card-accrodion mb-0">
+        <div class="card-header" data-toggle="collapse" aria-expanded="true" href="#collapseOne">
+            <a class="card-title ">
+              <i class="fa fa-line-chart mr-2"></i>  Discount Details
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-collapse  collapse show p-0" data-parent="#accordion1">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md-12">
+              <div class="row border_bottom mb-2">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Claim No:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8" >
+                      <p>{{myClaimRequst.CLAIM_NO}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Doctor:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.DOCTOR_NAME}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Product:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <div class="d-flex">
+                        <p>{{myClaimRequst.PRODUCT_DESC}}</p>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Date:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.CLAIM_DATE | date:'dd-MM-yyyy'}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Stockist:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.STOCKIST_NAME}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Sale Qty:-</label>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.FINAL_SALE_QTY}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">HQ:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.HQ_DESC}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Chemist:-</label>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.CHEMIST_NAME}}</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Free Qty:-</label>
+                      <h5 class=" header"></h5>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.FINAL_FREE_QTY}}</p>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="row">
+               <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">Invoice No:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.INVOICE_NO}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">Scheme Free Qty:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.SCHEME_FREE_QTY}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">SuperStockist Name:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-7" >
+                    <p>{{myClaimRequst.SUPERSTOCKIST_NAME}}</p>
+                  </div>
+                </div>
+
+               </div>
+               <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">Invoice Date:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.INVOICE_DATE | date:'dd/MM/yyyy'}}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">Claim Free Qty:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.CLAIM_FREE_QTY}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <button type="btn" class="btn btn-success text-white btn-sm" (click)="GETINVOICEIMAGEBYCLAIMNO()">View Image</button>
+                  </div>
+
+                </div>
+
+               </div>
+               <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">Invoice Sale Qty:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.INVOICE_SALE_QTY}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <label class="header">MRP:-</label>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8" >
+                    <p>{{myClaimRequst.MRP}}</p>
+                  </div>
+                </div>
+
+               </div>
+               <!-- <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-4">
+                    <button type="btn" class="btn btn-success text-white btn-sm" (click)="GETINVOICEIMAGEBYCLAIMNO()">View Image</button>
+                  </div>
+                </div>
+               </div> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+        <div class="card-header mt-2 " data-toggle="collapse" aria-expanded="true" data-parent="#accordion2"
+            href="#collapseTwo" >
+            <a class="card-title">
+              <i class="fa fa-refresh mr-2"></i>  Track
+            </a>
+        </div>
+        <div id="collapseTwo" class="accordion-collapse collapse show " data-parent="#accordion2">
+          <div class="card">
+            <div class="card-body">
+             <div class="col-md-12">
+               <div class="row ">
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Req By:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.REQUESTED_NAME}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-5">
+                       <label class="header">Sale Qty:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-7">
+                       <p>{{myClaimRequst.FINAL_SALE_QTY}}</p>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-5">
+                      <label class="header">Free Qty:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-7">
+                      <p>{{myClaimRequst.FINAL_FREE_QTY}}</p>
+                    </div>
+                  </div>
+                </div>
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Date:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                       <p>{{myClaimRequst.CLAIM_DATE | date:'dd/MM/yyyy h:mm a'}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+
+
+               </div>
+               <div class="row border_top " *ngIf="OnFMShowHide">
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">App By:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.FM_NAME}}</p>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Date :</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                       <p>{{myClaimRequst.FMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Satus:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p class="text-warning" *ngIf="myClaimRequst.FMSTATUS == null">Pending</p>
+                      <p class="text-success" *ngIf="myClaimRequst.FMSTATUS == 1">Approved</p>
+                      <p class="text-danger" *ngIf="myClaimRequst.FMSTATUS == 2">Rejected</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Remarks:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.FM_REMARKS}}</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class="row border_top mt-2" *ngIf="OnRSMShowHide">
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">App By:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.RSM_NAME}}</p>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Date :</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                       <p>{{myClaimRequst.RSMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Satus:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+
+                      <p  class="text-warning" *ngIf="myClaimRequst.RSMSTATUS == null">Pending</p>
+                      <p  class="text-success" *ngIf="myClaimRequst.RSMSTATUS == 1">Approved</p>
+                      <p  class="text-danger" *ngIf="myClaimRequst.RSMSTATUS == 2">Rejected</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12-sm col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Remarks:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                     <p>{{myClaimRequst.RSM_REMARKS}}</p>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="row border_top mt-2" *ngIf="OnSMShowHide">
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">App By:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.SM_NAME}}</p>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Date :</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                       <p>{{myClaimRequst.SMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Satus:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+
+                      <p  class="text-warning" *ngIf="myClaimRequst.SMSTATUS == null">Pending</p>
+                      <p  class="text-success" *ngIf="myClaimRequst.SMSTATUS == 1">Approved</p>
+                      <p  class="text-danger" *ngIf="myClaimRequst.SMSTATUS == 2">Rejected</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12-sm col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Remarks:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                     <p>{{myClaimRequst.SM_REMARKS}}</p>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               <div class="row border_top mt-2" *ngIf="OnPMTShowHide">
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">App By:</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{myClaimRequst.PMT_NAME}}</p>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="col-12-sm col-md-12 col-lg-3">
+                   <div class="row">
+                     <div class="col-sm-12 col-md-12 col-lg-4">
+                       <label class="header">Date :</label>
+                     </div>
+                     <div class="col-sm-12 col-md-12 col-lg-8">
+                       <p>{{myClaimRequst.PMTUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                     </div>
+                   </div>
+
+                 </div>
+
+                 <div class="col-sm-12 col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Satus:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+
+                      <p  class="text-warning" *ngIf="myClaimRequst.PMT_STATUS == null">Pending</p>
+                      <p  class="text-success" *ngIf="myClaimRequst.PMT_STATUS == 1">Approved</p>
+                      <p  class="text-danger" *ngIf="myClaimRequst.PMT_STATUS == 2">Rejected</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12-sm col-md-12 col-lg-3">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Remarks:</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                     <p>{{myClaimRequst.PMT_REMARKS}}</p>
+                    </div>
+                  </div>
+                </div>
+               </div>
+
+
+             </div>
+            </div>
+        </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+</div>
+<p-dialog  [(visible)]="myclaimrequestImage" [style]="{width: '60vw'}">
+  <div>
+ <img [src]="imageData" alt="img">
+</div>
+</p-dialog>
+
+

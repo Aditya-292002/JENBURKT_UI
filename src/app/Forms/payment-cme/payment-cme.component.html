@@ -1,0 +1,426 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Payment CME</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers" *ngIf="!ViewPamentData">CME Request List</h5>
+            <h5 class="mb-0 headers" *ngIf="ViewPamentData">CME Payment Report</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <!-- <button type="submit" class="btn-primary formButton " *ngIf="!ViewPamentData" (click)="ViewCmeDataList()" >Payment List</button> -->
+            <button type="submit" class="btn-primary  saveButton mr-2" *ngIf="!isPayemntDataView &&  ViewPamentData"
+                (click)="SAVECMEPAYMENT()">Save</button>
+            <button type="submit" class="btn-primary  cancelButton mr-2" *ngIf="!isPayemntDataView && ViewPamentData"
+                (click)="CANCELCMEPAYMENT()">Cancel</button>
+            <button type="submit" class="btn-primary formButton " *ngIf="ViewPamentData"
+                (click)="BackToList()">Back</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" *ngIf="ViewCmeData">
+    <div class="card">
+        <p-table [value]="REQUEST_CME_LIST" responsiveLayout="scroll" scrollHeight="420px"
+            [globalFilterFields]="['CME_NO','CME_DATE','HQ_DESC','OUT_STANDING','AMOUNT','GST']" #dt1>
+            <ng-template pTemplate="caption">
+
+                <div class="d-flex justify-content-between">
+                    <div class="table-header text-right">
+                        <div class="text-left">
+                            <div style="display: flex;gap: 15px;align-items: center;">
+                                <div style="display: flex;text-align: center;">
+                                    <p-checkbox [(ngModel)]="PENDING_PAYMENT" name="ispaymentlistview"
+                                        (click)="ClickPaymentMode(1)" binary="true" inputId="pending_payment">
+                                    </p-checkbox>
+                                    <label for="ispaymentlistview">Pending for Payment</label>
+                                </div>
+
+                                <div style="display: flex;text-align: center;">
+                                    <p-checkbox [(ngModel)]="RECEIVED_PAYMENT" name="ispaymentlistview"
+                                        (click)="ClickPaymentMode(0)" binary="true" inputId="received_payment">
+                                    </p-checkbox>
+                                    <label for="ispaymentlistview">Payment Done</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="p-input-icon-right ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" class="form-control"
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                        </span>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>CME NO</th>
+                    <th pSortableColumn="CME_DATE" class="width-12">DATE 
+                        <p-sortIcon field="CME_DATE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="USER_NAME" class="width-12">REQ BY 
+                        <p-sortIcon field="USER_NAME"></p-sortIcon>
+                    </th>
+                    <th>HQ CODE</th>
+                    <th pSortableColumn="AMOUNT">AMOUNT
+                        <p-sortIcon field="AMOUNT"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="GST">GST
+                        <p-sortIcon field="GST"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="OUT_STANDING">OUT STANDING
+                        <p-sortIcon field="OUT_STANDING"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                <tr>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.CME_NO }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">
+                        {{ data.CME_DATE | date:'dd-MM-yyy' }}
+                    </td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.USER_NAME }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.HQ_DESC }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.AMOUNT }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.GST }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.OUT_STANDING }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="ViewPamentData">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card ">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isPayemntDataView">
+                        <div class="mb-2">
+                            <label>PAYMENT No. </label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAYMENT_NO" disabled
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter PAYMENT NO">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>CME No. </label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="CME_NO" disabled
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter CME NO">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>CME Date </label>
+                            <div>
+                                <p-calendar [(ngModel)]="CME_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd-mm-yy" disabled placeholder="Please Select Date" [minDate]="Today"
+                                    inputId="icon" placeholder="{{CME_DATE}}"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
+                        <div class="mb-2">
+                            <label>Req By. </label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="REQ_BY" disabled
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Req By">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isPayemntDataView">
+                        <div class="mb-2">
+                            <label>Req By. </label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="REQ_BY" disabled
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Req By">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>HQ Code</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="HQ_CODE" disabled
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter HQ Code">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>CME Type</label>
+                            <div>
+                                <p-dropdown [options]="CME_TYPE_LIST" [(ngModel)]="CME_TYPE_ID"
+                                    [ngModelOptions]="{standalone:true}" [disabled]="true" appendTo="body"
+                                    optionValue="CME_TYPE_ID" optionLabel="CME_DESC" [filter]="true" filterBy=""
+                                    placeholder="Please Select CME Type">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isCampTypeView">
+                        <div class="mb-2">
+                            <label>Camp Type</label>
+                            <div>
+                                <p-dropdown [options]="CAMP_TYPE_LIST" [(ngModel)]="CAMP_TYPE"
+                                    [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="CAMP_DESC"
+                                    [disabled]="true" [filter]="true" filterBy="" placeholder="Please Select Camp Type">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+                            <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-4">
+                                        <div class="mb-2">
+                                            <label>Amt</label>
+                                            <div>
+                                                <input type="text" class="form-control" [(ngModel)]="AMOUNT" disabled
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-4">
+                                        <div class="mb-2">
+                                            <label>GST</label>
+                                            <div>
+                                                <input type="text" class="form-control" [(ngModel)]="GST" disabled
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Gst">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
+                                        <div class="mb-2">
+                                            <label>Advance Paid</label>
+                                            <div>
+                                                <input type="text" class="form-control" [(ngModel)]="OLD_PAID" disabled numbersOnly
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Paid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
+                                        <div class="mb-2">
+                                            <label>Old TDS</label>
+                                            <div>
+                                                <input type="text" class="form-control" [(ngModel)]="OLD_TDS" disabled numbersOnly
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Tds">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+                            <div >
+                                    <div *ngIf="!isPayemntDataView && this.CME_DOCUMENT_LIST.length > 0">
+                                        <h6 class="modal-title">Document Details</h6>
+                                        <p-table [value]="CME_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false" 
+                                            class="prime-table" [showCurrentPageReport]="true" [rows]="10" [autoLayout]="true">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th> Sr No </th>
+                                                    <th> Document Type </th>
+                                                    <th> Document Name </th>
+                                                    <th> Download Document </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                                <tr>
+                                                    <td>{{ rowIndex + 1 }}</td>
+                                                    <td>{{ data.DOCUMENT_DESC }}</td>
+                                                    <td>{{ data.FILE_NAME }}</td>
+                                                    <td >
+                                                        <button class="btn-primary formButton " (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
+                                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                            </div> 
+                        </div>
+                </div>
+                <div class="row"  *ngIf="!isPayemntDataView">
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <div class="mb-2">
+                            <label>O/s</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="OUT_STANDING" disabled numbersOnly
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter O/s">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <div class="mb-2">
+                            <label>Pay Amount<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAY_AMOUNT" numbersOnly
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Pay Amount" [disabled]="isPayemntDataView">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <div class="mb-2">
+                            <label>Tds Amount<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="TDS_AMOUNT" numbersOnly
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Tds Amount" [disabled]="isPayemntDataView">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Pay Mode<span style="color: red;">*</span></label>
+                            <div>
+                                <p-dropdown [options]="PAYMENT_TYPE_LIST" [(ngModel)]="PAYMENT_TYPE_ID"
+                                    [ngModelOptions]="{standalone:true}" appendTo="body" optionValue="PAYMENT_TYPE_ID"
+                                    optionLabel="PAYMENT_DESC" [filter]="true" filterBy="" [disabled]="isPayemntDataView"
+                                    placeholder="Please Select Pay Mode">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Payment Date<span style="color: red;">*</span></label>
+                            <div>
+                                <p-calendar [(ngModel)]="PAYMENT_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                    inputId="icon" placeholder="{{PAYMENT_DATE}}" [disabled]="isPayemntDataView" ></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Payment Ref<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAYMENT_REF"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref" [disabled]="isPayemntDataView">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>ERP Ref</label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="ERP_REF"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref" [disabled]="isPayemntDataView">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" *ngIf="ViewPamentDataList">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <p-table [value]="PAYMENT_CME_LIST" responsiveLayout="scroll" scrollHeight="420px"
+            [globalFilterFields]="['PAYMENT_NO','CME_NO','PAYMENT_DATE','PAY_AMOUNT','TDS_AMOUNT']" #dt1>
+            <ng-template pTemplate="caption">
+
+                <div class="d-flex justify-content-between">
+                    <div class="table-header text-right">
+                        <div class="text-left">
+                            <div style="display: flex;gap: 15px;align-items: center;">
+                                <div style="display: flex;text-align: center;">
+                                    <p-checkbox [(ngModel)]="PENDING_PAYMENT" name="ispaymentlistview"
+                                        (click)="ClickPaymentMode(1)" binary="true" inputId="pending_payment">
+                                    </p-checkbox>
+                                    <label for="ispaymentlistview">Cme Pending</label>
+                                </div>
+
+                                <div style="display: flex;text-align: center;">
+                                    <p-checkbox [(ngModel)]="RECEIVED_PAYMENT" name="ispaymentlistview"
+                                        (click)="ClickPaymentMode(0)" binary="true" inputId="received_payment">
+                                    </p-checkbox>
+                                    <label for="ispaymentlistview">Received Payment</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-header text-left">
+                            <div class="d-flex justify-content-end">
+                                <div style="width: 25%;margin-right: 10px;">
+                                    <label>From Date </label>
+                                    <div>
+                                        <p-calendar [(ngModel)]="PAYMENT_FROM_DATE" appendTo="body" [showIcon]="true"
+                                            dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                            (onSelect)="filterByDateRange()"   inputId="icon" placeholder="{{PAYMENT_FROM_DATE}}"></p-calendar>
+                                    </div>
+                                </div>
+                                <div style="width: 25%;margin-right: 10px;">
+                                    <label>To Date </label>
+                                    <div>
+                                        <p-calendar [(ngModel)]="PAYMENT_TO_DATE" appendTo="body" [showIcon]="true"
+                                            dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                            (onSelect)="filterByDateRange()"  inputId="icon" placeholder="{{PAYMENT_TO_DATE}}"></p-calendar>
+                                    </div>
+                                </div>
+                                <div style="width: 25%;">
+                                    <span class="p-input-icon-right ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text" class="form-control"
+                                            (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>PAYMENT NO</th>
+                    <th>CME NO</th>
+                    <th pSortableColumn="PAYMENT_DATE" class="width-12">PAYMENT DATE 
+                        <p-sortIcon field="PAYMENT_DATE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="PAYMENT_DESC" class="width-12">PAYMENT MODE 
+                        <p-sortIcon field="PAYMENT_DESC"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="PAY_AMOUNT" class="width-12">PAY AMOUNT 
+                        <p-sortIcon field="PAY_AMOUNT"></p-sortIcon></th>
+                    <th>TDS AMOUNT</th>
+                    <th>PAYMENT REF NO</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                <tr>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_NO }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.CME_NO }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_DATE | date:'dd-MM-yyy' }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_DESC }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >&#8377;{{ data.PAY_AMOUNT }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >&#8377;{{ data.TDS_AMOUNT }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_REF_NO }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

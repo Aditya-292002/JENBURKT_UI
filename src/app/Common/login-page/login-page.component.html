@@ -1,0 +1,29 @@
+<div class="login-background">
+    <div class="login-container">
+        <div class="p-5">
+            <div class="row">
+                <div class="login-building d-none d-lg-block">
+                </div>
+                <div class="form-wrapper">
+                    <h5 class="mb-5 text-center"><i class="fa fa-diamond logoicon" aria-hidden="true"></i> Login Page</h5>
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                          <label >Username</label>
+                          <input type="text" class="form-control" placeholder="Enter Username" [(ngModel)]="LOGIN_ID" >
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                          <label >Password</label>
+                          <input type="password" class="form-control" placeholder="Enter Password" [(ngModel)]="PASSWORD" >
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-4 mt-5" (window:keypress)="onSomeAction($event)" (click)="logInClick()">LOG IN</button>
+                    <!-- <div class="text-right forgot-text">
+                        <a class="text-white"(click)="forgotPassFun()">Forgot Password?</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

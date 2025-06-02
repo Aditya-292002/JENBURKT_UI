@@ -1,0 +1,41 @@
+
+/* accrodion css */
+.card-header {
+    padding: 0.35rem 1.25rem;
+    background-color: #d8ecfb;
+    color: #3e4b9a;
+    font-size: 14px;
+  }
+
+  .card-header.collapsed {
+    margin-bottom: 8px;
+    border-bottom: 0;
+    background-color: #d8ecfb;
+    color: #3e4b9a;
+    font-size: 15px;
+
+  }
+
+  .card-header.collapse.show {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+  }
+
+  .accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\f067";
+  }
+
+  .headerFixed {
+    padding: 10px 15px;
+    position: fixed;
+    width: 100%;
+    background: #ddd;
+    z-index: 1;
+  }

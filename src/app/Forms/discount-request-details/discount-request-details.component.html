@@ -1,0 +1,482 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Discount Request Details</li>
+  </ol>
+</nav>
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Discount Request Details :- {{discountrequestdetails?.REQUEST_NO}}</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+        <button  class="btn-primary  formButton mr-2" (click)="onBackClick()">Back</button>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <app-loader *ngIf="isLoaded" ></app-loader>
+  <div id="accordion1" class="accordion">
+    <div class="card-accrodion mb-0">
+        <div class="card-header" data-toggle="collapse" aria-expanded="true" href="#collapseOne">
+            <a class="card-title ">
+              <i class="fa fa-line-chart mr-2"></i>  Discount Details
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-collapse  collapse show p-0" data-parent="#accordion1">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Request By:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8" >
+                      <p>{{discountrequestdetails.USER_NAME}}</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Doctor:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.DOCTOR_NAME}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Product:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <div class="d-flex">
+                        <p>{{discountrequestdetails.PRODUCT_DESC}}</p>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-5">
+                      <label class="header">Approve Date:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-7">
+                      <p>{{discountrequestdetails.LAST_VISIT_DATE | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">HQ:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.HQ_DESC}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Specialization:-</label>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.SPL_DESCRIPTION}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Sale Qty:-</label>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.UPDATED_SALE_QTY}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 border_right">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Stockist:-</label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.STOCKIST_NAME}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Chemist:-</label>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.CHEMIST_NAME}}</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <label class="header">Free Qty:-</label>
+                      <h5 class=" header"></h5>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                      <p>{{discountrequestdetails.UPDATED_FREE_QTY}}</p>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+        <div class="card-header mt-2 " data-toggle="collapse" aria-expanded="true" data-parent="#accordion2"
+            href="#collapseTwo" >
+            <a class="card-title">
+              <i class="fa fa-refresh mr-2"></i>  Track
+            </a>
+        </div>
+        <div id="collapseTwo" class="accordion-collapse  collapse show " data-parent="#accordion2">
+         <div class="card">
+             <div class="card-body">
+              <div class="col-md-12">
+                <div class="row ">
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Req By:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.REQUESTED_NAME}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Sale Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SALE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Free Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FREE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <label class="header">Date:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-9">
+                        <p>{{discountrequestdetails.CREATEDON | date :'dd/MM/yyyy h:mm a'}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Remark:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.REMARKS}}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row border_Top mt-2" *ngIf="OnFMShowHide">
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">App By:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FM_NAME}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Sale Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FM_SALE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Free Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FM_FREE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-3">
+                        <label class="header">Date:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-9">
+                        <p>{{discountrequestdetails.FMUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Remark:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FM_REMARKS}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Satus:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p  class="text-warning" *ngIf="discountrequestdetails.FMSTATUS == null">Pending</p>
+                        <p  class="text-success" *ngIf="discountrequestdetails.FMSTATUS == 1">Approved</p>
+                        <p  class="text-danger" *ngIf="discountrequestdetails.FMSTATUS == 2">Rejected</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row border_Top mt-2" *ngIf="OnRSMShowHide">
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">App By:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.RSM_NAME}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Sale Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.RSM_SALE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Free Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.RSM_FREE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Date :</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.RSMUPDATEDON |date :'dd/MM/yyyy h:mm a'}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Remark:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.RSM_REMARKS}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Satus:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p  class="text-warning" *ngIf="discountrequestdetails.RSMSTATUS == null">Pending</p>
+                        <p  class="text-success" *ngIf="discountrequestdetails.RSMSTATUS == 1">Approved</p>
+                        <p  class="text-danger" *ngIf="discountrequestdetails.RSMSTATUS == 2">Rejected</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row border_Top mt-2" *ngIf="OnSMShowHide">
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">App By:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SM_NAME}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Sale Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SM_SALE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Free Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SM_FREE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Date :</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SMPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Remark:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.SM_REMARKS}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Satus:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p  class="text-warning" *ngIf="discountrequestdetails.SMSTATUS == null">Pending</p>
+                        <p  class="text-success" *ngIf="discountrequestdetails.SMSTATUS == 1">Approved</p>
+                        <p  class="text-danger" *ngIf="discountrequestdetails.SMSTATUS == 2">Rejected</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row border_Top mt-2" *ngIf="OnPMTShowHide">
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">App By:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.PMT_NAME}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Sale Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FINAL_SALE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Free Qty:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.FINAL_FREE_QTY}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12-sm col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Date :</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.PMTUPDATEDON | date:'dd/MM/yyyy h:mm a'}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Remark:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p>{{discountrequestdetails.PMT_REMARKS}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-4">
+                        <label class="header">Satus:</label>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-8">
+                        <p  class="text-warning" *ngIf="discountrequestdetails.PMTSTATUS == null">Pending</p>
+                        <p  class="text-success" *ngIf="discountrequestdetails.PMTSTATUS == 1">Approved</p>
+                        <p  class="text-danger" *ngIf="discountrequestdetails.PMTSTATUS == 2">Rejected</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+             </div>
+         </div>
+
+        </div>
+
+
+    </div>
+</div>
+</div>

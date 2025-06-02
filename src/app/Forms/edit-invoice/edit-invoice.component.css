@@ -1,0 +1,169 @@
+@media print {
+    body * {
+      visibility: hidden;
+      min-height: 100vh;
+    }
+    #section-to-print, #section-to-print * {
+      visibility: visible;
+    }
+    #section-to-print {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  /* @media print {
+    div.footer {
+        position: fixed;
+        bottom: 0;
+    }
+} */
+
+
+body{
+  min-height: 100vh;
+}
+.sticky-footer{
+  position: sticky;
+  top:100%
+}
+/*
+footer {
+    font-size: 9px;
+    color: #f00;
+    text-align: center;
+  } */
+
+  @page {
+    size: A4;
+    margin: 11mm
+    /* margin: 11mm 17mm 17mm 17mm; */
+  }
+
+  /* tfoot{
+    display: table-footer-group;
+  } */
+  @media print {
+
+    /* .sticky-footer{
+      position: sticky;
+      top:100%
+    } */
+    footer {
+      position: fixed;
+      bottom: 0;
+    }
+
+    .content-block, p {
+      page-break-inside: avoid;
+      /* page-break-after: always; */
+    }
+
+    /* html, body {
+      width: 210mm;
+      height: 297mm;
+    } */
+
+  }
+
+  table, tbody , td , ul,li{
+ font-size: 12px;
+ margin-bottom: 0px;
+  }
+  table, thead, th{
+    font-size: 14px;
+  }
+  table tbody td{
+    font-size: 10px;
+  }
+
+
+  .pBreak{display:none;}
+
+  @media print{
+    .pBreak{display:inline; page-break-after:always;
+  }
+}
+/* .header, .header-space,
+.footer, .footer-space {
+  height: 100px;
+}
+.header {
+  position: fixed;
+
+  top: -36px;
+
+}
+.footer {
+  position: sticky;
+  width: 100%;
+  bottom:0;
+} */
+
+.check{
+  page-break-inside:auto;
+  page-break-after:auto ;
+}
+
+@media all {
+  .page-break { display: none; }
+  /* thead{background: red; border: black; border: 1px solid;} */
+}
+
+@media print {
+  .page-break { display: block; page-break-before: auto; }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+
+table { page-break-inside:auto }
+tr    { page-break-inside:avoid; page-break-after:auto }
+thead { display:table-header-group;  }
+tfoot { display:table-footer-group;bottom: 0; }
+
+/* body { margin: 0; background-image: none; font-size: 12pt; } */
+
+}
+
+
+
+.table_new {
+  width: 100%;
+  max-width: 100%;
+  /* background-color: transparent; */
+  margin-bottom: 0;
+}
+
+.table_new thead th {
+  vertical-align: baseline;
+  border-bottom: 0;
+  /* background: #bec5d3; */
+  font-weight: 500;
+  font-size: 12px ;
+  /* border-width: 0px ; */
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+.table_new tbody th,.table td {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.table_new td,
+.table_new th {
+  vertical-align: top;
+  border: 1px solid #bfc1c3;
+  padding: 4px 8px;
+  color: #000;
+}
+
+.table_new td i {
+  font-size: 12px;
+}
+.width-10{
+  width: 107px;
+  padding: 6px;
+}
+.width-2{
+  font-size: 12px;
+}

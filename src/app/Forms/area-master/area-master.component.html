@@ -1,0 +1,324 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Area Master</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <!-- <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">{{"Area Master"}}</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+        </div>
+        <div class="col-md-12">
+            <div class="buttonBox">
+                <button type="submit" class="btn-primary  saveButton mr-2" (click)="saveAreaMasterData()">Save</button>
+                <button type="submit" class="btn-primary  cancelButton" (click)="cancelAreaMasterData()">Cancel</button>
+            </div>
+        </div>
+    </div> -->
+    <div class="">
+        <div class="d-flex mb-2">
+            <div class="d-flex justify-content-start">
+                <h5 class="mb-0 headers">{{'Area Master'}}</h5>
+            </div>
+            <div class="buttonBox ml-auto">
+                <button *ngIf="isEdit" type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">Edit</button>
+                <button *ngIf="isEdit" type="submit" class="btn-primary  saveButton mr-2" (click)="saveAreaMasterData()">Save</button>
+                <button *ngIf="isEdit" type="submit" class="btn-primary  cancelButton" (click)="cancelAreaMasterData()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-2">
+                            <label>Area Code</label>
+                            <div class="d-flex" [ngClass]="{'required-field':isHighLightAreaCode=== 'Yes'}">
+                                <input type="text" class="form-control" [(ngModel)]="areaCode" [ngModelOptions]="{standalone: true}"
+                                placeholder="Area Code" [disabled]="this.isShowAreacode==true?true:false">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <div class="mb-2">
+                            <label>Area Description</label>
+                            <div>
+                                <textarea name="" id="" cols="3" rows="" class="form-control"[(ngModel)]="description" [ngModelOptions]="{standalone:true}"
+                                    placeholder="Description" [disabled]="this.isShowAreadesc==true?true:false"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Sales Role</label>
+                            <div [ngClass]="{'required-field':isHighLightSalesRole=== 'Yes'}">
+                                <p-dropdown [options]="salesRoleList" [(ngModel)]="salesRoleId"
+                                [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="SALESROLE_NAME"
+                                optionValue="SALESROLE_ID" [filter]="true" filterBy="SALESROLE_NAME"
+                                  placeholder="Please Select..."  [disabled]="isDisabled"
+                                  (onChange)="getUnderList($event)">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                      <div class="mb-2">
+                        <label>Under</label>
+                        <div >
+                            <p-dropdown [options]="underList" [(ngModel)]="underId"
+                            [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="AREA_NAME"
+                            optionValue="AREA_CODE" [filter]="true" filterBy="AREA_NAME"  (ngModelChange)="getsalesChanges()"
+                                placeholder="Please Select...">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <!-- <div class="mb-3">
+                            <label>WEF</label>
+                            <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                                <p-autoComplete [(ngModel)]="periodId"
+                                    [suggestions]="filterPeriodId"
+                                    (completeMethod)="filteredPeriodId($event)" field="PERIOD_DESC"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setPeriodId(filterPeriodId,periodId)" [disabled]="isDisabled">
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.PERIOD_DESC}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div> -->
+                        <div class="mb-2">
+                            <label>WEF</label>
+                            <div [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                                <p-dropdown [options]="periodList" [(ngModel)]="periodId"
+                                appendTo="body" optionLabel="PERIOD_DESC"
+                                 placeholder="Please Select..."  optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"  [ngModelOptions]="{standalone:true}"
+                                 (ngModelChange)="getsalesChanges()"   >
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3" *ngIf="isShowdropdown">
+                      <div class="mb-2">
+                        <label>Old WEF</label>
+                        <div [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                            <p-dropdown [options]="Old_periodList" [(ngModel)]="oldperiodId"
+                            [ngModelOptions]="{standalone:true}" appendTo="body" optionLabel="PERIOD_DESC"
+
+                             placeholder="Please Select..." [disabled]="isDisabled" optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"
+                             (ngModelChange)="getsalesChanges()"    >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                        <!-- <div class="mb-3">
+                            <label>Old WEF</label>
+                            <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightRole=== 'Yes'}">
+                                <p-autoComplete [(ngModel)]="oldperiodId"
+                                    [suggestions]="filterPeriodId"
+                                    (completeMethod)="filteredPeriodId($event)" field="PERIOD_DESC"
+                                    [dropdown]="true" placeholder="Please Select.."
+                                    (keyup.enter)="setPeriodId(filterPeriodId,oldperiodId)" [disabled]="true">
+                                    <ng-template let-country pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{country.PERIOD_DESC}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+
+                        </div> -->
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                      <div class="d-flex">
+                        <div class="mb-2 mr-4">
+                          <div class="form-group form-check mb-0 mt-4" style="margin-top: 29px;" >
+                              <input type="checkbox" class="form-check-input" id="Active" [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
+                              <label class="form-check-label" for="Active">Active</label>
+                          </div>
+                      </div>
+                        <!-- <div class="mb-2 mt-3 mr-4">
+                            <label></label>
+                            <div class="mr-1">
+                                <input class="" type="checkbox" [(ngModel)]="active">
+                                <span class="ml-2">Active</span>
+                            </div>
+
+                        </div> -->
+                        <div  class="mt-4 ">
+                          <button  type="submit" class="btn-primary  saveButton mr-2" (click)="showAreaMasterData()">Show</button>
+                      </div>
+                    </div>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+                      <div  class=" ">
+                        <button  type="submit" class="btn-primary  saveButton mr-2" (click)="showAreaMasterData()">Show</button>
+                    </div>
+                    </div> -->
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div  class="buttonBox text-right ">
+                            <button  type="submit" class="btn-primary  saveButton mr-2" (click)="showAreaMasterData()">Show</button>
+                        </div>
+                        <div *ngIf="this.isShowAreaList" class="buttonBox text-right ">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="hideGrid()">Hide</button>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="row mt-2">
+                    <div class="col-md-12">
+                        <div class="buttonBox">
+                            <button type="submit" class="btn-primary  saveButton mr-2" (click)="saveAreaMasterData()">Save</button>
+                            <button type="submit" class="btn-primary  cancelButton" (click)="cancelAreaMasterData()">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2" *ngIf="isShowAreaList">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-5">
+              <div class="mb-2">
+                  <label>Area List </label>
+                  <div>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">Selected</th>
+                                  <th scope="col">Area</th>
+                                  <th scope="col">Description</th>
+
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let list of selectedlist; let i=index;">
+                                  <td class="width-2">
+                                      <div>
+                                          <input type="checkbox" class="form-control mt-2"
+                                           placeholder="TO" [(ngModel)]="list.SELECTED" [ngModelOptions]="{standalone: true}" >
+                                      </div>
+                                  </td>
+                                  <td class="width-2">
+                                      <div>
+                                          <input type="text" class="form-control" placeholder="Area" [(ngModel)]="list.AREA_CODE"
+                                          [ngModelOptions]="{standalone: true}" disabled>
+                                      </div>
+                                  </td>
+                                  <td class="width-2">
+                                      <div>
+                                          <input type="text" class="form-control " placeholder="Description"
+                                          [(ngModel)]="list.AREA_DESC" [ngModelOptions]="{standalone: true}" disabled>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+
+</div>
+
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isShowEditPopup">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Area Master List</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 mt-8 p-4">
+                <div class="card">
+                    <div class="">
+                        <p-table [value]="areaList"
+                        scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                        [globalFilterFields]="['AREA_CODE','AREA_NAME','SALESROLE_NAME','DETAREAHQ_CODE']"  scrollHeight="400px">
+                            <ng-template pTemplate="caption">
+                                <!-- <div style="text-align: right">
+                                    <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div> -->
+                                <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                        aria-label="Search" size="20"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="AREA_CODE" class="width-100" >
+                                        AREA CODE
+                                    </th>
+                                    <th pSortableColumn="AREA_NAME" class="width-100">
+                                        AREA NAME
+                                    </th>
+                                    <th pSortableColumn="SALES_ROLE" class="width-100">
+                                        SALES ROLE
+                                    </th>
+                                    <th pSortableColumn="DETAREAHQ_CODE" class="width-100">
+                                        WEF
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr>
+
+                                    <td class="width-100" >
+                                        <a class="click" (click)="onAreaSelected(rowData)"> {{rowData.AREA_CODE}}</a>
+                                    </td>
+                                    <td class="width-100">
+                                        <a class="click"   (click)="onAreaSelected(rowData)"> {{rowData.AREA_NAME}}</a>
+                                    </td>
+                                    <td class="width-100">
+                                        <a class="click"   (click)="onAreaSelected(rowData)"> {{rowData.SALESROLE_NAME}}</a>
+                                    </td>
+                                    <td class="width-100" >
+                                        <a class="click" (click)="onAreaSelected(rowData)"> {{rowData.WEF | date:'dd/MM/yyyy'}}</a>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary formButton">Save </button>
+          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
+        </div> -->
+      </div>
+    </div>
+</div>

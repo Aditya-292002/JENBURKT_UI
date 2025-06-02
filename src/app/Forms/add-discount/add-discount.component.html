@@ -1,0 +1,364 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                  aria-hidden="true"></i>Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add Discount</li>
+  </ol>
+</nav>
+
+<div class="col-md-12">
+  <div class="d-flex mb-2">
+      <div class="d-flex justify-content-start">
+          <h5 class="mb-0 headers">Add Discount Details</h5>
+      </div>
+      <div class="buttonBox ml-auto">
+          <button  type="submit" class="btn-primary  formButton mr-2" routerLink="/requestdiscountlist">Req Discount List</button>
+          <button  type="submit" class="btn btn-success  saveButton mr-2"  style="padding: 3px 6px !important;font-size: 13px !important;" (click)="saveAddDiscountData()">Save</button>
+          <button type="submit" class="btn btn-danger  cancelButton"  style="padding: 3px 6px !important;font-size: 13px !important;" (click)="onClearData()">Cancel</button>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+<div class="card">
+<div class="card-body">
+<div class="">
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-4">
+  <div class="mb-2">
+    <label>Req By</label>
+    <div class="">
+    <input type="text" class="form-control mr-2" [disabled]="true" [(ngModel)]="REQ_BY"
+        [ngModelOptions]="{standalone:true}" placeholder="User Name" >
+    </div>
+  </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>HQ</label>
+        <div [ngClass]="{'required-field':isHighLightHQ=== 'Yes'}">
+          <p-dropdown [options]="HQ_LIST" optionLabel="HQ_DESC"  optionValue="HQ_CODE" [(ngModel)]="HQ_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="HQ_DESC"
+          placeholder="Please Select..." (onChange)="getHqList($event)">
+          </p-dropdown>
+      </div>
+      </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Stockist</label>
+        <div [ngClass]="{'required-field':isHighLightStockist=== 'Yes'}">
+        <p-dropdown [options]="STOCKIST_LIST" optionLabel="STOCKIST_NAME"  optionValue="STOCKIST_CODE" [(ngModel)]="STOCKIST_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="STOCKIST_NAME"
+        placeholder="Please Select...">
+        </p-dropdown>
+    </div>
+      </div>
+
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class=" mb-2">
+          <label>Chemist</label>
+          <div class="search-dropdown" [ngClass]="{'required-field':isHighLightChemist=== 'Yes'}">
+            <p-dropdown  [options]="CHEMIST_LIST" optionLabel="CHEMIST_NAME"  optionValue="CHEMIST_ID" [(ngModel)]="CHEMIST_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="CHEMIST_NAME"
+            placeholder="Please Select..." >
+            </p-dropdown>
+
+        </div>
+        </div>
+  </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Doctor</label>
+      <div class="" [ngClass]="{'required-field':isHighLightDoctor=== 'Yes'}">
+        <p-dropdown  [options]="DOCTOR_MASTER_LIST" optionLabel="DOCTOR_NAME"  optionValue="DOCTOR_ID" [(ngModel)]="DOCTOR_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="DOCTOR_NAME"
+        placeholder="Please Select..." (onChange)="getDoctorList()">
+        </p-dropdown>
+
+    </div>
+      </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Specialization</label>
+        <div class="search-dropdown" [ngClass]="{'required-field':isHighLightSpecialization=== 'Yes'}">
+          <p-dropdown [options]="SPECIAL_LIST" optionLabel="SPL_DESCRIPTION"  optionValue="SPL_ID"  [(ngModel)]="SPL_ID"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="SPL_DESCRIPTION"
+          placeholder="Please Select..." [disabled]="true">
+          </p-dropdown>
+      </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Product</label>
+
+        <div class="d-flex" [ngClass]="{'required-field':isHighLightProduct=== 'Yes'}">
+          <p-dropdown  [options]="PRODUCT_MASTER_LIST" optionLabel="PRODUCT_DESC"  optionValue="PRODUCT_CODE" [(ngModel)]="PRODUCT_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="PRODUCT_DESC"
+          placeholder="Please Select..."  class="w-100 mr-1">
+          </p-dropdown>
+          <button  type="submit" class="btn-primary  formButton text-white" (click)="showDialog(PRODUCT_CODE)"><i class="fa fa-history" aria-hidden="true"></i></button>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Sale Qty</label>
+        <div [ngClass]="{'required-field':isHighLightSaleqty=== 'Yes'}">
+          <input type="text" name="number" class="form-control mr-2" [(ngModel)]="SALE_QTY"
+          [ngModelOptions]="{standalone:true}" placeholder="Please Enter..."  appTwoDigitDecimaNumber>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="mb-2">
+        <label>Free Qty</label>
+        <div [ngClass]="{'required-field':isHighLightFreeqty=== 'Yes'}">
+          <input type="text" name="number" class="form-control mr-2" [(ngModel)]="FREE_QTY"
+          [ngModelOptions]="{standalone:true}" placeholder="Please Enter..."  appTwoDigitDecimaNumber>
+        </div>
+
+      </div>
+    </div> -->
+
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-3">
+          <label>Approve Date</label>
+          <div >
+              <p-calendar [ngModel]="LAST_VISIT" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                  inputId="icon"  placeholder="{{LAST_VISIT}}" disabled=""></p-calendar>
+          </div>
+      </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-3">
+          <label>Request Date</label>
+          <div >
+              <p-calendar [(ngModel)]="REQUEST_DATE" appendTo="body" [showIcon]="true" dateFormat="dd.mm.yy"
+                  inputId="icon"  placeholder="REQUEST DATE"></p-calendar>
+          </div>
+      </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-8">
+        <div class="mb-2">
+          <label>Remark</label>
+          <div >
+            <textarea name="" id="" cols="3" rows="" class="form-control"[(ngModel)]="REMARK" [ngModelOptions]="{standalone:true}"
+            placeholder="Please Enter..." ></textarea>
+        </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+  </div>
+  <div class="bg-white" >
+    <div class="mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="width-1">Sr.No</th>
+                    <th>Product</th>
+                    <th>Sale Qty</th>
+                    <th>Free Qty</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let list of AddDiscountList; let i=index;">
+                    <td class="width-1">{{i+1}}</td>
+                    <td>
+                      <div class="d-flex" [ngClass]="{'required-field':list.isHighLightProduct=== 'Yes'}">
+                        <p-dropdown  [options]="PRODUCT_MASTER_LIST" optionLabel="PRODUCT_DESC"  optionValue="PRODUCT_CODE" [(ngModel)]="list.PRODUCT_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="PRODUCT_DESC"
+                        placeholder="Please Select..."  class="w-100 mr-1">
+                        </p-dropdown>
+                        <button  type="submit" class="btn-primary  formButton text-success" (click)="showDialog(PRODUCT_CODE)"><i class="fa fa-history" aria-hidden="true"></i></button>
+                    </div>
+
+                    </td>
+                    <td>
+                      <div class="" [ngClass]="{'required-field':list.isHighLightSaleqty=== 'Yes'}">
+                        <input type="text" name="number" class="form-control mr-2" [(ngModel)]="list.SALE_QTY"
+                          [ngModelOptions]="{standalone:true}" placeholder="Sale Qty"  appTwoDigitDecimaNumber>
+                        </div>
+
+                    </td>
+                    <td>
+                      <div class="d-flex" [ngClass]="{'required-field':list.isHighLightFreeqty=== 'Yes'}">
+                        <input type="text" class="form-control mr-2" [(ngModel)]="list.FREE_QTY"
+                          [ngModelOptions]="{standalone:true}" placeholder="Free Qty" appTwoDigitDecimaNumber>
+                        </div>
+
+                    </td>
+                    <td>
+                      <div>
+                        <button class="btn-primary formButton text-success mr-2" (click)="addList(i)" ><i class="fa fa-plus"
+                        aria-hidden="true"></i></button>
+                        <button class="btn-primary formButton text-danger"(click)="deleteList(i)"><i class="fa fa-trash-o "
+                            aria-hidden="true"></i></button>
+                    </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isShowEditPopup">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">History List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="col-md-12 mt-8 p-4">
+              <div class="card">
+                  <div class="">
+                      <p-table [value]="HISTORY_LIST"
+                      scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                      [globalFilterFields]="['Req_No','Date','Product','Sale','Free','Status']"  scrollHeight="400px">
+                          <ng-template pTemplate="caption">
+                              <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                      aria-label="Search" size="20"
+                                      (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                  <div class="input-group-append">
+                                      <button class="btn btn-primary" type="button">
+                                          <i class="fa fa-search fa-sm"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </ng-template>
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th pSortableColumn=" Req_No" class="width-100" >
+                                    Req No
+                                  </th>
+                                  <th pSortableColumn="Date" class="width-100">
+                                    Date
+                                  </th>
+                                  <th pSortableColumn="Product" class="width-100">
+                                    Product
+                                  </th>
+                                  <th pSortableColumn="Sale" class="width-100">
+                                    Sale
+                                  </th>
+                                  <th pSortableColumn="Free" class="width-100">
+                                    Free
+                                  </th>
+                                  <th pSortableColumn="Status" class="width-100">
+                                    Status
+                                  </th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-rowData>
+                              <tr>
+
+                                  <td class="width-100" >
+                                      <a class="click">{{rowData.REQUESTNO}}</a>
+                                  </td>
+                                  <td class="width-100" >
+                                    <a class="click">{{rowData.REQUESTDATE | date:'dd-MM-yyyy'}}</a>
+                                </td>
+                                  <td class="width-100">
+                                      <a class="click">{{rowData.PRODUCTDESC}}</a>
+                                  </td>
+                                  <td class="width-100">
+                                    <a  class="click" >{{ rowData.SALEQTY}}</a>
+                                </td>
+                                  <td class="width-100" >
+                                    <a >{{rowData.FREEQTY}}</a>
+                                </td>
+                                <td class="width-100"><span class="status-indicator" [ngClass]="{'is-red':rowData.STATUS === 'Rejected','is-orange':rowData.STATUS ==='Pending','is-green':rowData.STATUS === 'Approved'}"><i class="fa fa-circle" aria-hidden="true"  [ngClass]="{'is-red-i':rowData.STATUS === 'Rejected','is-orange-i':rowData.STATUS ==='Pending','is-green-i':rowData.STATUS === 'Approved'}"></i> {{rowData.STATUS}}</span></td>
+
+
+                              </tr>
+                          </ng-template>
+                      </p-table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Add Doctor:-" [(visible)]="visible_Doctor" [style]="{width: '50vw'}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>Doctor Name</label>
+          <div [ngClass]="{'required-field':isHighLightDoctorName=== 'Yes'}">
+            <input type="text" class="form-control mr-2" [(ngModel)]="DoctorName"
+              [ngModelOptions]="{standalone:true}" placeholder="Doctor Name " >
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>Specialization Name</label>
+            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightSpecializationName=== 'Yes'}">
+              <p-dropdown [options]="SPECIAL_LIST" optionLabel="SPL_DESCRIPTION"  optionValue="SPL_ID"  [(ngModel)]="SPL_CODE"  [ngModelOptions]="{standalone:true}" appendTo="body" [filter]="true" filterBy="SPL_DESCRIPTION"
+              placeholder="Please Select..." >
+              </p-dropdown>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="mb-2">
+          <label>HQ</label>
+          <div [ngClass]="{'required-field':isHighLightDoctorHq=== 'Yes'}">
+            <input type="text" class="form-control mr-2" [(ngModel)]="DoctorHQ"
+              [ngModelOptions]="{standalone:true}" placeholder="HQ" >
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-1">
+          <button  type="submit" class="btn-primary  formButton mt-4" (click)="formValidateDoctorList()">ADD</button>
+      </div>
+    </div>
+  </div>
+  </p-dialog>
+ <!-- chemist list popup -->
+<p-dialog header="Chemist Master:-" [(visible)]="visible" [style]="{width: '30vw'}">
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="mb-2">
+        <label>Chemist Name</label>
+        <div  [ngClass]="{'required-field':isHighLightChemistName=== 'Yes'}">
+          <input type="text" class="form-control mr-2" [(ngModel)]="ChemistName"
+            [ngModelOptions]="{standalone:true}" placeholder="Chemist Name" >
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="mb-2">
+        <label>HQ</label>
+        <div [ngClass]="{'required-field':isHighLightHqChemist=== 'Yes'}">
+          <input type="text" class="form-control mr-2" [(ngModel)]="ChemistHQ"
+            [ngModelOptions]="{standalone:true}" placeholder="HQ" >
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-1">
+          <div class="float-lg-end">
+            <button  type="submit" class="btn-primary  formButton mt-4" (click)="addSaveChemistData()">ADD</button>
+          </div>
+    </div>
+  </div>
+</div>
+</p-dialog>
+
+

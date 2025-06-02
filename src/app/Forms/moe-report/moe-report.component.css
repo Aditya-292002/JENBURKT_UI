@@ -1,0 +1,38 @@
+.node {
+    cursor: pointer;
+    margin: 4px 0;
+  }
+  
+  .children {
+    padding-left: 20px;
+  }
+  
+  .node:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  .headfolder{
+    /* cursor: context-menu !important; */
+    cursor: pointer !important;
+  }
+  .text-red{
+    color: red;
+  }
+  .bold{
+    font-weight: bold;
+  }
+  .progress-bar.active, .progress.active .progress-bar {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+.progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: 10px;
+  background-color: #e9ecef;
+  border-radius: .25rem;
+}
