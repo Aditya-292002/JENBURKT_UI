@@ -63,7 +63,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="co  l-sm-6 col-md-6 col-lg-3">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Inner Pack</label>
                             <div [ngClass]="{'required-field':isHighLightHsnCode === 'Yes'}">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Sample</label>
                             <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
@@ -100,11 +100,11 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="col-sm-6 col-md-6 col-lg-4" *ngIf="linkFg">
+                    <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="linkFg">
                         <div class="mb-2">
                             <label>Link FG</label>
-                            <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
-                            <p-dropdown [options]="LINKFG_LIST" appendTo="body" optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" [filter]="true" filterBy="PRODUCT_DESC" placeholder="Please Select..."  [suggestions]="filteredLinkFG" (completeMethod)="filterLinkFG($event)"
+                            <!-- <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
+                                <p-dropdown [options]="LINKFG_LIST" appendTo="body" optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" [filter]="true" filterBy="PRODUCT_DESC" placeholder="Please Select..."  [suggestions]="filteredLinkFG" (completeMethod)="filterLinkFG($event)"
                                     [(ngModel)]="LINKFG_CODE" [ngModelOptions]="{standalone:true}">
                                     <ng-template let-country pTemplate="item">
                                         <div class="country-item">
@@ -112,13 +112,13 @@
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
-                            </div>
-                            <!-- <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
+                            </div> -->
+                            <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
                                 <p-multiSelect [options]="LINKFG_LIST" [(ngModel)]="LINKFG_CODE"
-                                    optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" placeholder="Please Select..."
+                                    optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" placeholder="Please Select"
                                     [suggestions]="filteredLinkFG"
                                     (completeMethod)="filterLinkFG($event)"></p-multiSelect>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
 

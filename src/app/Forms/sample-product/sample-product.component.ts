@@ -68,7 +68,7 @@ export class SampleProductComponent implements OnInit {
     } else {
       this.isShowSampleProductRangeList = false
       this.RANGE_CODE = "";
-      this.LINKFG_CODE = ""
+      this.LINKFG_CODE = [];
       this.PREDEFINE_LIST_RANGE = []
     }
 
@@ -212,7 +212,7 @@ export class SampleProductComponent implements OnInit {
     //this.SAMPLE_LIST = [];
     this.SAMPLE_CODE = "";
     // this.LINKFG_LIST = [];
-    this.LINKFG_CODE = "";
+    this.LINKFG_CODE = [];
     this.isShowSampleProductRangeList = false;
     // this.PREDEFINE_LIST_RANGE = [];
   }
