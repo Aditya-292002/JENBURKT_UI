@@ -49,7 +49,9 @@
                             <li class="nav-item" (click)="isSelectedMenu('Chemist')"
                                 [ngClass]="customMenuChemist == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
                                     routerLink="/chemistmaster">Chemist Master</a></li>
-
+                            <li class="nav-item" (click)="isSelectedMenu('Sample_Product')"
+                                [ngClass]="customMenuSample_Product == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
                     <li class="nav-item"><a class="nav-link py-0" routerLink="/productdetails"> Product Details</a></li> -->
                         </ul>
@@ -82,17 +84,17 @@
                         </ul>
                     </div>
                 </li>
-                <li *ngIf="roleID == 1">
+                <li *ngIf="roleID == 1 || roleID == 2">
                     <a class="nav-link px-2" href="#submenu5" data-toggle="collapse" data-target="#submenu5"><i
                             class="fa fa-file-text mr-2"></i>Sample Invoice</a>
                     <div class="collapse" id="submenu5">
                         <ul class="flex-column sub-sidebar-nav nav">
-                            <li class="nav-item" (click)="isSelectedMenu('Sample_Product')"
-                                [ngClass]="customMenuSample_Product == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
                             <li class="nav-item" (click)="isSelectedMenu('Upload_Sample_Stock')"
                                 [ngClass]="customMenuUpload_Sample_Stock == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/uploadsamplestock">Upload Sample Stock</a></li>
+                            <li class="nav-item" (click)="isSelectedMenu('Cycle_Sample_Requisition')"
+                                [ngClass]="customCycle_Sample_Requisition == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/cyclesamplerequisition">Cycle Sample Requisition</a></li>
                             <li class="nav-item" (click)="isSelectedMenu('Sample_Requisition')"
                                 [ngClass]="customMenuSample_Requisition == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition</a></li>
@@ -100,7 +102,7 @@
                                 [ngClass]="customMenuSample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/samplerequisitionapproval"> Sample Requisition
                                     Approval</a></li>
-                            <li class="nav-item" (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
+                            <li class="nav-item" *ngIf="roleID == 4" (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
                                 [ngClass]="customMenuPMT_Sample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/PMTsamplerequisitionapproval"> PMT Sample
                                     Requisition Approval</a></li>
@@ -132,7 +134,7 @@
                     <a class="nav-link px-2" href="#submenu6" data-toggle="collapse" data-target="#submenu6"><i
                             class="fa fa-calculator mr-2"></i>Discount</a>
                     <div class="collapse" id="submenu6">
-                        <ul class="flex-column sub-sidebar-nav nav">
+                        <ul class="flex-column sub-sidebar-nav nav">  
                             <li class="nav-item" (click)="isSelectedMenu('Discount_Request')"
                                 [ngClass]="customMenuDiscount_Request == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/adddiscount">Discount Request</a></li>

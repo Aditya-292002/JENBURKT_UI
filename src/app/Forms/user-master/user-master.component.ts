@@ -61,7 +61,7 @@ export class UserMasterComponent implements OnInit {
     }
     this.http.postnew(this.url.getUserList, data).then(
       (res:any)=>{
-        console.log("userList",res);//PRODUCTLIST
+        // console.log("userList",res);//PRODUCTLIST
         this.isLoaded= false;
         this.userList=res.USERLIST;
 
