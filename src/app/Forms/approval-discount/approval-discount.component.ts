@@ -138,7 +138,6 @@ export class ApprovalDiscountComponent implements OnInit {
 
 
         }
-        console.log(this.FREE_QTY_LIST,"hq")
         if(val == 1){
           if(this.ClaimApprovalListLength == 1){
             this.dt11.clear();  

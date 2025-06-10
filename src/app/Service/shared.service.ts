@@ -54,7 +54,7 @@ export class SharedService {
   ViewBy: string = '';
   redirect_to:string='';
   //ApiUrl= "http://89.163.149.137:5000";
-  //ApiUrl="http://localhost:26493";
+  // ApiUrl="http://localhost:26493";
  ApiUrl =  "http://localhost:45232/";
   // ApiUrl= "http://192.168.1.27:9323/";
   // ApiUrl= "http://103.74.54.212:4201/"; //Live Server Test API
@@ -248,6 +248,14 @@ export class SharedService {
 
   public getRoleID = (): any | null => {
     return JSON.parse(localStorage.getItem("userdetail") ?? '{}').ROLE_ID;
+  }
+
+  isValid(InputValue:any){
+    if(InputValue == "" || InputValue == null || InputValue == "undefined" || InputValue == undefined){
+       return false;
+    }else {
+      return true;
+    }
   }
 
 }

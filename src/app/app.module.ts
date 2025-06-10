@@ -97,6 +97,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SampleRequisitionComponent } from './Forms/sample-requisition/sample-requisition.component';
 import { SampleRequisitionApprovalComponent } from './Forms/sample-requisition-approval/sample-requisition-approval.component';
 import { PMTSampleRequisitionApprovalComponent } from './Forms/pmt-sample-requisition-approval/pmt-sample-requisition-approval.component';
+import { SampleRequisitionListComponent } from './Forms/sample-requisition-list/sample-requisition-list.component';
+import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisition/cycle-sample-requisition.component';
+
 
 @NgModule({
   declarations: [
@@ -171,7 +174,9 @@ import { PMTSampleRequisitionApprovalComponent } from './Forms/pmt-sample-requis
     IncentivesComponent,
     SampleRequisitionComponent,
     SampleRequisitionApprovalComponent,
-    PMTSampleRequisitionApprovalComponent
+    PMTSampleRequisitionApprovalComponent,
+    SampleRequisitionListComponent,
+    CycleSampleRequisitionComponent
   //  UploadMktReportComponent
     
   ],

@@ -68,6 +68,8 @@ import { IncentivesComponent } from './Common/incentives/incentives.component';
 import { SampleRequisitionComponent } from './Forms/sample-requisition/sample-requisition.component';
 import { SampleRequisitionApprovalComponent } from './Forms/sample-requisition-approval/sample-requisition-approval.component';
 import { PMTSampleRequisitionApprovalComponent } from './Forms/pmt-sample-requisition-approval/pmt-sample-requisition-approval.component';
+import { SampleRequisitionListComponent } from './Forms/sample-requisition-list/sample-requisition-list.component';
+import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisition/cycle-sample-requisition.component';
 
 
 
@@ -143,6 +145,8 @@ const routes: Routes = [
       { path: 'samplerequisition', component: SampleRequisitionComponent },
       { path: 'samplerequisitionapproval', component: SampleRequisitionApprovalComponent },
       { path: 'PMTsamplerequisitionapproval', component: PMTSampleRequisitionApprovalComponent },
+      { path: 'samplerequisitionlist', component: SampleRequisitionListComponent },
+      { path: 'cyclesamplerequisition', component: CycleSampleRequisitionComponent },
     ]},
 ];
 

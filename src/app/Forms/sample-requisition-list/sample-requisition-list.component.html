@@ -1,0 +1,62 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sample Requisition List</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Sample Requisition List</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="Back()">Back</button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card">
+        <p-table [value]="SAMPLE_REQUISITION_LIST" responsiveLayout="scroll" scrollHeight="420px"
+            [globalFilterFields]="['POOL_DESC','DESCRIPTION','INNER_PACK','POOL_HQCOUNT','HQ_QTY','TOTAL_REQ','REQ_VALUE']"
+            stateStorage="session" stateKey="statedemo-session1" (onLazyLoad)="loadDataLazily($event)" #dt1>
+            <ng-template pTemplate="caption">
+                <div class="table-header text-right">
+                    <button pButton label="Clear" class="p-button-outlined mr-2" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-right ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" class="form-control"
+                            (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="POOL_DESC" scope="col">Pool
+                    </th>
+                    <th pSortableColumn="DESCRIPTION" scope="col">Product
+                    </th>
+                    <th pSortableColumn="INNER_PACK" scope="col">Inner Pack</th>
+                    <th pSortableColumn="POOL_COUNT" scope="col">Pool Count</th>
+                    <th pSortableColumn="HQ_COUNT" scope="col">HQ Qty</th>
+                    <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th>
+                    <th pSortableColumn="REQ_VALUE" scope="col">Req. Value</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td class="width-2">{{ data.POOL_DESC }}</td>
+                    <td class="width-2">{{ data.DESCRIPTION }}</td>
+                    <td class="width-2">{{ data.INNER_PACK }}</td>
+                    <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
+                    <td class="width-2">{{ data.HQ_QTY }}</td>
+                    <td class="width-2">{{ data.TOTAL_REQ }}</td>
+                    <td class="width-2">{{ data.REQ_VALUE }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

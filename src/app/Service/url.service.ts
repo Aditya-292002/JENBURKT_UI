@@ -166,4 +166,13 @@ export class URLService {
    public GETMASTERLISTFORCMEREPORT = this.sharedService.ApiUrl + '/api/MasterMobile/GETMASTERLISTFORCMEREPORT';
 
      public getIncentiveList = this.sharedService.ApiUrl + '/api/Dashboard/GETINCENTIVELIST';
+
+
+  public GETSAMPLEREQUISITIONMASTERLIST = this.sharedService.ApiUrl + '/api/SampelRequisition/GETSAMPLEREQUISITIONMASTERLIST';
+  public GETSAMPLEREQUISITIONLISTBYCYCLEID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETSAMPLEREQUISITIONLISTBYCYCLEID';
+  public SAVESAMPLEREQUISITION = this.sharedService.ApiUrl + '/api/SampelRequisition/SAVESAMPLEREQUISITION';
+  public GETHQCODELISTBYPOOLCODE = this.sharedService.ApiUrl + '/api/SampelRequisition/GETHQCODELISTBYPOOLCODE';
+  public GETSAMPLEREQUISITIONLISTBYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETSAMPLEREQUISITIONLISTBYUSERID';
+
+     
 }

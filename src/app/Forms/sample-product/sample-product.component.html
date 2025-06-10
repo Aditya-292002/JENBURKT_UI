@@ -116,8 +116,13 @@
                             <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
                                 <p-multiSelect [options]="LINKFG_LIST" [(ngModel)]="LINKFG_CODE"
                                     optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" placeholder="Please Select"
-                                    [suggestions]="filteredLinkFG"
-                                    (completeMethod)="filterLinkFG($event)"></p-multiSelect>
+                                    [suggestions]="filteredLinkFG" (completeMethod)="filterLinkFG($event)">
+
+                                    <ng-template let-item pTemplate="item">
+                                        {{ item.PRODUCT_DESC }} - {{ item.PRODUCT_CODE }}
+                                    </ng-template>
+
+                                </p-multiSelect>
                             </div>
                         </div>
                     </div>
