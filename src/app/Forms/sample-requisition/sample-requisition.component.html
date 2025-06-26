@@ -11,14 +11,14 @@
         <div class="d-flex justify-content-start">
             <h5 class="mb-0 headers">Sample Requisition</h5>
         </div>
-        <div class="buttonBox ml-auto" *ngIf="this.IS_DISABLED == false">
+        <div class="buttonBox ml-auto" >
              <button type="submit"   class="btn-primary formButton mr-2" (click)="EXCELDOWNLOAD()">
                 <i class="fa fa-download mr-2"></i>Excel Download
             </button>
-            <button type="submit" class="btn-primary saveButton mr-2" (click)="SAVESAMPLEREQUISITION(1)">
+            <button type="submit" *ngIf="this.IS_DISABLED == false" class="btn-primary saveButton mr-2" (click)="SAVESAMPLEREQUISITION(1)">
                 Save As Draft
             </button>
-            <button type="submit" class="btn-primary saveButton mr-2" (click)="OpenConformationPopup()">
+            <button type="submit" *ngIf="this.IS_DISABLED == false" class="btn-primary saveButton mr-2" (click)="OpenConformationPopup()">
                 Submit
             </button>
         </div>

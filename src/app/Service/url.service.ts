@@ -189,3 +189,4 @@ export class URLService {
   public GETHQCODEEXCELDOWNLOADDATABYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETHQCODEEXCELDOWNLOADDATABYUSERID';
   public GETSAMPLEPRODUCTREPORT= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLEPRODUCTREPORT';
 
+}
