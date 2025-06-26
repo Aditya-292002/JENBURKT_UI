@@ -42,11 +42,18 @@
                                     <label for="ispaymentlistview">Pending for Payment</label>
                                 </div>
 
-                                <div style="display: flex;text-align: center;">
+                                <!-- <div style="display: flex;text-align: center;">
                                     <p-checkbox [(ngModel)]="RECEIVED_PAYMENT" name="ispaymentlistview"
                                         (click)="ClickPaymentMode(0)" binary="true" inputId="received_payment">
                                     </p-checkbox>
                                     <label for="ispaymentlistview">Payment Done</label>
+                                </div> -->
+
+                                <div>
+                                    <button (click)="exportAsXLSX()" class="btn btn-primary pr-2">
+                                         download excel
+                                    </button>
+                                    <!-- <i class="fa fa-file-excel-o" style="font-size:24px;color:blue" (click)="exportAsXLSX()"></i> -->
                                 </div>
                             </div>
                         </div>
@@ -63,36 +70,65 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>CME NO</th>
-                    <th pSortableColumn="CME_DATE" class="width-12">DATE 
+                    <th class="width-12">CME NO</th>
+                    <th pSortableColumn="CME_DATE" class="width-12">REQ DATE
                         <p-sortIcon field="CME_DATE"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="USER_NAME" class="width-12">REQ BY 
+                    <th pSortableColumn="USER_NAME" class="width-300">REQ BY
                         <p-sortIcon field="USER_NAME"></p-sortIcon>
                     </th>
-                    <th>HQ CODE</th>
-                    <th pSortableColumn="AMOUNT">AMOUNT
+                    <th class="width-12">HQ CODE</th>
+                    <th pSortableColumn="AMOUNT" class="width-12">AMOUNT
                         <p-sortIcon field="AMOUNT"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="GST">GST
+                    <th pSortableColumn="GST" class="width-12">GST
                         <p-sortIcon field="GST"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="OUT_STANDING">OUT STANDING
+                    <th pSortableColumn="OUT_STANDING" class="width-12">OUT STANDING
                         <p-sortIcon field="OUT_STANDING"></p-sortIcon>
                     </th>
+                    <th class="width-300">BENIFICIARY NAME</th>
+                    <th class="width-12">PAN NO</th>
+                    <th pSortableColumn="PAYMENT_DATE" class="width-300">TOPIC
+                        <!-- <p-sortIcon field="PAYMENT_DATE"></p-sortIcon> -->
+                    </th>
+                    <th pSortableColumn="PAYMENT_DESC" class="width-12">DATE
+                        <!-- <p-sortIcon field="PAYMENT_DESC"></p-sortIcon> -->
+                    </th>
+                    <!-- <th pSortableColumn="PAY_AMOUNT" class="width-12">ADVANCE -->
+
+                    <!-- <th class="width-300">ACCOUNT NAME</th> -->
+                    <th class="width-300">BANK NAME</th>
+
+                    <th class="width-12">ACCOUNT NO</th>
+                    <th class="width-12">IFSC CODE</th>
+                    <!-- <th class="width-12">UTR NO</th> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                 <tr>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.CME_NO }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">{{ data.CME_NO }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)" class="width-12">
                         {{ data.CME_DATE | date:'dd-MM-yyy' }}
                     </td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.USER_NAME }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">{{ data.HQ_DESC }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.AMOUNT }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.GST }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.OUT_STANDING }}</td>
+                    <td class="width-300" (click)="GetPayemntCmeForCmeNo(data)">{{ data.USER_NAME }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">{{ data.HQ_DESC }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.AMOUNT }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.GST }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.OUT_STANDING }}</td>
+
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.BENIFICIARY_NAME }}</td>
+
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.PAN_NO }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.TOPIC }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.DATE_FROM | date:'dd-MM-yyy' }}
+                    </td>
+                    <!-- <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.OLD_PAID }}</td> -->
+                    <!-- <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.USER_NAME }}</td> -->
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.BANK_NAME }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.ACCOUNT_NUMBER }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.BANK_IFSC }}</td>
+                    <!-- <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.UTR_NO }}</td> -->
                 </tr>
             </ng-template>
         </p-table>
@@ -187,80 +223,83 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-6">
-                            <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        <div class="mb-2">
-                                            <label>Amt</label>
-                                            <div>
-                                                <input type="text" class="form-control" [(ngModel)]="AMOUNT" disabled
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Amount">
-                                            </div>
-                                        </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <div class="mb-2">
+                                    <label>Amt</label>
+                                    <div>
+                                        <input type="text" class="form-control" [(ngModel)]="AMOUNT" disabled
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter Amount">
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        <div class="mb-2">
-                                            <label>GST</label>
-                                            <div>
-                                                <input type="text" class="form-control" [(ngModel)]="GST" disabled
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Gst">
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
-                                        <div class="mb-2">
-                                            <label>Advance Paid</label>
-                                            <div>
-                                                <input type="text" class="form-control" [(ngModel)]="OLD_PAID" disabled numbersOnly
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Paid">
-                                            </div>
-                                        </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <div class="mb-2">
+                                    <label>GST</label>
+                                    <div>
+                                        <input type="text" class="form-control" [(ngModel)]="GST" disabled
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter Gst">
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
-                                        <div class="mb-2">
-                                            <label>Old TDS</label>
-                                            <div>
-                                                <input type="text" class="form-control" [(ngModel)]="OLD_TDS" disabled numbersOnly
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Old Tds">
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-6">
-                            <div >
-                                    <div *ngIf="!isPayemntDataView && this.CME_DOCUMENT_LIST.length > 0">
-                                        <h6 class="modal-title">Document Details</h6>
-                                        <p-table [value]="CME_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false" 
-                                            class="prime-table" [showCurrentPageReport]="true" [rows]="10" [autoLayout]="true">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th> Sr No </th>
-                                                    <th> Document Type </th>
-                                                    <th> Document Name </th>
-                                                    <th> Download Document </th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
-                                                <tr>
-                                                    <td>{{ rowIndex + 1 }}</td>
-                                                    <td>{{ data.DOCUMENT_DESC }}</td>
-                                                    <td>{{ data.FILE_NAME }}</td>
-                                                    <td >
-                                                        <button class="btn-primary formButton " (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
-                                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
+                                <div class="mb-2">
+                                    <label>Advance Paid</label>
+                                    <div>
+                                        <input type="text" class="form-control" [(ngModel)]="OLD_PAID" disabled
+                                            numbersOnly [ngModelOptions]="{standalone: true}"
+                                            placeholder="Please Enter Old Paid">
                                     </div>
-                            </div> 
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="!isPayemntDataView">
+                                <div class="mb-2">
+                                    <label>Old TDS</label>
+                                    <div>
+                                        <input type="text" class="form-control" [(ngModel)]="OLD_TDS" disabled
+                                            numbersOnly [ngModelOptions]="{standalone: true}"
+                                            placeholder="Please Enter Old Tds">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <div>
+                            <div *ngIf="!isPayemntDataView && this.CME_DOCUMENT_LIST?.length > 0">
+                                <h6 class="modal-title">Document Details</h6>
+                                <p-table [value]="CME_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false"
+                                    class="prime-table" [showCurrentPageReport]="true" [rows]="10" [autoLayout]="true">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th> Sr No </th>
+                                            <th> Document Type </th>
+                                            <th> Document Name </th>
+                                            <th> Download Document </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ data.DOCUMENT_DESC }}</td>
+                                            <td>{{ data.FILE_NAME }}</td>
+                                            <td>
+                                                <button class="btn-primary formButton "
+                                                    (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
+                                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row"  *ngIf="!isPayemntDataView">
+                <div class="row" *ngIf="!isPayemntDataView">
                     <div class="col-sm-12 col-md-12 col-lg-2">
                         <div class="mb-2">
                             <label>O/s</label>
@@ -272,12 +311,53 @@
                     </div>
                 </div>
                 <div class="row">
+
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        >
+                        <div class="mb-2">
+                            <label>Bank Name<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                       >
+                        <div class="mb-2">
+                            <label>Bank Account Number<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"
+                                    (keypress)="keyPressNumbers($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        >
+                        <div class="">
+                            <label>IFSC code<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code"
+                                     (input)="isValid_IFSC_Code()">
+                            </div>
+                            <!-- <div> -->
+                                <span *ngIf="ifscFlag" style="color: red;">Please enter valid IFSC code*</span>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-2">
                         <div class="mb-2">
                             <label>Pay Amount<span style="color: red;">*</span></label>
                             <div>
                                 <input type="text" class="form-control" [(ngModel)]="PAY_AMOUNT" numbersOnly
-                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Pay Amount" [disabled]="isPayemntDataView">
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Pay Amount"
+                                    [disabled]="isPayemntDataView">
                             </div>
                         </div>
                     </div>
@@ -286,7 +366,8 @@
                             <label>Tds Amount<span style="color: red;">*</span></label>
                             <div>
                                 <input type="text" class="form-control" [(ngModel)]="TDS_AMOUNT" numbersOnly
-                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Tds Amount" [disabled]="isPayemntDataView">
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Tds Amount"
+                                    [disabled]="isPayemntDataView">
                             </div>
                         </div>
                     </div>
@@ -296,8 +377,8 @@
                             <div>
                                 <p-dropdown [options]="PAYMENT_TYPE_LIST" [(ngModel)]="PAYMENT_TYPE_ID"
                                     [ngModelOptions]="{standalone:true}" appendTo="body" optionValue="PAYMENT_TYPE_ID"
-                                    optionLabel="PAYMENT_DESC" [filter]="true" filterBy="" [disabled]="isPayemntDataView"
-                                    placeholder="Please Select Pay Mode">
+                                    optionLabel="PAYMENT_DESC" [filter]="true" filterBy=""
+                                    [disabled]="isPayemntDataView" placeholder="Please Select Pay Mode">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -308,7 +389,18 @@
                             <div>
                                 <p-calendar [(ngModel)]="PAYMENT_DATE" appendTo="body" [showIcon]="true"
                                     dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
-                                    inputId="icon" placeholder="{{PAYMENT_DATE}}" [disabled]="isPayemntDataView" ></p-calendar>
+                                    inputId="icon" placeholder="{{PAYMENT_DATE}}"
+                                    [disabled]="isPayemntDataView"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>UTR NO<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="UTR_NO"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter UTR NO"
+                                    [disabled]="isPayemntDataView">
                             </div>
                         </div>
                     </div>
@@ -317,7 +409,8 @@
                             <label>Payment Ref<span style="color: red;">*</span></label>
                             <div>
                                 <input type="text" class="form-control" [(ngModel)]="PAYMENT_REF"
-                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref" [disabled]="isPayemntDataView">
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref"
+                                    [disabled]="isPayemntDataView">
                             </div>
                         </div>
                     </div>
@@ -326,7 +419,8 @@
                             <label>ERP Ref</label>
                             <div>
                                 <input type="text" class="form-control" [(ngModel)]="ERP_REF"
-                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref" [disabled]="isPayemntDataView">
+                                    [ngModelOptions]="{standalone: true}" placeholder="Please Enter Ref"
+                                    [disabled]="isPayemntDataView">
                             </div>
                         </div>
                     </div>
@@ -365,31 +459,33 @@
                         </div>
                     </div>
                     <div class="table-header text-left">
-                            <div class="d-flex justify-content-end">
-                                <div style="width: 25%;margin-right: 10px;">
-                                    <label>From Date </label>
-                                    <div>
-                                        <p-calendar [(ngModel)]="PAYMENT_FROM_DATE" appendTo="body" [showIcon]="true"
-                                            dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
-                                            (onSelect)="filterByDateRange()"   inputId="icon" placeholder="{{PAYMENT_FROM_DATE}}"></p-calendar>
-                                    </div>
-                                </div>
-                                <div style="width: 25%;margin-right: 10px;">
-                                    <label>To Date </label>
-                                    <div>
-                                        <p-calendar [(ngModel)]="PAYMENT_TO_DATE" appendTo="body" [showIcon]="true"
-                                            dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
-                                            (onSelect)="filterByDateRange()"  inputId="icon" placeholder="{{PAYMENT_TO_DATE}}"></p-calendar>
-                                    </div>
-                                </div>
-                                <div style="width: 25%;">
-                                    <span class="p-input-icon-right ml-auto">
-                                        <i class="pi pi-search"></i>
-                                        <input pInputText type="text" class="form-control"
-                                            (input)="dt1.filterGlobal($event.target.value, 'contains')" />
-                                    </span>
+                        <div class="d-flex justify-content-end">
+                            <div style="width: 25%;margin-right: 10px;">
+                                <label>From Date </label>
+                                <div>
+                                    <p-calendar [(ngModel)]="PAYMENT_FROM_DATE" appendTo="body" [showIcon]="true"
+                                        dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                        (onSelect)="filterByDateRange()" inputId="icon"
+                                        placeholder="{{PAYMENT_FROM_DATE}}"></p-calendar>
                                 </div>
                             </div>
+                            <div style="width: 25%;margin-right: 10px;">
+                                <label>To Date </label>
+                                <div>
+                                    <p-calendar [(ngModel)]="PAYMENT_TO_DATE" appendTo="body" [showIcon]="true"
+                                        dateFormat="dd-mm-yy" placeholder="Please Select Date" [minDate]="Today"
+                                        (onSelect)="filterByDateRange()" inputId="icon"
+                                        placeholder="{{PAYMENT_TO_DATE}}"></p-calendar>
+                                </div>
+                            </div>
+                            <div style="width: 25%;">
+                                <span class="p-input-icon-right ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" class="form-control"
+                                        (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -398,27 +494,28 @@
                 <tr>
                     <th>PAYMENT NO</th>
                     <th>CME NO</th>
-                    <th pSortableColumn="PAYMENT_DATE" class="width-12">PAYMENT DATE 
+                    <th pSortableColumn="PAYMENT_DATE" class="width-12">PAYMENT DATE
                         <p-sortIcon field="PAYMENT_DATE"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="PAYMENT_DESC" class="width-12">PAYMENT MODE 
+                    <th pSortableColumn="PAYMENT_DESC" class="width-12">PAYMENT MODE
                         <p-sortIcon field="PAYMENT_DESC"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="PAY_AMOUNT" class="width-12">PAY AMOUNT 
-                        <p-sortIcon field="PAY_AMOUNT"></p-sortIcon></th>
+                    <th pSortableColumn="PAY_AMOUNT" class="width-12">PAY AMOUNT
+                        <p-sortIcon field="PAY_AMOUNT"></p-sortIcon>
+                    </th>
                     <th>TDS AMOUNT</th>
                     <th>PAYMENT REF NO</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                 <tr>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_NO }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.CME_NO }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_DATE | date:'dd-MM-yyy' }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_DESC }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >&#8377;{{ data.PAY_AMOUNT }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >&#8377;{{ data.TDS_AMOUNT }}</td>
-                    <td (click)="GetPayemntDataCmeForPaymentNo(data)" >{{ data.PAYMENT_REF_NO }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">{{ data.PAYMENT_NO }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">{{ data.CME_NO }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">{{ data.PAYMENT_DATE | date:'dd-MM-yyy' }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">{{ data.PAYMENT_DESC }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">&#8377;{{ data.PAY_AMOUNT }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">&#8377;{{ data.TDS_AMOUNT }}</td>
+                    <td (click)="GetPayemntDataCmeForPaymentNo(data)">{{ data.PAYMENT_REF_NO }}</td>
                 </tr>
             </ng-template>
         </p-table>

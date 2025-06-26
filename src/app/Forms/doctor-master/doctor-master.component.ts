@@ -395,7 +395,7 @@ export class DoctorMasterComponent implements OnInit {
       // });
 
       // workbook.SheetNames.forEach((sheet) => {
-        const data = XLSX.utils.sheet_to_json(workbook.Sheets['DOCTOR']);
+        const data = XLSX.utils.sheet_to_json(workbook.Sheets['data']);
         this.convertedJson = data;
         console.log(this.convertedJson,"data=convert")
         this.isLoaded = false;

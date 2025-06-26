@@ -47,3 +47,7 @@
 .width-100{
     width: 238px;
 }
+.input-group input {
+    max-width: 60px;
+    text-align: center;
+}

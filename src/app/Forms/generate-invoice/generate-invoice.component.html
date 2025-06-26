@@ -9,7 +9,7 @@
 <div class="col-md-12">
     <div class="d-flex mb-2">
         <div class="d-flex justify-content-start">
-            <h5 class="mb-0 headers">Generate Invoice</h5>
+            <h5 class="mb-0 headers">Edit Invoice</h5>
         </div>
         <div class="buttonBox ml-auto">
             <button type="submit" class="btn-primary  saveButton mr-2"
@@ -36,125 +36,272 @@
                     <div class="card-body">
                         <div class="">
                             <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-3">
+
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+                                                <div [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                                    <label>Invoice No.</label>
+                                                    <input type="text" [(ngModel)]="INVOICE_NO" class="form-control"
+                                                        [ngModelOptions]="{standalone:true}" placeholder="Invoice No."
+                                                        [disabled]="disableAllInput">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+                                                <div [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                                    <label>Unit</label>
+                                                    <p-dropdown [options]="UNIT_LIST" appendTo="body"
+                                                        optionLabel="UNIT_DESC" optionValue="UNIT_CODE" appendTo="body"
+                                                        placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
+                                                        [ngModelOptions]="{standalone:true}"
+                                                        [disabled]="disableAllInput">
+                                                    </p-dropdown>
+
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightHQ === 'Yes'}">
+                                                    <label>HQ</label>
+                                                    <p-dropdown [options]="HQ_LIST" appendTo="body"
+                                                        optionLabel="HQ_DESC" optionValue="HQ_CODE" appendTo="body"
+                                                        placeholder="Please Select.." [(ngModel)]="HQ_CODE"
+                                                        [ngModelOptions]="{standalone:true}"
+                                                        [disabled]="disableAllInput">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalCase === 'Yes'}">
+                                                    <label>Ref Invoice No.</label>
+                                                    <input type="text" [(ngModel)]="REF_INVOICE_NO" class="form-control"
+                                                        placeholder="Enter Invoice No">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div>
+                                                    <label>DC Date</label>
+                                                    <p-calendar [tabindex]=1 [(ngModel)]="DC_DATE " [showIcon]="true"
+                                                        inputId="icon" dateFormat="dd-mm-yy"></p-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-2">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalCase === 'Yes'}">
+                                                    <label>Total Case</label>
+                                                    <input type="text" [(ngModel)]="TOTAL_CASE" class="form-control"
+                                                        placeholder="0">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-2">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                                    <label>Total Gross Wt</label>
+                                                    <input type="text" [(ngModel)]="TOTAL_GROSS_WT" class="form-control"
+                                                        placeholder="0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="mb-3">
-                                        <div  [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
-                                            <label>Unit</label>
-                                            <p-dropdown [options]="UNIT_LIST" appendTo="body" optionLabel="UNIT_DESC"
-                                                optionValue="UNIT_CODE" appendTo="body" placeholder="Please Select.."
-                                                [(ngModel)]="UNIT_CODE" [ngModelOptions]="{standalone:true}" [disabled]="disableAllInput">
+
+                                        <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                            <label>Docket No</label>
+                                            <input type="text" class="form-control" placeholder="Docket No"
+                                                [(ngModel)]="DOCKET_NO">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-4">  
+                                    <div class="mb-3">
+
+                                        <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                            <label>Docket Dt</label>
+                                            <p-calendar [(ngModel)]="DOCKET_DT" [showIcon]="true" inputId="icon"
+                                                dateFormat="dd-mm-yy"></p-calendar>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <div class="mb-3">
+
+                                        <div [ngClass]="{'required-field':isHighLightDispatch === 'Yes'}">
+                                            <label>Dispatch Thru</label>
+                                            <p-dropdown [options]="TRANSPORT_LIST" appendTo="body"
+                                                optionLabel="DESCRIPTION" optionValue="ID" appendTo="body"
+                                                placeholder="Please Select.." [(ngModel)]="DISPATCH"
+                                                [ngModelOptions]="{standalone:true}">
                                             </p-dropdown>
                                         </div>
+
+                                    </div>
+
+                                </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-3">
+                                <div class="col-sm-12 col-md-12 col-lg-6" style=" border: 1px dashed #999ea3; padding:-1px">
+                                    <div class="row">
+
+                                        <div class="col-sm-12 col-md-12 col-lg-6">
+
+                                            <div class="mb-3">
+                                                <div [ngClass]="{'required-field':isHighLightSalesRoleList === 'Yes'}">
+                                                    <label>Send To</label>
+                                                    <p-dropdown [options]="SALES_ROLE_LIST" appendTo="body"
+                                                        optionLabel="SALESROLE_NAME" optionValue="SALESROLE_ID"
+                                                        appendTo="body" placeholder="Please Select.."
+                                                        [(ngModel)]="SALES_ROLE_CODE"
+                                                        [ngModelOptions]="{standalone:true}"
+                                                        (ngModelChange)="GetSampleInvoiceDataById()">
+                                                    </p-dropdown>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-6">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightUserName === 'Yes'}">
+                                                    <label>User Name</label>
+                                                    <input type="text" [(ngModel)]="USER_NAME" class="form-control"
+                                                        placeholder="User Name" [ngModelOptions]="{standalone:true}"
+                                                        [disabled]="disableAllInput">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+                                                <div [ngClass]="{'required-field':isHighLightEmail === 'Yes'}">
+                                                    <label>Email</label>
+                                                    <input type="text" [(ngModel)]="EMAIL_ID" class="form-control"
+                                                        placeholder="Email" [ngModelOptions]="{standalone:true}" [disabled]="disableAllInput">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightMobileNo === 'Yes'}">
+                                                    <label>Mobile No</label>
+                                                    <input type="text" [(ngModel)]="MOBILE_NO" class="form-control"
+                                                        [ngModelOptions]="{standalone:true}" placeholder="Mobile No"
+                                                        maxlength="10" appTwoDigitDecimaNumber
+                                                        [disabled]="disableAllInput">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+
+                                            <div class="mb-3">
+                                                <label>State Name</label>
+                                                <input type="text" [(ngModel)]="STATE_NAME" class="form-control"
+                                                    [ngModelOptions]="{standalone:true}" placeholder="State Name"
+                                                    [disabled]="disableAllInput">
+
+                                            </div>
+                                        </div>
+                                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+
                                     <div class="mb-3">
 
-                                        <div [ngClass]="{'required-field':isHighLightHQ === 'Yes'}">
-                                            <label>HQ</label>
-                                            <p-dropdown [options]="HQ_LIST" appendTo="body" optionLabel="HQ_DESC"
-                                                optionValue="HQ_CODE" appendTo="body" placeholder="Please Select.."
-                                                [(ngModel)]="HQ_CODE" [ngModelOptions]="{standalone:true}" [disabled]="disableAllInput">
-                                            </p-dropdown>
+                                        <label>Address</label>
+                                        <textarea type="text" [(ngModel)]="ADDRESS" class="form-control"
+                                            [ngModelOptions]="{standalone:true}" placeholder="Address"
+                                            [disabled]="disableAllInput"></textarea>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <!-- 
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalCase === 'Yes'}">
+                                                    <label>Ref Invoice No.</label>
+                                                    <input type="text" [(ngModel)]="REF_INVOICE_NO" class="form-control"
+                                                        placeholder="Enter Invoice No">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalCase === 'Yes'}">
+                                                    <label>Total Case</label>
+                                                    <input type="text" [(ngModel)]="TOTAL_CASE" class="form-control"
+                                                        placeholder="0">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                                    <label>Total Gross Wt</label>
+                                                    <input type="text" [(ngModel)]="TOTAL_GROSS_WT" class="form-control"
+                                                        placeholder="0">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-md-12 col-lg-3">
-                                  <div class="mb-3">
+                                </div> -->
+                                <!-- <div class="col-sm-12 col-md-12 col-lg-3">
 
-                                      <div [ngClass]="{'required-field':isHighLightUserName === 'Yes'}">
-                                          <label>User Name</label>
-                                          <input type="text" [(ngModel)]="USER_NAME" class="form-control" placeholder="User Name"
-                                              [ngModelOptions]="{standalone:true}" [disabled]="disableAllInput">
-                                      </div>
-                                  </div>
-                              </div>
-                                <div class="col-sm-12 col-md-12 col-lg-3">
-                                    <div class="mb-3">
-                                      <div [ngClass]="{'required-field':isHighLightEmail === 'Yes'}">
-                                        <label>Email</label>
-                                        <input type="text" [(ngModel)]="EMAIL_ID" class="form-control" placeholder="Email"
-                                            [ngModelOptions]="{standalone:true}" >
-                                    </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-3">
-
-                                  <div class="mb-3">
-                                    <div
-                                    [ngClass]="{'required-field':isHighLightSalesRoleList === 'Yes'}">
-                                    <label>Send To</label>
-                                    <p-dropdown [options]="SALES_ROLE_LIST" appendTo="body" optionLabel="SALESROLE_NAME"
-                                        optionValue="SALESROLE_ID" appendTo="body" placeholder="Please Select.."
-                                        [(ngModel)]="SALES_ROLE_CODE" [ngModelOptions]="{standalone:true}"
-                                        (ngModelChange)="GetSampleInvoiceDataById()" >
-                                    </p-dropdown>
-                                </div>
-
-                                  </div>
-                              </div>
-
-
-                                <div class="col-sm-12 col-md-12 col-lg-3">
                                     <div class="mb-3">
 
-                                        <div>
-                                            <label>DC Date</label>
-                                            <p-calendar [tabindex]=1 [(ngModel)]="DC_DATE " [showIcon]="true" inputId="icon"
-                                                dateFormat="yy-mm-dd"></p-calendar>
-                                        </div>
+
                                     </div>
                                 </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-3">
-                                  <div class="mb-3">
-
-                                      <div [ngClass]="{'required-field':isHighLightMobileNo === 'Yes'}">
-                                          <label>Mobile No</label>
-                                          <input type="text" [(ngModel)]="MOBILE_NO" class="form-control"
-                                              [ngModelOptions]="{standalone:true}" placeholder="Mobile No" maxlength="10"
-                                              appTwoDigitDecimaNumber [disabled]="disableAllInput">
-                                      </div>
-                                  </div>
-                              </div>
-
                                 <div class="col-sm-12 col-md-12 col-lg-3">
 
-                                  <div class="mb-3">
-                                    <label>State Name</label>
-                                    <input type="text" [(ngModel)]="STATE_NAME" class="form-control"
-                                    [ngModelOptions]="{standalone:true}" placeholder="State Name"
-                                     [disabled]="disableAllInput">
-
-                                  </div>
-                              </div>
-                              <div class="col-sm-12 col-md-12 col-lg-3">
-
-                                <div class="mb-3">
+                                    <div class="mb-3">
 
 
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-3">
+                                    </div>
+                                </div> -->
 
-                              <div class="mb-3">
-
-
-                              </div>
-                          </div>
-                          <div class="col-sm-12 col-md-12 col-lg-6">
-
-                            <div class="mb-3">
-
-                              <label>Address</label>
-                              <textarea type="text" [(ngModel)]="ADDRESS" class="form-control"
-                              [ngModelOptions]="{standalone:true}" placeholder="Address"
-                               [disabled]="disableAllInput"></textarea>
-                            </div>
-                        </div>
                                 <!-- <div class="col-sm-12 col-md-12 col-lg-3">
                                     <div class="mb-3">
 
@@ -171,19 +318,33 @@
                                     </div>
                                 </div> -->
                             </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-2"> 
+                                    <div class="mb-3 ml-auto">
+                                        <div class="form-group from1 form-check mb-0 header ">
+                                            <input type="checkbox" class="form-check-input" id="Dispatched"
+                                                [(ngModel)]="IS_CHECK" (change)="Checked($event)"
+                                               >
+                                            <label class="form-check-label" class="is-checking-i" for="Dispatched">
+                                                Dispatched</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div class="card-header mt-2" data-toggle="collapse" aria-expanded="true" data-parent="#accordion2" href="#collapseTwo">
-                <a class="card-title ">
-                   Invoice Details
-                </a>
+                <div class="card-header mt-2" data-toggle="collapse" aria-expanded="true" data-parent="#accordion2"
+                    href="#collapseTwo">
+                    <a class="card-title ">
+                        Invoice Details
+                    </a>
 
-            </div>
-            <div id="collapseTwo"  class="accordion-collapse collapse show p-0" data-parent="#accordion2">
+                </div>
+                <div id="collapseTwo" class="accordion-collapse collapse show p-0" data-parent="#accordion2">
 
                     <div class="card ">
                         <div class="card-body">
@@ -194,9 +355,9 @@
                                             <tr>
                                                 <th>SR No</th>
                                                 <th>Sample Product</th>
-                                                <th>Allocation Qty</th>
+                                                <th>Inner Pack </th>
                                                 <th>DC Qty</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
 
@@ -210,36 +371,41 @@
                                                             optionLabel="DESCRIPTION" optionValue="SAMPLE_PRODUCT_CODE"
                                                             appendTo="body" placeholder="Please Select.."
                                                             [(ngModel)]="list.SAMPLE_PRODUCT_CODE"
-                                                            [ngModelOptions]="{standalone:true}" [disabled]="list.isDisabled">
+                                                            [ngModelOptions]="{standalone:true}"
+                                                            [disabled]="list.isDisabled">
                                                         </p-dropdown>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <input type="text" class="form-control" [(ngModel)]="list.ALLOC_OF_MRS"
-                                                            placeholder="0" [disabled]="disableAllInput" [disabled]="list.isDisabled">
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="list.INNER_PACK" placeholder="0"
+                                                            [disabled]="disableAllInput" [disabled]="list.isDisabled">
                                                     </div>
 
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <input type="text" class="form-control" [(ngModel)]="list.DC_QTY"
-                                                            placeholder="0" [disabled]="disableAllInput">
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="list.DC_QTY" placeholder="0"
+                                                            [disabled]="disableAllInput">
                                                     </div>
 
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <div *ngIf="(INVOICE_DETAILS.length - 1)  == i && isHideButtons">
-                                                        <span class="badge badge-success mr-1" (click)="addGenerateList(list)"
+                                                        <span class="badge badge-success mr-1"
+                                                            (click)="addGenerateList(list)"
                                                             (keypress)="addGenerateList(list)" data-toggle="tooltip"
                                                             data-placement="top" title="Shortcut Key :- Alt + a"
                                                             [tabindex]="addTab" [disabled]="disableAllInput">
                                                             <i class="fa fa-plus "></i></span>
                                                         <span class="badge badge-danger" (click)="deleteRowList(i)"
                                                             *ngIf="PRODUCT_DETALS_COUNT < (i + 1)">
-                                                            <i class="fa fa-times text-white icon form-control-icon"></i></span>
+                                                            <i
+                                                                class="fa fa-times text-white icon form-control-icon"></i></span>
                                                     </div>
-                                                </td>
+                                                </td> -->
 
                                             </tr>
 
@@ -248,7 +414,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <!-- <div class="row">
                               <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                 <div class="mb-3 ml-auto">
                                   <div class="form-group from1 form-check mb-0 header ">
@@ -260,10 +426,10 @@
                                      Dispatched</label>
                                   </div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
-                            <div class="row mt-2" >
+                            <!-- <div class="row mt-2" >
                                 <div class="col-sm-12 col-md-12 col-lg-2">
                                     <div class="mb-3">
 
@@ -322,11 +488,11 @@
                                 </div>
 
 
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>

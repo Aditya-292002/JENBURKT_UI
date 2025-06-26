@@ -49,9 +49,13 @@ export class CycleSampleRequisitionComponent implements OnInit {
       "USER_ID": this.USER_ID,
       "CYCLE_ID": this.CYCLE_NO
     }
-    this.http.postnew(this.url.GETSAMPLEREQUISITIONLISTBYCYCLEID, data).then(
+    this.http.postnew(this.url.SAVESAMPLEREQUISITIONCYCLEDATA, data).then(
       (res: any) => {
-        // this.SAMPLE_REQUISITION_LIST = res.SAMPLE_REQUISITION_LIST;
+        if (res.FLAG == 1) {
+        this.toastrService.success(res.MSG);
+      } else if (res.FLAG == 0) {
+        this.toastrService.error(res.MSG);
+      }
       });
   }
 

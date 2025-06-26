@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
 import { CommonService } from 'src/app/Service/common.service';
 import { ToastrNotificationService } from 'src/app/Service/toastr-notification.service';
+import { UrlService } from 'src/app/Service/url.service';
 import { SharedService } from 'src/app/Service/shared.service';
-import { URLService } from 'src/app/Service/url.service';
 
 @Component({
   selector: 'app-change-company',
@@ -17,7 +17,7 @@ export class ChangeCompanyComponent implements OnInit {
   UNIT_LIST=[];
   FINANCIAL_YEAR_LIST=[];
   
-  constructor(private router: Router, private urlService: URLService, public commonservice: CommonService,
+  constructor(private router: Router, private urlService: UrlService, public commonservice: CommonService,
     private toastrService: ToastrNotificationService, private apiService: ApiService,public SharedService:SharedService,) { }
 
 UNIT_CODE:any;
@@ -28,7 +28,7 @@ FYEAR:any;
   ngOnInit(): void {
 
     this.USER_ID=localStorage.getItem("USER_ID")
-    // this.getCompanyList();
+    this.getCompanyList();
 
    
   }
@@ -66,25 +66,26 @@ FYEAR:any;
     this.router.navigate(["/companymaster"]);
   }
   OnFinacialYearChange(){
+    console.log("OnFinacialYearChange",this.FYEAR)
     localStorage.setItem("START_YEAR",this.FYEAR.FYEAR)
     localStorage.setItem("NEXT_YEAR",this.FYEAR.NEXT_FYEAR)
   }
 
 
-  // getCompanyList(){
-  // let data = {
-  //   "USER_ID": (+this.USER_ID),
-  //   "COMPANY_CODE": (this.COMPANY_CODE == undefined ? '' : this.COMPANY_CODE.COMPANY_CODE),
-  //   "PARTY_CODE": this.PARTY_CODE
-  // }
-  // this.apiService.post(this.urlService.CompanyList, data).then((res: any) => {
-  //   this.COMPANY_LIST = res.Company_List.CompanyDetails;
-  //   this.UNIT_LIST=res.Company_List.UnitDetails;
-  //   this.FINANCIAL_YEAR_LIST=res.Company_List.FyearDetails;
-  // },
-  //   error => {
-  //   });
-  // }
+  getCompanyList(){
+  let data = {
+    "USER_ID": (+this.USER_ID),
+    "COMPANY_CODE": (this.COMPANY_CODE == undefined ? '' : this.COMPANY_CODE.COMPANY_CODE),
+    "PARTY_CODE": this.PARTY_CODE
+  }
+  this.apiService.post(this.urlService.CompanyList, data).then((res: any) => {
+    this.COMPANY_LIST = res.Company_List.CompanyDetails;
+    this.UNIT_LIST=res.Company_List.UnitDetails;
+    this.FINANCIAL_YEAR_LIST=res.Company_List.FyearDetails;
+  },
+    error => {
+    });
+  }
   
   onSomeAction(e: any) {
     console.log("event", e.code);

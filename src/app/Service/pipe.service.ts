@@ -8,7 +8,7 @@ import { CostFilterPipe } from '../Pipe/filter-pipe.pipe';
   
 export class PipeService {
 
-    constructor(private currencyPipe: CostFilterPipe,private costFilter:CostFilterPipe) { }
+    constructor(private currencyPipe: CostFilterPipe) { }
    
     setCommaseprated(pdata: any) {
         let rtn_pdata;

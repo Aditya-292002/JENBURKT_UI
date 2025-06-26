@@ -1,0 +1,98 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Payment Approved List</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+
+            <h5 class="mb-0 headers">Payment List</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+
+            <!-- <button class="btn btn-primary  formButton" (click)="BACKTOLIST()"
+                style="padding: 3px 6px !important;font-size: 13px !important;">Back</button> -->
+
+        </div>
+        <!-- <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2">Save</button>
+            <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+        </div> -->
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+
+        <div class="card-body">
+            <p-table #dt [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList"
+                responsiveLayout="scroll" [paginator]="true" class="prime-table" [showCurrentPageReport]="true"
+                [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]" [totalRecords]="totalRecords"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true"
+                (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true"
+                [globalFilterFields]="showGridData.SearchKey">
+                <ng-template pTemplate="caption">
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <label>From Date</label>
+                            <div>
+                                <p-calendar [showIcon]="true" [(ngModel)]="FROM_DATE" inputId="icon"
+                                    dateFormat="dd.mm.yy"></p-calendar>
+                            </div>
+                        </div>
+                        <div class=" col-md-3 mb-2">
+                            <label>To Date</label>
+                            <div>
+                                <p-calendar [showIcon]="true" [(ngModel)]="TO_DATE" inputId="icon"
+                                    dateFormat="dd.mm.yy"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pt-md-4">
+                            <button class="btn btn-primary  formButton" (click)="approvedPayementList()"
+                                style="padding: 3px 6px !important;font-size: 13px !important;">Show</button>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Search</label>
+                            <div>
+                                <span class="p-input-icon-right ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" size="30" class="form-control"
+                                        placeholder="Global Filter"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+
+                        <th style="width:180px ;" *ngFor="let col of columns"
+                            [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}">
+                            {{col.Headers}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td style="width:180px" *ngFor="let col of columns"
+                            [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}">
+                            <a class="click" (click)="routeList(rowData)">
+                                {{rowData[col.Field]}}
+                            </a>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </div>
+</div>

@@ -79,7 +79,7 @@ export class EditInvoiceComponent implements OnInit {
   INVOICE_NO_PRINT: any;
   INVOICE_ID:any;
   HQ_CODE:any;
-  STATUS_CODE:any;
+  STATUS_CODE:any=0;
   STATUS_LIST: any = [
     {
       "STATUS_CODE": 0,
@@ -115,7 +115,7 @@ filterInvoiceDetails:any = [];
       }
 
     }
-
+this.onPrintInvoiceChange();
     this.getEditInvoiceMasterList();
 
     this.TODAY_DATE = new Date();
@@ -170,7 +170,8 @@ filterInvoiceDetails:any = [];
       "INVOICE_NO": this.invoice_no,
       "DOCKET_NO": this.DOCKET_NO,
       "DOCKET_DT": this.DOCKET_DT,
-      "USER_ID": (+this.userInfo.USER_ID)
+      "USER_ID": (+this.userInfo.USER_ID),
+       "UNIT_CODE":this.UNIT_CODE
 
     }
 
@@ -200,9 +201,10 @@ filterInvoiceDetails:any = [];
     console.log(list,"data")
     let data={
      "INVOICE_ID":list.INVOICE_NO,
-     "CYCLE_CODE":this.CYCLE_CODE,
-      "UNIT_CODE":this.UNIT_CODE,
-      "HQ_CODE":list.HQ_CODE
+     "CYCLE_CODE":list.CYCLE_CODE,
+      "UNIT_CODE":list.UNIT_CODE,
+      "HQ_CODE":list.HQ_CODE,
+      "SALES_ROLE_CODE": list.SALESROLE_ID
     }
 
     localStorage.setItem("InvoiceDetail",JSON.stringify(data));
@@ -281,6 +283,7 @@ filterInvoiceDetails:any = [];
           this.DOCKET_DT_PRINT = this.IncvoiceHeader[0].DOCKET_DT;
           this.DISPATCHED_NAME = this.IncvoiceHeader[0].DISPATCHED_NAME;
           this.INVOICE_NO_PRINT = this.IncvoiceHeader[0].INVOICE_NO;
+          this.UNIT_CODE=this.IncvoiceHeader[0].UNIT_CODE;
 
         }
 

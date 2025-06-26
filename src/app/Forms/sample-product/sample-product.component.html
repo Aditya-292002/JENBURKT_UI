@@ -19,7 +19,7 @@
     </div>
 </div>
 <div class="container-fluid ">
-    <app-loader *ngIf="isLoaded"></app-loader>
+    <app-loader *ngIf="isLoaded" ></app-loader>
     <div class="card">
         <div class="card-body">
             <div class="">
@@ -28,8 +28,7 @@
                         <div class="mb-2">
                             <label>Product Code</label>
                             <div [ngClass]="{'required-field':isHighLightProductCode === 'Yes'}">
-                                <input type="text" [(ngModel)]="PRODUCT_CODE" class="form-control"
-                                    placeholder="Product Code">
+                                <input type="text" [(ngModel)]="PRODUCT_CODE" class="form-control" placeholder="Product Code">
                             </div>
                         </div>
                     </div>
@@ -37,15 +36,14 @@
                         <div class="mb-2">
                             <label>Description</label>
                             <div [ngClass]="{'required-field':isHighLightDescription === 'Yes'}">
-                                <input type="text" [(ngModel)]="DESCRIPTION" class="form-control"
-                                    placeholder="Description">
+                                <input type="text" [(ngModel)]="DESCRIPTION" class="form-control" placeholder="Description">
                             </div>
                         </div>
                     </div>
                     <div class="co  l-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Unit Info</label>
-                            <div [ngClass]="{'required-field':isHighLightPackInfo === 'Yes'}">
+                            <div  [ngClass]="{'required-field':isHighLightPackInfo === 'Yes'}">
                                 <input type="text" [(ngModel)]="UNIT_INFO" class="form-control" placeholder="Unit Info">
                             </div>
                         </div>
@@ -54,38 +52,27 @@
                     <div class="co  l-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>HSN Code</label>
-                            <div [ngClass]="{'required-field':isHighLightHsnCode === 'Yes'}">
-                                <input type="text" [(ngModel)]="HSM_CODE" class="form-control" name="pincode"
-                                    placeholder="HSN Code" maxlength="4" appTwoDigitDecimaNumber>
+                            <div  [ngClass]="{'required-field':isHighLightHsnCode === 'Yes'}">
+                                <input type="text" [(ngModel)]="HSM_CODE" class="form-control" name="pincode" placeholder="HSN Code"  maxlength="4"  appTwoDigitDecimaNumber>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="row">
 
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <div class="mb-2">
-                            <label>Inner Pack</label>
-                            <div [ngClass]="{'required-field':isHighLightHsnCode === 'Yes'}">
-                                <input type="text" [(ngModel)]="INNER_PACK" class="form-control" name="pincode"
-                                    placeholder="Inner Pack" maxlength="4" appTwoDigitDecimaNumber>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-sm-6 col-md-6 col-lg-4">
                         <div class="mb-2">
                             <label>Sample</label>
                             <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
-                                <p-dropdown [options]="SAMPLE_LIST" appendTo="body" optionLabel="SAMPLE_DESC"
-                                    optionValue="SAMPLE_CODE" [filter]="true" filterBy="SAMPLE_DESC"
-                                    placeholder="Please Select..." (onChange)="sampleOnClick($event)" value=1
-                                    [(ngModel)]="SAMPLE_CODE" [ngModelOptions]="{standalone:true}">
+                                <p-dropdown [options]="SAMPLE_LIST" appendTo="body" optionLabel="SAMPLE_DESC" optionValue="SAMPLE_CODE" [filter]="true" filterBy="SAMPLE_DESC" placeholder="Please Select..." (onChange)="sampleOnClick($event)"   value=1
+                                     [(ngModel)]="SAMPLE_CODE" [ngModelOptions]="{standalone:true}" >
                                 </p-dropdown>
                             </div>
                         </div>
                     </div>
 
-                    <!-- <div class="col-sm-6 col-md-6 col-lg-4" *ngIf="linkFg">
+                    <div class="col-sm-6 col-md-6 col-lg-4" *ngIf="linkFg">
                         <div class="mb-2">
                             <label>Pri-Define Range</label>
                             <div  class="search-dropdown">
@@ -99,11 +86,11 @@
                                 </p-dropdown>
                             </div>
                         </div>
-                    </div> -->
-                    <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="linkFg">
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4" *ngIf="linkFg">
                         <div class="mb-2">
                             <label>Link FG</label>
-                            <!-- <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightLinkFG === 'Yes'}">
                                 <p-dropdown [options]="LINKFG_LIST" appendTo="body" optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" [filter]="true" filterBy="PRODUCT_DESC" placeholder="Please Select..."  [suggestions]="filteredLinkFG" (completeMethod)="filterLinkFG($event)"
                                     [(ngModel)]="LINKFG_CODE" [ngModelOptions]="{standalone:true}">
                                     <ng-template let-country pTemplate="item">
@@ -112,17 +99,6 @@
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
-                            </div> -->
-                            <div [ngClass]="{'required-field': isHighLightLinkFG === 'Yes'}">
-                                <p-multiSelect [options]="LINKFG_LIST" [(ngModel)]="LINKFG_CODE"
-                                    optionLabel="PRODUCT_DESC" optionValue="PRODUCT_CODE" placeholder="Please Select"
-                                    [suggestions]="filteredLinkFG" (completeMethod)="filterLinkFG($event)">
-
-                                    <ng-template let-item pTemplate="item">
-                                        {{ item.PRODUCT_DESC }} - {{ item.PRODUCT_CODE }}
-                                    </ng-template>
-
-                                </p-multiSelect>
                             </div>
                         </div>
                     </div>
@@ -148,27 +124,20 @@
                                             <th class="width-2">{{i+1}}</th>
                                             <td class="width-2">
                                                 <div [ngClass]="{'required-field':isHighLightFrom === 'Yes'}">
-                                                    <input type="text" class="form-control text-right" placeholder="0"
-                                                        [(ngModel)]="list.FROM_RANGE"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        (change)="onFromRange(event ,i,list)">
+                                                    <input type="text" class="form-control text-right" placeholder="0" [(ngModel)]="list.FROM_RANGE" [ngModelOptions]="{standalone: true}" (change)="onFromRange(event ,i,list)">
                                                 </div>
                                             </td>
                                             <td class="width-2">
                                                 <div [ngClass]="{'required-field':isHighLightTo === 'Yes'}">
-                                                    <input type="text" class="form-control text-right" placeholder="0"
-                                                        [(ngModel)]="list.TO_RANGE"
-                                                        [ngModelOptions]="{standalone: true}">
+                                                    <input type="text" class="form-control text-right" placeholder="0" [(ngModel)]="list.TO_RANGE" [ngModelOptions]="{standalone: true}" >
                                                 </div>
                                             </td>
                                             <td style="width: 88px;">
                                                 <div>
-                                                    <button class="btn-primary formButton text-success mr-2"
-                                                        (click)="addSampleProduct(list,i)"><i class="fa fa-plus"
-                                                            aria-hidden="true"></i></button>
-                                                    <button class="btn-primary formButton text-danger"
-                                                        (click)="deleteSampleProduct(i)"><i class="fa fa-trash-o "
-                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn-primary formButton text-success mr-2" (click)="addSampleProduct(list,i)" ><i class="fa fa-plus"
+                                                    aria-hidden="true"></i></button>
+                                                    <button class="btn-primary formButton text-danger"(click)="deleteSampleProduct(i)"><i class="fa fa-trash-o "
+                                                        aria-hidden="true"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -184,80 +153,74 @@
     </div>
 
 </div>
-<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
-    *ngIf="isShowEditPopup">
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isShowEditPopup">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Sample Product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12 mt-8 p-4">
-                    <div class="card">
-                        <div class="">
-                            <p-table [value]="PRODUCT_LIST" scrollDirection="both" [scrollable]="true"
-                                styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
-                                [globalFilterFields]="['SAMPLE_PRODUCT_CODE','DESCRIPTION','PACK_INFO']"
-                                scrollHeight="400px">
-                                <ng-template pTemplate="caption">
-                                    <!-- <div style="text-align: right">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Sample Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 mt-8 p-4">
+                <div class="card">
+                    <div class="">
+                        <p-table [value]="PRODUCT_LIST"
+                        scrollDirection="both" [scrollable]="true" styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
+                        [globalFilterFields]="['SAMPLE_PRODUCT_CODE','DESCRIPTION','PACK_INFO']"  scrollHeight="400px">
+                            <ng-template pTemplate="caption">
+                                <!-- <div style="text-align: right">
                                     <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
                                     <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                                 </div> -->
-                                    <div class="input-group search-group px-3"
-                                        style="width: 250px; margin-left: 440px;">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search keyword" aria-label="Search" size="20"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fa fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
+                                <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search keyword"
+                                        aria-label="Search" size="20"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-search fa-sm"></i>
+                                        </button>
                                     </div>
-                                </ng-template>
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100">
-                                            PRODUCT CODE
-                                        </th>
-                                        <th pSortableColumn="DESCRIPTION" class="width-100">
-                                            DESCRIPTION
-                                        </th>
-                                        <th pSortableColumn="PACK_INFO" class="width-100">
-                                            PACK INFO
-                                        </th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData>
-                                    <tr>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100" >
+                                        PRODUCT CODE
+                                    </th>
+                                    <th pSortableColumn="DESCRIPTION" class="width-100">
+                                        DESCRIPTION
+                                    </th>
+                                    <th pSortableColumn="PACK_INFO" class="width-100">
+                                        PACK INFO
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr>
 
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.SAMPLE_PRODUCT_CODE}}</a>
-                                        </td>
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.DESCRIPTION}}</a>
-                                        </td>
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.PACK_INFO}}</a>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
+                                    <td class="width-100" >
+                                        <a class="click" (click)="onProductSelected(rowData)" > {{rowData.SAMPLE_PRODUCT_CODE}}</a>
+                                    </td>
+                                    <td class="width-100">
+                                        <a class="click"   (click)="onProductSelected(rowData)"> {{rowData.DESCRIPTION}}</a>
+                                    </td>
+                                    <td class="width-100" >
+                                        <a class="click" (click)="onProductSelected(rowData)"> {{rowData.PACK_INFO}}</a>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
             </div>
-            <!-- <div class="modal-footer">
+        </div>
+        <!-- <div class="modal-footer">
           <button type="button" class="btn btn-primary formButton">Save </button>
           <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
         </div> -->
-        </div>
+      </div>
     </div>
 </div>

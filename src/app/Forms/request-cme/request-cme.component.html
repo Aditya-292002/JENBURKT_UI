@@ -14,6 +14,8 @@
         <div class="buttonBox ml-auto">
             <button type="submit" class="btn btn-primary  formButton mr-2" (click)="GETCMECREATEDLIST()"
                 *ngIf="this.CME_ID == null">Req Cme List</button>
+            <!-- <button type="submit" class="btn btn-primary  formButton mr-2" (click)="getpaymentList()"
+                *ngIf="this.CME_ID == null">Payment List</button> -->
             <button type="submit" class="btn btn-success  saveButton mr-2" (click)="SAVECMEREQUEST(0)"
                 *ngIf="this.CME_ID == null">Save</button>
             <button type="submit" class="btn-danger  cancelButton " (click)="CANCElCMEREQUEST()"
@@ -261,7 +263,7 @@
                 </div>
             </div>
             <div class="row ">
-                <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="col-sm-12 col-md-12 col-lg-3">
                     <div class="mb-2">
                         <label>Amount/Honorarium<span style="color: red;">*</span></label>
                         <div>
@@ -270,12 +272,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-4">
+
+
+                <div class="col-sm-12 col-md-12 col-lg-3">
                     <div class="mb-2">
                         <label>Gst</label>
                         <div>
                             <input type="text" class="form-control" [(ngModel)]="GST"
                                 [ngModelOptions]="{standalone: true}" numbersOnly placeholder="Please Enter Gst">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.InstName == false">
+                    <div class="mb-2">
+                        <label>Division<span style="color: red;">*</span></label>
+                        <div>
+                            <p-dropdown [options]="DIV_LIST" [(ngModel)]="DIVISION_CODE"
+                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Division"
+                                appendTo="body" optionValue="DIVISION_CODE" optionLabel="DIVISION_NAME" [filter]="true"
+                                filterBy="DIVISION_NAME">
+                            </p-dropdown>
                         </div>
                     </div>
                 </div>
@@ -297,7 +313,8 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName != false">
+
+                <div class="col-sm-12 col-md-12 col-lg-5" *ngIf="this.InstName != false">
                     <div class="mb-2">
                         <label>Division<span style="color: red;">*</span></label>
                         <div>
@@ -310,107 +327,173 @@
                     </div>
                 </div>
             </div>
-            <div class="row " *ngIf="this.InstName == false">
-                                <div class="col-sm-12 col-md-12 col-lg-2" *ngIf="this.InstName == false">
-                    <div class="mb-2">
-                        <label>Whom to Pay<span style="color: red;">*</span></label>
-                        <div class="d-flex justify-content-space ">
-                            <div class="form-check form-check-inline">
-                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_USER" name="isWhomToPayView"
-                                    (click)="CheckisWhomToPay(1)" binary="true" inputId="isWhomToPayUser"></p-checkbox>
-                                <label for="isWhomToPayView">User</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_OTHERS" name="isWhomToPayView"
-                                    (click)="CheckisWhomToPay(0)" binary="true"
-                                    inputId="isWhomToPayOthers"></p-checkbox>
-                                <label for="isWhomToPayView">Others</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.isWhomToPayView == 'U'">
-                    <div class="mb-2">
-                        <label>User<span style="color: red;">*</span></label>
+            <div class="" [ngClass]="{ 'highlight': this.INSTITUTION == true }">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName == true">
                         <div>
-                            <p-dropdown [options]="WHOM_TO_PAY_LIST" [(ngModel)]="WHOM_TO_PAY_USER_ID"
-                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Whom to Pay"
-                                appendTo="body" optionValue="USER_ID" optionLabel="USER_NAME" [filter]="true"
-                                filterBy="USER_NAME">
-                            </p-dropdown>
+                            <label>Whom To Pay<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="INST_NAME"
+                                    placeholder="Please Enter Institution Name" [ngModelOptions]="{standalone: true}">
+                            </div>
                         </div>
-
                     </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf=" this.INSTITUTION">
+                        <div class="mb-2">
+                            <label>PAN No.<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAN_NO"
+                                    [ngModelOptions]="{standalone: true}" placeholder="PAN Number" (input)="isValidPanCardNo()">
+                            </div>
+                             <!-- <div> -->
+                                <span *ngIf="PANFlag" style="color: red;">Please enter valid IFSC code*</span>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf=" this.INSTITUTION">
+                        <div class="mb-2">
+                            <label>Bank Name<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf=" this.INSTITUTION">
+                        <div class="mb-2">
+                            <label>Bank Account Number<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"
+                                    (keypress)="keyPressNumbers($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf=" this.INSTITUTION">
+                        <div class="mb-2">
+                            <label>IFSC code<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code"
+                                    (input)="isValid_IFSC_Code()">
+                            </div>
+                            <!-- <div> -->
+                                <span *ngIf="ifscFlag" style="color: red;">Please enter valid PAN code*</span>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.isWhomToPayView == 'O'">
-                    <div class="mb-2">
-                        <label>Others<span style="color: red;">*</span></label>
-                        <!-- <div *ngIf="WHOM_TO_PAY_USER_ID">
+            </div>
+            <!-- <hr class="hrStyle"> -->
+            <div class="" [ngClass]="{ 'highlight': this.INSTITUTION == false }">
+                <div class="row" *ngIf="this.InstName == false">
+                    <div class="col-sm-12 col-md-12 col-lg-2" *ngIf="this.InstName == false">
+                        <div class="mb-2">
+                            <label>Whom to Pay<span style="color: red;">*</span></label>
+                            <div class="d-flex justify-content-space ">
+                                <div class="form-check form-check-inline">
+                                    <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_USER" name="isWhomToPayView"
+                                        (click)="CheckisWhomToPay(1)" binary="true"
+                                        inputId="isWhomToPayUser"></p-checkbox>
+                                    <label for="isWhomToPayView">User</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <p-checkbox [(ngModel)]="IS_WHOM_TO_PAY_OTHERS" name="isWhomToPayView"
+                                        (click)="CheckisWhomToPay(0)" binary="true"
+                                        inputId="isWhomToPayOthers"></p-checkbox>
+                                    <label for="isWhomToPayView">Others</label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="this.isWhomToPayView == 'U'">
+                        <div class="mb-2">
+                            <label>User<span style="color: red;">*</span></label>
+                            <div>
+                                <p-dropdown [options]="WHOM_TO_PAY_LIST" [(ngModel)]="WHOM_TO_PAY_USER_ID"
+                                    [ngModelOptions]="{standalone:true}" placeholder="Please Select Whom to Pay"
+                                    appendTo="body" optionValue="USER_ID" optionLabel="USER_NAME" [filter]="true"
+                                    filterBy="USER_NAME">
+                                </p-dropdown>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O' ">
+                        <div class="mb-2">
+                            <label>Others<span style="color: red;">*</span></label>
+                            <!-- <div *ngIf="WHOM_TO_PAY_USER_ID">
                             <input type="text" class="form-control" [(ngModel)]="WHOM_TO_PAY_USER_NAME"
                                 [ngModelOptions]="{standalone: true}" placeholder="Please Enter Whom to Pay">
                         </div> -->
-                        <div>
-                            <input type="text" class="form-control" [(ngModel)]="SPEAKER_NAME"
-                                [ngModelOptions]="{standalone: true}" placeholder="Name" dissabled>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="SPEAKER_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Name" dissabled>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-4">
-                    <div class="mb-2">
-                        <label>Division<span style="color: red;">*</span></label>
-                        <div>
-                            <p-dropdown [options]="DIV_LIST" [(ngModel)]="DIVISION_CODE"
-                                [ngModelOptions]="{standalone:true}" placeholder="Please Select Division"
-                                appendTo="body" optionValue="DIVISION_CODE" optionLabel="DIVISION_NAME" [filter]="true"
-                                filterBy="DIVISION_NAME">
-                            </p-dropdown>
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        *ngIf="this.isWhomToPayView == 'O'|| this.Doctor_Name_To_pay_TO == true">
+                        <div class="mb-2">
+                            <label>PAN No.<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="PAN_NO" 
+                                    [ngModelOptions]="{standalone: true}" placeholder="PAN Number" (input)="isValidPanCardNo()">
+                            </div>
+                             <!-- <div> -->
+                                <span *ngIf="PANFlag" style="color: red;">Please enter valid PAN*</span>
+                            <!-- </div> -->
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        *ngIf="this.isWhomToPayView == 'O'|| this.Doctor_Name_To_pay_TO == true">
+                        <div class="mb-2">
+                            <label>Bank Name<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        *ngIf="this.isWhomToPayView == 'O'|| this.Doctor_Name_To_pay_TO == true">
+                        <div class="mb-2">
+                            <label>Bank Account Number<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"
+                                    (keypress)="keyPressNumbers($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3"
+                        *ngIf="this.isWhomToPayView == 'O'|| this.Doctor_Name_To_pay_TO == true">
+                        <div class="">
+                            <label>IFSC code<span style="color: red;">*</span></label>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code"
+                                     (input)="isValid_IFSC_Code()">
+                            </div>
+                            <!-- <div> -->
+                                <span *ngIf="ifscFlag" style="color: red;">Please enter valid IFSC code*</span>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+
+
+
+                    <!-- //REMOVE DIDSION OF NON-INSTITUTE HEMANT  -->
                 </div>
             </div>
             <div>
-
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
-                        <div class="mb-2">
-                            <label>Bank Name<span style="color: red;">*</span></label>
-                            <div >
-                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
-                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
-                        <div class="mb-2">
-                            <label>Bank Account Number<span style="color: red;">*</span></label>
-                            <div >
-                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
-                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"  (keypress)="keyPressNumbers($event)">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
-                        <div class="mb-2">
-                            <label>IFSC code<span style="color: red;">*</span></label>
-                            <div >
-                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
-                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row ">
-
- <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.InstName == true">
-                    <div>
-                        <label>Institution Name<span style="color: red;">*</span></label>
-                        <div>
-                            <input type="text" class="form-control" [(ngModel)]="INST_NAME"
-                                placeholder="Please Enter Institution Name" [ngModelOptions]="{standalone: true}">
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="col-sm-12 col-md-12 col-lg-3">
                         <div class="mb-2">
                             <label>Pay By<span style="color: red;">*</span></label>
                             <div>
@@ -420,7 +503,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="col-sm-12 col-md-12 col-lg-3">
                         <div class="mb-2">
                             <label>Advance</label>
                             <div class="d-flex justify-content-space ">
@@ -443,6 +526,40 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+                    <!-- <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>Bank Name<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="BANK_NAME"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Bank Name" >
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>Bank Account Number<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="ACCOUNT_NUMBER"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Account number"  (keypress)="keyPressNumbers($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.isWhomToPayView == 'O'">
+                        <div class="mb-2">
+                            <label>IFSC code<span style="color: red;">*</span></label>
+                            <div >
+                                <input type="text" class="form-control" [(ngModel)]="BANK_IFSC"
+                                    [ngModelOptions]="{standalone: true}" placeholder="IFSC code" >
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row ">
+
+                    <!-- //hemant pay by and ADVANCE  -->
                     <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="isAddvanceView == true">
                         <div class="">
                             <label>Advance Amount<span style="color: red;">*</span></label>
@@ -1665,13 +1782,25 @@
                             Sr No.</th>
                         <th
                             style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
-                            Bill No </th>
+                            Pay To </th>
                         <th
                             style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
-                            Particular</th>
+                            Payment Date</th>
                         <th
                             style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
-                            Amount </th>
+                            Pay Amount </th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Account Number </th>
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Bank IFSC </th>
+                              <!-- <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            Bank Name </th> -->
+                        <th
+                            style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">
+                            UTR No. </th>
                         <!-- <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Payment Mode </th>
                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;">Payment Amt</th>
                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #e3f2fd ; font-weight: bold;font-size: 13px; color: #4a4848;;"> TDS Amt</th> -->
@@ -1680,10 +1809,14 @@
                 <tbody *ngFor="let mat of CME_REQ_PAYMENT_DETAILS;let i = index;">
                     <tr style="background-color: #f9f9f9;">
                         <td style="border: 1px solid #ddd; padding: 8px;">{{i + 1}}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.BILL_NO}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.BENIFICIARY_NAME}}</td>
                         <!-- <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAYMENT_DATE | date:'dd-MM-yyy, h:mm a'}}</td> -->
-                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PARTICULARS}}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.AMOUNT.toFixed(2) | number }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAYMENT_DATE| date:'dd-MM-yyy'}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAY_AMOUNT | indianCurrency }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.ACCOUNT_NUMBER}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.BANK_IFSC }}</td>
+                         <!-- <td style="border: 1px solid #ddd; padding: 8px;">{{mat.BANK_NAME }}</td> -->
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{mat.UTR_NO }}</td>
                         <!-- <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAYMENT_MODE}}</td>
                         <td style="border: 1px solid #ddd; padding: 8px;">{{mat.PAY_AMOUNT }}</td>
                         <td style="border: 1px solid #ddd; padding: 8px;">{{mat.TDS_AMOUNT }}</td> -->

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +27,7 @@ import { AuthService } from './Service/auth.service';
 import { AuthGuard } from './Service/auth.guard';
 import { SharedService } from './Service/shared.service';
 import { URLService } from './Service/url.service';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { LoaderComponent } from './Common/loader/loader.component';
 import { CostFilterPipe } from './directive/filter.pipe';
@@ -99,7 +99,14 @@ import { SampleRequisitionApprovalComponent } from './Forms/sample-requisition-a
 import { PMTSampleRequisitionApprovalComponent } from './Forms/pmt-sample-requisition-approval/pmt-sample-requisition-approval.component';
 import { SampleRequisitionListComponent } from './Forms/sample-requisition-list/sample-requisition-list.component';
 import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisition/cycle-sample-requisition.component';
+import { PipeService } from './Service/pipe.service';
+import { registerLocaleData } from '@angular/common';
+import localeIn from '@angular/common/locales/en-IN';
+import { PayementExcelUploadComponent } from './Forms/payement-excel-upload/payement-excel-upload.component';
+import { ApprovedPayementListComponent } from './Forms/approved-payement-list/approved-payement-list.component';
+import { SampleReceivedComponent } from './Forms/sample-received/sample-received.component';
 
+registerLocaleData(localeIn);
 
 @NgModule({
   declarations: [
@@ -176,8 +183,10 @@ import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisitio
     SampleRequisitionApprovalComponent,
     PMTSampleRequisitionApprovalComponent,
     SampleRequisitionListComponent,
-    CycleSampleRequisitionComponent
-  //  UploadMktReportComponent
+    CycleSampleRequisitionComponent,
+    SampleReceivedComponent,
+    ApprovedPayementListComponent,
+    PayementExcelUploadComponent
     
   ],
   imports: [
@@ -193,14 +202,12 @@ import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisitio
     NgApexchartsModule,
     AutoCompleteModule,
     OverlayPanelModule, 
-    DialogModule,
     CheckboxModule,
     TooltipModule,
     ProgressBarModule,
     RadioButtonModule,
     PaginatorModule,
     MultiSelectModule,
-    FormsModule,      
     ToastrModule.forRoot({
       positionClass: 'toast-custom',
       // positionClass :'toast-bottom-full-width',
@@ -217,7 +224,12 @@ import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisitio
     SharedService,
     URLService,
     Ng2ImgMaxService,
+    PipeService,
+    CostFilterPipe,
+    CurrencyPipe,
+   { provide: LOCALE_ID, useValue: 'en-IN' },
     DatePipe],
+    
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,13 +9,16 @@
 <div class="col-md-12">
     <div class="d-flex mb-2">
         <div class="d-flex justify-content-start">
-            <h5 class="mb-0 headers">Sample Requisition Approve</h5>
+            <h5 class="mb-0 headers">Sample Requisition Approval</h5>
         </div>
         <div class="buttonBox ml-auto">
-            <button type="submit" class="btn-primary  saveButton mr-2" (click)="Approved()">Approved</button>
+            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">List</button>
+            <button type="submit" *ngIf="this.IS_DISABLED == false" class="btn-primary  saveButton mr-2"
+                (click)="OpenConformationPopup()">Approve</button>
         </div>
     </div>
 </div>
+
 <div class="container-fluid ">
     <app-loader *ngIf="isLoaded"></app-loader>
     <div class="card">
@@ -25,19 +28,19 @@
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>RSM</label>
-                            <div [ngClass]="{'required-field':isHighLightRsm === 'Yes'}">
-                                <input type="text" [(ngModel)]="RSM_CODE" class="form-control" placeholder="RSM">
+                            <div>
+                                <input type="text" [value]="RSM_NAME" [disabled]="true" class="form-control"
+                                    placeholder="RSM">
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Period</label>
-                            <div [ngClass]="{'required-field':isHighLightPeriod === 'Yes'}">
+                            <div>
                                 <p-dropdown [options]="PERIOD_LIST" appendTo="body" optionLabel="CYCLE_DESC"
-                                    optionValue="CYCLE_NO" [filter]="true" filterBy="CYCLE_DESC"
-                                    placeholder="Please Select" [disabled]="false" [(ngModel)]="CYCLE_NO"
-                                    (ngModelChange)="GETSAMPLEREQUISITIONLISTBYCYCLEID(CYCLE_NO)"
+                                    optionValue="CYCLE_NO" [filter]="true" [disabled]="true" filterBy="CYCLE_DESC"
+                                    placeholder="Please Select" [(ngModel)]="CYCLE_NO"
                                     [ngModelOptions]="{standalone:true}">
                                 </p-dropdown>
                             </div>
@@ -46,9 +49,11 @@
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Total Target</label>
-                            <div [ngClass]="{'required-field':isHighLightTotalTarget === 'Yes'}">
-                                <input type="text" [(ngModel)]="TOTAL_TARGET" class="form-control"
-                                    placeholder="Total Target">
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
                     </div>
@@ -56,9 +61,11 @@
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Max Sample Value</label>
-                            <div [ngClass]="{'required-field':isHighLightMaxSampleValue === 'Yes'}">
-                                <input type="text" [(ngModel)]="MAX_SAMPEL_VALUE" class="form-control" name="pincode"
-                                    placeholder="Max Sample Value" maxlength="4" appTwoDigitDecimaNumber>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="MAX_SAMPEL_VALUE | currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control  text-right rupee-input" name="pincode"
+                                    placeholder="Max Sample Value" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
                     </div>
@@ -66,12 +73,23 @@
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Req. Value</label>
-                            <div [ngClass]="{'required-field':isHighLightReqValue === 'Yes'}">
-                                <input type="text" [(ngModel)]="REQ_VALUE" class="form-control" name="pincode"
-                                    placeholder="Req. Value" maxlength="4" appTwoDigitDecimaNumber>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Req. Value" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
                     </div>
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mt-4">
+                            <button type="submit" 
+                             class="btn-primary formButton mr-2" (click)="EXCELDOWNLOAD()">
+                               <i class="fa fa-download mr-2"></i>Excel Download
+                            </button>
+
+                        </div>
+                    </div> -->
                 </div>
 
                 <div class="row">
@@ -79,31 +97,97 @@
                         <div class="mb-2">
                             <label> </label>
                             <div>
-                                <table class="table">
-                                    <thead>
+                                <p-table [value]="SAMPLE_REQUISITION_LIST" responsiveLayout="scroll"
+                                    scrollHeight="420px" [globalFilterFields]="['POOL_CODE','LINK_FG_CODE','INNER_PACK','POOL_COUNT','POOL_HQCOUNT',
+                                    'TOTAL_REQ','REQ_VALUE','REQUESTED_PACK_QTY']" stateStorage="session"
+                                    stateKey="statedemo-session3" #dt1>
+                                    <!-- <ng-template pTemplate="caption">
+                                        <div class="table-header text-right">
+                                            <button pButton label="Clear" class="p-button-outlined mr-2"
+                                                icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                                            <span class="p-input-icon-right ml-auto">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" class="form-control"
+                                                    (input)="dt1.filterGlobal($event.target.value, 'contains')" />
+                                            </span>
+                                        </div>
+                                    </ng-template> -->
+                                    <ng-template pTemplate="header">
                                         <tr>
-                                            <th scope="col">HQ</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Inner Pack</th>
-                                            <th scope="col">HQ Qty</th>
-                                            <th scope="col">Total Req.</th>
-                                            <th scope="col">Req. Value</th>
-                                            <th scope="col">Remarks</th>
+                                            <th scope="col">Pool
+                                                <p-columnFilter class="column-filter" field="POOL_DESC"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="POOL_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+                                                </p-columnFilter>
+                                            </th>
+                                            <th scope="col">Product
+                                                <p-columnFilter class="column-filter" field="DESCRIPTION"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="PRODUCT_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+                                                </p-columnFilter>
+                                            </th>
+                                            <th pSortableColumn="SAMPEL_COST" scope="col">Sample Cost</th>
+                                            <th pSortableColumn="UNIT_PACK" scope="col">User Info</th>
+                                            <th pSortableColumn="POOL_COUNT" scope="col">HQ Count</th>
+                                            <th pSortableColumn="INNER_PACK" scope="col">Inner Pack</th>
+                                            <th pSortableColumn="REQUESTED_PACK_QTY" scope="col">Req Inner Pack HQ</th>
+                                            <th pSortableColumn="POOL_HQCOUNT" scope="col">Per HQ Qty</th>
+                                            <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th>
+                                            <th pSortableColumn="REQ_VALUE" scope="col">Req. Value</th>
+                                            <!-- <th scope="col">Action</th> -->
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let list of PREDEFINE_LIST_RANGE; let i=index;">
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
-                                            <th class="width-2">{{i+1}}</th>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                        <tr [ngClass]="{'hq-updated': data.HQ_UPDATED == 1}"
+                                            (dblclick)="GETHQCODELISTBYPOOLCODE(data)">
+                                            <td class="width-2">{{ data.POOL_DESC }}</td>
+                                            <td class="width-2">{{ data.DESCRIPTION }}</td>
+                                            <td class="width-2"><span>&#8377;</span>{{ data.SAMPLE_COST }}</td>
+                                            <td class="width-2">{{ data.UNIT_PACK }}</td>
+                                            <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
+                                            <td class="width-2">{{ data.INNER_PACK }}</td>
+                                            <td class="width-2">
+                                                <!-- <div *ngIf="data.HQ_UPDATED != 1"> -->
+                                                <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY"
+                                                    class="form-control" name="pincode"
+                                                    (focusout)="GETSMCALCULATEPACKQTYBYPOOLCODE(data)"
+                                                    [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
+                                                    placeholder="Req Inner Pack Qty" maxlength="4"
+                                                    appTwoDigitDecimaNumber>
+                                                <!-- </div> -->
+                                            </td>
+                                            <td class="width-2">
+                                                <!-- <div *ngIf="data.HQ_UPDATED != 1"> -->
+                                                {{ data.REQUESTED_HQ_QTY }}
+                                                <!-- </div> -->
+                                            </td>
+                                            <td class="width-2">{{ data.TOTAL_REQUESTED_QTY }}</td>
+                                            <td class="width-2"><span>&#8377;</span>{{ data.REQ_VALUE | number:'1.2-2'
+                                                }}
+                                            </td>
                                         </tr>
-
-                                    </tbody>
-                                </table>
+                                    </ng-template>
+                                </p-table>
                             </div>
                         </div>
                     </div>
@@ -113,80 +197,175 @@
     </div>
 
 </div>
+
+
 <div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
-    *ngIf="isShowEditPopup">
+    *ngIf="isShowHqEditPopup">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Sample Product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                <!-- <h5 class="modal-title">HQ Code List</h5> -->
+                <div class="modal-title d-flex ">
+                    <h6 class="">Pool: {{this.POOL_DESC}},</h6>
+                    <h6 class="ml-2">Product: {{this.PRODUCT_DESCRIPTION}},</h6>
+                    <h6 class="ml-2">Inner Pack: {{this.INNER_PACK}}</h6>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="Cancel()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-md-12 mt-8 p-4">
-                    <div class="card">
-                        <div class="">
-                            <p-table [value]="PRODUCT_LIST" scrollDirection="both" [scrollable]="true"
-                                styleClass="p-datatable-lg" responsiveLayout="scroll" #dt
-                                [globalFilterFields]="['SAMPLE_PRODUCT_CODE','DESCRIPTION','PACK_INFO']"
-                                scrollHeight="400px">
-                                <ng-template pTemplate="caption">
-                                    <!-- <div style="text-align: right">
-                                    <i class="fa fa-search fa-sm" style="margin:4px 4px 0 0"></i>
-                                    <input type="text" pInputText size="20" placeholder="Search Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-                                </div> -->
-                                    <div class="input-group search-group px-3"
-                                        style="width: 250px; margin-left: 440px;">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search keyword" aria-label="Search" size="20"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fa fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th pSortableColumn="SAMPLE_PRODUCT_CODE" class="width-100">
-                                            PRODUCT CODE
-                                        </th>
-                                        <th pSortableColumn="DESCRIPTION" class="width-100">
-                                            DESCRIPTION
-                                        </th>
-                                        <th pSortableColumn="PACK_INFO" class="width-100">
-                                            PACK INFO
-                                        </th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData>
-                                    <tr>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="">
+                        <p-table #table [value]="HQ_CODE_LIST" [scrollable]="true" styleClass="p-datatable-lg"
+                            responsiveLayout="scroll" scrollHeight="420px"
+                            [globalFilterFields]="['POOL_DESC', 'HQ_CODE', 'HQ_QTY', 'REMARKS']" [paginator]="false"
+                            [rows]="rowsPerPage" [totalRecords]="totalRecords" [first]="first"
+                            [rowsPerPageOptions]="[5, 10, 15]" (onPageChange)="onPageChange($event)">
+                            <!-- <ng-template pTemplate="caption">
+                                <div class="d-flex ">
+                                    <p>Pool: <span>{{this.POOL_DESC}},</span></p>
+                                    <p class="ml-2">Product: <span>{{this.PRODUCT_DESCRIPTION}},</span></p>
+                                    <p class="ml-2">Inner Pack: <span>{{this.INNER_PACK}}</span></p>
+                                </div>
+                            </ng-template> -->
 
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.SAMPLE_PRODUCT_CODE}}</a>
-                                        </td>
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.DESCRIPTION}}</a>
-                                        </td>
-                                        <td class="width-100">
-                                            <a class="click" (click)="onProductSelected(rowData)">
-                                                {{rowData.PACK_INFO}}</a>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="HQ_CODE" class="width-150">HQ Code</th>
+                                    <th pSortableColumn="REQUESTED_PACK_QTY" class="width-200">Req Inner Pack</th>
+                                    <th pSortableColumn="HQ_QTY" class="width-50">HQ Qty</th>
+                                    <th pSortableColumn="REMARKS" class="width-200">Remarks</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr>
+                                    <td class="width-150">
+                                        <a>{{rowData.HQ_DESC}}- {{rowData.HQ_CODE}}</a>
+                                    </td>
+                                    <td class="width-200">
+                                        <input type="text" [(ngModel)]="rowData.REQUESTED_PACK_QTY" class="form-control"
+                                            name="pincode" (focusout)="CalculateHqPackQty(rowData)"
+                                            [disabled]="this.IS_DISABLED == true" placeholder="Req Inner Pack Qty"
+                                            maxlength="4" appTwoDigitDecimaNumber>
+                                    </td>
+                                    <td class="width-50">
+                                        <a>{{rowData.HQ_QTY}}</a>
+                                    </td>
+                                    <td class="width-200">
+                                        <input type="text" [(ngModel)]="rowData.REMARKS"
+                                            [disabled]="this.IS_DISABLED == true" class="form-control"
+                                            placeholder="Enter Remarks">
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <div class="d-flex justify-content-center align-items-center p-2">
+                                    <button type="submit" class="btn-primary saveButton mr-2"
+                                        (click)="SAVEHQCODEBYPOOLCODE()">Save</button>
+                                    <button type="submit" class="btn-primary formButton mr-2"
+                                        (click)="Cancel()">Cancel</button>
+                                </div>
+                            </ng-template>
+                        </p-table>
+
+                        <!-- <p-paginator [rows]="rowsPerPage" [first]="first" [totalRecords]="totalRecords"
+                            [rowsPerPageOptions]="[5, 10, 15]" (onPageChange)="onPageChange($event)">
+                        </p-paginator> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isConformationPopup">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">Are you sure you want to approve request for RSM {{this.RSM_NAME}}, Period
+                                {{this.CYCLE_DESC}} ?</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+
+                            <button type="cancel" class="btn-primary  formButton mr-2"
+                                (click)="CancelConformationPopup()">No</button>
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="APPROVEDSAMPLEREQUISITION()">Yes</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-primary formButton">Save </button>
-          <button type="button" class="btn btn-primary formButton" data-dismiss="modal" (click)="ClosePopUp()">Close</button>
-        </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isDataPickUpPopup">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">{{this.isDataPickUpPopupMess}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <button type="submit" class="btn-primary  formButton mr-2"
+                                (click)="GETSAMPLEREQUISITIONLISTBYTRXNID(this.TRXN_ID,this.CYCLE_NO,2)">No</button>
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="GETSAMPLEREQUISITIONLISTBYTRXNID(this.TRXN_ID,this.CYCLE_NO,1)">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isDataPickUpPopup1">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">{{this.isDataPickUpPopupMess}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <button type="submit" class="btn-primary  formButton mr-2"
+                                (click)="CloseisDataPickUpPopup1()">No</button>
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="GETSAMPLEREQUISITIONLISTBYTRXNID(this.TRXN_ID,this.CYCLE_NO,1)">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

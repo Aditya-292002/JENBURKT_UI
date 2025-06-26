@@ -13,7 +13,7 @@ import {
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
-
+const EXCEL_EXTENSION = '.xlsx';
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -91,7 +91,8 @@ export class DashboardComponent implements OnInit {
   dataObject1: any;
   sparevalue = 100
   PIE_DATA: any;
-  isYearSelected:boolean=false
+  isYearSelected:any="monthly";
+    showYearSelected:boolean=false;
   salesRoleId: any;
   userData: string;
   sortedarrayYTD: any[];
@@ -532,7 +533,7 @@ export class DashboardComponent implements OnInit {
     this.http.postnew(this.url.getDashBoardListnew, data).then(
       (res: any) => {
         this.isLoaded = false;
-        // console.log("response", res);
+        console.log("response", res);
         this.getDashBoardList = res;
         this.monthActualValue = res.INCENTIVE_LIST[0].MONTH_ACT;
         this.monthTargetValue = res.INCENTIVE_LIST[0].MONTH_TARGET;
@@ -560,7 +561,7 @@ export class DashboardComponent implements OnInit {
         //   }
         // }
         // this.chartOptions.fill = [this.v_monthAvg];
-        // console.log('%456', v_monthAvg);
+        console.log('%456', v_monthAvg);
         this.remainingAmount =this.monthTargetValue - this.monthActualValue
         this.chartOptions.series = [v_monthAvg];
         // this.chartOptions.labels = [ "Balance to Achieve"]
@@ -583,10 +584,10 @@ export class DashboardComponent implements OnInit {
           element.YTD_SALE_PER = ytdTarget > 0 ? +(element.YTD_SALE / ytdTarget * 100).toFixed(2) : 0;
         });
         }
-        // console.log('this.PIE_DATA', this.PIE_DATA);
+        console.log('this.PIE_DATA', this.PIE_DATA);
          this.sortedarrayYTD = this.sortBySales(this.PIE_DATA, 'YTD_SALE');
          this.sortedArrayCM = this.sortBySales(this.PIE_DATA, 'CM_SALE');
-      //  console.log(' this.sortedarrayYTD', this.sortedarrayYTD);
+       console.log(' this.sortedarrayYTD', this.sortedarrayYTD);
        
         const pieLabels = groupData.map(item => item.GROUP_DESC);
         const pieSeries = groupData.map(item => item.CM_SALE);
@@ -646,23 +647,23 @@ export class DashboardComponent implements OnInit {
     this.isLoaded = true;
     await this.http.postnew(this.url.getIncentiveList, data).then(
       (res: any) => {
-        // console.log('res ->', res)
+        console.log('res ->', res)
         if (res.INCENTIVE_LIST)
           this.INCENTIVE_LIST = res.INCENTIVE_LIST;
 
         if (this.INCENTIVE_LIST.length > 0) {
-          this.INCENTIVE_LIST.forEach((element:any) => {
+          this.INCENTIVE_LIST.forEach(element => {
 
             if (element.CM == 1) {
               this.dataObject.push(element);
-              // console.log('this.dataObject', this.dataObject);
+              console.log('this.dataObject', this.dataObject);
 
               this.INCENTIVE_LIST.splice(0, 1);
             }
           });
           this.dataObject = res.INCENTIVE_LIST[0];
           this.INCENTIVE_LIST.splice(0, 1);
-          // console.log('123', this.dataObject);
+          console.log('123', this.dataObject);
 
 
           this.CURR_INCENTIVE_MONTH = [
@@ -707,10 +708,15 @@ export class DashboardComponent implements OnInit {
     );
   }
   toggle(){
-    // console.log('this.isYearSelected',this.isYearSelected);
+    console.log('this.isYearSelected',this.isYearSelected);
     
-    this.isYearSelected!=this.isYearSelected
-    this.sortAsc=false;
+    // this.isYearSelected!=this.isYearSelected
+    // this.sortAsc=false;
+    if(this.isYearSelected=="monthly"){
+this.showYearSelected=false;
+    }else{
+      this.showYearSelected=true;
+    }
   }
  private sortBySales( data:any,key:any) {
     return [...data].sort((a, b) => b[key] - a[key]);
