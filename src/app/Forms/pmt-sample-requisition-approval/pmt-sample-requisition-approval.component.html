@@ -32,6 +32,40 @@
         <div class="card-body">
             <div class="">
                 <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Target Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Max sample Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_MAX_SAMPLE_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Max sample Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Req Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Req Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
@@ -95,6 +129,15 @@
                                             </td>
                                         </tr>
                                     </ng-template>
+                                    <!-- <ng-template pTemplate="footer">
+                                        <tr>
+                                            <td colspan="1"> </td>
+                                            <td colspan="1">Total Target:- <span>&#8377;</span>{{ RSM_TOTAL_TARGET  | number:'1.2-2' }}</td>
+                                            <td colspan="1">Total Max Sample Value:- <span>&#8377;</span>{{ RSM_MAX_SAMPLE_VALUE  | number:'1.2-2' }}</td>
+                                            <td colspan="1">Total Req Value:- <span>&#8377;</span>{{ RSM_REQ_VALUE  | number:'1.2-2' }}</td>
+                                            <td colspan="1"></td>
+                                        </tr>
+                                    </ng-template> -->
                                 </p-table>
                             </div>
                         </div>
@@ -110,6 +153,40 @@
         <div class="card-body">
             <div class="">
                 <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Target Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Max sample Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_MAX_SAMPLE_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Max sample Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Req Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Req Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
@@ -199,6 +276,17 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-2">
                         <div class="mb-2">
+                            <label>Sample Cost</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="SAMPEL_COST |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Sample Cost" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
                             <label>Inner Pack</label>
                             <div>
                                 <input type="text" [(ngModel)]="INNER_PACK" class="form-control text-right"
@@ -206,6 +294,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-sm-3 col-md-3 col-lg-2">
                         <div class="mb-2">
                             <label>Total Stock</label>
@@ -219,8 +308,8 @@
                         <div class="mb-2">
                             <label>Req Qty</label>
                             <div>
-                                <input type="text" [(ngModel)]="TOTAL_REQUESTED_PACK_QTY" class="form-control text-right"
-                                    [disabled]="true" placeholder="Req Qty">
+                                <input type="text" [(ngModel)]="TOTAL_REQUESTED_PACK_QTY"
+                                    class="form-control text-right" [disabled]="true" placeholder="Req Qty">
                             </div>
                         </div>
                     </div>
@@ -237,12 +326,12 @@
                                         (click)="increaseQty()">+</button> -->
                                 </div>
                             </div>
-                                <!-- <label>Qty</label> -->
-                                <div class="input-group mt-4 ml-2 ">
-                                  <p-dropdown appendTo="body" [options]="QTY_LIST" optionLabel="QTY_DESC" 
+                            <!-- <label>Qty</label> -->
+                            <div class="input-group mt-4 ml-2 ">
+                                <p-dropdown appendTo="body" [options]="QTY_LIST" optionLabel="QTY_DESC"
                                     [(ngModel)]="QTY_CODE" optionValue="QTY_CODE">
-                                    </p-dropdown>
-                                </div>
+                                </p-dropdown>
+                            </div>
                             <div class="buttonBox mt-4 mr-2 ">
                                 <button type="submit" class="btn-primary saveButton"
                                     (click)="UpdateReqInnerpack()">Update</button>
@@ -278,6 +367,7 @@
                                             </th>
                                             <th pSortableColumn="REQ_INNER" class="">Req Inner Pack</th>
                                             <th pSortableColumn="HQ_QTY" class="">Hq Req Qty</th>
+                                            <!-- <th pSortableColumn="SAMPEL_COST" class="">Sample Cost</th> -->
                                             <th scope="col">FM
                                                 <p-columnFilter class="column-filter" field="FM_NAME" matchMode="equals"
                                                     [showMenu]="false">
@@ -349,7 +439,7 @@
                                             <td class="width-2 ">
                                                 <a>{{data.HQ_DESC}}</a>
                                             </td>
-                                            <td class="width-2 ">
+                                            <td class="width-150 ">
                                                 <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY"
                                                     class="form-control" name="pincode"
                                                     (focusout)="GETPMTCALCULATEPACKQTYBYPOOLCODE(data)"
@@ -358,6 +448,9 @@
                                             <td class="width-2 text-right">
                                                 <a>{{data.HQ_QTY}}</a>
                                             </td>
+                                            <!-- <td class="width-2"><span>&#8377;</span>{{ data.SAMPEL_COST | number:'1.2-2'
+                                                }}
+                                            </td> -->
                                             <td class="width-2 ">
                                                 <a>{{data.FM_NAME}}</a>
                                             </td>

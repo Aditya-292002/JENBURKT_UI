@@ -51,3 +51,34 @@
     max-width: 60px;
     text-align: center;
 }
+
+.rupee-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.rupee-symbol {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #495057;
+  pointer-events: none; /* allows clicks to pass through to input */
+}
+
+.rupee-input {
+  padding-left: 25px; /* make space for the ₹ icon */
+}
+:host::ng-deep .p-table .p-table-scrollable-body {
+  max-height: 420px; /* Same as scrollHeight in p-table */
+  overflow-y: auto;
+}
+
+:host::ng-deep .p-table-footer {
+  position: sticky;
+  bottom: 0;
+  background: white; /* Optional: to avoid the footer blending with the body */
+  z-index: 1;
+}

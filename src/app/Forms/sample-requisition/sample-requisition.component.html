@@ -12,6 +12,9 @@
             <h5 class="mb-0 headers">Sample Requisition</h5>
         </div>
         <div class="buttonBox ml-auto" *ngIf="this.IS_DISABLED == false">
+             <button type="submit"   class="btn-primary formButton mr-2" (click)="EXCELDOWNLOAD()">
+                <i class="fa fa-download mr-2"></i>Excel Download
+            </button>
             <button type="submit" class="btn-primary saveButton mr-2" (click)="SAVESAMPLEREQUISITION(1)">
                 Save As Draft
             </button>

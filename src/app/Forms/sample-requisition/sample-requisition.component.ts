@@ -10,6 +10,10 @@ import { HttpService } from 'src/app/Service/http.Service';
 import { PipeService } from 'src/app/Service/pipe.service';
 import { SharedService } from 'src/app/Service/shared.service';
 import { URLService } from 'src/app/Service/url.service';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-sample-requisition',
@@ -75,6 +79,7 @@ export class SampleRequisitionComponent implements OnInit {
   rowsPerPage: number = 5;
   first: number = 0;
   IS_DISABLED: boolean = false;
+  EXCEL_DATA_LIST: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService, datepipe: DatePipe,
@@ -224,7 +229,7 @@ export class SampleRequisitionComponent implements OnInit {
     //  if (data.HQ_UPDATED == 0 || data.HQ_UPDATED == null || data.HQ_UPDATED == undefined) {
     //   return
     // }
-    
+
     let Qty = data.HQ_QTY;
     this.POOL_DESC = data.POOL_DESC;
     this.PRODUCT_DESCRIPTION = data.DESCRIPTION;
@@ -416,6 +421,37 @@ export class SampleRequisitionComponent implements OnInit {
   CancelConformationPopup() {
     this.isConformationPopup = false;
   }
+
+  EXCELDOWNLOAD() {
+    let data = {
+      "TRXN_ID": this.TRXN_ID,
+      "CYCLE_ID": this.CYCLE_NO,
+      "USER_ID": this.USER_ID,
+    }
+    // console.log(' data -> ' , data)
+    // return
+    this.http.postnew(this.url.GETHQCODEEXCELDOWNLOADDATABYUSERID, data).then((res: any) => {
+      this.EXCEL_DATA_LIST = res.DATA_LIST;
+      // console.log(' EXCEL_DATA_LIST -> ' , this.EXCEL_DATA_LIST)
+      this.exportAsExcelFile(this.EXCEL_DATA_LIST, 'HQ_CODE_DATA_LIST');
+    });
+  }
+
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
 
 }
 
