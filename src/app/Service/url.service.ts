@@ -185,6 +185,9 @@ export class URLService {
   public GETHQFORSAMPLERECEIVELIST= this.sharedService.ApiUrl + '/api/SampleProduct/GETHQFORSAMPLERECEIVELIST';
   public getIncentiveReport = this.sharedService.ApiUrl + '/api/Reports/GetIncentiveReport';
   public getIncentiveReportListFilter = this.sharedService.ApiUrl + '/api/Reports/GetIncentiveReportFilter';
+
+    public GETSAMPLEPRODUCTREPORT= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLEPRODUCTREPORT';
+
  
  
 }
