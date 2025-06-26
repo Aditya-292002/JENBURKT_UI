@@ -216,6 +216,28 @@ this.onPrintInvoiceChange();
     this.DOCKET_DT = "";
     this.DOCKET_NO = "";
   }
+  onPrintClickList(list:any) {
+    console.log(list,"data")
+    let data={
+     "INVOICE_ID":list.INVOICE_NO,
+     "CYCLE_CODE":list.CYCLE_CODE,
+      "UNIT_CODE":list.UNIT_CODE,
+      "HQ_CODE":list.HQ_CODE,
+      "SALES_ROLE_CODE": list.SALESROLE_ID
+    }
+        this.isLoaded=true;
+        this.http.postnew(this.url.GETSAMPLEPRODUCTREPORT, data).then(
+      (res: any) => {
+        console.log('res',res);
+        this.isLoaded=false;
+
+        
+      });
+
+
+  }
+
+
   onPrintClick() {
     // this.isShowConfig = true
     this.showTemplateView.emit('test');
@@ -248,154 +270,155 @@ this.onPrintInvoiceChange();
 
     }
 
-    this.http.postnew(this.url.GETINVOICEDATAFORPRINT, data).then(
-      (res: any) => {
+
+    // this.http.postnew(this.url.GETINVOICEDATAFORPRINT, data).then(
+    //   (res: any) => {
 
 
-        //  if (res.data[0].FLAG == true) {
-        this.IncvoiceHeader = res.INVOICE_HEADER;
-        this.InvoiceDetail = res.INVOICE_DETAIL;
-        this.InvoiceCycleDetail = res.INVOICE_CYCLE_DETAIL;
+    //     //  if (res.data[0].FLAG == true) {
+    //     this.IncvoiceHeader = res.INVOICE_HEADER;
+    //     this.InvoiceDetail = res.INVOICE_DETAIL;
+    //     this.InvoiceCycleDetail = res.INVOICE_CYCLE_DETAIL;
 
-        if (this.IncvoiceHeader.length > 0) {
-          this.CON_EMAIL_ID = this.IncvoiceHeader[0].CON_EMAIL_ID;
-          this.CON_MOBILE_NO = this.IncvoiceHeader[0].CON_MOBILE_NO;
-          this.CON_STATE_CODE = this.IncvoiceHeader[0].CON_STATE_CODE;
-          this.CON_STATE_NAME = this.IncvoiceHeader[0].CON_STATE_NAME;
-          this.CON_USER_ADDRESS = this.IncvoiceHeader[0].CON_USER_ADDRESS;
-          this.CON_USER_ID = this.IncvoiceHeader[0].CON_USER_ID;
-          this.CON_USER_NAME = this.IncvoiceHeader[0].CON_USER_NAME;
-          this.DISTRICT = this.IncvoiceHeader[0].DISTRICT;
-          this.DRUG_LIC_NO = this.IncvoiceHeader[0].DRUG_LIC_NO;
-          this.FOOD_LIC_NO = this.IncvoiceHeader[0].FOOD_LIC_NO;
-          this.GST_IN_NO = this.IncvoiceHeader[0].GST_IN_NO;
-          this.PLANT_ADDRESS = this.IncvoiceHeader[0].PLANT_ADDRESS;
-          this.STATE_CODE = this.IncvoiceHeader[0].STATE_CODE;
-          this.STATE_NAME = this.IncvoiceHeader[0].STATE_NAME;
-          this.TEL_NO = this.IncvoiceHeader[0].TEL_NO;
-          this.UNIT_CODE = this.IncvoiceHeader[0].UNIT_CODE;
-          this.MR_MOBILE_NO = this.IncvoiceHeader[0].MR_MOBILE_NO;
-          this.RSM_NAME = this.IncvoiceHeader[0].RSM_NAME;
-          this.RSM_MOBILE_NO = this.IncvoiceHeader[0].RSM_MOBILE_NO;
-          this.TOTAL_CASE = this.IncvoiceHeader[0].TOTAL_CASE;
-          this.GROSS_WT = this.IncvoiceHeader[0].GROSS_WT;
-          this.DOCKET_NO_PRINT = this.IncvoiceHeader[0].DOCKET_NO;
-          this.DOCKET_DT_PRINT = this.IncvoiceHeader[0].DOCKET_DT;
-          this.DISPATCHED_NAME = this.IncvoiceHeader[0].DISPATCHED_NAME;
-          this.INVOICE_NO_PRINT = this.IncvoiceHeader[0].INVOICE_NO;
-          this.UNIT_CODE=this.IncvoiceHeader[0].UNIT_CODE;
+    //     if (this.IncvoiceHeader.length > 0) {
+    //       this.CON_EMAIL_ID = this.IncvoiceHeader[0].CON_EMAIL_ID;
+    //       this.CON_MOBILE_NO = this.IncvoiceHeader[0].CON_MOBILE_NO;
+    //       this.CON_STATE_CODE = this.IncvoiceHeader[0].CON_STATE_CODE;
+    //       this.CON_STATE_NAME = this.IncvoiceHeader[0].CON_STATE_NAME;
+    //       this.CON_USER_ADDRESS = this.IncvoiceHeader[0].CON_USER_ADDRESS;
+    //       this.CON_USER_ID = this.IncvoiceHeader[0].CON_USER_ID;
+    //       this.CON_USER_NAME = this.IncvoiceHeader[0].CON_USER_NAME;
+    //       this.DISTRICT = this.IncvoiceHeader[0].DISTRICT;
+    //       this.DRUG_LIC_NO = this.IncvoiceHeader[0].DRUG_LIC_NO;
+    //       this.FOOD_LIC_NO = this.IncvoiceHeader[0].FOOD_LIC_NO;
+    //       this.GST_IN_NO = this.IncvoiceHeader[0].GST_IN_NO;
+    //       this.PLANT_ADDRESS = this.IncvoiceHeader[0].PLANT_ADDRESS;
+    //       this.STATE_CODE = this.IncvoiceHeader[0].STATE_CODE;
+    //       this.STATE_NAME = this.IncvoiceHeader[0].STATE_NAME;
+    //       this.TEL_NO = this.IncvoiceHeader[0].TEL_NO;
+    //       this.UNIT_CODE = this.IncvoiceHeader[0].UNIT_CODE;
+    //       this.MR_MOBILE_NO = this.IncvoiceHeader[0].MR_MOBILE_NO;
+    //       this.RSM_NAME = this.IncvoiceHeader[0].RSM_NAME;
+    //       this.RSM_MOBILE_NO = this.IncvoiceHeader[0].RSM_MOBILE_NO;
+    //       this.TOTAL_CASE = this.IncvoiceHeader[0].TOTAL_CASE;
+    //       this.GROSS_WT = this.IncvoiceHeader[0].GROSS_WT;
+    //       this.DOCKET_NO_PRINT = this.IncvoiceHeader[0].DOCKET_NO;
+    //       this.DOCKET_DT_PRINT = this.IncvoiceHeader[0].DOCKET_DT;
+    //       this.DISPATCHED_NAME = this.IncvoiceHeader[0].DISPATCHED_NAME;
+    //       this.INVOICE_NO_PRINT = this.IncvoiceHeader[0].INVOICE_NO;
+    //       this.UNIT_CODE=this.IncvoiceHeader[0].UNIT_CODE;
 
-        }
+    //     }
 
-        if (this.InvoiceDetail.length > 0) {
+    //     if (this.InvoiceDetail.length > 0) {
 
-          // this.DC_QTY = res.DC_QTY;
-          // this.HSM_CODE = res.HSM_CODE;
-          // this.RATE_TAX = res.RATE_TAX;
-          // this.RATE_UNIT = res.RATE_UNIT;
-          // this.SAMPLE_PRODUCT_CODE = res.SAMPLE_PRODUCT_CODE;
-          // this.SAMPLE_PRODUCT_DESC = res.SAMPLE_PRODUCT_DESC;
-          // this.SR_NO = res.SR_NO;
-          // this.TAXABLE_VALUE = res.TAXABLE_VALUE;
-          // this.TAX_AMT = res.TAX_AMT;
-          // this.TYPE_TAX = res.TYPE_TAX;
-          // this.UNIT = res.UNIT;
-        }
+    //       // this.DC_QTY = res.DC_QTY;
+    //       // this.HSM_CODE = res.HSM_CODE;
+    //       // this.RATE_TAX = res.RATE_TAX;
+    //       // this.RATE_UNIT = res.RATE_UNIT;
+    //       // this.SAMPLE_PRODUCT_CODE = res.SAMPLE_PRODUCT_CODE;
+    //       // this.SAMPLE_PRODUCT_DESC = res.SAMPLE_PRODUCT_DESC;
+    //       // this.SR_NO = res.SR_NO;
+    //       // this.TAXABLE_VALUE = res.TAXABLE_VALUE;
+    //       // this.TAX_AMT = res.TAX_AMT;
+    //       // this.TYPE_TAX = res.TYPE_TAX;
+    //       // this.UNIT = res.UNIT;
+    //     }
 
-        if (this.InvoiceCycleDetail.length > 0) {
-          this.CALYEAR = this.InvoiceCycleDetail[0].CALYEAR;
-          this.FROM_DATE = this.InvoiceCycleDetail[0].FROM_DATE;
-          this.TO_DATE = this.InvoiceCycleDetail[0].TO_DATE;
+    //     if (this.InvoiceCycleDetail.length > 0) {
+    //       this.CALYEAR = this.InvoiceCycleDetail[0].CALYEAR;
+    //       this.FROM_DATE = this.InvoiceCycleDetail[0].FROM_DATE;
+    //       this.TO_DATE = this.InvoiceCycleDetail[0].TO_DATE;
 
-        }
+    //     }
 
-        // for (let i = 0; i < 70; i++) {
+    //     // for (let i = 0; i < 70; i++) {
 
-        //   this.InvoiceDetail.push({
-        //     "SR_NO": this.InvoiceDetail.length + 1,
-        //     "HSN_CODE": "",
-        //     "Product": "",
-        //     "Quantity": "",
-        //     "Unit": "",
-        //     "Rate": "",
-        //     "Taxable_Value": "",
-        //     "Rate_of_Tax": "",
-        //     "Type_of_Tax": "",
-        //     "Tax_Amt": ""
-        //   });
-        // }
-
-
-        var invoiceCount = this.InvoiceDetail.length;
-        var page = 1;
-        var pageSize = 35;
-        var totalpage = (invoiceCount / pageSize) + 1;
-
-        console.log(invoiceCount,pageSize,totalpage,"test")
-        if (invoiceCount < pageSize) {
-          for (let i = 0; i < pageSize - invoiceCount; i++) {
-            this.InvoiceDetail.push({
-              "SR_NO": this.InvoiceDetail.length + 1,
-              "HSN_CODE": "",
-              "Product": "",
-              "Quantity": "",
-              "Unit": "",
-              "Rate": "",
-              "Taxable_Value": "",
-              "Rate_of_Tax": "",
-              "Type_of_Tax": "",
-              "Tax_Amt": ""
-            });
-          }
-        }
-        else{
-          // var count = 53;
-          // var testcount =   invoiceCount - count;
-          // console.log(testcount,"testcount")
-          // for (let i = 0; i < testcount; i++) {
-
-          //   this.InvoiceDetail.push({
-          //     "SR_NO": this.InvoiceDetail.length + 1,
-          //     "HSN_CODE": "",
-          //     "Product": "",
-          //     "Quantity": "",
-          //     "Unit": "",
-          //     "Rate": "",
-          //     "Taxable_Value": "",
-          //     "Rate_of_Tax": "",
-          //     "Type_of_Tax": "",
-          //     "Tax_Amt": ""
-          //   });
-          // }
-        }
+    //     //   this.InvoiceDetail.push({
+    //     //     "SR_NO": this.InvoiceDetail.length + 1,
+    //     //     "HSN_CODE": "",
+    //     //     "Product": "",
+    //     //     "Quantity": "",
+    //     //     "Unit": "",
+    //     //     "Rate": "",
+    //     //     "Taxable_Value": "",
+    //     //     "Rate_of_Tax": "",
+    //     //     "Type_of_Tax": "",
+    //     //     "Tax_Amt": ""
+    //     //   });
+    //     // }
 
 
+    //     var invoiceCount = this.InvoiceDetail.length;
+    //     var page = 1;
+    //     var pageSize = 35;
+    //     var totalpage = (invoiceCount / pageSize) + 1;
 
+    //     console.log(invoiceCount,pageSize,totalpage,"test")
+    //     if (invoiceCount < pageSize) {
+    //       for (let i = 0; i < pageSize - invoiceCount; i++) {
+    //         this.InvoiceDetail.push({
+    //           "SR_NO": this.InvoiceDetail.length + 1,
+    //           "HSN_CODE": "",
+    //           "Product": "",
+    //           "Quantity": "",
+    //           "Unit": "",
+    //           "Rate": "",
+    //           "Taxable_Value": "",
+    //           "Rate_of_Tax": "",
+    //           "Type_of_Tax": "",
+    //           "Tax_Amt": ""
+    //         });
+    //       }
+    //     }
+    //     else{
+    //       // var count = 53;
+    //       // var testcount =   invoiceCount - count;
+    //       // console.log(testcount,"testcount")
+    //       // for (let i = 0; i < testcount; i++) {
 
+    //       //   this.InvoiceDetail.push({
+    //       //     "SR_NO": this.InvoiceDetail.length + 1,
+    //       //     "HSN_CODE": "",
+    //       //     "Product": "",
+    //       //     "Quantity": "",
+    //       //     "Unit": "",
+    //       //     "Rate": "",
+    //       //     "Taxable_Value": "",
+    //       //     "Rate_of_Tax": "",
+    //       //     "Type_of_Tax": "",
+    //       //     "Tax_Amt": ""
+    //       //   });
+    //       // }
+    //     }
 
 
 
 
 
-        // console.log(pageSize-invoiceCount,this.InvoiceDetail,"detail")
-        this.isLoaded = true;
-        setTimeout(() => {                           // <<<---using ()=> syntax
-          this.printDiv('print-new')
-        }, 4000);
 
-        // }
-        // if (res.data[0].FLAG == false) {
-        //   this.toastrService.error(res.data[0].MSG)
-        //   return;
-        // }
 
-      },
-      error => {
-        this.isLoaded = false;
-        console.log(error);
-        this.toastrService.error("Oops, Something went wrong.");
-      }
-    );
+
+
+    //     // console.log(pageSize-invoiceCount,this.InvoiceDetail,"detail")
+    //     this.isLoaded = true;
+    //     setTimeout(() => {                           // <<<---using ()=> syntax
+    //       this.printDiv('print-new')
+    //     }, 4000);
+
+    //     // }
+    //     // if (res.data[0].FLAG == false) {
+    //     //   this.toastrService.error(res.data[0].MSG)
+    //     //   return;
+    //     // }
+
+    //   },
+    //   error => {
+    //     this.isLoaded = false;
+    //     console.log(error);
+    //     this.toastrService.error("Oops, Something went wrong.");
+    //   }
+    // );
 
   }
 
