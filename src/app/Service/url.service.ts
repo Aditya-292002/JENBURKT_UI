@@ -188,4 +188,4 @@ export class URLService {
   public UPDATEPMTREQINNERPACKBYHQCODE = this.sharedService.ApiUrl + '/api/SampelRequisition/UPDATEPMTREQINNERPACKBYHQCODE';
   public GETHQCODEEXCELDOWNLOADDATABYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETHQCODEEXCELDOWNLOADDATABYUSERID';
   public GETSAMPLEPRODUCTREPORT= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLEPRODUCTREPORT';
-}
+
