@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/Service/auth.service';
 import { HttpService } from 'src/app/Service/http.Service';
+import { SharedService } from 'src/app/Service/shared.service';
 import { URLService } from 'src/app/Service/url.service';
 
 @Component({
@@ -54,11 +55,23 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     "QTY_CODE": 1, "QTY_DESC": 'Increase'
   }, {
     "QTY_CODE": 2, "QTY_DESC": 'Decrease'
+  }, {
+    "QTY_CODE": 3, "QTY_DESC": 'Replace'
   }];
-  QTY_CODE: any;
+  QTY_CODE: any = 1;
+  RSM_TOTAL_TARGET: any;
+  RSM_MAX_SAMPLE_VALUE: any;
+  RSM_REQ_VALUE: any;
+  SAMPLE_PRODUCT_CODE: any;
+  SAMPEL_COST: any;
+  POOL_CODE: any;
+  RSM_CODE: any;
+  HQ_CODE: any;
+  FM_CODE: any;
+  SM_CODE: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,private SharedService:SharedService) { }
 
   ngOnInit(): void {
     this.UserDetail = this.authService.getUserDetail();
@@ -73,6 +86,9 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     }
     this.http.postnew(this.url.GETPMTSAMPLEREQUISITIONLISTBYUSERID, data).then((res: any) => {
       this.SAMPLE_REQUISITION_LIST = res.SAMPLE_REQUISITION_LIST;
+      this.RSM_TOTAL_TARGET = res.DATA_LIST[0].TOTAL_TARGET;
+      this.RSM_MAX_SAMPLE_VALUE = res.DATA_LIST[0].MAX_SAMPLE_VALUE;
+      this.RSM_REQ_VALUE = res.DATA_LIST[0].REQ_VALUE;
       this.CYCLE_ID = this.SAMPLE_REQUISITION_LIST[0].CYCLE_ID;
       this.TRXN_ID = this.SAMPLE_REQUISITION_LIST[0].TRXN_ID;
       this.STATUS_LIST = [];
@@ -136,6 +152,8 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
       this.INNER_PACK = this.DATA_LIST[0].INNER_PACK;
       this.TOTAL_STOCK = this.DATA_LIST[0].STOCK;
       this.TOTAL_REQUESTED_PACK_QTY = this.DATA_LIST[0].TOTAL_REQUESTED_PACK_QTY;
+      this.SAMPLE_PRODUCT_CODE = this.DATA_LIST[0].SAMPLE_PRODUCT_CODE;
+      this.SAMPEL_COST = this.DATA_LIST[0].SAMPEL_COST;
       this.DROPDOWN_POOL_LIST = [];
       this.DROPDOWN_FM_LIST = [];
       this.DROPDOWN_RSM_LIST = [];
@@ -155,6 +173,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
         this.DROPDOWN_HQ_CODE_LIST.push({ label: element, value: element })
       })
       this.SAMPLE_DROPDOWN_POOL_LIST = this.HQ_CODE_LIST.map((item: any) => ({
+        POOL_CODE: item.POOL_CODE,
         POOL_DESC: item.POOL_DESC
       }));
       const poollist = [...new Set(this.HQ_CODE_LIST.map((item: any) => item.POOL_DESC))];
@@ -162,6 +181,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
         this.DROPDOWN_POOL_LIST.push({ label: element, value: element })
       })
       this.SAMPLE_DROPDOWN_FM_LIST = this.HQ_CODE_LIST.map((item: any) => ({
+        FM_CODE: item.FM_CODE,
         FM_NAME: item.FM_NAME
       }));
       const fmlist = [...new Set(this.HQ_CODE_LIST.map((item: any) => item.FM_NAME))];
@@ -169,6 +189,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
         this.DROPDOWN_FM_LIST.push({ label: element, value: element })
       })
       this.SAMPLE_DROPDOWN_RSM_LIST = this.HQ_CODE_LIST.map((item: any) => ({
+        RSM_CODE: item.RSM_CODE,
         RSM_NAME: item.RSM_NAME
       }));
       const rsmlist = [...new Set(this.HQ_CODE_LIST.map((item: any) => item.RSM_NAME))];
@@ -176,6 +197,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
         this.DROPDOWN_RSM_LIST.push({ label: element, value: element })
       })
       this.SAMPLE_DROPDOWN_SM_LIST = this.HQ_CODE_LIST.map((item: any) => ({
+        SM_CODE: item.SM_CODE,
         SM_NAME: item.SM_NAME
       }));
       const smlist = [...new Set(this.HQ_CODE_LIST.map((item: any) => item.SM_NAME))];
@@ -297,15 +319,33 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
       const currentQty = element.REQUESTED_PACK_QTY;
       let newQty = currentQty;
       if (this.QTY_CODE == 1) {
-        newQty += (+this.QTY); 
+        newQty += (+this.QTY);
       } else if (this.QTY_CODE == 2) {
         newQty -= (+this.QTY);
+      }else if (this.QTY_CODE == 3) {
+        newQty = (+this.QTY);
       }
       if (newQty < 0) {
         newQty = 0;
       }
       element.REQUESTED_PACK_QTY = newQty;
       element.HQ_QTY = element.REQUESTED_PACK_QTY * this.INNER_PACK
+    });
+    let data = {
+      "USER_ID": this.USER_ID,
+      "SAMPLE_PRODUCT_CODE": this.SAMPLE_PRODUCT_CODE,
+      "HQ_CODE_LIST": filteredData
+    }
+    // console.log(' filteredData -> ' , filteredData)
+    // console.log(' data -> ' , JSON.stringify(data))
+    // return
+    this.http.postnew(this.url.UPDATEPMTREQINNERPACKBYHQCODE,data).then((res:any)=>{
+        if (res.data[0].FLAG == 1) {
+        this.TOTAL_REQUESTED_PACK_QTY = res.data[0].TOTAL_REQUESTED_PACK_QTY;
+        // this.toastrService.success(res.data[0].MSG);
+      } else if (res.data[0].FLAG == 0) {
+        // this.toastrService.error(res.data[0].MSG);
+      }
     });
   }
 
