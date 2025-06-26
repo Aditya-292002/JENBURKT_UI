@@ -13,7 +13,6 @@ import { URLService } from 'src/app/Service/url.service';
   styleUrls: ['./sample-received.component.css']
 })
 export class SampleReceivedComponent implements OnInit {
-   @ViewChild('dt3') dt3: any;
   setValue: any;
   gridDataSetValue: any;
   first: number = 0;

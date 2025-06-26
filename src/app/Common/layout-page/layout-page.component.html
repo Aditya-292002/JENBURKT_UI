@@ -115,6 +115,10 @@
                             <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Sample_Invoice')"
                                 [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li>
+
+                                     <li class="nav-item" (click)="isSelectedMenu('Sample_Received')"  [ngClass]="customMenuSample_Received == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/samplereceive">Sample Receive</a></li>
+                   
+                                    
                             <!-- <li class="nav-item userDispatched" (click)="isSelectedMenu('Update_Invoice_Dispatched_Details')"  [ngClass]="customMenuDispatchedInvoiceDetails == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/updateDispatchedDetails">Update User Dispatched Details</a></li> -->
                         </ul>
                     </div>
