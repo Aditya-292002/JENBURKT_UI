@@ -25,3 +25,18 @@
     cursor: pointer;
   }
   .dotted {border-style: dotted;}
+
+  .hrStyle{
+  /* border-top: 1px dashed #c5c9cd; */
+  border-top: 1px dashed #999ea3;
+  margin: 4px 4px;
+}
+.shw{
+   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%);
+}
+.highlight {
+  background-color: #fff3cd;
+  font-weight: bold;
+  padding: 2px;
+   border: 1px dashed #999ea3;
+}

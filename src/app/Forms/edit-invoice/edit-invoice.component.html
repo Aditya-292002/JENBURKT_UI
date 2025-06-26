@@ -18,7 +18,7 @@
     <app-loader *ngIf="isLoaded"></app-loader>
     <div class="card">
         <div class="card-body">
-             <div class="">
+             <!-- <div class="">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-3">
                         <div class="">
@@ -33,7 +33,7 @@
                     </div>
                 
                     <div class="col-sm-12 col-md-12 col-lg-3">
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                                         <label>Unit</label>
                                         <div class="autoCompleteDropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
                                             <p-autoComplete [(ngModel)]="UNIT_CODE" class="p-autoComplete"
@@ -48,7 +48,7 @@
                                                 </ng-template>
                                             </p-autoComplete>
                                         </div>
-                                    </div> -->
+                                    </div>
                         <div class="">
                             <label>Unit</label>
                             <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
@@ -65,8 +65,8 @@
                         </div>
                     </div>
                 </div>
-             </div>
-             <div class="bg-white   mt-4" *ngIf="isShowPrintInvoiceList">
+             </div> -->
+             <div class="bg-white" *ngIf="isShowPrintInvoiceList">
 
                 <!-- <table class="table ">
                     <thead>
@@ -106,8 +106,8 @@
                     </tbody>
                 </table> -->
 
-                <p-table [value]="filterInvoiceDetails" responsiveLayout="scroll" scrollHeight="311px"
-                    [globalFilterFields]="['INVOICE_NO','HQ_DESC','UNIT_DESC','DOCKET_NO']" #dt1>
+                <p-table [value]="filterInvoiceDetails" responsiveLayout="scroll" scrollHeight="70vh"
+                    [globalFilterFields]="['INVOICE_NO','HQ_DESC','UNIT_DESC','DOCKET_NO','HQ_CODE']" #dt1>
                     <ng-template pTemplate="caption">
                         <div class="row" style="justify-content: right;">
                             <label class="col-form-label">Filter</label>
@@ -131,8 +131,14 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th class="header" pSortableColumn="INVOICE_NO">INVOICE NO </th>
+                               <th class="header" pSortableColumn="INVOICE_NO">UNIT_CODE </th>
+                       
+                            <th>HQ CODE</th>
                             <th pSortableColumn="HQ_DESC">HQ DESCRIPTION </th>
+                             <th>Docket No</th>
+                          <th>Docket Date</th>
                             <th class="width-10">STATUS</th>
+
                             <th>ACTION </th>
                         </tr>
                     </ng-template>
@@ -141,7 +147,15 @@
                             <td style="font-size: 11px;">
                                 {{data.INVOICE_NO}}
                             </td>
+                            <td style="font-size: 11px;">
+                                {{data.UNIT_CODE}}
+                            </td>
+                                    <td style="font-size: 11px;">
+                                {{data.HQ_CODE}}
+                            </td>
                             <td style="font-size: 11px;">{{data.HQ_DESC}}</td>
+                             <td style="font-size: 11px;">{{data.DOCKET_NO}}</td>
+                              <td style="font-size: 11px;">{{data.DOCKET_DT | date:"dd-MM-yyy"}}</td>
                             <td *ngIf="data.IS_EDIT == 1" class="width-10 text-center"> <span class="status-indicator"
                                     [ngClass]="{'is-orange':data.STATUS ==='Pending','is-green':data.STATUS === 'Dispatched'}"><i
                                         class="fa fa-circle" aria-hidden="true"
@@ -245,7 +259,7 @@
                                 <td class="width-2 " colspan="2" style="font-size: 12px;">Regd . office: J.P. Road, Andheri (w), Mumbai 400 058. Tel(022)
                                     66943121 (8 lines), Fax : (022) 66943127
                                     Plant: {{PLANT_ADDRESS}} District :
-                                    {{DISTRICT}} Tel : {{TEL_NO}} CIN:L24230MH1985PL036541, PAN:AAACJ0256E, Website:www.jenburkt.com, E-Mail : info@jenburkt.com. </td>
+                                    <!-- {{DISTRICT}} Tel : {{TEL_NO}} CIN:L24230MH1985PL036541, PAN:AAACJ0256E, Website:www.jenburkt.com, E-Mail : info@jenburkt.com. </td> -->
                             </tr>
 
 
@@ -253,8 +267,6 @@
 
                 </table>
             </div>
-
-
             <div class="header-space">
                 <table class="table">
                     <tbody>

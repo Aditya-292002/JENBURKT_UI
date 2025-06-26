@@ -11,10 +11,13 @@
         <div class="d-flex justify-content-start">
             <h5 class="mb-0 headers">Sample Requisition</h5>
         </div>
-        <div class="buttonBox ml-auto">
-            <button type="submit" class="btn-primary  formButton mr-2" (click)="onEditListClick()">List</button>
-            <button type="submit" class="btn-primary  saveButton mr-2" (click)="SAVESAMPLEREQUISITION()">Save</button>
-            <button type="submit" class="btn-primary  cancelButton" (click)="clearForm()">Cancel</button>
+        <div class="buttonBox ml-auto" *ngIf="this.IS_DISABLED == false">
+            <button type="submit" class="btn-primary saveButton mr-2" (click)="SAVESAMPLEREQUISITION(1)">
+                Save As Draft
+            </button>
+            <button type="submit" class="btn-primary saveButton mr-2" (click)="OpenConformationPopup()">
+                Submit
+            </button>
         </div>
     </div>
 </div>
@@ -34,12 +37,11 @@
                     </div> -->
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
-                            <label>Period<span style="color: red;">*</span></label>
+                            <label>Period</label>
                             <div [ngClass]="{'required-field':isHighLightPeriod === 'Yes'}">
                                 <p-dropdown [options]="PERIOD_LIST" appendTo="body" optionLabel="CYCLE_DESC"
                                     optionValue="CYCLE_NO" [filter]="true" filterBy="CYCLE_DESC"
-                                    placeholder="Please Select" [disabled]="false" [(ngModel)]="CYCLE_NO"
-                                    (ngModelChange)="GETSAMPLEREQUISITIONLISTBYCYCLEID(CYCLE_NO)"
+                                    placeholder="Please Select" [disabled]="true" [(ngModel)]="CYCLE_NO"
                                     [ngModelOptions]="{standalone:true}">
                                 </p-dropdown>
                             </div>
@@ -47,9 +49,12 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
-                            <label>Total Target<span style="color: red;">*</span></label>
-                            <div [ngClass]="{'required-field':isHighLightTotalTarget === 'Yes'}">
-                                <input type="text" [(ngModel)]="TOTAL_TARGET" [disabled]="true"  class="form-control" name="pincode"
+                            <label>Total Target</label>
+                            <div class="rupee-input-wrapper"
+                                [ngClass]="{'required-field':isHighLightTotalTarget === 'Yes'}">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
                                     placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
@@ -57,9 +62,12 @@
 
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
-                            <label>Max Sample Value<span style="color: red;">*</span></label>
-                            <div [ngClass]="{'required-field':isHighLightMaxSampleValue === 'Yes'}">
-                                <input type="text" [(ngModel)]="MAX_SAMPEL_VALUE" [disabled]="true"  class="form-control" name="pincode"
+                            <label>Max Sample Value</label>
+                            <div class="rupee-input-wrapper"
+                                [ngClass]="{'required-field':isHighLightMaxSampleValue === 'Yes'}">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="MAX_SAMPEL_VALUE | currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control  text-right rupee-input" name="pincode"
                                     placeholder="Max Sample Value" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
@@ -67,9 +75,12 @@
 
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
-                            <label>Req. Value<span style="color: red;">*</span></label>
-                            <div [ngClass]="{'required-field':isHighLightReqValue === 'Yes'}">
-                                <input type="text" [(ngModel)]="REQ_VALUE" [disabled]="true" class="form-control" name="pincode"
+                            <label>Req. Value</label>
+                            <div class="rupee-input-wrapper"
+                                [ngClass]="{'required-field':isHighLightReqValue === 'Yes'}">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
                                     placeholder="Req. Value" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
@@ -82,10 +93,10 @@
                             <label> </label>
                             <div>
                                 <p-table [value]="SAMPLE_REQUISITION_LIST" responsiveLayout="scroll"
-                                    scrollHeight="420px" [globalFilterFields]="['POOL_CODE','LINK_FG_CODE','INNER_PACK','POOL_COUNT','HQ_COUNT',
-                                    'TOTAL_REQ','REQ_VALUE']" stateStorage="session" stateKey="statedemo-session3"
-                                    #dt1>
-                                    <ng-template pTemplate="caption">
+                                    scrollHeight="420px" [globalFilterFields]="['POOL_CODE','LINK_FG_CODE','INNER_PACK','POOL_COUNT','POOL_HQCOUNT',
+                                    'TOTAL_REQ','REQ_VALUE','REQUESTED_PACK_QTY']" stateStorage="session"
+                                    stateKey="statedemo-session3" #dt1>
+                                    <!-- <ng-template pTemplate="caption">
                                         <div class="table-header text-right">
                                             <button pButton label="Clear" class="p-button-outlined mr-2"
                                                 icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
@@ -95,7 +106,7 @@
                                                     (input)="dt1.filterGlobal($event.target.value, 'contains')" />
                                             </span>
                                         </div>
-                                    </ng-template>
+                                    </ng-template> -->
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th scope="col">Pool
@@ -130,37 +141,49 @@
                                                     </ng-template>
                                                 </p-columnFilter>
                                             </th>
-                                            <th pSortableColumn="SAMPEL_COST" scope="col">Sampel Cost</th>
-                                            <th pSortableColumn="PACK_INFO" scope="col">User Info</th>
-                                            <th pSortableColumn="POOL_COUNT" scope="col">Pool Count</th>
+                                            <th pSortableColumn="SAMPEL_COST" scope="col">Sample Cost</th>
+                                            <th pSortableColumn="UNIT_PACK" scope="col">User Info</th>
+                                            <th pSortableColumn="POOL_COUNT" scope="col">HQ Count</th>
                                             <th pSortableColumn="INNER_PACK" scope="col">Inner Pack</th>
-                                            <th pSortableColumn="INNER_PACK" scope="col">Req Inner Pack</th>
-                                            <th pSortableColumn="HQ_COUNT" scope="col">HQ Qty</th>
+                                            <th pSortableColumn="REQUESTED_PACK_QTY" scope="col">Req Inner Pack HQ</th>
+                                            <th pSortableColumn="POOL_HQCOUNT" scope="col">Per HQ Qty</th>
                                             <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th>
                                             <th pSortableColumn="REQ_VALUE" scope="col">Req. Value</th>
+                                            <!-- <th scope="col">Action</th> -->
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
-                                        <tr>
+                                        <tr [ngClass]="{'hq-updated': data.HQ_UPDATED == 1}"
+                                            (dblclick)="GETHQCODELISTBYPOOLCODE(data)">
                                             <td class="width-2">{{ data.POOL_DESC }}</td>
                                             <td class="width-2">{{ data.DESCRIPTION }}</td>
                                             <td class="width-2"><span>&#8377;</span>{{ data.SAMPLE_COST }}</td>
-                                            <td class="width-2">{{ data.PACK_INFO }}</td>
+                                            <td class="width-2">{{ data.UNIT_PACK }}</td>
                                             <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
                                             <td class="width-2">{{ data.INNER_PACK }}</td>
                                             <td class="width-2">
-                                                <div>
-                                                    <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY" class="form-control"
-                                                        name="pincode" (ngModelChange)="CalculatePackQty(data.POOL_CODE)" [disabled]="data.ReqInnerPackDisabled"
-                                                        placeholder="Req Inner Pack Qty" maxlength="4" appTwoDigitDecimaNumber>
-                                                </div>
+                                                <!-- <div *ngIf="data.HQ_UPDATED != 1"> -->
+                                                <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY"
+                                                    class="form-control" name="pincode"
+                                                    (focusout)="GETCALCULATEPACKQTYBYPOOLCODE(data)"
+                                                    [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
+                                                    placeholder="Req Inner Pack Qty" maxlength="4"
+                                                    appTwoDigitDecimaNumber>
+                                                <!-- </div> -->
                                             </td>
-                                            <td class="width-2">{{ data.HQ_QTY }}
-                                                <i class="pi pi-info-circle" (click)="GETHQCODELISTBYPOOLCODE(data)" style="color: red"></i>
+                                            <td class="width-2">
+                                                <!-- <div *ngIf="data.HQ_UPDATED != 1"> -->
+                                                {{ data.REQUESTED_HQ_QTY }}
+                                                <!-- </div> -->
                                             </td>
-                                            <td class="width-2">{{ data.TOTAL_REQ }}</td>
-                                            <td class="width-2"><span>&#8377;</span>{{ data.REQ_VALUE }}</td>
-                                        </tr>   
+                                            <td class="width-2">{{ data.TOTAL_REQUESTED_QTY }}</td>
+                                            <td class="width-2"><span>&#8377;</span>{{ data.REQ_VALUE | number:'1.2-2'
+                                                }}
+                                            </td>
+                                            <!-- <td class="width-2"> <i *ngIf="data.HQ_UPDATED == 1"
+                                                    class="pi pi-info-circle" style="color: red"></i>
+                                            </td> -->
+                                        </tr>
                                     </ng-template>
                                 </p-table>
                             </div>
@@ -177,75 +200,132 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">HQ Code List</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                <!-- <h5 class="modal-title">HQ Code List</h5> -->
+                   <div class="modal-title d-flex ">
+                    <h6 class="">Pool: {{this.POOL_DESC}},</h6>
+                    <h6 class="ml-2">Product: {{this.PRODUCT_DESCRIPTION}},</h6> 
+                    <h6 class="ml-2">Inner Pack: {{this.INNER_PACK}}</h6> 
+                    </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="Cancel()">
                     <span aria-hidden="true">&times;</span>
-                </button> -->
+                </button>
             </div>
-            <div class="modal-body">
-                <div class="col-md-12 p-4">
+            <div class="modal-body ">
+                <div class="col-md-12 ">
                     <div class="">
-                        <p-table #table class="" [value]="HQ_CODE_LIST" scrollDirection="both" [scrollable]="true"
-                            styleClass="p-datatable-lg" responsiveLayout="scrol" #dt
-                            [globalFilterFields]="['HQ_CODE','HQ_QTY','REMARKS']" scrollHeight="400px"
-                            [paginator]="false" [rows]="10" [totalRecords]="totalRecords"
-                            [rowsPerPageOptions]="[10, 20, 30]">
-                            <ng-template pTemplate="caption">
-                                <div class="input-group search-group px-3" style="width: 250px; margin-left: 440px;">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                        placeholder="Search keyword" aria-label="Search" size="20"
-                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fa fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
+                        <p-table #table [value]="HQ_CODE_LIST" [scrollable]="true" styleClass="p-datatable-lg"
+                            responsiveLayout="scroll" scrollHeight="420px"
+                            [globalFilterFields]="['POOL_DESC', 'HQ_CODE', 'HQ_QTY', 'REMARKS']" [paginator]="false"
+                            [rows]="rowsPerPage" [totalRecords]="totalRecords" [first]="first"
+                            [rowsPerPageOptions]="[5, 10, 15]" (onPageChange)="onPageChange($event)">
+                            <!-- <ng-template pTemplate="caption">
+                                <div class="d-flex ">
+                                    <p>Pool: <span>{{this.POOL_DESC}},</span></p>
+                                    <p class="ml-2">Product: <span>{{this.PRODUCT_DESCRIPTION}},</span></p>
+                                    <p class="ml-2">Inner Pack: <span>{{this.INNER_PACK}}</span></p>
                                 </div>
-                            </ng-template>
+                            </ng-template> -->
+
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th pSortableColumn="HQ_CODE" class="width-100">
-                                        HQ Code
-                                    </th>
-                                    <th pSortableColumn="HQ_QTY" class="width-100">
-                                        HQ Qty
-                                    </th>
-                                    <th pSortableColumn="REMARKS" class="width-100">
-                                        Remarks
-                                    </th>
+                                    <th pSortableColumn="HQ_CODE" class="width-150">HQ Code</th>
+                                    <th pSortableColumn="REQUESTED_PACK_QTY" class="width-200">Req Inner Pack</th>
+                                    <th pSortableColumn="HQ_QTY" class="width-50">HQ Qty</th>
+                                    <th pSortableColumn="REMARKS" class="width-200">Remarks</th>
                                 </tr>
                             </ng-template>
+
                             <ng-template pTemplate="body" let-rowData>
                                 <tr>
-                                    <td class="width-100">
-                                        <a>{{rowData.HQ_CODE}}</a>
+                                    <td class="width-150">
+                                        <a>{{rowData.HQ_DESC}}- {{rowData.HQ_CODE}}</a>
                                     </td>
-                                    <td class="width-100">
-                                        <input type="text" [(ngModel)]="rowData.HQ_QTY" class="form-control"
-                                            name="pincode" placeholder="HQ Qty" maxlength="4" appTwoDigitDecimaNumber>
+                                    <td class="width-200">
+                                        <input type="text" [(ngModel)]="rowData.REQUESTED_PACK_QTY" class="form-control"
+                                            name="pincode" (focusout)="CalculateHqPackQty(rowData)" [disabled]="this.IS_DISABLED == true" 
+                                            placeholder="Req Inner Pack Qty" maxlength="4" appTwoDigitDecimaNumber>
                                     </td>
-                                    <!-- <td class="width-100">
-                                        <input type="text" [(ngModel)]="rowData.HQ_QTY" class="form-control"
-                                            name="pincode" placeholder="HQ Qty" (ngModelChange)="GETCALCULATEHQQTY(rowData)" maxlength="4" appTwoDigitDecimaNumber>
-                                    </td> -->
-                                    <td class="width-100">
-                                        <input type="text" [(ngModel)]="rowData.REMARKS" class="form-control"
+                                    <td class="width-50">
+                                        <a>{{rowData.HQ_QTY}}</a>
+                                    </td>
+                                    <td class="width-200">
+                                        <input type="text" [(ngModel)]="rowData.REMARKS" [disabled]="this.IS_DISABLED == true"  class="form-control"
                                             placeholder="Enter Remarks">
                                     </td>
                                 </tr>
                             </ng-template>
+
                             <ng-template pTemplate="footer">
-                                <div class="buttonBox p-2">
-                                    <button type="submit" class="btn-primary  saveButton mr-2"
-                                        (click)="Save()">Save</button>
-                                    <button type="submit" class="btn-primary  formButton mr-2"
+                                <div class="d-flex justify-content-center align-items-center p-2">
+                                    <button type="submit" class="btn-primary saveButton mr-2"
+                                        (click)="SAVEHQCODEBYPOOLCODE()">Save</button>
+                                    <button type="submit" class="btn-primary formButton mr-2"
                                         (click)="Cancel()">Cancel</button>
                                 </div>
                             </ng-template>
                         </p-table>
-                        <!-- <p-paginator [rows]="10" [first]="first" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]"
-                (onPageChange)="onPageChange($event)" #table>
-              </p-paginator> -->
+
+                        <!-- <p-paginator [rows]="rowsPerPage" [first]="first" [totalRecords]="totalRecords"
+                            [rowsPerPageOptions]="[5, 10, 15]" (onPageChange)="onPageChange($event)">
+                        </p-paginator> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isConformationPopup">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">Are you sure you want to submit this list?</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <button type="submit" class="btn-primary  formButton mr-2"
+                                (click)="CancelConformationPopup()">No</button>
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="SAVESAMPLEREQUISITION(0)">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isDataPickUpPopup">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">{{this.isDataPickUpPopupMess}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="GETSAMPLEREQUISITIONLISTBYCYCLEID(this.TRXN_ID ,this.CYCLE_NO,1)">Yes</button>
+                            <button type="submit" class="btn-primary  formButton mr-2"
+                                (click)="GETSAMPLEREQUISITIONLISTBYCYCLEID(this.TRXN_ID ,this.CYCLE_NO,2)">No</button>
+                        </div>
                     </div>
                 </div>
             </div>

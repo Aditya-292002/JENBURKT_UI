@@ -14,81 +14,91 @@ import { Pipe, PipeTransform } from '@angular/core';
   templateUrl: './incentives.component.html',
   styleUrls: ['./incentives.component.css']
 })
-export class IncentivesComponent implements OnInit,PipeTransform  {
+export class IncentivesComponent implements OnInit, PipeTransform {
   @Pipe({ name: 'formatValue' })
   userInfo: any;
   isLoaded: boolean;
-  INCENTIVE_LIST: any=[];
+  INCENTIVE_LIST: any = [];
   // CURR_INCENTIVE_MONTH: any;
-  dataObject: any=[];
-  CURR_INCENTIVE_MONTH: { field: string, value: any,format:any }[] = [];
+  dataObject: any = [];
+  CURR_INCENTIVE_MONTH: { field: string, value: any, format: any }[] = [];
 
-  constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
-    private ToastrService: ToastrService,private url: URLService,private http: HttpService) { }
+  constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService,
+    private ToastrService: ToastrService, private url: URLService, private http: HttpService) { }
 
   ngOnInit(): void {
-     localStorage.removeItem('CME_ID')
+    localStorage.removeItem('CME_ID')
     this.userInfo = JSON.parse(this.AuthService.getUserDetail());
-    this.GETINCENTIVE();
+    this.GETCMEAPPROVEDLISTUSERID();
   }
-  async GETINCENTIVE(){
-    let data = {  
+  async GETCMEAPPROVEDLISTUSERID() {
+    let data = {
       "USER_ID": this.userInfo.USER_ID,
-      "SALES_ROLE_ID" : this.userInfo.SALESROLE_ID
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
     }
-      this.isLoaded = true;
+    this.isLoaded = true;
     await this.http.postnew(this.url.getIncentiveList, data).then(
       (res: any) => {
-        console.log('res ->' , res)
-        if(res.INCENTIVE_LIST)
-        this.INCENTIVE_LIST = res.INCENTIVE_LIST;
-         
-            
-      
-         if( this.INCENTIVE_LIST.length>0){
+        console.log('res ->', res)
+        if (res.INCENTIVE_LIST)
+          this.INCENTIVE_LIST = res.INCENTIVE_LIST;
+
+
+
+        if (this.INCENTIVE_LIST.length > 0) {
           this.INCENTIVE_LIST.forEach(element => {
-            if(element.CM==1){
-             this.dataObject.push(element);
-             console.log('this.dataObject',this.dataObject);
-             
+            if (element.CM == 1) {
+              this.dataObject.push(element);
+              console.log('this.dataObject', this.dataObject);
+
               this.INCENTIVE_LIST.splice(0, 1);
             }
           });
           //  this.dataObject=res.INCENTIVE_LIST[0];
-            //this.INCENTIVE_LIST.splice(0, 1);
+          //this.INCENTIVE_LIST.splice(0, 1);
+          
+          if (this.dataObject[0].CM_INC > 0) {
+            console.log('inside if');
+            
+            this.CURR_INCENTIVE_MONTH = [
+              { field: 'CURRENT MONTH', value: this.dataObject[0].PERIOD_DESC, format: 'S' },
+              { field: 'CURRENT MONTH SALE', value: this.dataObject[0].PERIOD_SALES, format: 'N' },
+              { field: 'TARGET VALUE', value: this.dataObject[0].TARGET_MONTH, format: 'N' },
+              { field: 'ELIGIBLE INCENTIVE', value: this.dataObject[0].CM_INC, format: 'N' },
+              { field: 'BALANCE TO ACHIEVE THE TARGET', value: this.dataObject[0].PEND_FORNEXT, format: 'N' },
+              // { field: 'PENDING FOR NEXT SLAB', value: this.dataObject[0].PEND_FORNEXT,format: 'N'},
+              // { field: 'INCENTIVE ON TARGET ACHIEVMENT', value: this.dataObject[0].INC_IFACHIEV, format: 'N' },
+              { field: 'SALE REQUIRED TO ACHIEVE PREVIOUS MONTH INCENTIVE ', value: this.dataObject[0].PEND_FOR_PM_INC, format: 'N' },
 
-      this.CURR_INCENTIVE_MONTH = [
-        { field: 'Current Month', value: this.dataObject[0].PERIOD_DESC,format:'S' },
-        { field: 'PCPM', value: this.dataObject[0].PERIOD_SALES,format: 'N'},
-        { field: 'TARGET', value: this.dataObject[0].TARGET_MONTH,format: 'N'},
-        { field: 'CURRENT INCENTIVE', value: this.dataObject[0].CM_INC,format:'N' },
-        { field: 'BALANCE TO ACHIEVE THE TARGET/NEXT SLAB', value: this.dataObject[0].PEND_FORNEXT,format: 'N'},
-        // { field: 'PENDING FOR NEXT SLAB', value: this.dataObject[0].PEND_FORNEXT,format: 'N'},
-        { field: 'INCENTIVE ON TARGET/NEXT SLAB ACHIEVMENT', value: this.dataObject[0].INC_IFACHIEV,format: 'N'},
-        { field: 'SALE REQUIRED TO ACHIEVE PREVIOUS MONTH INCENTIVE ', value: this.dataObject[0].PEND_FOR_PM_INC ,format:'N'},
 
-      //  this.CURR_INCENTIVE_MONTH = [
-      //   { field: 'Current Month Sale', value: this.dataObject[0].PERIOD_DESC,format:'S' },
-      //   { field: 'Target Value', value: this.dataObject[0].PERIOD_SALES,format: 'N'},
-      //   { field: 'Current Sales value', value: this.dataObject[0].CM_INC,format:'N' },
-      //   { field: 'Balance to achieve the Target', value: this.dataObject[0].PEND_FORNEXT,format: 'N'},
-      //   { field: 'Incentive on Target achievement', value: this.dataObject[0].INC_IFACHIEV,format: 'N'},
-      //   { field: 'Sale required to achieve Previous month Incentive', value: this.dataObject[0].PEND_FOR_PM_INC ,format:'N'},
-      //   // { field: 'Next Month Achieved', value: this.dataObject.NM_ACHV },
-        // { field: 'Achieved Incentive', value: this.dataObject.ACHV_INC },
-        // { field: 'CM Flag', value: this.dataObject.CM }
-];
+            ];
+          }else{
+               console.log('inside else');
+             this.CURR_INCENTIVE_MONTH = [
+              { field: 'CURRENT MONTH', value: this.dataObject[0].PERIOD_DESC, format: 'S' },
+              { field: 'CURRENT MONTH SALE', value: this.dataObject[0].PERIOD_SALES, format: 'N' },
+              { field: 'TARGET VALUE', value: this.dataObject[0].TARGET_MONTH, format: 'N' },
+              // { field: 'ELIGIBLE INCENTIVE', value: this.dataObject[0].CM_INC, format: 'N' },
+              { field: 'BALANCE TO ACHIEVE THE TARGET', value: this.dataObject[0].PEND_FORNEXT, format: 'N' },
+              // { field: 'PENDING FOR NEXT SLAB', value: this.dataObject[0].PEND_FORNEXT,format: 'N'},
+              { field: 'INCENTIVE ON TARGET ACHIEVMENT', value: this.dataObject[0].INC_IFACHIEV, format: 'N' },
+              { field: 'SALE REQUIRED TO ACHIEVE PREVIOUS MONTH INCENTIVE ', value: this.dataObject[0].PEND_FOR_PM_INC, format: 'N' },
+
+
+            ];
           }
 
-        //  console.log('123',this.CURR_INCENTIVE_MONTH);
-          
+        }
 
-  //       this.CURR_INCENTIVE_MONTH = Object.entries(this.dataObject).map(([key, value]) => ({
-  //   field: key,
-  //   value: value
-  // }));
+        //  console.log('123',this.CURR_INCENTIVE_MONTH);
+
+
+        //       this.CURR_INCENTIVE_MONTH = Object.entries(this.dataObject).map(([key, value]) => ({
+        //   field: key,
+        //   value: value
+        // }));
         //console.log('test',this.CURR_INCENTIVE_MONTH);
-        
+
         this.isLoaded = false;
       },
       error => {
@@ -98,7 +108,7 @@ export class IncentivesComponent implements OnInit,PipeTransform  {
       }
     );
   }
-    transform(value: any): string {
+  transform(value: any): string {
     const num = Number(value);
     if (!isNaN(num) && value !== null && value !== '') {
       return num.toLocaleString('en-US');

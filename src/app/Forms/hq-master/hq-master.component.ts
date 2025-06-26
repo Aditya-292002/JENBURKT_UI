@@ -66,7 +66,7 @@ oldWEFHQList:any=[];
       (res:any)=>{
         this.isLoaded= false;
         this.HQMasterList = res.poolhqlist;
-        // console.log(this.HQMasterList)
+        console.log(this.HQMasterList)
       },
       error =>{
         console.log(error);
@@ -92,7 +92,7 @@ oldWEFHQList:any=[];
             this.WEFCode = element.PERIOD_ID
            // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
 
-            // console.log( this.WEFCode,"code")
+            console.log( this.WEFCode,"code")
           }
         });
 

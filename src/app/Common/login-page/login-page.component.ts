@@ -26,6 +26,7 @@ export class LoginPageComponent implements OnInit {
       "PASSWORD": this.PASSWORD,
     }
     this.apiService.post(this.urlService.userLogin, data).then((res: any) => {
+      console.log("result", res.User_List)
       if (res.User_List.FLAG == true) {
         this.toastrService.showSucess(res.User_List.MSG, '');
         this.router.navigate(["/changecompany"]);
@@ -41,6 +42,7 @@ export class LoginPageComponent implements OnInit {
   }
   
   onSomeAction(e: any) {
+    console.log("event", e.code);
     if(e.code == "Enter"){
       this.logInClick();
     }

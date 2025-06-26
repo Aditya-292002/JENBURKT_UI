@@ -12,26 +12,28 @@
             <h5 class="mb-0 headers">Upload Sample Stock</h5>
         </div>
         <div class="buttonBox ml-auto">
-            <button type="submit" class="btn-primary  formButton  mr-2" (click)="downloadTemplate()">Download Template</button>
-            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()" >Upload</button>
-            <button type="submit" class="btn-primary  cancelButton" (click)="clearData()" >Cancel</button>
+            <button type="submit" class="btn-primary  formButton  mr-2" (click)="downloadTemplate()">Download
+                Template</button>
+            <button type="submit" class="btn-primary  saveButton mr-2" (click)="formValidate()">Upload</button>
+            <button type="submit" class="btn-primary  cancelButton" (click)="clearData()">Cancel</button>
         </div>
     </div>
 </div>
 
 <div class="container-fluid">
-    <app-loader *ngIf="isLoaded" ></app-loader>
+    <app-loader *ngIf="isLoaded"></app-loader>
     <div class="card">
         <div class="card-body">
             <div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-4">
-                        <div >
+                        <div>
                             <label>Cycle</label>
                             <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
-                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC" [filter]="true" filterBy="CYCLE_DESC"
-                                    optionValue="CYCLE_NO" appendTo="body" placeholder="Please Select.."
-                                    [(ngModel)]="CYCLE_CODE" [ngModelOptions]="{standalone:true}">
+                                <p-dropdown [options]="CYCLE_LIST" appendTo="body" optionLabel="CYCLE_DESC"
+                                    [filter]="true" filterBy="CYCLE_DESC" optionValue="CYCLE_NO" appendTo="body"
+                                    placeholder="Please Select.." [(ngModel)]="CYCLE_CODE"
+                                    [ngModelOptions]="{standalone:true}">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -40,11 +42,11 @@
                         <div>
                             <label>Unit</label>
                             <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
-                                <p-dropdown appendTo="body" [options]="UNIT_LIST" appendTo="body" [filter]="true" filterBy="UNIT_DESC"
-                                optionLabel="UNIT_DESC" optionValue="UNIT_CODE"
-                                placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
-                                [ngModelOptions]="{standalone:true}" >
-                            </p-dropdown>
+                                <p-dropdown appendTo="body" [options]="UNIT_LIST" appendTo="body" [filter]="true"
+                                    filterBy="UNIT_DESC" optionLabel="UNIT_DESC" optionValue="UNIT_CODE"
+                                    placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
                             </div>
 
                         </div>
@@ -58,32 +60,88 @@
                               </div>
                         </div> -->
                         <div class="mb-2">
-                          <div >
-                            <label for="docs">Upload Document</label>
-                            <div >
-                              <div class="file-upload">
-                                <span class="input-group-btn uploadbtn mr-3">
-                                    <a href="#javascript:;">
-                                        <div class="btn btn-default  custom-file-uploader">
-                                            <input type="file" class="form-control-file" id="docs" name="file"
-                                            (change)="selectFile($event.target)" [(ngModel)]="UPLOAD"
-                                                >
-                                            <b >Upload File</b>
-                                        </div>
-                                    </a>
-                                </span>
-                                <a class="" >{{UPLOAD | slice:-100}}</a>
+                            <div>
+                                <label for="docs">Upload Document</label>
+                                <div>
+                                    <div class="file-upload">
+                                        <span class="input-group-btn uploadbtn mr-3">
+                                            <a href="#javascript:;">
+                                                <div class="btn btn-default  custom-file-uploader">
+                                                    <input type="file" class="form-control-file" id="docs" name="file"
+                                                        (change)="selectFile($event.target)" [(ngModel)]="UPLOAD">
+                                                    <b>Upload File</b>
+                                                </div>
+                                            </a>
+                                        </span>
+                                        <a class="">{{UPLOAD | slice:-100}}</a>
+
+                                    </div>
+                                </div>
 
                             </div>
-                            </div>
-
-                          </div>
-                      </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
         </div>
 
+        <hr class="hrStyle">
+        <div class="">
+            <div class="card">
+                <p-table [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList"
+                    responsiveLayout="scroll" [paginator]="true" class="prime-table" [showCurrentPageReport]="true"
+                    [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]" [totalRecords]="totalRecords"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true"
+                    (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true">
+                    <!-- <ng-template pTemplate="caption">
+                                        <div style="text-align: right">
+                                          
+                                            <span class="p-input-icon-right ml-auto">
+                                              <i class="pi pi-search" ></i>
+                                              <input pInputText type="text" size="30" class="form-control" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                          </span>
+                                        </div>
+                                    </ng-template> -->
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+
+                            <th style="width:180px ;" *ngFor="let col of columns"
+                                [ngClass]="{'employee-code-header': col.Headers === 'EMPLOYEE'}">
+                                {{col.Headers}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td style="width:180px" *ngFor="let col of columns"
+                                [ngClass]="{'employee-code-header': col.Headers === 'EMPLOYEE'}">
+                                <a class="click" (click)="routeList(rowData)">
+                                    {{rowData[col.Field]}}
+                                </a>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+
+        </div>
+
     </div>
-</div>
+
+    <p-dialog header="Confirmation" [modal]="true" [(visible)]="this.validateflag" [style]="{ width: '50rem' }">
+     <div class=" gap-3 ">
+        <div>
+            <h6>Data is being overrided are you sure you still want save?</h6>
+            <div class="float-right">
+                <button type="submit" class="btn-primary  saveButton mr-2" (click)="saveOverrridernData()">
+                    Save
+                </button>
+                <button type="submit" class="btn-primary  formButton mr-2" (click)="CLOSEREJECTCMEREQUESTPOPUP()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

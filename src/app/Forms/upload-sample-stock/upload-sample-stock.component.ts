@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
+import { __await } from 'tslib';
 @Component({
   selector: 'app-upload-sample-stock',
   templateUrl: './upload-sample-stock.component.html',
@@ -23,6 +24,15 @@ export class UploadSampleStockComponent implements OnInit {
   isHighLightCycle:string = "No";
   UPLOAD:any;
   isHighLightUnit:string="No";
+  SAMPLE_STOCK: any=[];
+  showGridData: any=[];
+    setValue: any=[];
+  gridDataSetValue: any;
+  first: number = 0;
+  totalRecords: number = 0;
+  rows: number = 10;
+  last: number;
+  validateflag: boolean=false;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService,) { }
 
@@ -128,6 +138,7 @@ export class UploadSampleStockComponent implements OnInit {
 
     this.http.postnew(this.url.SAVESAMPLESTOCKDATA, data).then(
       (res: any) => {
+    
         // this.isLoaded = false;
         if(res.data[0].FLAG == true){
             this.toastrService.success(res.data[0].MSG)
@@ -166,7 +177,15 @@ export class UploadSampleStockComponent implements OnInit {
     }
 
     if(this.isHighLightCycle !="Yes" || this.isHighLightUnit!="Yes"){
-      this.uploadSampleStockData();
+      this.saveValidation();
+      // if(!this.validateflag){ 
+      //   //console.log('isnide if');
+      //   this.uploadSampleStockData();
+      // }
+      //   console.log('isnide else');
+      //   this.saveValidation();
+       
+    //  }
 
     }
   }
@@ -174,7 +193,8 @@ export class UploadSampleStockComponent implements OnInit {
   clearData(){
     this.CYCLE_CODE="";
     this.UNIT_CODE="";
-    this.UPLOAD=""
+    this.UPLOAD="";
+    this.showGridData=[];
   }
 
   filterCycle:any=[];
@@ -238,5 +258,86 @@ export class UploadSampleStockComponent implements OnInit {
         }
       });
   }
+
+    async saveValidation() {
+   this.userInfo = this.authService.getUserDetail();
+    let data = {
+      "CYCLE_CODE":this.CYCLE_CODE,
+      "UNIT_CODE":this.UNIT_CODE,
+      "DETAILS":this.convertedJson
+    }
+
+    // console.log('DATA ->', JSON.stringify(data))
+    // return
+    this.isLoaded = true;
+         
+    await this.http.postnew(this.url.STOCKSAVEVALIDATION, data).then(
+      (res: any) => {
+   
+        if (res.FLAG == 1) {
+          
+          console.log('123', res);
+          this.isLoaded = false;
+          this.SAMPLE_STOCK = res.SAMPLE_STOCK;
+          if (this.SAMPLE_STOCK?.length > 0) {
+            this.validateflag=true;
+            this.showGridData["GridList"] = this.SAMPLE_STOCK;
+            this.setValue = this.gridDataSetValue;
+
+            // Clear headers & keys
+            this.showGridData["GridHeadersList"] = [];
+            this.showGridData["SearchKey"] = [];
+
+            // Extract headers from first row
+            if (this.showGridData.GridList.length > 0) {
+              const keys = Object.keys(this.showGridData.GridList[0]);
+              console.log('sinside2');
+
+              keys.forEach(key => {
+                const header = {
+                  Headers: key,
+                  Field: key
+                };
+                this.showGridData["SearchKey"].push(key);
+                this.showGridData["GridHeadersList"].push(header);
+                console.log('sinside3');
+              });
+            }
+          }
+           else {
+          this.uploadSampleStockData();
+           this.validateflag=false;
+          this.showGridData = []
+          console.log('inside else validation');
+
+          //  this.savePayement()
+        }
+
+        }else{
+          this.toastrService.error("something went wrong");
+        }
+       
+
+
+
+      });
+  }
+    onPageChange(event: any) {
+    console.log(event.first);
+
+    console.log('this.totalRecords', this.totalRecords);
+    this.last = this.first;
+    this.first = event.first;
+    this.rows = event.rows;
+  }
+  CLOSEREJECTCMEREQUESTPOPUP(){
+    this.validateflag=false;
+  }
+
+  saveOverrridernData(){
+    this.uploadSampleStockData();
+    this.validateflag=false;
+  }
+
 
 }

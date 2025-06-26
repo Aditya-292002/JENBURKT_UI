@@ -64,13 +64,8 @@ export class SampleAllocationApprovalComponent implements OnInit {
      "DETAILS": this.SAMPLE_ALLOCATION_APPROVAL_LIST
     }
   console.log(' save data',JSON.stringify(data))
-
-    // this.isLoaded = true;
-
     this.http.postnew(this.url.SAVESAMPLEAPPROVALDETAILS, data).then(
       (res: any) => {
-        // this.isLoaded = false;
-        console.log
         if (res.data[0].FLAG == true) {
           this.toastrService.success(res.data[0].MSG)
           this.getSampleAllocationApprovalMasterList();

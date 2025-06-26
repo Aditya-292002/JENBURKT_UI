@@ -60,11 +60,13 @@ export class GenerateInvoiceComponent implements OnInit {
   finalDetails:any = [];
   CYCLE_CODE:any;
   INVOICE_NO:any;
-  disableAllInput:boolean;
+  disableAllInput:boolean=true;
   STATE_NAME:any;
   ADDRESS:any;
   IS_CHECK:any = 0;
   isHideButtons:boolean = false;
+
+  REF_INVOICE_NO:any;
   constructor(private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService,
     private datepipe: DatePipe,private router: Router,private SharedService: SharedService) { }
 
@@ -88,8 +90,8 @@ export class GenerateInvoiceComponent implements OnInit {
         this.isLoaded = false;
         this.INVOICE_DETAILS = res.INVOICE_DETAILS;
         this.INVOICE_HEADERS = res.INVOICE_HEADERS;
-          let DC_DATE = this.datepipe.transform(new Date(this.INVOICE_HEADERS[0].DC_DATE),'yyyy-MM-dd');
-         let DOCKET_DT = this.datepipe.transform(new Date(this.INVOICE_HEADERS[0].DOCKET_DT),'yyyy-MM-dd');
+        //   let DC_DATE = this.datepipe.transform(new Date(this.INVOICE_HEADERS[0].DC_DATE),'dd-mm-yy');
+        //  let DOCKET_DT = this.datepipe.transform(new Date(this.INVOICE_HEADERS[0].DOCKET_DT),'dd-mm-yy');
         this.PRODUCT_DETALS_COUNT = this.INVOICE_DETAILS.length;
         if (this.INVOICE_HEADERS.length > 0) {
           this.ID = this.INVOICE_HEADERS[0].ID
@@ -98,29 +100,34 @@ export class GenerateInvoiceComponent implements OnInit {
           this.TOTAL_CASE = this.INVOICE_HEADERS[0].TOTAL_CASE
           this.TOTAL_GROSS_WT = this.INVOICE_HEADERS[0].GROSS_WT
           this.DOCKET_NO = this.INVOICE_HEADERS[0].DOCKET_NO
-          this.DOCKET_DT = DOCKET_DT
+          this.DOCKET_DT = new Date(this.INVOICE_HEADERS[0].DOCKET_DT)
           this.DISPATCH = this.INVOICE_HEADERS[0].DISPATCHED_THROUGH
           this.SALES_ROLE_CODE = this.INVOICE_HEADERS[0].SALESROLE_ID
           this.USER_NAME = this.INVOICE_HEADERS[0].USER_NAME
           this.UNIT_CODE = this.INVOICE_HEADERS[0].UNIT_CODE
+           // console.log('this.UNIT_CODE1',this.UNIT_CODE);
+           // this.UNIT_CODE=this.UNIT_LIST.filter((word) => word.UNIT_CODE == this.UNIT_CODE )
+           // console.log('this.UNIT_CODE2',this.UNIT_CODE);
+          
           this.HQ_CODE = this.INVOICE_HEADERS[0].HQ_CODE
           this.EMAIL_ID = this.INVOICE_HEADERS[0].EMAIL_ID
           this.MOBILE_NO = this.INVOICE_HEADERS[0].MOBILE_NO
-          this.DC_DATE = DC_DATE
+          this.DC_DATE = new Date(this.INVOICE_HEADERS[0].DC_DATE)
           this.IS_CHECK = this.INVOICE_HEADERS[0].IS_EDIT
           this.USER_ID = this.INVOICE_HEADERS[0].USER_ID
           this.ADDRESS =  this.INVOICE_HEADERS[0].ADDRESS
-
+          this.REF_INVOICE_NO =  this.INVOICE_HEADERS[0].REF_INVOICE_NO
+  
           //  console.log("this.DC_DATE",this.DC_DATE)
           //  console.log("this.DOCKET_DT",this.DOCKET_DT)
 
-           if(this.INVOICE_HEADERS[0].IS_EDIT==1){
-              this.disableAllInput=true;
-              this.isHideButtons = false;
-           }else{
-            this.disableAllInput=false;
-            this.isHideButtons = true;
-           }
+          //  if(this.INVOICE_HEADERS[0].IS_EDIT==1){
+          //     this.disableAllInput=true;
+          //     this.isHideButtons = false;
+          //  }else{
+          //   this.disableAllInput=false;
+          //   this.isHideButtons = true;
+          //  }
 
         }
 
@@ -210,6 +217,8 @@ export class GenerateInvoiceComponent implements OnInit {
       "HQ_CODE": this.HQ_CODE,
       "SALES_ROLE_CODE": this.SALES_ROLE_CODE
     }
+    console.log('123454444 he,',data);
+    
     // this.isLoaded = true;
     this.http.postnew(this.url.GETSAMPLEINVOICEDATABYID, data).then(
       (res: any) => {
@@ -291,7 +300,9 @@ export class GenerateInvoiceComponent implements OnInit {
       "DOCKET_DT": this.DOCKET_DT,
       "DISPATCHED_THROUGH": this.DISPATCH,
       "CREATED_BY": +this.userInfo.USER_ID,
-      "IS_EDIT":this.IS_CHECK
+      "IS_EDIT":this.IS_CHECK,
+      "REF_INVOICE_NO":this.REF_INVOICE_NO,
+      "ADDRESS":this.ADDRESS
     }
     console.log(JSON.stringify(data));
     //this.isLoaded = true;

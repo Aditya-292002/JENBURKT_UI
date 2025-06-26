@@ -8,6 +8,10 @@ import { CommonService } from 'src/app/Service/common.service';
 import { HttpService } from 'src/app/Service/http.Service';
 import { PipeService } from 'src/app/Service/pipe.service';
 import { URLService } from 'src/app/Service/url.service';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-payment-cme',
@@ -65,6 +69,11 @@ export class PaymentCmeComponent implements OnInit {
   CME_DOCUMENT_LIST:any = [];
   PAYMENT_FROM_DATE:any;
   PAYMENT_TO_DATE:any;
+    BANK_NAME: any
+  ACCOUNT_NUMBER: any
+  BANK_IFSC: any
+  PAN_NO: any;
+  UTR_NO: any;
 
   constructor(private authService:AuthService,private   url:URLService,private http:HttpService,
     private toastrService:ToastrService,private common:CommonService,public datePipe: DatePipe,private router:Router) { 
@@ -133,7 +142,7 @@ export class PaymentCmeComponent implements OnInit {
     }
     
   GetPayemntCmeForCmeNo(data:any){
-    // console.log('data ->' , data)
+     //console.log('data ->' , data)
    this.CME_NO = data.CME_NO;
    this.CME_ID = data.CME_ID;
    this.CME_DATE = this.datePipe.transform(data.CME_DATE, 'dd-MM-yyyy'); 
@@ -151,12 +160,18 @@ export class PaymentCmeComponent implements OnInit {
    this.ViewCmeData = false;
    this.isPayemntDataView = false;
    this.ViewPamentData = true;
+   this.BANK_NAME=data.BANK_NAME;
+   this.ACCOUNT_NUMBER=data.ACCOUNT_NUMBER;
+   this.BANK_IFSC=data.BANK_IFSC;
+   this.PAN_NO=data.PAN_NO
+   this.PAY_AMOUNT=data.PAY_AMOUNT
+      this.UTR_NO=data.UTR_NO
    this.GETPAYMENTMASTERLIST();
   }
 
    
   GetPayemntDataCmeForPaymentNo(data:any){
-    // console.log('data ->' , data)
+    //  console.log('data ->' , data)
    this.PAYMENT_NO = data.PAYMENT_NO;
    this.CME_NO = data.CME_NO;
    this.CME_ID = data.CME_ID;
@@ -171,6 +186,9 @@ export class PaymentCmeComponent implements OnInit {
    this.PAYMENT_TYPE_ID = data.PAYMENT_MODE;
    this.PAYMENT_REF = data.PAYMENT_REF_NO;
    this.ERP_REF = data.ERP_REF_NO;
+   this.BANK_NAME=data.BANK_NAME;
+   this.BANK_IFSC=data.BANK_IFSC;
+   this.ACCOUNT_NUMBER=data.ACCOUNT_NUMBER
    this.PAYMENT_DATE = this.datePipe.transform(data.PAYMENT_DATE, 'dd-MM-yyyy');
    this.camp_type = data.CAMP_TYPE;
    this.cme_type = data.CME_TYPE;
@@ -178,6 +196,7 @@ export class PaymentCmeComponent implements OnInit {
    this.ViewPamentData = true;
    this.ViewCmeData = false;
    this.isPayemntDataView = true;
+   this.UTR_NO=data.UTR_NO
    this.GETPAYMENTMASTERLIST();
   }
 
@@ -290,6 +309,37 @@ export class PaymentCmeComponent implements OnInit {
       return
     }
 
+    
+      if (!this.common.isValid(this.BANK_IFSC)) {
+        this.toastrService.error('Enter a Bank IFSC Code')
+        return
+      }
+ 
+  
+      if (!this.common.isValid(this.BANK_NAME)) {
+        this.toastrService.error('Enter a Bank Name')
+        return
+      }
+   
+
+        if (!this.common.isValid(this.PAN_NO)) {
+        this.toastrService.error('Enter a Pan Number')
+        return
+      }
+  
+
+   
+      if (!this.common.isValid(this.ACCOUNT_NUMBER)) {
+        this.toastrService.error('Enter a Bank Account Number')
+        return
+      }
+
+          if (!this.common.isValid(this.UTR_NO)) {
+        this.toastrService.error('Enter a UTR Number')
+        return
+      }
+   
+
     let data = {  
       "USER_ID": this.userInfo.USER_ID,
       "CME_PAYMENT_DATA": {
@@ -299,7 +349,12 @@ export class PaymentCmeComponent implements OnInit {
         "ERP_REF_NO": this.ERP_REF,
         "PAYMENT_MODE": this.PAYMENT_TYPE_ID,
         "PAY_AMOUNT": this.PAY_AMOUNT,
-        "TDS_AMOUNT": this.TDS_AMOUNT
+        "TDS_AMOUNT": this.TDS_AMOUNT,
+        "BANK_NAME": this.common.isValid(this.BANK_NAME) ? this.BANK_NAME : "",
+        "ACCOUNT_NUMBER": this.common.isValid(this.ACCOUNT_NUMBER) ? this.ACCOUNT_NUMBER : "",
+        "BANK_IFSC": this.common.isValid(this.BANK_IFSC) ? this.BANK_IFSC : "",
+        "PAN_NO": this.common.isValid(this.PAN_NO) ? this.PAN_NO : "",
+        "UTR_NO":this.common.isValid(this.UTR_NO) ? this.UTR_NO : "",
       }
     }
 
@@ -420,5 +475,90 @@ export class PaymentCmeComponent implements OnInit {
       this.PAYMENT_CME_LIST = [...this.SAMPEL_PAYMENT_CME_LIST];
     }
   }
+    exportAsXLSX(): void {
+    
+    this.exportAsExcelFile(this.REQUEST_CME_LIST, 'PAYMENT_PENDING_LIST');
+  }
 
+    public exportAsExcelFile(json: any[], excelFileName: string): void {
+  
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+      console.log('worksheet', worksheet);
+      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+      this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+  
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+
+       PANFlag:boolean=false
+isValidPanCardNo() {
+  console.log('Inside PAN validation');
+
+  // PAN format: 5 uppercase letters, 4 digits, 1 uppercase letter
+  // let regex = new RegExp(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/);
+const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  // return panRegex.test(pan.toUpperCase());
+  // Check if the PAN number is valid
+   if(this.PAN_NO=='' || this.PAN_NO==null){
+     this.PANFlag = false;
+     return false;
+   }
+
+
+  if (panRegex.test(this.PAN_NO)) {
+    this.PANFlag = false;
+    console.log('Valid PAN');
+    return true;
+  } else {
+    this.PANFlag = true;
+    console.log('Invalid PAN');
+    return false;
+  }
+}
+
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+ ifscFlag: boolean = false
+    isValid_IFSC_Code() {
+    console.log('insdie');
+    if(this.BANK_IFSC==null || this.BANK_IFSC==''){
+     this.ifscFlag=false;
+     return false
+    }
+   
+    let regex = new RegExp(/^[A-Z]{4}0[A-Z0-9]{6}$/);
+    this.ifscFlag = false
+ 
+    if (regex.test(this.BANK_IFSC) == true) {
+      this.ifscFlag = false
+      console.log(' this.ifscFlag1')
+      return true;
+    }
+    else {
+      this.ifscFlag = true
+      console.log(' this.ifscFlag2')
+      return false;
+
+    }
+
+
+
+  }
+  
 }

@@ -23,7 +23,132 @@
 <div class="container-fluid ">
     <div class="card">
         <div class="card-body">
-            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>From</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="periodList1" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="FROM_PERIOD" [filter]="true"   (onChange)="onPeriodChange($event)" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>To</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="filteredPeriodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="TO_PERIOD"  [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                     placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Role </label>
+                            <div>
+                                <p-dropdown [options]="rolelist" appendTo="body" optionLabel="SALESROLE_NAME"  [(ngModel)]="ROLE_ID" [filter]="true" filterBy="SALESROLE_NAME" [ngModelOptions]="{standalone: true}"
+                                placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-6 col-lg-3 p-0">
+                        <div class="buttonBox mt-4">
+                            <button *ngIf="!isLoaded" type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
+                            </button>
+                            <button *ngIf="isLoaded"  type="submit" class="btn-primary viewButton mr-2">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>Loading...
+                            </button>
+                            <!-- <button   type="submit" class="btn-primary viewButton mr-2" (click)="exportExcel()">
+                                <i class="fa fa-upload mr-2" aria-hidden="true"></i>Download
+                            </button> -->
+
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-2">
+                            <label>Key Figure</label>
+                            <div>
+                                <p-dropdown [options]="keyFigureList" appendTo="body" optionLabel="NAME"  [(ngModel)]="keyFigure"  [filter]="true" filterBy="NAME"  [ngModelOptions]="{standalone: true}"
+                                    placeholder="Please Select...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                             <hr class="hrStyle">
+                           
+                <div class="row">
+    <div class="card">
+                          <p-table [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList" responsiveLayout="scroll" [paginator]="true"  class="prime-table"
+                        [showCurrentPageReport]="true"  [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"  [totalRecords]="totalRecords"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [autoLayout]="true" (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true"> 
+                                    <!-- <ng-template pTemplate="caption">
+                                        <div style="text-align: right">
+                                          
+                                            <span class="p-input-icon-right ml-auto">
+                                              <i class="pi pi-search" ></i>
+                                              <input pInputText type="text" size="30" class="form-control" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                          </span>
+                                        </div>
+                                    </ng-template> -->
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                           
+                                            <th style="width:180px ;" *ngFor="let col of columns" [ngClass]="{'employee-code-header': col.Headers === 'EMPLOYEE'}">
+                                                {{col.Headers}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                        <tr>
+                                            <td style="width:180px" *ngFor="let col of columns" [ngClass]="{'employee-code-header': col.Headers === 'EMPLOYEE'}">
+                                                <a class="click" (click)="routeList(rowData)">
+                                                    {{rowData[col.Field]}}
+                                                  </a>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+
+    </div>
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Under</label>
+                            <div>
+                                <div>
+                                    <p-dropdown [options]="underEmployeeList" appendTo="body" optionLabel="USER_NAME" [(ngModel)]="underEmployee" [filter]="true" filterBy="USER_NAME" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select...">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Qty/Value</label>
+                            <div>
+                                <p-dropdown [options]="QTY_VALUE_LIST" appendTo="body" optionLabel="NAME" [(ngModel)]="QTY_VALUE" [filter]="true" filterBy="NAME" [ngModelOptions]="{standalone: true}"
+                                 placeholder="Please Select..." (onChange)="changeQtyValue()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+
+            <!-- <div class="col-md-12">
+
+
                 <div class="row">
                     <div class="col-md-12">
                       <div style="display: flex; justify-content: end; margin-bottom: 10px;">
@@ -40,9 +165,7 @@
                                 [globalFilterFields]="showGridData.SearchKey" styleClass="p-datatable-lg">
                                     <ng-template pTemplate="caption">
                                         <div style="text-align: right">
-                                            <!-- <i class="pi pi-search" style="margin:4px 4px 0 0"></i> -->
-                                            <!-- <input type="text" pInputText size="30" placeholder="Global Filter" class="form-control" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-                                            <i class="pi pi-search" style="margin:4px 4px 0 0"></i> -->
+                                          
                                             <span class="p-input-icon-right ml-auto">
                                               <i class="pi pi-search" ></i>
                                               <input pInputText type="text" size="30" class="form-control" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')">
@@ -70,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

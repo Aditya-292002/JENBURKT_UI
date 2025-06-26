@@ -44,6 +44,37 @@
 .required-field .search-dropdown {
     border-color: #E4002B !important;
 }
-.width-100{
-    width: 238px;
+.width-50{
+    width: 100px;
+}
+.width-150{
+    width: 170px;
+}
+.width-200{
+    width: 230px;
+}
+.rupee-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.rupee-symbol {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #495057;
+  pointer-events: none; /* allows clicks to pass through to input */
+}
+
+.rupee-input {
+  padding-left: 25px; /* make space for the ₹ icon */
+}
+.hq-updated {
+  background-color: #ffe6e6; /* light red, you can change */
+}
+:host ::ng-deep tr.hq-updated {
+  background-color: #ffe6e6 !important;
 }

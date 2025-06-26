@@ -21,7 +21,7 @@ export class RequestCmeComponent implements OnInit {
   CME_NO: any;
   CME_DATE: any = new Date();
   REQ_BY: any;
-  CME_REQUEST_BY:any;
+  CME_REQUEST_BY: any;
   HQ_CODE: any;
   CME_TYPE_ID: any;
   CAMP_TYPE_ID: any;
@@ -138,15 +138,16 @@ export class RequestCmeComponent implements OnInit {
   TOPIC_ID: any;
   visible: boolean = false;
   CME_REQ_PAYMENT_DETAILS: any;
-  vissiblepostpone:Boolean=false;
+  vissiblepostpone: Boolean = false;
   dataForBackup: { VENUE: any; FROM_DATE: any; TO_DATE: any; TIME_FROM: any; TIME_TO: any; };
-  vissibleCancel: boolean=false;
-  POST_CMESTATUS: any='0';
-  IS_CANCELLED:any='0'
-  Doctor_Name_To_pay_TO: boolean=false;
-  BANK_NAME:any
-  ACCOUNT_NUMBER:any
-  BANK_IFSC:any
+  vissibleCancel: boolean = false;
+  POST_CMESTATUS: any = '0';
+  IS_CANCELLED: any = '0'
+  Doctor_Name_To_pay_TO: boolean = false;
+  BANK_NAME: any
+  ACCOUNT_NUMBER: any
+  BANK_IFSC: any
+  PAN_NO: any;
 
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
@@ -232,16 +233,16 @@ export class RequestCmeComponent implements OnInit {
     //     "TOPIC_DESC": "Other"
     //   }
     // ]
-    
+
   }
   showDialog() {
-   // this.GETCMEREQUESTDATABYCMENO();
+    // this.GETCMEREQUESTDATABYCMENO();
     // let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = this.REQ_UPDATED_USER_DETAILS;
     // this.REQ_UPDATED_USER_DETAILS = this.transformData1(SAMPEL_CME_REQ_UPDATED_USER_DETAILS)
     console.log(' this.REQ_UPDATED_USER_DETAILS;', this.REQ_UPDATED_USER_DETAILS);
-    
+
     this.visible = true;
-}
+  }
 
   GETCMEMASTERLIST() {
     let data = {
@@ -250,7 +251,7 @@ export class RequestCmeComponent implements OnInit {
     this.isLoaded = true;
     this.http.postnew(this.url.GETCMEMASTERLIST, data).then(
       (res: any) => {
-      //   console.log('GETCMEMASTERLIST res ->' , res)
+        //   console.log('GETCMEMASTERLIST res ->' , res)
         this.HQ_CODE_LIST = res.HQ_CODE_LIST;
         this.CME_TYPE_LIST = res.CME_TYPE_LIST;
         this.CAMP_TYPE_LIST = res.CAMP_TYPE_LIST;
@@ -262,7 +263,7 @@ export class RequestCmeComponent implements OnInit {
         this.PROM_MAT_REQ_ITEM_LIST = res.ITEM_LIST;
         this.SPEAKER_SPECIALIZATION_LIST = res.DOCTOR_SPECIALIZATION_LIST;
         this.DIV_LIST = res.DIV_LIST;
-        this.TOPIC_LIST=res.TOPIC_LIST
+        this.TOPIC_LIST = res.TOPIC_LIST
         this.isLoaded = false;
       },
       error => {
@@ -300,11 +301,13 @@ export class RequestCmeComponent implements OnInit {
 
   CheckisWhomToPay(val: any) {
     if (val == '1') {
+      this.Doctor_Name_To_pay_TO = false
       this.IS_WHOM_TO_PAY_USER = true;
       this.IS_WHOM_TO_PAY_OTHERS = false;
       this.isWhomToPayView = 'U';
       this.WHOM_TO_PAY_USER_NAME = '';
     } else if (val == '0') {
+      this.Doctor_Name_To_pay_TO = true
       this.IS_WHOM_TO_PAY_USER = false;
       this.IS_WHOM_TO_PAY_OTHERS = true;
       this.isWhomToPayView = 'O';
@@ -617,28 +620,30 @@ export class RequestCmeComponent implements OnInit {
       this.isCampTypeView = true;
     } else {
       this.isCampTypeView = false;
-    } 
+    }
     if (id == 3 || id == 1) {
       this.isDocumentMandatory = true;
     } else {
       this.isDocumentMandatory = false;
     }
-    if(id==6 || id==7 || id==8){
-       this.Doctor_Name_To_pay_TO=true
-       this.CheckisWhomToPay('0')
-     //  this.IS_WHOM_TO_PAY_USER=false
+    if (id == 6 || id == 7 || id == 8) {
+      this.Doctor_Name_To_pay_TO = true
+      console.log('inside', this.Doctor_Name_To_pay_TO);
+      this.CheckisWhomToPay('0')
+      //  this.IS_WHOM_TO_PAY_USER=false
       // this.IS_WHOM_TO_PAY_OTHERS=true
-    }else{
-       this.Doctor_Name_To_pay_TO=false 
-        this.CheckisWhomToPay('1')
-       //  this.IS_WHOM_TO_PAY_OTHERS=false
-       //  this.IS_WHOM_TO_PAY_USER=true
+    } else {
+      this.Doctor_Name_To_pay_TO = false
+      console.log('outside', this.Doctor_Name_To_pay_TO);
+      this.CheckisWhomToPay('1')
+      //  this.IS_WHOM_TO_PAY_OTHERS=false
+      //  this.IS_WHOM_TO_PAY_USER=true
     }
   }
 
   getValidDate() {
     this.Today_cme_to_date = new Date(this.CME_DATE_FROM);
-    
+
   }
 
   GETCMEDOCTORLIST(event: any) {
@@ -666,10 +671,13 @@ export class RequestCmeComponent implements OnInit {
     //   this.toastrService.error('Enter a CME No')
     //   return
     // }
-       if( this.isWhomToPayView == 'O' && this.Doctor_Name_To_pay_TO){
-   
-         this.WHOM_TO_PAY_USER_NAME=this.SPEAKER_NAME
-         }
+    if (this.isWhomToPayView == 'O' && this.Doctor_Name_To_pay_TO) {
+
+      this.WHOM_TO_PAY_USER_NAME = this.SPEAKER_NAME
+    }
+    if (this.InstName == true) {
+      this.WHOM_TO_PAY_USER_NAME = this.INST_NAME
+    }
 
     if (!this.common.isValid(this.CME_DATE)) {
       this.toastrService.error('Select a Date')
@@ -700,14 +708,14 @@ export class RequestCmeComponent implements OnInit {
       }
     }
     // if(this.TOPIC_ID==0 ){
-      console.log('this.TOPIC',this.TOPIC);
-      
-      if (this.TOPIC_ID==0 && !this.common.isValid(this.TOPIC)) {
-        this.toastrService.error('Enter a Topic')
-        return
-      }
-  //  }
-    if (this.TOPIC_ID!=0  && !this.common.isValid(this.TOPIC_ID)) {
+    console.log('this.TOPIC', this.TOPIC);
+
+    if (this.TOPIC_ID == 0 && !this.common.isValid(this.TOPIC)) {
+      this.toastrService.error('Enter a Topic')
+      return
+    }
+    //  }
+    if (this.TOPIC_ID != 0 && !this.common.isValid(this.TOPIC_ID)) {
       this.toastrService.error('Please select a Topic')
       return
     }
@@ -755,25 +763,38 @@ export class RequestCmeComponent implements OnInit {
       this.toastrService.error('Select a Pay By')
       return
     }
-     if (this.IS_WHOM_TO_PAY_OTHERS == true) {
-    if (!this.common.isValid(this.BANK_IFSC)) {
-      this.toastrService.error('Enter a Bank IFSC Code')
-      return
+    if (this.IS_WHOM_TO_PAY_OTHERS == true) {
+      if (!this.common.isValid(this.BANK_IFSC)) {
+        this.toastrService.error('Enter a Bank IFSC Code')
+        return
+      }
     }
-  }
-      if (this.IS_WHOM_TO_PAY_OTHERS == true) {
+    if (this.IS_WHOM_TO_PAY_OTHERS == true) {
       if (!this.common.isValid(this.BANK_NAME)) {
-      this.toastrService.error('Enter a Bank Name')
-      return
+        this.toastrService.error('Enter a Bank Name')
+        return
+      }
     }
-  }
 
-        if (this.IS_WHOM_TO_PAY_OTHERS == true) {
-      if (!this.common.isValid(this.ACCOUNT_NUMBER)) {
-      this.toastrService.error('Enter a Bank Account Number')
-      return
+    if (this.IS_WHOM_TO_PAY_OTHERS == true) {
+      if (!this.common.isValid(this.PAN_NO)) {
+        this.toastrService.error('Enter a Pan Number')
+        return
+      }
     }
-  }
+
+    if (this.IS_WHOM_TO_PAY_OTHERS == true) {
+      if (!this.common.isValid(this.ACCOUNT_NUMBER)) {
+        this.toastrService.error('Enter a Bank Account Number')
+        return
+      }
+    }
+    if (this.IS_WHOM_TO_PAY_OTHERS == true) {
+      if (!this.common.isValid(this.PAN_NO)) {
+        this.toastrService.error('Enter a PAN Number')
+        return
+      }
+    }
 
     if (this.InstName == false) {
       if (this.IS_WHOM_TO_PAY_USER == true) {
@@ -869,9 +890,9 @@ export class RequestCmeComponent implements OnInit {
 
 
     this.UPLOAD_DOCUMENT_LIST = this.UPLOAD_DOCUMENT_LIST.map((item, index) => ({ ...item, SR_NO: index + 1, }));
-     let cme_date_from = this.datePipe.transform(this.CME_DATE_FROM, "yyyy-MM-dd");
+    let cme_date_from = this.datePipe.transform(this.CME_DATE_FROM, "yyyy-MM-dd");
     let cme_date_to = this.datePipe.transform(this.CME_TO_DATE, "yyyy-MM-dd");
-   // let cme_date = this.datePipe.transform(this.CME_DATE, "yyyy-MM-dd");
+    // let cme_date = this.datePipe.transform(this.CME_DATE, "yyyy-MM-dd");
     let data = {
 
       "USER_ID": this.userInfo.USER_ID,
@@ -894,7 +915,7 @@ export class RequestCmeComponent implements OnInit {
         "SPEAKER_QUALIFICATION": this.common.isValid(this.SPEAKER_QUALIFICATION) ? this.SPEAKER_QUALIFICATION : "",
         "SPEAKER_SPECIALIZATION": this.common.isValid(this.SPEAKER_SPECIALIZATION_ID) ? this.SPEAKER_SPECIALIZATION_ID : 0,
         "VENUE": this.common.isValid(this.VENUE) ? this.VENUE : "",
-        "DATE_FROM":cme_date_from,
+        "DATE_FROM": cme_date_from,
         "DATE_TO": cme_date_to,
         "TIME_FROM": this.CME_TIME_FROM,
         "TIME_TO": this.CME_TO_TIME,
@@ -913,8 +934,9 @@ export class RequestCmeComponent implements OnInit {
         "BANK_NAME": this.common.isValid(this.BANK_NAME) ? this.BANK_NAME : "",
         "ACCOUNT_NUMBER": this.common.isValid(this.ACCOUNT_NUMBER) ? this.ACCOUNT_NUMBER : "",
         "BANK_IFSC": this.common.isValid(this.BANK_IFSC) ? this.BANK_IFSC : "",
+        "PAN_NO": this.common.isValid(this.PAN_NO) ? this.PAN_NO : "",
       }],
-      
+
       ATTENDING_TEAM_DETAILS: this.AttendingDropdowns,
       BRANDS_DETAILS: this.BrandDropdowns,
       PROMOTION_MATERIAL_REQUEST_DETAILS: this.PromotionalMaterialReq,
@@ -934,11 +956,11 @@ export class RequestCmeComponent implements OnInit {
     // formData.append('data',JSON.stringify(data))
 
     // console.log('data ->' ,JSON.stringify(data))
-   //  return
- //   this.isLoaded = true;
-   
-   console.log('this.CME_REQUEST_LIST',data);
-   
+    //  return
+    //   this.isLoaded = true;
+
+    console.log('this.CME_REQUEST_LIST', data);
+
     //return 
     this.http.postnew(this.url.SAVECMEREQUEST, data).then(
       (res: any) => {
@@ -989,7 +1011,7 @@ export class RequestCmeComponent implements OnInit {
     this.isAddvanceView = false;
     this.isSlideDeckReqd = false;
     this.INSTITUTION = false;
-    this.DROPDOWNFLAG=false;
+    this.DROPDOWNFLAG = false;
   }
 
   async GETCMEREQUESTDATABYCMENO() {
@@ -998,7 +1020,7 @@ export class RequestCmeComponent implements OnInit {
       "CME_ID": this.CME_ID,
     }
     this.isLoaded = true;
-   await this.http.postnew(this.url.GETCMEREQUESTDATABYCMENO, data).then((res: any) => {
+    await this.http.postnew(this.url.GETCMEREQUESTDATABYCMENO, data).then((res: any) => {
       //  console.log('step-2 ')
       this.datalist[0] = res
       this.CME_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
@@ -1013,7 +1035,7 @@ export class RequestCmeComponent implements OnInit {
       this.REQ_BY_USER_NAME = res.CME_REQ_DETAILS[0].REQ_BY_USER_NAME;
       this.INST_NAME = res.CME_REQ_DETAILS[0].INST_NAME;
       this.TOPIC = res.CME_REQ_DETAILS[0].TOPIC;
-      this.TOPIC_ID=res.CME_REQ_DETAILS[0].TOPIC_ID;
+      this.TOPIC_ID = res.CME_REQ_DETAILS[0].TOPIC_ID;
       this.SPEAKER_NAME = res.CME_REQ_DETAILS[0].SPK_NAME;
       this.SPEAKER_QUALIFICATION = res.CME_REQ_DETAILS[0].SPK_QUALIFICATION;
       this.SPEAKER_SPECIALIZATION_ID = res.CME_REQ_DETAILS[0].SPK_SPECIALIZATION;
@@ -1040,33 +1062,34 @@ export class RequestCmeComponent implements OnInit {
       this.BrandDropdowns = res.CME_BRANDS_DETAILS;
       this.PromotionalMaterialReq = res.CME_PROM_MATERIAL_REQ_DETAILS;
       this.UPLOAD_DOCUMENT_LIST = res.CME_DOCUMENT_DETAILS;
-      this.BANK_NAME=res.CME_REQ_DETAILS[0].BANK_NAME;
-      this.BANK_IFSC=res.CME_REQ_DETAILS[0].BANK_IFSC;
-      this.ACCOUNT_NUMBER=res.CME_REQ_DETAILS[0].ACCOUNT_NUMBER;
-      let SAMPEL_CME_REQ_UPDATED_USER_DETAILS =res.CME_REQ_UPDATED_USER_DETAILS;
+      this.BANK_NAME = res.CME_REQ_DETAILS[0].BANK_NAME;
+      this.BANK_IFSC = res.CME_REQ_DETAILS[0].BANK_IFSC;
+      this.PAN_NO = res.CME_REQ_DETAILS[0].PAN_NO;
+      this.ACCOUNT_NUMBER = res.CME_REQ_DETAILS[0].ACCOUNT_NUMBER;
+      let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = res.CME_REQ_UPDATED_USER_DETAILS;
       this.REQ_UPDATED_USER_DETAILS = this.transformData1(SAMPEL_CME_REQ_UPDATED_USER_DETAILS)
-      console.log('REQ_UPDATED_USER_DETAILS',this.REQ_UPDATED_USER_DETAILS);
-   
+      console.log('REQ_UPDATED_USER_DETAILS', this.REQ_UPDATED_USER_DETAILS);
+
       this.REQ_UPDATED_USER_DETAILS = this.REQ_UPDATED_USER_DETAILS.filter(
-        element => element.userName !== "" && element.userName !== null && element.status !==""
+        element => element.userName !== "" && element.userName !== null && element.status !== ""
       );
-      
-      this.CME_REQ_PAYMENT_DETAILS=res.CME_REQ_PAYMENT_DETAILS
+
+      this.CME_REQ_PAYMENT_DETAILS = res.CME_REQ_PAYMENT_DETAILS
       this.POST_CMESTATUS = res?.CME_REQ_DETAILS[0]?.POST_CMESTATUS;
       this.CME_REQUEST_BY = res?.CME_REQ_DETAILS[0]?.REQ_BY;
-      this.IS_CANCELLED=res?.CME_REQ_DETAILS[0]?.IS_CANCELLED
-    //  if( this.POST_CMESTATUS=='1'){
-    //   if(this.REQ_BY_USER_ID== this.CME_REQ_PAYMENT_DETAILS.REQ_BY){
-    //         this.POST_CMESTATUS=='0'
-    //   }
-    //  }
-     //this.REQ_BY_USER_ID = JSON.parse(this.authService.getUserDetail());
-     
-     console.log(this.CME_REQUEST_BY == this.REQ_BY_USER_ID,this.POST_CMESTATUS,"this.POST_CMESTATUS")
-      if(this.TOPIC_ID==0){
-        this.DROPDOWNFLAG=true;
-      }else{
-        this.DROPDOWNFLAG=false;
+      this.IS_CANCELLED = res?.CME_REQ_DETAILS[0]?.IS_CANCELLED
+      //  if( this.POST_CMESTATUS=='1'){
+      //   if(this.REQ_BY_USER_ID== this.CME_REQ_PAYMENT_DETAILS.REQ_BY){
+      //         this.POST_CMESTATUS=='0'
+      //   }
+      //  }
+      //this.REQ_BY_USER_ID = JSON.parse(this.authService.getUserDetail());
+
+      console.log(this.CME_REQUEST_BY == this.REQ_BY_USER_ID, this.POST_CMESTATUS, "this.POST_CMESTATUS")
+      if (this.TOPIC_ID == 0) {
+        this.DROPDOWNFLAG = true;
+      } else {
+        this.DROPDOWNFLAG = false;
       }
       if (this.InstName == true) {
         this.INSTITUTION = true;
@@ -1116,8 +1139,8 @@ export class RequestCmeComponent implements OnInit {
   }
 
 
-async  APPROVECMEREQUEST(val: any) {
- //   console.log('APProval for individual');
+  async APPROVECMEREQUEST(val: any) {
+    //   console.log('APProval for individual');
 
     if (val == 1) {
       var STATUS = 1
@@ -1137,7 +1160,7 @@ async  APPROVECMEREQUEST(val: any) {
       "USER_ID": this.userInfo.USER_ID,
       "STATUS": STATUS,
       "REMARKS": this.REQUEST_REJECT_REMARKS,
-      "CME_NO":this.CME_NO
+      "CME_NO": this.CME_NO
     }
 
     let data = {
@@ -1146,36 +1169,36 @@ async  APPROVECMEREQUEST(val: any) {
       APPROVAL_DETAILS: this.CmeApproveData,
       datalist: this.datalist
     }
-  //  console.log("data-->",this.CmeApproveData);
-  
+    //  console.log("data-->",this.CmeApproveData);
 
-  //  console.log('data after click ->' ,JSON.stringify( this.datalist))
-     
-    
+
+    //  console.log('data after click ->' ,JSON.stringify( this.datalist))
+
+
     //return
     this.isLoaded = true;
-     //return
- await  this.http.postnew(this.url.APPROVECMEREQUEST, data).then(async (res: any) => {
-      
+    //return
+    await this.http.postnew(this.url.APPROVECMEREQUEST, data).then(async (res: any) => {
+
       if (res.FLAG == true) {
-        if(this.userInfo.SALESROLE_ID==6){
-         // console.log('step-1')
-         await this.GETCMEREQUESTDATABYCMENO()
-       //  console.log('step-3 ')
-         
-         await this.GetCreateBase64(this.datalist);
-        // console.log('step-5 ')
-         this.toastrService.success(res.MSG);
-         this.CmeApproveData = [];
-         this.router.navigate(["/requestapprovalcme"]);
-        }else{
+        if (this.userInfo.SALESROLE_ID == 6) {
+          // console.log('step-1')
+          await this.GETCMEREQUESTDATABYCMENO()
+          //  console.log('step-3 ')
+
+          await this.GetCreateBase64(this.datalist);
+          // console.log('step-5 ')
           this.toastrService.success(res.MSG);
           this.CmeApproveData = [];
           this.router.navigate(["/requestapprovalcme"]);
-          this.isLoaded=false;
+        } else {
+          this.toastrService.success(res.MSG);
+          this.CmeApproveData = [];
+          this.router.navigate(["/requestapprovalcme"]);
+          this.isLoaded = false;
         }
-      //  this.GetCreateBase64(this.datalist);
-       
+        //  this.GetCreateBase64(this.datalist);
+
       } else if (res.FLAG == false) {
         this.toastrService.error(res.MSG);
       }
@@ -1281,23 +1304,23 @@ async  APPROVECMEREQUEST(val: any) {
   }
 
   formatDateBasedOnCmeTimeFrom(time: any) {
- if(time !=null){
-  if (time.length <= 8) {
-    this.CME_TIME_FROM = time;
-  } else if (time.length > 8) {
-    this.CME_TIME_FROM = this.datePipe.transform(time, 'hh:mm a');
-  }
- }
+    if (time != null) {
+      if (time.length <= 8) {
+        this.CME_TIME_FROM = time;
+      } else if (time.length > 8) {
+        this.CME_TIME_FROM = this.datePipe.transform(time, 'hh:mm a');
+      }
+    }
   }
 
   formatDateBasedOnCmeToTimeFrom(time: any) {
-    if(time !=null){
-    if (time.length <= 8) {
-      this.CME_TO_TIME = time;
-    } else if (time.length > 8) {
-      this.CME_TO_TIME = this.datePipe.transform(time, 'hh:mm a');
+    if (time != null) {
+      if (time.length <= 8) {
+        this.CME_TO_TIME = time;
+      } else if (time.length > 8) {
+        this.CME_TO_TIME = this.datePipe.transform(time, 'hh:mm a');
+      }
     }
-  }
   }
 
   BACKTOAPPROVALLIST() {
@@ -1310,20 +1333,20 @@ async  APPROVECMEREQUEST(val: any) {
 
   async GetCreateBase64(data: any) {
     //console.log('data ->', data)
-  //  console.log('step-4 ')
+    //  console.log('step-4 ')
     this.GETCMEMASTERLIST();
-    
+
     for (let index = 0; index < data.length; index++) {
-    //  console.log('inside loop', index);
+      //  console.log('inside loop', index);
 
       // this.CME_DATE = this.datePipe.transform(data[index].CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
       // this.CME_ID = data[index].CME_REQ_DETAILS[0].CME_ID;
       //   this.CME_NO =data[index].CME_REQ_DETAILS[0].CME_NO;
       //   this.HQ_CODE =data[index].CME_REQ_DETAILS[0].HQ_CODE;
 
-        this.HQ_DESC = data[index].CME_REQ_DETAILS[0]?.HQ_DESC;
-        this.DIVISION_NAME = data[index].CME_REQ_DETAILS[0]?.DIVISION_NAME;
-        //console.log(this.HQ_DESC,"HQ_DESC");
+      this.HQ_DESC = data[index].CME_REQ_DETAILS[0]?.HQ_DESC;
+      this.DIVISION_NAME = data[index].CME_REQ_DETAILS[0]?.DIVISION_NAME;
+      //console.log(this.HQ_DESC,"HQ_DESC");
       //   this.HQ_DESC =data[index].CME_REQ_DETAILS[0].HQ_DESC;
       //   this.DIVISION_CODE =data[index].CME_REQ_DETAILS[0].DIVISION_CODE;
       //   this.DIVISION_NAME =data[index].CME_REQ_DETAILS[0].DIVISION_NAME;
@@ -1354,15 +1377,15 @@ async  APPROVECMEREQUEST(val: any) {
       //    this.AttendingDropdowns = data[0].CME_ATTENDING_DETAILS;
       //    this.BrandDropdowns = data[0].CME_BRANDS_DETAILS;
       //   this.PromotionalMaterialReq = data[0].CME_PROM_MATERIAL_REQ_DETAILS;
-         this.UPLOAD_DOCUMENT_LIST =data[index].CME_DOCUMENT_DETAILS;
-        let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = data[0].CME_REQ_UPDATED_USER_DETAILS;
-            this.REQ_UPDATED_USER_DETAILS = this.transformData(SAMPEL_CME_REQ_UPDATED_USER_DETAILS);
-     
-        this.CME_TYPE_LIST.forEach((element: any) => {
-          if (this.CME_TYPE_ID == element.CME_TYPE_ID) {
-            this.CME_DESC = element.CME_DESC;
-          }
-        })
+      this.UPLOAD_DOCUMENT_LIST = data[index].CME_DOCUMENT_DETAILS;
+      let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = data[0].CME_REQ_UPDATED_USER_DETAILS;
+      this.REQ_UPDATED_USER_DETAILS = this.transformData(SAMPEL_CME_REQ_UPDATED_USER_DETAILS);
+
+      this.CME_TYPE_LIST.forEach((element: any) => {
+        if (this.CME_TYPE_ID == element.CME_TYPE_ID) {
+          this.CME_DESC = element.CME_DESC;
+        }
+      })
       this.SPEAKER_SPECIALIZATION_LIST.forEach((element: any) => {
         if (this.SPEAKER_SPECIALIZATION_ID == element.SPL_ID) {
           this.SPEAKER_SPECIALIZATION_NAME = element.SPL_DESCRIPTION;
@@ -1401,8 +1424,8 @@ async  APPROVECMEREQUEST(val: any) {
         })
       })
       //console.log('this.BrandDropdowns',this.BrandDropdowns);
-    //  console.log('BRAND_LIST',this.BRAND_LIST);
-      
+      //  console.log('BRAND_LIST',this.BRAND_LIST);
+
       this.BrandDropdowns.forEach((element: any) => {
         this.BRANDS = [];
         this.BRAND_LIST.forEach((product: any) => {
@@ -1436,15 +1459,15 @@ async  APPROVECMEREQUEST(val: any) {
       //   this.convertToPdf(this.CME_NO)
       // }, 2000);
       await new Promise(resolve => setTimeout(resolve, 2000));  // Wait for 2 seconds before calling the function
-    //  console.log('Converting to PDF for CME_NO:', this.CME_NO);
+      //  console.log('Converting to PDF for CME_NO:', this.CME_NO);
       await this.convertToPdf(this.CME_NO);  // Ensure this is awaited if it's async
     }
   }
   transformData(data: any): any[] {
-   
-    
-    if(data!=undefined){
-     // console.log('data transformData',data);
+
+
+    if (data != undefined) {
+      // console.log('data transformData',data);
       return [
         // {
         //   role: 'RSM',
@@ -1471,10 +1494,10 @@ async  APPROVECMEREQUEST(val: any) {
           updatedOn: data[0].VP_UPDATED_ON
         }
       ];
-    }else{
-      return[];
+    } else {
+      return [];
     }
- 
+
   }
 
   convertToPdf(id: any) {
@@ -1490,7 +1513,7 @@ async  APPROVECMEREQUEST(val: any) {
     //for (let index = 0; index < id.length; index++) {
     var html = this.DownloadPDF.nativeElement.innerHTML
     html = '<html>' + html + '</html>';
-  //  console.log('html ->', JSON.stringify(html))
+    //  console.log('html ->', JSON.stringify(html))
     //html = html.replace("{{CME_NO}}", this.CME_NO);
     //  html = html.replace("{{CME_DATE}}", this.CME_DATE);
     // html = html.replace("{{Message}}", message);
@@ -1503,7 +1526,7 @@ async  APPROVECMEREQUEST(val: any) {
     // const body = {
     //   base64: this.base64PdfString
     // };
- //   console.log('post_data ->', post_data)
+    //   console.log('post_data ->', post_data)
     // return
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -1551,16 +1574,16 @@ async  APPROVECMEREQUEST(val: any) {
     // );
 
   }
-  changeTOPIC(TOPIC_ID:any){
-    if(TOPIC_ID==0){
-      this.DROPDOWNFLAG=true
-     // this.TOPIC=''
-    }else if(TOPIC_ID!==0){
-      this.DROPDOWNFLAG=false
-       this.TOPIC=''
+  changeTOPIC(TOPIC_ID: any) {
+    if (TOPIC_ID == 0) {
+      this.DROPDOWNFLAG = true
+      // this.TOPIC=''
+    } else if (TOPIC_ID !== 0) {
+      this.DROPDOWNFLAG = false
+      this.TOPIC = ''
     }
- //   console.log('value',TOPIC_ID,this.DROPDOWNFLAG);
-    
+    //   console.log('value',TOPIC_ID,this.DROPDOWNFLAG);
+
   }
   transformData1(data: any): any[] {
     return [
@@ -1569,129 +1592,129 @@ async  APPROVECMEREQUEST(val: any) {
         userName: data[0].RSM_USER_NAME,
         updatedBy: data[0].RSM_UPDATED_BY,
         updatedOn: data[0].RSM_UPDATED_ON,
-        status:data[0].RSM_STATUS== 1? 'Approved' : 'Rejected'
+        status: data[0].RSM_STATUS == 1 ? 'Approved' : 'Rejected'
       },
       {
         role: 'SM',
         userName: data[0].SM_USER_NAME,
         updatedBy: data[0].SM_UPDATED_BY,
         updatedOn: data[0].SM_UPDATED_ON,
-        status:data[0].SM_STATUS== 1? 'Approved' : 'Rejected'
+        status: data[0].SM_STATUS == 1 ? 'Approved' : 'Rejected'
       },
       {
         role: 'PMT',
         userName: data[0].PMT_USER_NAME,
         updatedBy: data[0].PMT_UPDATED_BY,
         updatedOn: data[0].PMT_UPDATED_ON,
-        status:data[0].PMT_STATUS== 1? 'Approved' : 'Rejected'
+        status: data[0].PMT_STATUS == 1 ? 'Approved' : 'Rejected'
       },
       {
         role: 'VP',
         userName: data[0].VP_USER_NAME,
         updatedBy: data[0].VP_UPDATED_BY,
         updatedOn: data[0].VP_UPDATED_ON,
-        status:data[0].VP_STATUS== 1? 'Approved' : 'Rejected'
+        status: data[0].VP_STATUS == 1 ? 'Approved' : 'Rejected'
       },
       {
         role: 'RSM',
         userName: data[0]?.CANCELLED_BY,
         updatedBy: data[0]?.CANCELLED_BY,
         updatedOn: data[0]?.CANCELLED_ON,
-        status:data[0]?.CANCEL_STATUS == 1? 'Cancelled' : ''
+        status: data[0]?.CANCEL_STATUS == 1 ? 'Cancelled' : ''
       }
     ];
   }
 
-  postpone(){
-    this.vissiblepostpone=true;
-    this.dataForBackup={
-      "VENUE":this.VENUE,
-      "FROM_DATE"	:this.CME_DATE_FROM,
-      "TO_DATE":this.CME_TO_DATE,
-      "TIME_FROM":this.CME_TIME_FROM,
-      "TIME_TO":this.CME_TO_TIME
+  postpone() {
+    this.vissiblepostpone = true;
+    this.dataForBackup = {
+      "VENUE": this.VENUE,
+      "FROM_DATE": this.CME_DATE_FROM,
+      "TO_DATE": this.CME_TO_DATE,
+      "TIME_FROM": this.CME_TIME_FROM,
+      "TIME_TO": this.CME_TO_TIME
     }
-    console.log('this.dataForBackup',this.dataForBackup);
-    
+    console.log('this.dataForBackup', this.dataForBackup);
+
     //this.updatePostPoneCmeRequest()
   }
 
-  cancelForPostpone(){
-    this.VENUE=this.dataForBackup.VENUE
-    this.CME_DATE_FROM=this.dataForBackup.FROM_DATE
-    this.CME_TO_DATE=this.dataForBackup.TO_DATE
-    this.CME_TIME_FROM=this.dataForBackup.TIME_FROM
-    this.CME_TO_TIME=this.dataForBackup.TIME_TO
-    this.vissiblepostpone=false;
+  cancelForPostpone() {
+    this.VENUE = this.dataForBackup.VENUE
+    this.CME_DATE_FROM = this.dataForBackup.FROM_DATE
+    this.CME_TO_DATE = this.dataForBackup.TO_DATE
+    this.CME_TIME_FROM = this.dataForBackup.TIME_FROM
+    this.CME_TO_TIME = this.dataForBackup.TIME_TO
+    this.vissiblepostpone = false;
   }
-  updatePostPoneCmeRequest(num:any){
+  updatePostPoneCmeRequest(num: any) {
     let datefrom = this.convertDate(this.CME_DATE_FROM);
     let dateto = this.convertDate(this.CME_TO_DATE);
 
-    let data={
+    let data = {
       "CME_ID": this.CME_ID,
       "USER_ID": this.userInfo.USER_ID,
-      "MODE":num==1?'POSTPONED':'CANCEL',
-      "VENUE":this.VENUE,
-      "FROM_DATE"	:datefrom,
+      "MODE": num == 1 ? 'POSTPONED' : 'CANCEL',
+      "VENUE": this.VENUE,
+      "FROM_DATE": datefrom,
       "TO_DATE": dateto,
-      "TIME_FROM":this.CME_TIME_FROM,
-      "TIME_TO":this.CME_TO_TIME
+      "TIME_FROM": this.CME_TIME_FROM,
+      "TIME_TO": this.CME_TO_TIME
     }
     this.http.postnew(this.url.UPDATEPOSTPONECMEREQUEST, data).then(
       (res: any) => {
         // console.log('res ->' , res)
         if (res.FLAG == true) {
           this.toastrService.success(res.MSG);
-          this.vissibleCancel=false;
+          this.vissibleCancel = false;
           this.router.navigate(["/requestcmelist"]);
         } else if (res.FLAG == false) {
           this.toastrService.error(res.MSG);
-          this.vissibleCancel=false;
+          this.vissibleCancel = false;
         }
       },
       error => {
         console.log(error);
         this.toastrService.error("Oops, Something went wrong.");
-        this.vissibleCancel=false;
+        this.vissibleCancel = false;
       }
-    );  
+    );
 
   }
   convertDate(inputDate: string): string | null {
     let date: Date;
 
-  // Check if the input date is in dd-MM-yyyy format
-  const ddMMyyyyRegex = /^\d{2}-\d{2}-\d{4}$/;
-  if (ddMMyyyyRegex.test(inputDate)) {
-    const [day, month, year] = inputDate.split('-').map(Number);
-    date = new Date(year, month - 1, day); // Create a date object
-  } else {
-    // Assume input is a valid JavaScript date string
-    date = new Date(inputDate);
+    // Check if the input date is in dd-MM-yyyy format
+    const ddMMyyyyRegex = /^\d{2}-\d{2}-\d{4}$/;
+    if (ddMMyyyyRegex.test(inputDate)) {
+      const [day, month, year] = inputDate.split('-').map(Number);
+      date = new Date(year, month - 1, day); // Create a date object
+    } else {
+      // Assume input is a valid JavaScript date string
+      date = new Date(inputDate);
+    }
+
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      return null; // Invalid date
+    }
+
+    // Format to 'yyyy-MM-dd'
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
-  // Check if the date is valid
-  if (isNaN(date.getTime())) {
-    return null; // Invalid date
+  cancel() {
+    this.vissibleCancel = true;
+  }
+  cancelForCancel() {
+    this.vissibleCancel = false;
   }
 
-  // Format to 'yyyy-MM-dd'
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
-  const day = String(date.getDate()).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-  }
-
-  cancel(){
-    this.vissibleCancel=true;
-  }
-  cancelForCancel(){
-    this.vissibleCancel=false;
-  }
-
-    keyPressNumbers(event) {
+  keyPressNumbers(event) {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
     if ((charCode < 48 || charCode > 57)) {
@@ -1701,4 +1724,80 @@ async  APPROVECMEREQUEST(val: any) {
       return true;
     }
   }
+  //added by hemant 9 jun 2025
+  getpaymentList() {
+    this.router.navigate(["/paymentapprovedlist"]);
+  }
+
+  keyPressIFSC(event: any) {
+    var charCode = event.which ? event.which : event.keyCode;
+    var charStr = String.fromCharCode(charCode);
+
+    // Allow only uppercase letters (A-Z) and digits (0-9)
+    var regex = /^[A-Z0-9]$/;
+    console.log('charStr', charStr);
+
+    if (!regex.test(charStr)) {
+      //event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+  ifscFlag: boolean = false
+  isValid_IFSC_Code() {
+    console.log('insdie');
+    if(this.BANK_IFSC==null || this.BANK_IFSC==''){
+     this.ifscFlag=false;
+     return false
+    }
+   
+    let regex = new RegExp(/^[A-Z]{4}0[A-Z0-9]{6}$/);
+    this.ifscFlag = false
+ 
+    if (regex.test(this.BANK_IFSC) == true) {
+      this.ifscFlag = false
+      console.log(' this.ifscFlag1')
+      return true;
+    }
+    else {
+      this.ifscFlag = true
+      console.log(' this.ifscFlag2')
+      return false;
+
+    }
+
+
+
+  }
+   PANFlag:boolean=false
+isValidPanCardNo() {
+  console.log('Inside PAN validation');
+
+  // PAN format: 5 uppercase letters, 4 digits, 1 uppercase letter
+  // let regex = new RegExp(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/);
+const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  // return panRegex.test(pan.toUpperCase());
+  // Check if the PAN number is valid
+   if(this.PAN_NO=='' || this.PAN_NO==null){
+     this.PANFlag = false;
+     return false;
+   }
+
+
+  if (panRegex.test(this.PAN_NO)) {
+    this.PANFlag = false;
+    console.log('Valid PAN');
+    return true;
+  } else {
+    this.PANFlag = true;
+    console.log('Invalid PAN');
+    return false;
+  }
+}
+
+
+
+
+
+
 }

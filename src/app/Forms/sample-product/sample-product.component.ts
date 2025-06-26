@@ -13,12 +13,12 @@ export class SampleProductComponent implements OnInit {
   LINKFG_LIST = [];
   SAMPLE_LIST = [{ "SAMPLE_CODE": 1, "SAMPLE_DESC": "Yes" }, { "SAMPLE_CODE": 0, "SAMPLE_DESC": "No" }];
   SAMPLE_PRODUCT_LIST = [{ "FROM": 0, "TO": 0 }]
-  SAMPLE_CODE: any = 1;
-  LINKFG_CODE: any = [];
+  SAMPLE_CODE:any = 1;
+  LINKFG_CODE: any;
   PRODUCT_CODE: any;
   DESCRIPTION: any;
-  HSM_CODE: any;
-  isShowSampleProductRangeList: boolean = false;
+  HSM_CODE:any;
+  isShowSampleProductRangeList:boolean=false;
   PREDEFINE_LIST_RANGE: any = []
   UNIT_INFO: any;
   PRODUCT_LIST: any = [];
@@ -31,7 +31,7 @@ export class SampleProductComponent implements OnInit {
   PREDEFINE_RANGE: any;
   FROM_RANGE: any;
   TO_RANGE: any;
-  isHighLightHsnCode: string = "No";
+  isHighLightHsnCode:string="No";
   isHighLightProductCode: string = "No";
   isHighLightDescription: string = "No";
   isHighLightPackInfo: string = "No";
@@ -40,8 +40,6 @@ export class SampleProductComponent implements OnInit {
   isHighLightPriDefineRange: string = "No";
   isHighLightFrom: string = "No";
   isHighLightTo: string = "No";
-  INNER_PACK: any;
-
   constructor(private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService,) { }
 
   ngOnInit(): void {
@@ -63,13 +61,13 @@ export class SampleProductComponent implements OnInit {
   }
   sampleOnClick(event: any) {
     this.linkFg = false;
-    if (this.SAMPLE_CODE == 1) {
+    if ( this.SAMPLE_CODE == 1) {
       this.linkFg = true;
-    } else {
-      this.isShowSampleProductRangeList = false
-      this.RANGE_CODE = "";
-      this.LINKFG_CODE = [];
-      this.PREDEFINE_LIST_RANGE = []
+    } else{
+      this.isShowSampleProductRangeList=false
+      this.RANGE_CODE="";
+      this.LINKFG_CODE=""
+      this.PREDEFINE_LIST_RANGE=[]
     }
 
   }
@@ -79,16 +77,16 @@ export class SampleProductComponent implements OnInit {
       "SAMPLE_PRODUCT_CODE": this.PRODUCT_CODE,
       "DESCRIPTION": this.DESCRIPTION,
       "PACK_INFO": this.UNIT_INFO,
-      "HSM_CODE": this.HSM_CODE,
+      "HSM_CODE":this.HSM_CODE,
       "SAMPLE_CODE": this.SAMPLE_CODE,
       "LINK_FG_CODE": this.LINKFG_CODE,
       "RANGE_CODE": this.RANGE_CODE,
-      "INNER_PACK": this.INNER_PACK,
       "DETAILS": this.PREDEFINE_LIST_RANGE
     }
+  
+
     // this.isLoaded = true;
-    // console.log('data ->' , data)
-    // return
+
     this.http.postnew(this.url.saveSampleProductData, data).then(
       (res: any) => {
         // this.isLoaded = false;
@@ -114,7 +112,7 @@ export class SampleProductComponent implements OnInit {
     this.isHighLightPackInfo = "No";
     this.isHighLightSample = "No";
     this.isHighLightLinkFG = "No";
-    this.isHighLightHsnCode = "No";
+    this.isHighLightHsnCode="No";
     //this.isHighLightPriDefineRange="No";
     this.isHighLightFrom = "No";
     this.isHighLightTo = "No";
@@ -156,7 +154,7 @@ export class SampleProductComponent implements OnInit {
     //   this.isHighLightSample = "No";
     // }
 
-    if (this.SAMPLE_CODE == 1) {
+    if(this.SAMPLE_CODE==1){
       if (this.LINKFG_CODE == undefined || this.LINKFG_CODE == "") {
         this.isHighLightLinkFG = "Yes";
         this.toastrService.error("Please select a Link FG ");
@@ -175,7 +173,7 @@ export class SampleProductComponent implements OnInit {
     //  this.isHighLightPriDefineRange="No";
     // }
 
-    if (this.isHighLightProductCode != "Yes" && this.isHighLightDescription != "Yes" && this.isHighLightPackInfo != "Yes" && this.isHighLightLinkFG != "Yes" && this.isHighLightFrom != "Yes" && this.isHighLightTo != "Yes") {
+    if (this.isHighLightProductCode != "Yes" && this.isHighLightDescription != "Yes" && this.isHighLightPackInfo != "Yes"  && this.isHighLightLinkFG != "Yes" && this.isHighLightFrom != "Yes" && this.isHighLightTo != "Yes") {
 
       this.onSaveSampleProductClick();
     }
@@ -208,12 +206,12 @@ export class SampleProductComponent implements OnInit {
     this.DESCRIPTION = "";
     this.UNIT_INFO = "";
     this.RANGE_CODE = "";
-    this.HSM_CODE = "";
+    this.HSM_CODE="";
     //this.SAMPLE_LIST = [];
-    this.SAMPLE_CODE = "";
-    // this.LINKFG_LIST = [];
-    this.LINKFG_CODE = [];
-    this.isShowSampleProductRangeList = false;
+    this.SAMPLE_CODE="";
+   // this.LINKFG_LIST = [];
+   this.LINKFG_CODE="";
+   this.isShowSampleProductRangeList=false;
     // this.PREDEFINE_LIST_RANGE = [];
   }
 
@@ -241,10 +239,10 @@ export class SampleProductComponent implements OnInit {
 
   onRange() {
 
-    if (this.RANGE_CODE != undefined || this.RANGE_CODE != "") {
+    if(this.RANGE_CODE != undefined || this.RANGE_CODE != ""){
 
       this.isShowSampleProductRangeList = true
-    } else {
+    }else{
       this.isShowSampleProductRangeList = false
     }
     this.userInfo = this.authService.getUserDetail();
@@ -289,23 +287,23 @@ export class SampleProductComponent implements OnInit {
 
         if (this.Sample_Product_Header.length > 0) {
           this.PRODUCT_CODE = this.Sample_Product_Header[0].SAMPLE_PRODUCT_CODE;
-          this.DESCRIPTION = this.Sample_Product_Header[0].DESCRIPTION;
-          this.UNIT_INFO = this.Sample_Product_Header[0].PACK_INFO;
-          this.HSM_CODE = this.Sample_Product_Header[0].HSM_CODE;
-          this.RANGE_CODE = +this.Sample_Product_Header[0].RANGE_CODE;
-          if (this.Sample_Product_Header[0].SAMPLE_CODE == true) {
+           this.DESCRIPTION = this.Sample_Product_Header[0].DESCRIPTION;
+           this.UNIT_INFO = this.Sample_Product_Header[0].PACK_INFO;
+           this.HSM_CODE = this.Sample_Product_Header[0].HSM_CODE;
+           this.RANGE_CODE = +this.Sample_Product_Header[0].RANGE_CODE;
+           if(this.Sample_Product_Header[0].SAMPLE_CODE==true){
             this.SAMPLE_CODE = 1;
             this.linkFg = true;
-          } else {
+           }else{
             this.SAMPLE_CODE = 0;
             this.linkFg = false;
-          }
+           }
 
-          this.LINKFG_CODE = this.Sample_Product_Header[0].LINK_FG_CODE;
+           this.LINKFG_CODE = this.Sample_Product_Header[0].LINK_FG_CODE;
 
         }
         this.isShowEditPopup = false;
-        this.isShowSampleProductRangeList = true;
+        this.isShowSampleProductRangeList=true;
       },
       error => {
         console.log(error);
@@ -314,7 +312,7 @@ export class SampleProductComponent implements OnInit {
     );
   }
 
-  filterSAMPLECODE: any = [];
+  filterSAMPLECODE:any=[];
   filteredSAMPLECODE(event: any) {
     let filtered: any[] = [];
     let query = event.query;
@@ -330,22 +328,22 @@ export class SampleProductComponent implements OnInit {
 
   setSAMPLECODE(fileterlist, code: any) {
     code = "";
-    this.filterSAMPLECODE.forEach((element: any, index: number) => {
-      if (element.SAMPLE_DESC != this.SAMPLE_LIST[0].SAMPLE_DESC && this.SAMPLE_LIST[0].SAMPLE_DESC == undefined) {
-        if (index == 0) {
-          code = element;
-          this.SAMPLE_LIST = code;
-          this.filterSAMPLECODE = [];
+      this.filterSAMPLECODE.forEach((element: any, index: number) => {
+        if (element.SAMPLE_DESC != this.SAMPLE_LIST[0].SAMPLE_DESC && this.SAMPLE_LIST[0].SAMPLE_DESC == undefined) {
+          if (index == 0) {
+            code = element;
+            this.SAMPLE_LIST = code;
+            this.filterSAMPLECODE = [];
+          }
+          else {
+            this.SAMPLE_LIST = element;
+            return;
+          }
         }
-        else {
-          this.SAMPLE_LIST = element;
-          return;
-        }
-      }
-    });
+      });
   }
 
-  filterRANGECODE: any = [];
+  filterRANGECODE:any=[];
   filteredRANGECODE(event: any) {
     let filtered: any[] = [];
     let query = event.query;
@@ -361,19 +359,19 @@ export class SampleProductComponent implements OnInit {
 
   setRANGECODE(fileterlist, code: any) {
     code = "";
-    this.filterRANGECODE.forEach((element: any, index: number) => {
-      if (element.DESCRIPTION != this.PREDEFINE_RANGE[0].DESCRIPTION && this.PREDEFINE_RANGE[0].DESCRIPTION == undefined) {
-        if (index == 0) {
-          code = element;
-          this.PREDEFINE_RANGE = code;
-          this.filterRANGECODE = [];
+      this.filterRANGECODE.forEach((element: any, index: number) => {
+        if (element.DESCRIPTION != this.PREDEFINE_RANGE[0].DESCRIPTION && this.PREDEFINE_RANGE[0].DESCRIPTION == undefined) {
+          if (index == 0) {
+            code = element;
+            this.PREDEFINE_RANGE = code;
+            this.filterRANGECODE = [];
+          }
+          else {
+            this.PREDEFINE_RANGE = element;
+            return;
+          }
         }
-        else {
-          this.PREDEFINE_RANGE = element;
-          return;
-        }
-      }
-    });
+      });
   }
   filteredLinkFG: any = [];
   filterLinkFG(event) {
@@ -390,18 +388,18 @@ export class SampleProductComponent implements OnInit {
   }
   setLinkFG(fileterlist, code: any) {
     code = "";
-    this.filteredLinkFG.forEach((element: any, index: number) => {
-      if (element.PRODUCT_DESC != this.LINKFG_LIST[0].PRODUCT_DESC && this.LINKFG_LIST[0].PRODUCT_DESC == undefined) {
-        if (index == 0) {
-          code = element;
-          this.LINKFG_LIST = code;
-          this.filteredLinkFG = [];
+      this.filteredLinkFG.forEach((element: any, index: number) => {
+        if (element.PRODUCT_DESC != this.LINKFG_LIST[0].PRODUCT_DESC && this.LINKFG_LIST[0].PRODUCT_DESC == undefined) {
+          if (index == 0) {
+            code = element;
+            this.LINKFG_LIST = code;
+            this.filteredLinkFG = [];
+          }
+          else {
+            this.LINKFG_LIST = element;
+            return;
+          }
         }
-        else {
-          this.LINKFG_LIST = element;
-          return;
-        }
-      }
-    });
+      });
   }
 }
