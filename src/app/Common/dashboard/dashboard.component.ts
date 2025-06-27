@@ -533,7 +533,7 @@ export class DashboardComponent implements OnInit {
     this.http.postnew(this.url.getDashBoardListnew, data).then(
       (res: any) => {
         this.isLoaded = false;
-        console.log("response", res);
+        // console.log("response", res);
         this.getDashBoardList = res;
         this.monthActualValue = res.INCENTIVE_LIST[0].MONTH_ACT;
         this.monthTargetValue = res.INCENTIVE_LIST[0].MONTH_TARGET;
