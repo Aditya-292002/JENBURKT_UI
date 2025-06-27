@@ -119,9 +119,8 @@
                             </a>
                             <span *ngIf="col.Headers === 'ACTION' && STATUS=='P'">
                                 <button type="submit" class="btn-primary saveButton mr-2"
-                                    (click)="openModel(rowData)">receive</button>
+                                    (click)="openModel(rowData)">Received</button>
                             </span>
-                            
                         </td>
                         <!-- <td style="width:180px" *ngFor="let col of columns"
                              *ngIf="col.Headers === 'ACTION'">
@@ -143,7 +142,7 @@
 <p-dialog header="Confirmation" [modal]="true" [(visible)]="this.receivedModelFlag" [style]="{ width: '50rem' }">
     <div class=" gap-3 ">
         <div>
-            <h6>Are you sure, you have received DOCKET_NO :{{DOCKET_NO}}? </h6>
+            <h6>Are you sure, you have received the sample? </h6>
             <div class="float-right">
                 <button type="submit" class="btn-primary  saveButton mr-2" (click)="UPDATERECEIVESTATUS()">
                     Yes,Received
