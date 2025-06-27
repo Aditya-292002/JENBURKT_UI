@@ -37,7 +37,7 @@
                         <div class="">
                             <div class="row">
 
-                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-sm-12 col-md-12 col-lg-7">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-12 col-lg-4">
                                             <div class="mb-3">
@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-6" style=" border: 1px dashed #999ea3; padding:-1px">
+                                <div class="col-sm-12 col-md-12 col-lg-5" style=" border: 1px dashed #999ea3; padding:-1px">
                                     <div class="row">
 
                                         <div class="col-sm-12 col-md-12 col-lg-6">
@@ -364,16 +364,19 @@
 
                                         <tbody>
                                             <tr *ngFor="let list of INVOICE_DETAILS; let i=index;">
-                                                <td>{{list.SR_NO}}</td>
+                                                <td>{{i+1}}</td>
                                                 <td>
                                                     <div class="search-dropdown">
-                                                        <p-dropdown [options]="list.PRODUCTLIST" appendTo="body"
+                                                         <input type="text" class="form-control"
+                                                            [(ngModel)]="list.DESCRIPTION" placeholder=""
+                                                            [disabled]="disableAllInput" [disabled]="list.isDisabled">
+                                                        <!-- <p-dropdown [options]="list.PRODUCTLIST" appendTo="body"
                                                             optionLabel="DESCRIPTION" optionValue="SAMPLE_PRODUCT_CODE"
                                                             appendTo="body" placeholder="Please Select.."
                                                             [(ngModel)]="list.SAMPLE_PRODUCT_CODE"
                                                             [ngModelOptions]="{standalone:true}"
                                                             [disabled]="list.isDisabled">
-                                                        </p-dropdown>
+                                                        </p-dropdown> -->
                                                     </div>
                                                 </td>
                                                 <td>

@@ -25,7 +25,7 @@
     <div class="card">
 
         <div class="card-body">
-          <!-- <p-table #dt [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList"
+            <p-table #dt [value]="showGridData.GridList" [columns]="showGridData.GridHeadersList"
                 responsiveLayout="scroll" [paginator]="true" class="prime-table" [showCurrentPageReport]="true"
                 [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]" [totalRecords]="totalRecords"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true"
@@ -123,14 +123,22 @@
                             </span>
                             
                         </td>
+                        <!-- <td style="width:180px" *ngFor="let col of columns"
+                             *ngIf="col.Headers === 'ACTION'">
+                          
+                                {{rowData[col.Field]}}
+                          
+                        </td> -->
                     </tr>
                 </ng-template>
-            </p-table> -->
+            </p-table>
         </div>
+
+
     </div>
 </div>
 
-<!-- 
+
 
 <p-dialog header="Confirmation" [modal]="true" [(visible)]="this.receivedModelFlag" [style]="{ width: '50rem' }">
     <div class=" gap-3 ">
@@ -146,4 +154,4 @@
             </div>
         </div>
     </div>
-</p-dialog> -->
+</p-dialog>

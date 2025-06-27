@@ -102,7 +102,7 @@ export class GenerateInvoiceComponent implements OnInit {
           this.DOCKET_NO = this.INVOICE_HEADERS[0].DOCKET_NO
           this.DOCKET_DT = new Date(this.INVOICE_HEADERS[0].DOCKET_DT)
           this.DISPATCH = this.INVOICE_HEADERS[0].DISPATCHED_THROUGH
-          this.SALES_ROLE_CODE = this.INVOICE_HEADERS[0].SALESROLE_ID
+          this.SALES_ROLE_CODE = 1 //this.INVOICE_HEADERS[0].SALESROLE_ID
           this.USER_NAME = this.INVOICE_HEADERS[0].USER_NAME
           this.UNIT_CODE = this.INVOICE_HEADERS[0].UNIT_CODE
            // console.log('this.UNIT_CODE1',this.UNIT_CODE);
@@ -138,7 +138,7 @@ export class GenerateInvoiceComponent implements OnInit {
         }
 
 
-
+      this.GetSampleInvoiceDataById()
       },
       error => {
         console.log(error);
@@ -219,7 +219,7 @@ export class GenerateInvoiceComponent implements OnInit {
     }
     console.log('123454444 he,',data);
     
-    // this.isLoaded = true;
+     this.isLoaded = true;
     this.http.postnew(this.url.GETSAMPLEINVOICEDATABYID, data).then(
       (res: any) => {
         console.log("response", res);
