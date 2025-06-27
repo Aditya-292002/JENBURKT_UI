@@ -71,13 +71,17 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th class="width-12">CME NO</th>
-                    <th pSortableColumn="CME_DATE" class="width-12">REQ DATE
+                      <th class="width-12">DOCTOR NAME</th>
+                      <th class="width-12">CITY</th>
+                      <th pSortableColumn="PAYMENT_DATE" class="width-300">TOPIC
+                          <!-- <p-sortIcon field="PAYMENT_DATE"></p-sortIcon> -->
+                      </th>
+                    <th pSortableColumn="CME_DATE" class="width-300" >REQ DATE
                         <p-sortIcon field="CME_DATE"></p-sortIcon>
                     </th>
                     <th pSortableColumn="USER_NAME" class="width-300">REQ BY
                         <p-sortIcon field="USER_NAME"></p-sortIcon>
                     </th>
-                    <th class="width-12">HQ CODE</th>
                     <th pSortableColumn="AMOUNT" class="width-12">AMOUNT
                         <p-sortIcon field="AMOUNT"></p-sortIcon>
                     </th>
@@ -89,9 +93,6 @@
                     </th>
                     <th class="width-300">BENIFICIARY NAME</th>
                     <th class="width-12">PAN NO</th>
-                    <th pSortableColumn="PAYMENT_DATE" class="width-300">TOPIC
-                        <!-- <p-sortIcon field="PAYMENT_DATE"></p-sortIcon> -->
-                    </th>
                     <th pSortableColumn="PAYMENT_DESC" class="width-12">DATE
                         <!-- <p-sortIcon field="PAYMENT_DESC"></p-sortIcon> -->
                     </th>
@@ -108,19 +109,20 @@
             <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                 <tr>
                     <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">{{ data.CME_NO }}</td>
+                       <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)"  class="width-300">{{ data.DOCTOR_NAME }}</td>
+                       <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">{{ data.CITY }}</td>
+                       <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.TOPIC }}</td>
                     <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)" class="width-12">
                         {{ data.CME_DATE | date:'dd-MM-yyy' }}
                     </td>
                     <td class="width-300" (click)="GetPayemntCmeForCmeNo(data)">{{ data.USER_NAME }}</td>
-                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">{{ data.HQ_DESC }}</td>
                     <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.AMOUNT }}</td>
                     <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.GST }}</td>
                     <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.OUT_STANDING }}</td>
 
-                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.BENIFICIARY_NAME }}</td>
+                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.BENEFICIARY_NAME }}</td>
 
                     <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.PAN_NO }}</td>
-                    <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.TOPIC }}</td>
                     <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.DATE_FROM | date:'dd-MM-yyy' }}
                     </td>
                     <!-- <td (click)="GetPayemntCmeForCmeNo(data)" class="width-12">{{ data.OLD_PAID }}</td> -->

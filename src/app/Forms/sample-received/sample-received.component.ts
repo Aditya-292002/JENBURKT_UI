@@ -53,9 +53,9 @@ export class SampleReceivedComponent implements OnInit {
   GETSAMPLERECEIVEDETAILSBYUSERID() {
     let data = {
       "USER_ID": this.userInfo.USER_ID,
+      "SALES_ROLE_ID":this.userInfo.SALESROLE_ID,
       "FROM_DATE":this.FROM_DATE,
       "TO_DATE":this.TO_DATE,
-      "SALES_ROLE_ID":this.salesRoleId,
       "HQ_CODE":this.HQ_CODE,
       "STATUS":this.STATUS
     }

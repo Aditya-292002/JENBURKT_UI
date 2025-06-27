@@ -109,12 +109,12 @@
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/generateinvoice">Generate Invoice</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/printinvoice">Print Invioce</a></li>
                      -->
-                            <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Print_Invoice')"
+                            <li class="nav-item" (click)="isSelectedMenu('Print_Invoice')"
                                 [ngClass]="customMenuPrint_Invoice == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/editInvoice">Edit Invoice</a></li>
-                            <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Sample_Invoice')"
+                            <!-- <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Sample_Invoice')"
                                 [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li>
+                                    class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li> -->
 
                                      <li class="nav-item" (click)="isSelectedMenu('Sample_Received')"  [ngClass]="customMenuSample_Received == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/samplereceive">Sample Receive</a></li>
                    
