@@ -98,6 +98,9 @@ filterInvoiceDetails:any = [];
   constructor(private router: Router, private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
+
+     this.userInfo = JSON.parse(this.authService.getUserDetail());
+ 
     for (let i = 0; i < 42; i++) {
       if (this.DataList.length < i) {
         this.DataList.push({
@@ -126,7 +129,10 @@ this.onPrintInvoiceChange();
     this.isShowPrintInvoiceList = true;
     let data = {
     "CYCLE_CODE":this.CYCLE_CODE,
-     "UNIT_CODE":this.UNIT_CODE
+     "UNIT_CODE":this.UNIT_CODE,
+     "USER_ID": this.userInfo.USER_ID,
+     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
+    
     }
 
     this.http.postnew(this.url.SHOWINVOICEDATABYCYCLECODEANDUNITCODE, data).then(
@@ -146,7 +152,8 @@ this.onPrintInvoiceChange();
   getEditInvoiceMasterList() {
     this.userInfo = JSON.parse(this.authService.getUserDetail());
     let data = {
-
+     "USER_ID": this.userInfo.USER_ID,
+     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
     }
     this.http.postnew(this.url.GETINVOICEMASTERLIST, data).then(
       (res: any) => {
