@@ -350,11 +350,15 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     // console.log(' data -> ' , JSON.stringify(data))
     // return
     this.http.postnew(this.url.UPDATEPMTREQINNERPACKBYHQCODE, data).then((res: any) => {
-      if (res.data[0].FLAG == 1) {
-        this.TOTAL_REQUESTED_PACK_QTY = res.data[0].TOTAL_REQUESTED_PACK_QTY;
+      if (res.RES_LIST[0].FLAG == 1) {
+        this.TOTAL_REQUESTED_PACK_QTY = res.RES_LIST[0].TOTAL_REQUESTED_PACK_QTY;
+        this.RSM_TOTAL_TARGET = res.DATA_LIST[0].TOTAL_TARGET;
+        this.RSM_MAX_SAMPLE_VALUE = res.DATA_LIST[0].MAX_SAMPLE_VALUE;
+        this.RSM_REQ_VALUE = res.DATA_LIST[0].REQ_VALUE;
         this.QTY = 0;
         // this.toastrService.success(res.data[0].MSG);
-      } else if (res.data[0].FLAG == 0) {
+      } else if (res.RES_LIST[0].FLAG == 0) {
+         this.QTY = 0;
         // this.toastrService.error(res.data[0].MSG);
       }
     });
