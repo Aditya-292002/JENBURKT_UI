@@ -175,7 +175,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Total Req Value</label>
@@ -265,12 +264,46 @@
         <div class="card-body">
             <div class="">
                 <div class="row">
+
                     <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>Product</label>
                             <div>
                                 <input type="text" [(ngModel)]="PRODUCT" class="form-control" [disabled]="true"
                                     placeholder="Product">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
+                            <label>Total Target Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
+                            <label>Total Max sample Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_MAX_SAMPLE_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Max sample Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
+                            <label>Total Req Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="RSM_REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Req Value" maxlength="7" appTwoDigitDecimaNumber>
                             </div>
                         </div>
                     </div>
@@ -285,53 +318,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-lg-2">
-                        <div class="mb-2">
-                            <label>Inner Pack</label>
-                            <div>
-                                <input type="text" [(ngModel)]="INNER_PACK" class="form-control text-right"
-                                    [disabled]="true" placeholder="Inner Pack">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 col-md-3 col-lg-2">
-                        <div class="mb-2">
-                            <label>Total Stock</label>
-                            <div>
-                                <input type="text" [(ngModel)]="TOTAL_STOCK" class="form-control text-right"
-                                    [disabled]="true" placeholder="Total Stock">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-2">
-                        <div class="mb-2">
-                            <label>Req Qty</label>
-                            <div>
-                                <input type="text" [(ngModel)]="TOTAL_REQUESTED_PACK_QTY"
-                                    class="form-control text-right" [disabled]="true" placeholder="Req Qty">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-md-4 col-lg-3">
-                        <div class="d-flex align-items-center">
-                            <div>
-                                <label>Qty</label>
-                                <div class="input-group mr-3">
-                                    <!-- <button type="button" class="btn btn-primary formButton mr-2"
-                                        (click)="decreaseQty()">-</button> -->
-                                    <input type="text" [(ngModel)]="QTY" class="form-control text-right"
-                                        [disabled]="false" placeholder="Qty">
-                                    <!-- <button type="button" class="btn btn-primary formButton ml-2"
-                                        (click)="increaseQty()">+</button> -->
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="d-flex flex-row align-items-center gap-3">
+                            <div class="">
+                                <label>Inner Pack</label>
+                                <div>
+                                    <input type="text" [(ngModel)]="INNER_PACK" class="form-control text-right"
+                                        [disabled]="true" placeholder="Inner Pack">
                                 </div>
                             </div>
-                            <!-- <label>Qty</label> -->
-                            <div class="input-group mt-4 ml-2 ">
+                            <div class="ml-2">
+                                <label>Total Stock</label>
+                                <div>
+                                    <input type="text" [(ngModel)]="TOTAL_STOCK" class="form-control text-right"
+                                        [disabled]="true" placeholder="Total Stock">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="d-flex flex-row align-items-center gap-3">
+                            <div class="">
+                                <label>Req Qty</label>
+                                <div>
+                                    <input type="text" [(ngModel)]="TOTAL_REQUESTED_PACK_QTY"
+                                        class="form-control text-right" [disabled]="true" placeholder="Req Qty">
+                                </div>
+                            </div>
+                            <div class="ml-2">
+                                <label>Qty</label>
+                                <div class="input-group mr-3">
+                                    <input type="text" [(ngModel)]="QTY" class="form-control text-right"
+                                        [disabled]="false" placeholder="Qty">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
+                            <label>Qty Type</label>
+                            <div class="">
                                 <p-dropdown appendTo="body" [options]="QTY_LIST" optionLabel="QTY_DESC"
                                     [(ngModel)]="QTY_CODE" optionValue="QTY_CODE">
                                 </p-dropdown>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <div class="mb-2">
                             <div class="buttonBox mt-4 mr-2 ">
                                 <button type="submit" class="btn-primary saveButton"
                                     (click)="UpdateReqInnerpack()">Update</button>
@@ -349,7 +383,7 @@
                                     #dt3>
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th scope="col">Hq Code
+                                            <th scope="col">HQ Code
                                                 <p-columnFilter class="column-filter" field="HQ_DESC" matchMode="equals"
                                                     [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
@@ -366,7 +400,7 @@
                                                 </p-columnFilter>
                                             </th>
                                             <th pSortableColumn="REQ_INNER" class="">Req Inner Pack</th>
-                                            <th pSortableColumn="HQ_QTY" class="">Hq Req Qty</th>
+                                            <th pSortableColumn="HQ_QTY" class="">HQ Req Qty</th>
                                             <!-- <th pSortableColumn="SAMPEL_COST" class="">Sample Cost</th> -->
                                             <th scope="col">FM
                                                 <p-columnFilter class="column-filter" field="FM_NAME" matchMode="equals"
@@ -518,8 +552,7 @@
                 <div class="col-md-12 ">
                     <div class="d-flex flex-column justify-content-center align-items-center ">
                         <div>
-                            <h6 class="">After approval from all SM you will get next screen. Do you still want to
-                                proceed without all SM approval ?</h6>
+                            <h6 class="">{{this.isDataPickUpPopupMess}}</h6>
                         </div>
                         <div class="d-flex justify-content-center align-items-center p-2">
                             <button type="submit" class="btn-primary  formButton mr-2"

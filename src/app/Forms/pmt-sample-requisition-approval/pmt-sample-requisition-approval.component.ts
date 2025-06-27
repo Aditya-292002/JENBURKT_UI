@@ -69,9 +69,10 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   HQ_CODE: any;
   FM_CODE: any;
   SM_CODE: any;
+  isDataPickUpPopupMess: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
-    private toastrService: ToastrService,private SharedService:SharedService) { }
+    private toastrService: ToastrService, private SharedService: SharedService) { }
 
   ngOnInit(): void {
     this.UserDetail = this.authService.getUserDetail();
@@ -292,7 +293,16 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   }
 
   OpenNextConformationPopup() {
-    this.isNextConformationPopup = true;
+    let data = {};
+    this.http.postnew(this.url.GETCONFORMATIONPOPUPMESS, data).then((res: any) => {
+      if (res.data[0].FLAG == 1) {
+        this.isDataPickUpPopupMess = res.data[0].MSG;
+        this.isNextConformationPopup = true;
+      } else if (res.data[0].FLAG == 0) {
+        this.isDataPickUpPopupMess = res.data[0].MSG;
+        this.isNextConformationPopup = true;
+      }
+    });
   }
 
   CancelNextConformationPopup() {
@@ -322,7 +332,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
         newQty += (+this.QTY);
       } else if (this.QTY_CODE == 2) {
         newQty -= (+this.QTY);
-      }else if (this.QTY_CODE == 3) {
+      } else if (this.QTY_CODE == 3) {
         newQty = (+this.QTY);
       }
       if (newQty < 0) {
@@ -339,9 +349,10 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     // console.log(' filteredData -> ' , filteredData)
     // console.log(' data -> ' , JSON.stringify(data))
     // return
-    this.http.postnew(this.url.UPDATEPMTREQINNERPACKBYHQCODE,data).then((res:any)=>{
-        if (res.data[0].FLAG == 1) {
+    this.http.postnew(this.url.UPDATEPMTREQINNERPACKBYHQCODE, data).then((res: any) => {
+      if (res.data[0].FLAG == 1) {
         this.TOTAL_REQUESTED_PACK_QTY = res.data[0].TOTAL_REQUESTED_PACK_QTY;
+        this.QTY = 0;
         // this.toastrService.success(res.data[0].MSG);
       } else if (res.data[0].FLAG == 0) {
         // this.toastrService.error(res.data[0].MSG);
