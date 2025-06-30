@@ -70,6 +70,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   FM_CODE: any;
   SM_CODE: any;
   isDataPickUpPopupMess: any;
+  FYEAR: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService) { }
@@ -78,6 +79,7 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
+    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETPMTSAMPLEREQUISITIONLISTBYUSERID();
   }
 
@@ -211,11 +213,11 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   }
 
   GETPMTCALCULATEPACKQTYBYPOOLCODE(data: any) {
-    this.HQ_CODE_LIST.forEach((element: any) => {
-      if (element.HQ_CODE == data.HQ_CODE) {
-        element.HQ_QTY = element.REQUESTED_PACK_QTY * this.INNER_PACK
-      }
-    });
+    // this.HQ_CODE_LIST.forEach((element: any) => {
+    //   if (element.HQ_CODE == data.HQ_CODE) {
+    //     element.HQ_QTY = element.REQUESTED_PACK_QTY * this.INNER_PACK
+    //   }
+    // });
     let data1 = {
       USER_ID: this.USER_ID,
       TRXN_ID: data.TRXN_ID,
@@ -228,10 +230,16 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     // console.log(' data1 ->', JSON.stringify(data1))
     // return
     this.http.postnew(this.url.GETPMTCALCULATEPACKQTYBYPOOLCODE, data1).then((res: any) => {
-      if (res.data[0].FLAG == 1) {
-        this.TOTAL_REQUESTED_PACK_QTY = res.data[0].TOTAL_REQUESTED_PACK_QTY;
+      if (res.RES_LIST[0].FLAG == 1) {
+        this.TOTAL_REQUESTED_PACK_QTY = res.RES_LIST[0].TOTAL_REQUESTED_PACK_QTY;
+        this.RSM_TOTAL_TARGET = res.DATA_LIST[0].TOTAL_TARGET;
+        this.RSM_MAX_SAMPLE_VALUE = res.DATA_LIST[0].MAX_SAMPLE_VALUE;
+        this.RSM_REQ_VALUE = res.DATA_LIST[0].REQ_VALUE;
+        this.QTY = 0;
+        this.UpdateReqInnerpack();
         // this.toastrService.success(res.data[0].MSG);
-      } else if (res.data[0].FLAG == 0) {
+      } else if (res.RES_LIST[0].FLAG == 0) {
+         this.QTY = 0;
         // this.toastrService.error(res.data[0].MSG);
       }
     });
@@ -324,9 +332,10 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   }
 
   UpdateReqInnerpack() {
+
     const filteredData = this.dt3.filteredValue || this.HQ_CODE_LIST;
     filteredData.forEach((element: any) => {
-      const currentQty = element.REQUESTED_PACK_QTY;
+      const currentQty = (+element.REQUESTED_PACK_QTY);
       let newQty = currentQty;
       if (this.QTY_CODE == 1) {
         newQty += (+this.QTY);
