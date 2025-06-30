@@ -144,14 +144,14 @@
                                                     </ng-template>
                                                 </p-columnFilter>
                                             </th>
-                                            <th pSortableColumn="SAMPEL_COST" scope="col">Sample Cost</th>
+                                            <!-- <th pSortableColumn="SAMPEL_COST" scope="col">Sample Cost</th> -->
                                             <th pSortableColumn="UNIT_PACK" scope="col">User Info</th>
                                             <th pSortableColumn="POOL_COUNT" scope="col">HQ Count</th>
                                             <th pSortableColumn="INNER_PACK" scope="col">Inner Pack</th>
                                             <th pSortableColumn="REQUESTED_PACK_QTY" scope="col">Req Inner Pack HQ</th>
                                             <th pSortableColumn="POOL_HQCOUNT" scope="col">Per HQ Qty</th>
                                             <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th>
-                                            <th pSortableColumn="REQ_VALUE" scope="col">Req. Value</th>
+                                            <!-- <th pSortableColumn="REQ_VALUE" scope="col">Req. Value</th> -->
                                             <!-- <th scope="col">Action</th> -->
                                         </tr>
                                     </ng-template>
@@ -160,7 +160,7 @@
                                             (dblclick)="GETHQCODELISTBYPOOLCODE(data)">
                                             <td class="width-2">{{ data.POOL_DESC }}</td>
                                             <td class="width-2">{{ data.DESCRIPTION }}</td>
-                                            <td class="width-2"><span>&#8377;</span>{{ data.SAMPLE_COST }}</td>
+                                            <!-- <td class="width-2"><span>&#8377;</span>{{ data.SAMPLE_COST }}</td> -->
                                             <td class="width-2">{{ data.UNIT_PACK }}</td>
                                             <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
                                             <td class="width-2">{{ data.INNER_PACK }}</td>
@@ -180,9 +180,9 @@
                                                 <!-- </div> -->
                                             </td>
                                             <td class="width-2">{{ data.TOTAL_REQUESTED_QTY }}</td>
-                                            <td class="width-2"><span>&#8377;</span>{{ data.REQ_VALUE | number:'1.2-2'
+                                            <!-- <td class="width-2"><span>&#8377;</span>{{ data.REQ_VALUE | number:'1.2-2'
                                                 }}
-                                            </td>
+                                            </td> -->
                                             <!-- <td class="width-2"> <i *ngIf="data.HQ_UPDATED == 1"
                                                     class="pi pi-info-circle" style="color: red"></i>
                                             </td> -->
@@ -295,10 +295,10 @@
                             <h6 class="">Are you sure you want to submit this list?</h6>
                         </div>
                         <div class="d-flex justify-content-center align-items-center p-2">
-                            <button type="submit" class="btn-primary  formButton mr-2"
-                                (click)="CancelConformationPopup()">No</button>
                             <button type="submit" class="btn-primary  saveButton mr-2"
                                 (click)="SAVESAMPLEREQUISITION(0)">Yes</button>
+                            <button type="submit" class="btn-primary  formButton mr-2"
+                                (click)="CancelConformationPopup()">No</button>
                         </div>
                     </div>
                 </div>

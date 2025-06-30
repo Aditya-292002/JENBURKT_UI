@@ -66,6 +66,7 @@ export class SampleRequisitionApprovalComponent implements OnInit {
   IS_DRAFT: any;
   isDataPickUpPopup1: boolean = false;
   EXCEL_DATA_LIST: any = [];
+  FYEAR: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private router: Router) { }
@@ -77,6 +78,7 @@ export class SampleRequisitionApprovalComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
+    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETSAMPLEREQUISITIONMASTERLIST();
   }
 
