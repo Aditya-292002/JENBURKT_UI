@@ -58,7 +58,7 @@ export class EditInvoiceComponent implements OnInit {
   DOCKET_DT_PRINT: any = "";
   isShowPrintInvoiceList: boolean = false;
   DISPATCHED_NAME: any = "";
-  IS_EDIT:number;
+  IS_EDIT: number;
   // DC_QTY:any = "";
   // HSM_CODE:any = "";
   // RATE_TAX:any = "";
@@ -72,7 +72,7 @@ export class EditInvoiceComponent implements OnInit {
   // UNIT:any = "";
   UNIT_LIST: any = [];
   CYCLE_LIST: any = [];
-  INVOICE_DETAILS:any=[];
+  INVOICE_DETAILS: any = [];
   CYCLE_CODE: any;
   isHighLightUnit: string = "No";
   isHighLightCycle: String = "No";
@@ -81,11 +81,11 @@ export class EditInvoiceComponent implements OnInit {
   TO_DATE: any = "";
   TODAY_DATE: any;
   INVOICE_NO_PRINT: any;
-  INVOICE_ID:any;
-  HQ_CODE:any;
-  STATUS_CODE:any=0;
-  jsonData: any=[];
-   TEMPLATE: any = {};
+  INVOICE_ID: any;
+  HQ_CODE: any;
+  STATUS_CODE: any = 0;
+  jsonData: any = [];
+  TEMPLATE: any = {};
   STATUS_LIST: any = [
     {
       "STATUS_CODE": 0,
@@ -100,15 +100,15 @@ export class EditInvoiceComponent implements OnInit {
       "STATUS_DESC": "Dispatched"
     }
   ]
-filterInvoiceDetails:any = [];
+  filterInvoiceDetails: any = [];
   FileName: string;
   PENDING_LIST: any;
   constructor(private router: Router, private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
 
-     this.userInfo = JSON.parse(this.authService.getUserDetail());
- 
+    this.userInfo = JSON.parse(this.authService.getUserDetail());
+
     for (let i = 0; i < 42; i++) {
       if (this.DataList.length < i) {
         this.DataList.push({
@@ -126,7 +126,7 @@ filterInvoiceDetails:any = [];
       }
 
     }
-this.onPrintInvoiceChange();
+    this.onPrintInvoiceChange();
     this.getEditInvoiceMasterList();
     this.onExcelTemplateDownload()
 
@@ -137,20 +137,20 @@ this.onPrintInvoiceChange();
   onPrintInvoiceChange() {
     this.isShowPrintInvoiceList = true;
     let data = {
-    "CYCLE_CODE":this.CYCLE_CODE,
-     "UNIT_CODE":this.UNIT_CODE,
-     "USER_ID": this.userInfo.USER_ID,
-     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
-    
+      "CYCLE_CODE": this.CYCLE_CODE,
+      "UNIT_CODE": this.UNIT_CODE,
+      "USER_ID": this.userInfo.USER_ID,
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
+
     }
 
     this.http.postnew(this.url.SHOWINVOICEDATABYCYCLECODEANDUNITCODE, data).then(
       (res: any) => {
         console.log("response print", res);//PRODUCTLIST
         this.isLoaded = false;
-        this.INVOICE_DETAILS=res.INVOICE_DETAILS
-        this.filterInvoiceDetails =  res.INVOICE_DETAILS
-        this.PENDING_LIST= this.filterInvoiceDetails.filter((e:any)=> e.STATUS === "Pending")
+        this.INVOICE_DETAILS = res.INVOICE_DETAILS
+        this.filterInvoiceDetails = res.INVOICE_DETAILS
+        this.PENDING_LIST = this.filterInvoiceDetails.filter((e: any) => e.STATUS === "Pending")
       },
       error => {
         console.log(error);
@@ -161,14 +161,14 @@ this.onPrintInvoiceChange();
   getEditInvoiceMasterList() {
     this.userInfo = JSON.parse(this.authService.getUserDetail());
     let data = {
-     "USER_ID": this.userInfo.USER_ID,
-     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
+      "USER_ID": this.userInfo.USER_ID,
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
     }
     this.http.postnew(this.url.GETINVOICEMASTERLIST, data).then(
       (res: any) => {
         this.isLoaded = false;
         // this.INVOICE_LIST = res.INVOICE_LIST,
-          this.CYCLE_LIST = res.CYCLE_LIST,
+        this.CYCLE_LIST = res.CYCLE_LIST,
           this.UNIT_LIST = res.UNIT_LIST
 
       },
@@ -187,7 +187,7 @@ this.onPrintInvoiceChange();
       "DOCKET_NO": this.DOCKET_NO,
       "DOCKET_DT": this.DOCKET_DT,
       "USER_ID": (+this.userInfo.USER_ID),
-       "UNIT_CODE":this.UNIT_CODE
+      "UNIT_CODE": this.UNIT_CODE
 
     }
 
@@ -213,17 +213,17 @@ this.onPrintInvoiceChange();
       }
     );
   }
-  onEditClick(list:any) {
-    console.log(list,"data")
-    let data={
-     "INVOICE_ID":list.INVOICE_NO,
-     "CYCLE_CODE":list.CYCLE_CODE,
-      "UNIT_CODE":list.UNIT_CODE,
-      "HQ_CODE":list.HQ_CODE,
+  onEditClick(list: any) {
+    console.log(list, "data")
+    let data = {
+      "INVOICE_ID": list.INVOICE_NO,
+      "CYCLE_CODE": list.CYCLE_CODE,
+      "UNIT_CODE": list.UNIT_CODE,
+      "HQ_CODE": list.HQ_CODE,
       "SALES_ROLE_CODE": list.SALESROLE_ID
     }
 
-    localStorage.setItem("InvoiceDetail",JSON.stringify(data));
+    localStorage.setItem("InvoiceDetail", JSON.stringify(data));
     this.router.navigate(["/generateinvoice"]);
 
 
@@ -232,25 +232,25 @@ this.onPrintInvoiceChange();
     this.DOCKET_DT = "";
     this.DOCKET_NO = "";
   }
-  onPrintClickList(list:any) {
-    console.log(list,"data")
-    let data={
-     "INVOICE_ID":list.INVOICE_NO,
-     "CYCLE_CODE":list.CYCLE_CODE,
-      "UNIT_CODE":list.UNIT_CODE,
-      "HQ_CODE":list.HQ_CODE,
+  onPrintClickList(list: any) {
+    console.log(list, "data")
+    let data = {
+      "INVOICE_ID": list.INVOICE_NO,
+      "CYCLE_CODE": list.CYCLE_CODE,
+      "UNIT_CODE": list.UNIT_CODE,
+      "HQ_CODE": list.HQ_CODE,
       "SALES_ROLE_CODE": list.SALESROLE_ID
     }
-    console.log('DATA',data);
-    
-        this.isLoaded=true;
-        this.http.postnew(this.url.GETSAMPLEPRODUCTREPORT, data).then(
+    console.log('DATA', data);
+
+    this.isLoaded = true;
+    this.http.postnew(this.url.GETSAMPLEPRODUCTREPORT, data).then(
       (res: any) => {
-        console.log('res',res);
-        this.isLoaded=false;
+        console.log('res', res);
+        this.isLoaded = false;
         const downloadUrl = res.filePath; // From JSON
 
-       const base64Pdf = res.base64Pdf; // full data URL
+        const base64Pdf = res.base64Pdf; // full data URL
 
         // Create a download link
         const link = document.createElement('a');
@@ -478,7 +478,7 @@ this.onPrintInvoiceChange();
   }
 
 
-  filterCycle:any=[];
+  filterCycle: any = [];
   filteredCycle(event: any) {
     let filtered: any[] = [];
     let query = event.query;
@@ -494,22 +494,22 @@ this.onPrintInvoiceChange();
 
   setCycle(fileterlist, code: any) {
     code = "";
-      this.filterCycle.forEach((element: any, index: number) => {
-        if (element.CYCLE_DESC != this.CYCLE_LIST.CYCLE_DESC && this.CYCLE_LIST.CYCLE_DESC == undefined) {
-          if (index == 0) {
-            code = element;
-            this.CYCLE_LIST = code;
-            this.filterCycle = [];
-          }
-          else {
-            this.CYCLE_LIST = element;
-            return;
-          }
+    this.filterCycle.forEach((element: any, index: number) => {
+      if (element.CYCLE_DESC != this.CYCLE_LIST.CYCLE_DESC && this.CYCLE_LIST.CYCLE_DESC == undefined) {
+        if (index == 0) {
+          code = element;
+          this.CYCLE_LIST = code;
+          this.filterCycle = [];
         }
-      });
+        else {
+          this.CYCLE_LIST = element;
+          return;
+        }
+      }
+    });
   }
 
-  filterUnitCode:any=[];
+  filterUnitCode: any = [];
   filteredUnitCode(event: any) {
     let filtered: any[] = [];
     let query = event.query;
@@ -525,19 +525,19 @@ this.onPrintInvoiceChange();
 
   setUnitCode(fileterlist, code: any) {
     code = "";
-      this.filterUnitCode.forEach((element: any, index: number) => {
-        if (element.UNIT_DESC != this.UNIT_LIST.UNIT_DESC && this.UNIT_LIST.UNIT_DESC == undefined) {
-          if (index == 0) {
-            code = element;
-            this.UNIT_LIST = code;
-            this.filterUnitCode = [];
-          }
-          else {
-            this.UNIT_LIST = element;
-            return;
-          }
+    this.filterUnitCode.forEach((element: any, index: number) => {
+      if (element.UNIT_DESC != this.UNIT_LIST.UNIT_DESC && this.UNIT_LIST.UNIT_DESC == undefined) {
+        if (index == 0) {
+          code = element;
+          this.UNIT_LIST = code;
+          this.filterUnitCode = [];
         }
-      });
+        else {
+          this.UNIT_LIST = element;
+          return;
+        }
+      }
+    });
   }
 
   getFilterStatus() {
@@ -569,90 +569,93 @@ this.onPrintInvoiceChange();
     }
   }
 
-    onFileSelected(event: any): void {
+  async onFileSelected(event: any): Promise<void> {
     this.FileName = "";
     const file: File = event.target.files[0];
     this.FileName = file.name;
-  
+
     if (file) {
       const reader: FileReader = new FileReader();
-  
+
       reader.onload = async (e: any) => {
         const data: Uint8Array = new Uint8Array(e.target.result);
         const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'array' });
-  
+
         const sheetName: string = workbook.SheetNames[0];
         const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
-  
+
         const rawData: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: null });
-  
+
         const excelDateToJSDate = (serial: number): string => {
           const utc_days = Math.floor(serial - 25569);
           const utc_value = utc_days * 86400;
           const date_info = new Date(utc_value * 1000);
           return date_info.toISOString().split('T')[0]; // 'YYYY-MM-DD'
         };
-  
-         this.jsonData = rawData.map((row: Record<string, any>) => {
+
+        const JSONData = rawData.map((row: Record<string, any>) => {
           const fixedRow = { ...row }; // ✅ Now `row` is known to be an object
-  
+
           if (
             fixedRow['DOCKET_DT'] &&
             typeof fixedRow['DOCKET_DT'] === 'number'
           ) {
             fixedRow['DOCKET_DT'] = excelDateToJSDate(fixedRow['DOCKET_DT']);
           }
-  
+
           return fixedRow;
         });
-  
+
+        await this.updateDetails(JSONData)
+
         console.log('Excel JSON with fixed date:', this.jsonData);
       };
-  //console.log('this.jsonData',this.jsonData);
-  
+      //console.log('this.jsonData',this.jsonData);
+
       reader.readAsArrayBuffer(file);
-         this.updateDetails()
-      
+
+      // await   this.updateDetails()
+
     }
   }
 
-    exportAsXLSX(): void {
-    
+  exportAsXLSX(): void {
+
     this.exportAsExcelFile(this.TEMPLATE, 'PENDING_DETAILS');
   }
 
-    public exportAsExcelFile(json: any[], excelFileName: string): void {
-  
-      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-      console.log('worksheet', worksheet);
-      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-      //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
-      this.saveAsExcelFile(excelBuffer, excelFileName);
-    }
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
 
-    private saveAsExcelFile(buffer: any, fileName: string): void {
-      const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE
-      });
-      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-    }
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    console.log('worksheet', worksheet);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
 
 
-    onExcelTemplateDownload() {
+  onExcelTemplateDownload() {
     let data = {
-    "CYCLE_CODE":this.CYCLE_CODE,
-     "UNIT_CODE":this.UNIT_CODE,
-     "USER_ID": this.userInfo.USER_ID,
-     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
-    
+      "CYCLE_CODE": this.CYCLE_CODE,
+      "UNIT_CODE": this.UNIT_CODE,
+      "USER_ID": this.userInfo.USER_ID,
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
+
     }
 
     this.http.postnew(this.url.GETPENDINGDETAILSFORINVOICE, data).then(
       (res: any) => {
         console.log("response print", res);//PRODUCTLIST
         this.isLoaded = false;
-        this.TEMPLATE=res.INVOICE_DETAILS
+        this.TEMPLATE = res.INVOICE_DETAILS
       },
       error => {
         console.log(error);
@@ -661,27 +664,32 @@ this.onPrintInvoiceChange();
     );
   }
 
-    updateDetails() {
-      if(this.jsonData.length<0){
+  async updateDetails(JSONData: {
+    [x: string]: any;
+  }[]) {
+    if (JSONData.length < 0) {
       this.toastrService.success('Please select excel ')
-        return 
-      }
+      return
+    }
     this.userInfo = JSON.parse(this.authService.getUserDetail());
     let data = {
-     
+
       "USER_ID": (+this.userInfo.USER_ID),
-      "JSON_DATA":this.jsonData
+      "JSON_DATA": JSONData
 
     }
 
-    this.http.postnew(this.url.UPDATESAMPLEINVOICEDETAILS, data).then(
+    console.log(data);
+
+
+    await this.http.postnew(this.url.UPDATESAMPLEINVOICEDETAILS, data).then(
       (res: any) => {
         console.log("response", res);//PRODUCTLIST
         this.isLoaded = false;
 
         if (res.data[0].FLAG == true) {
           this.toastrService.success(res.data[0].MSG)
-        
+
         }
         if (res.data[0].FLAG == false) {
           this.toastrService.error(res.data[0].MSG)

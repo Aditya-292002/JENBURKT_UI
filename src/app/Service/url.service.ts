@@ -194,5 +194,4 @@ export class URLService {
 
   public GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO';
 
-
 }

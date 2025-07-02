@@ -55,9 +55,9 @@ export class SharedService {
   redirect_to:string='';
   //ApiUrl= "http://89.163.149.137:5000";
   // ApiUrl="http://localhost:26493";
- ApiUrl =  "http://localhost:45232/";
+ //ApiUrl =  "http://localhost:45232/";
   // ApiUrl= "http://192.168.1.27:9323/";
-  // ApiUrl= "http://103.74.54.212:4201/"; //Live Server Test API
+   ApiUrl= "http://103.74.54.212:4201/"; //Live Server Test API
  // ApiUrl= "http://103.74.54.212:5000/"; //Live Server Live API
   AuthenticatedUser:boolean = false;
   isPricing:boolean = true;
