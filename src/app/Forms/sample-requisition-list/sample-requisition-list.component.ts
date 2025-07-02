@@ -20,6 +20,7 @@ export class SampleRequisitionListComponent implements OnInit {
   CYCLE_ID: any;
   MASTER_LIST: any = [];
   TEMP_USER_ID: any;
+  FYEAR: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService, private router: Router) { }
@@ -31,6 +32,7 @@ export class SampleRequisitionListComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
+    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETSAMPLEREQUISITIONLISTBYUSERID();
   }
 

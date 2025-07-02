@@ -80,6 +80,7 @@ export class SampleRequisitionComponent implements OnInit {
   first: number = 0;
   IS_DISABLED: boolean = false;
   EXCEL_DATA_LIST: any;
+  FYEAR: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService, datepipe: DatePipe,
@@ -89,6 +90,7 @@ export class SampleRequisitionComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
+    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETSAMPLEREQUISITIONMASTERLIST();
   }
 
