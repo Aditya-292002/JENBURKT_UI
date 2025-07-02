@@ -116,9 +116,9 @@
                         {{ data.CME_DATE | date:'dd-MM-yyy' }}
                     </td>
                     <td class="width-300" (click)="GetPayemntCmeForCmeNo(data)">{{ data.USER_NAME }}</td>
-                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.AMOUNT }}</td>
-                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.GST }}</td>
-                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)">&#8377;{{ data.OUT_STANDING }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)" style="text-align: right;">&#8377;{{ data.AMOUNT | indianCurrency }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)" style="text-align: right;">&#8377;{{ data.GST | indianCurrency }}</td>
+                    <td class="width-12" (click)="GetPayemntCmeForCmeNo(data)" style="text-align: right;">&#8377;{{ data.OUT_STANDING | indianCurrency }}</td>
 
                     <td (click)="GetPayemntCmeForCmeNo(data)" class="width-300">{{ data.BENEFICIARY_NAME }}</td>
 
