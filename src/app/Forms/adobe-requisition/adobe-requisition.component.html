@@ -1,0 +1,151 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Adobe Requisition</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Adobe Requisition</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <!-- <button type="submit"   class="btn-primary formButton mr-2" (click)="EXCELDOWNLOAD()">
+                <i class="fa fa-download mr-2"></i>Excel Download
+            </button> -->
+            <button type="submit" class="btn-primary saveButton mr-2">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>RSM</label>
+                            <div [ngClass]="{'required-field':isHighLightRsm === 'Yes'}">
+                                <input type="text" [(ngModel)]="RSM_CODE" class="form-control" placeholder="RSM">
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <p-dropdown [options]="PERIOD_LIST" appendTo="body" optionLabel="CYCLE_DESC"
+                                    optionValue="CYCLE_NO" [filter]="true" filterBy="CYCLE_DESC"
+                                    placeholder="Please Select" [disabled]="true" [(ngModel)]="CYCLE_ID"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Total Target</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="TOTAL_TARGET |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Total Target" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Max Sample Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="MAX_SAMPEL_VALUE | currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control  text-right rupee-input" name="pincode"
+                                    placeholder="Max Sample Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Req. Value</label>
+                            <div class="rupee-input-wrapper">
+                                <span class="rupee-symbol">₹</span>
+                                <input type="text" [value]="REQ_VALUE |  currency:'INR':'symbol':'1.2-2'"
+                                    [disabled]="true" class="form-control text-right rupee-input" name="pincode"
+                                    placeholder="Req. Value" maxlength="7" appTwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-2">
+                            <label> </label>
+                            <div>
+                                <p-table [value]="PRODUCT_LIST" responsiveLayout="scroll" scrollHeight="420px"
+                                    [globalFilterFields]="['DESCRIPTION', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
+                                        ,'POOL_HQCOUNT','TOTAL_REQ'
+                                    ]"
+                                    #dt2>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" class="width-200">Product
+                                                <p-columnFilter class="column-filter" field="DESCRIPTION"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="DROPDOWN_PRODUCT_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+                                                </p-columnFilter>
+                                            </th>
+                                            <th pSortableColumn="UNIT_PACK" scope="col">User Info</th>
+                                            <th pSortableColumn="POOL_COUNT" scope="col">HQ Count</th>
+                                            <th pSortableColumn="INNER_PACK" scope="col">Inner Pack</th>
+                                            <th pSortableColumn="REQUESTED_PACK_QTY" scope="col">Req Inner Pack HQ</th>
+                                            <th pSortableColumn="POOL_HQCOUNT" scope="col">Per HQ Qty</th>
+                                            <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td class="width-2">{{ data.DESCRIPTION }}</td>
+                                            <td class="width-2">{{ data.UNIT_PACK }}</td>
+                                            <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
+                                            <td class="width-2">{{ data.INNER_PACK }}</td>
+                                            <td class="width-2">
+                                                <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY"
+                                                    class="form-control" name="pincode"
+                                                    (focusout)="GETCALCULATEPACKQTYBYPOOLCODE(data)"
+                                                    [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
+                                                    placeholder="Req Inner Pack Qty" maxlength="4"
+                                                    appTwoDigitDecimaNumber>
+                                            </td>
+                                            <td class="width-2">
+                                                {{ data.REQUESTED_HQ_QTY }}
+                                            </td>
+                                            <td class="width-2">{{ data.TOTAL_REQUESTED_QTY }}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

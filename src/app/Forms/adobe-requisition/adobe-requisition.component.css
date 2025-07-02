@@ -1,0 +1,80 @@
+.col-form-label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 400;
+    color: #898484 ;
+    font-size: 14px;
+}
+.print-page .card-box{
+    border: 1px solid #000;
+    position: inherit; 
+    padding: 5px 10px;
+}
+.print-page .card-box b{
+    color: #060606 !important;
+}
+
+.requisition-table table th{
+    background-color: transparent;
+    border: 1px solid #060606;
+}
+.requisition-table table td{
+    background-color: transparent;
+    border: 1px solid #060606;
+    padding: 2.92rem 0.2rem;
+}
+.equipment-table {
+    border: 1px solid #060606;
+}
+.equipment-table td{
+    border: 0;
+}
+.feedback-table td{
+    border: 0;
+}
+.isHighlight{
+    border-color: #ebb8c2d9 !important;
+    background: #e4002b !important;
+    color: #fff !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}
+.width-50{
+    width: 100px;
+}
+.width-150{
+    width: 170px;
+}
+.width-200{
+    width: 230px;
+}
+.rupee-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.rupee-symbol {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #495057;
+  pointer-events: none; /* allows clicks to pass through to input */
+}
+
+.rupee-input {
+  padding-left: 25px; /* make space for the ₹ icon */
+}
+.hq-updated {
+  background-color: #ffe6e6; /* light red, you can change */
+}
+:host ::ng-deep tr.hq-updated {
+  background-color: #ffe6e6 !important;
+}

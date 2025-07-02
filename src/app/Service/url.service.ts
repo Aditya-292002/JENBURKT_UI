@@ -189,10 +189,12 @@ export class URLService {
   public GETHQCODEEXCELDOWNLOADDATABYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETHQCODEEXCELDOWNLOADDATABYUSERID';
   public GETSAMPLEPRODUCTREPORT= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLEPRODUCTREPORT';
   public GETCONFORMATIONPOPUPMESS = this.sharedService.ApiUrl + '/api/SampelRequisition/GETCONFORMATIONPOPUPMESS';
+  public GETPRODUCTLISTBYCYCLEID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETPRODUCTLISTBYCYCLEID';
   public GETPENDINGDETAILSFORINVOICE = this.sharedService.ApiUrl + '/api/SampleProduct/GETPENDINGDETAILSFORINVOICE';
   public UPDATESAMPLEINVOICEDETAILS = this.sharedService.ApiUrl + '/api/SampleProduct/UPDATESAMPLEINVOICEDETAILS';
-
   public GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO';
-
+  public APPROVEDPMTSAMPLEREQUISITIONDATA= this.sharedService.ApiUrl + '/api/SampleProduct/APPROVEDPMTSAMPLEREQUISITIONDATA';
+ 
+ 
 
 }

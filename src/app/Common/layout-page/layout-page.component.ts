@@ -69,6 +69,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuSample_Requisition_Approval: boolean;
   customMenuPMT_Sample_Requisition_Approval: boolean;
   customCycle_Sample_Requisition: boolean;
+  customMenuAdobe_Requisition: boolean;
 
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
@@ -194,6 +195,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuSample_Requisition_Approval = false;
     this.customMenuPMT_Sample_Requisition_Approval = false;
     this.customMenuSample_Requisition = false;
+    this.customMenuAdobe_Requisition = false;
     this.customMenuPrint_Invoice = false;
     this.customMenuSample_Invoice = false;
     this.customMenuDiscount_Request = false;
@@ -263,9 +265,11 @@ export class LayoutPageComponent implements OnInit {
       this.customMenuUpload_Sample_Stock = true;
     } else if (data == 'Cycle_Sample_Requisition') {
       this.customCycle_Sample_Requisition = true;
-    }
-    else if (data == 'Sample_Requisition') {
+    }else if (data == 'Sample_Requisition') {
       this.customMenuSample_Requisition = true;
+    }
+    else if (data == 'Adobe_Requisition') {
+      this.customMenuAdobe_Requisition = true;
     } else if (data == 'Sample_Allocation_Approval') {
       this.customMenuSample_Allocation_Approval = true;
     } else if (data == 'Sample_Requisition_Approval') {

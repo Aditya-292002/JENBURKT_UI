@@ -105,6 +105,7 @@ import localeIn from '@angular/common/locales/en-IN';
 import { PayementExcelUploadComponent } from './Forms/payement-excel-upload/payement-excel-upload.component';
 import { ApprovedPayementListComponent } from './Forms/approved-payement-list/approved-payement-list.component';
 import { SampleReceivedComponent } from './Forms/sample-received/sample-received.component';
+import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requisition.component';
 
 registerLocaleData(localeIn);
 
@@ -186,7 +187,8 @@ registerLocaleData(localeIn);
     CycleSampleRequisitionComponent,
     SampleReceivedComponent,
     ApprovedPayementListComponent,
-    PayementExcelUploadComponent
+    PayementExcelUploadComponent,
+    AdobeRequisitionComponent
     
   ],
   imports: [
