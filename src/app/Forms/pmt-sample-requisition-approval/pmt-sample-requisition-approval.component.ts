@@ -70,7 +70,6 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
   FM_CODE: any;
   SM_CODE: any;
   isDataPickUpPopupMess: any;
-  FYEAR: any;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService) { }
@@ -79,7 +78,6 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
-    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETPMTSAMPLEREQUISITIONLISTBYUSERID();
   }
 
@@ -353,7 +351,8 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
     let data = {
       "USER_ID": this.USER_ID,
       "SAMPLE_PRODUCT_CODE": this.SAMPLE_PRODUCT_CODE,
-      "HQ_CODE_LIST": filteredData
+      "HQ_CODE_LIST": filteredData,
+      "CYCLE_ID": this.CYCLE_ID
     }
     // console.log(' filteredData -> ' , filteredData)
     // console.log(' data -> ' , JSON.stringify(data))
@@ -372,5 +371,24 @@ export class PMTSampleRequisitionApprovalComponent implements OnInit {
       }
     });
   }
+
+  APPROVEDPMTSAMPLEREQUISITIONDATA(){
+let data = {
+      "USER_ID": this.USER_ID,
+      "CYCLE_ID": this.CYCLE_ID,
+      "TRXN_ID": this.TRXN_ID
+    }
+    this.http.postnew(this.url.APPROVEDPMTSAMPLEREQUISITIONDATA, data).then((res: any) => {
+      if (res.data[0].FLAG == 1) {
+        this.toastrService.success(res.data[0].MSG);
+        this.GETPMTSAMPLEREQUISITIONLISTBYUSERID();
+        this.isProductList == false
+        this.isHqCodeList == false
+      } else if (res.data[0].FLAG == 0) {
+        this.toastrService.error(res.data[0].MSG);
+      }
+    });
+  }
+    
 
 }

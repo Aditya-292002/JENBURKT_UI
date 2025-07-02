@@ -90,7 +90,6 @@ export class SampleRequisitionComponent implements OnInit {
     this.UserDetail = this.authService.getUserDetail();
     this.USER_ID = JSON.parse(this.UserDetail).USER_ID;
     this.USER_NAME = JSON.parse(this.UserDetail).USER_NAME;
-    this.FYEAR = JSON.parse(this.UserDetail).FYEAR;
     this.GETSAMPLEREQUISITIONMASTERLIST();
   }
 

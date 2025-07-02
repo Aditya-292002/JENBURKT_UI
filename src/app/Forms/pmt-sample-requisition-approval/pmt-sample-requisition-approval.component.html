@@ -21,7 +21,9 @@
             <button type="submit" *ngIf="this.isProductList == true && this.isHqCodeList == false"
                 class="btn-primary  saveButton mr-2" (click)="Approve()">Approve</button>
             <button type="submit" *ngIf="this.isProductList == false && this.isHqCodeList == true"
-                class="btn-primary  saveButton mr-2" (click)="OpenConformationPopup()">Save</button>
+                class="btn-primary  saveButton mr-2" (click)="SAVEPMTSAMPLEREQUISITIONDATA()">Save</button>
+            <button type="submit" *ngIf="this.isProductList == false && this.isHqCodeList == true"
+                class="btn-primary  saveButton mr-2" (click)="OpenConformationPopup()">Approve</button>
         </div>
     </div>
 </div>
@@ -527,7 +529,7 @@
                         </div>
                         <div class="d-flex justify-content-center align-items-center p-2">
                             <button type="submit" class="btn-primary  saveButton mr-2"
-                                (click)="SAVEPMTSAMPLEREQUISITIONDATA()">Yes</button>
+                              (click)="APPROVEDPMTSAMPLEREQUISITIONDATA()"  >Yes</button>
                             <button type="submit" class="btn-primary  formButton mr-2"
                                 (click)="CancelConformationPopup()">No</button>
                         </div>
