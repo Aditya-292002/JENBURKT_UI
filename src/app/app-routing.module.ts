@@ -73,6 +73,7 @@ import { CycleSampleRequisitionComponent } from './Forms/cycle-sample-requisitio
 import { PayementExcelUploadComponent } from './Forms/payement-excel-upload/payement-excel-upload.component';
 import { ApprovedPayementListComponent } from './Forms/approved-payement-list/approved-payement-list.component';
 import { SampleReceivedComponent } from './Forms/sample-received/sample-received.component';
+import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requisition.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -151,6 +152,7 @@ const routes: Routes = [
       { path: 'paymentexcelupload', component: PayementExcelUploadComponent },
       { path: 'paymentapprovedlist', component: ApprovedPayementListComponent },
       { path: 'samplereceive', component: SampleReceivedComponent },
+      { path: 'adoberequisition', component: AdobeRequisitionComponent },
     ]
   },
 ];
