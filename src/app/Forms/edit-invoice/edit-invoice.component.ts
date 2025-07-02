@@ -5,6 +5,10 @@ import { AuthService } from 'src/app/Service/auth.service';
 import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
 declare var $: any;
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 @Component({
   selector: 'app-edit-invoice',
   templateUrl: './edit-invoice.component.html',
@@ -80,6 +84,8 @@ export class EditInvoiceComponent implements OnInit {
   INVOICE_ID:any;
   HQ_CODE:any;
   STATUS_CODE:any=0;
+  jsonData: any=[];
+   TEMPLATE: any = {};
   STATUS_LIST: any = [
     {
       "STATUS_CODE": 0,
@@ -95,6 +101,8 @@ export class EditInvoiceComponent implements OnInit {
     }
   ]
 filterInvoiceDetails:any = [];
+  FileName: string;
+  PENDING_LIST: any;
   constructor(private router: Router, private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
@@ -120,6 +128,7 @@ filterInvoiceDetails:any = [];
     }
 this.onPrintInvoiceChange();
     this.getEditInvoiceMasterList();
+    this.onExcelTemplateDownload()
 
     this.TODAY_DATE = new Date();
   }
@@ -141,7 +150,7 @@ this.onPrintInvoiceChange();
         this.isLoaded = false;
         this.INVOICE_DETAILS=res.INVOICE_DETAILS
         this.filterInvoiceDetails =  res.INVOICE_DETAILS
-
+        this.PENDING_LIST= this.filterInvoiceDetails.filter((e:any)=> e.STATUS === "Pending")
       },
       error => {
         console.log(error);
@@ -232,13 +241,25 @@ this.onPrintInvoiceChange();
       "HQ_CODE":list.HQ_CODE,
       "SALES_ROLE_CODE": list.SALESROLE_ID
     }
+    console.log('DATA',data);
+    
         this.isLoaded=true;
         this.http.postnew(this.url.GETSAMPLEPRODUCTREPORT, data).then(
       (res: any) => {
         console.log('res',res);
         this.isLoaded=false;
+        const downloadUrl = res.filePath; // From JSON
 
-        
+       const base64Pdf = res.base64Pdf; // full data URL
+
+        // Create a download link
+        const link = document.createElement('a');
+        link.href = base64Pdf;
+        link.download = res.fileName; // or use dynamic file name
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
       });
 
 
@@ -546,6 +567,132 @@ this.onPrintInvoiceChange();
       console.log('All')
       this.filterInvoiceDetails = this.INVOICE_DETAILS;
     }
+  }
+
+    onFileSelected(event: any): void {
+    this.FileName = "";
+    const file: File = event.target.files[0];
+    this.FileName = file.name;
+  
+    if (file) {
+      const reader: FileReader = new FileReader();
+  
+      reader.onload = async (e: any) => {
+        const data: Uint8Array = new Uint8Array(e.target.result);
+        const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'array' });
+  
+        const sheetName: string = workbook.SheetNames[0];
+        const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+  
+        const rawData: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: null });
+  
+        const excelDateToJSDate = (serial: number): string => {
+          const utc_days = Math.floor(serial - 25569);
+          const utc_value = utc_days * 86400;
+          const date_info = new Date(utc_value * 1000);
+          return date_info.toISOString().split('T')[0]; // 'YYYY-MM-DD'
+        };
+  
+         this.jsonData = rawData.map((row: Record<string, any>) => {
+          const fixedRow = { ...row }; // ✅ Now `row` is known to be an object
+  
+          if (
+            fixedRow['DOCKET_DT'] &&
+            typeof fixedRow['DOCKET_DT'] === 'number'
+          ) {
+            fixedRow['DOCKET_DT'] = excelDateToJSDate(fixedRow['DOCKET_DT']);
+          }
+  
+          return fixedRow;
+        });
+  
+        console.log('Excel JSON with fixed date:', this.jsonData);
+      };
+  //console.log('this.jsonData',this.jsonData);
+  
+      reader.readAsArrayBuffer(file);
+         this.updateDetails()
+      
+    }
+  }
+
+    exportAsXLSX(): void {
+    
+    this.exportAsExcelFile(this.TEMPLATE, 'PENDING_DETAILS');
+  }
+
+    public exportAsExcelFile(json: any[], excelFileName: string): void {
+  
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+      console.log('worksheet', worksheet);
+      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+      this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+
+    onExcelTemplateDownload() {
+    let data = {
+    "CYCLE_CODE":this.CYCLE_CODE,
+     "UNIT_CODE":this.UNIT_CODE,
+     "USER_ID": this.userInfo.USER_ID,
+     "SALES_ROLE_ID": this.userInfo.SALESROLE_ID
+    
+    }
+
+    this.http.postnew(this.url.GETPENDINGDETAILSFORINVOICE, data).then(
+      (res: any) => {
+        console.log("response print", res);//PRODUCTLIST
+        this.isLoaded = false;
+        this.TEMPLATE=res.INVOICE_DETAILS
+      },
+      error => {
+        console.log(error);
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
+  }
+
+    updateDetails() {
+      if(this.jsonData.length<0){
+      this.toastrService.success('Please select excel ')
+        return 
+      }
+    this.userInfo = JSON.parse(this.authService.getUserDetail());
+    let data = {
+     
+      "USER_ID": (+this.userInfo.USER_ID),
+      "JSON_DATA":this.jsonData
+
+    }
+
+    this.http.postnew(this.url.UPDATESAMPLEINVOICEDETAILS, data).then(
+      (res: any) => {
+        console.log("response", res);//PRODUCTLIST
+        this.isLoaded = false;
+
+        if (res.data[0].FLAG == true) {
+          this.toastrService.success(res.data[0].MSG)
+        
+        }
+        if (res.data[0].FLAG == false) {
+          this.toastrService.error(res.data[0].MSG)
+        }
+
+      },
+      error => {
+        console.log(error);
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
   }
 
 }

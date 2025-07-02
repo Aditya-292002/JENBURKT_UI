@@ -34,6 +34,9 @@ export class SampleReceivedComponent implements OnInit {
   RECEIVEDFLAG: boolean=false;
   PENDINGFLAG: boolean=true;
   STATUS: string="P";
+  PRODUCT_DETAILS: any;
+  productDetailFlag: boolean;
+  showGridData1: any={};
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private common: CommonService, public datePipe: DatePipe, private router: Router, public httpclient: HttpClient) {
   }
@@ -112,9 +115,7 @@ console.log('this.showGridData',this.showGridData);
   UPDATERECEIVESTATUS(){
     let data = {
           "USER_ID": this.userInfo.USER_ID,
-          "FROM_DATE":this.FROM_DATE,
           "INVOICE_NO":this.INVOICE_NO,
-         
         }
     this.isLoaded = true;
     this.http.postnew(this.url.UPDATESAMPLEINVOICERECEIVESTATUS, data).then(
@@ -179,4 +180,60 @@ GETHQLIST(){
       }
     );
 }
+
+
+  GETSAMPLEPRODUCTDETAILS(DATA:any){
+    console.log('details',DATA);
+    
+    let data = {
+          "USER_ID": this.userInfo.USER_ID,
+          "INVOICE_NO":DATA.INVOICE_NO
+         
+        }
+    this.isLoaded = true;
+    this.http.postnew(this.url.GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO, data).then(
+      (res: any) => {
+        
+      this.PRODUCT_DETAILS=res.PRODUCT_DETAILS
+        if(this.PRODUCT_DETAILS.length>0){
+        this.showGridData1["GridList"] = this.PRODUCT_DETAILS;
+        this.setValue = this.gridDataSetValue;
+
+        // Clear headers & keys
+        this.showGridData1["GridHeadersList"] = [];
+        this.showGridData1["SearchKey"] = [];
+
+        // Extract headers from first row
+        if (this.showGridData1.GridList.length > 0) {
+          const keys = Object.keys(this.showGridData1.GridList[0]);
+          console.log('sinside2');
+
+          keys.forEach(key => {
+            const header = {
+              Headers: key,
+              Field: key
+            };
+            this.showGridData1["SearchKey"].push(key);
+            this.showGridData1["GridHeadersList"].push(header);
+            console.log('sinside3');
+          });
+        }
+        }else{
+          this.showGridData=[]
+        }
+
+
+
+
+      this.productDetailFlag=true;
+        this.isLoaded = false;
+      },
+      error =>{
+         this.productDetailFlag=false;
+        this.toastrService.error("Oops, Something went wrong.");
+         this.isLoaded = false;
+      }
+    );
+      
+  }
 }

@@ -103,17 +103,17 @@
 
                         <th style="width:180px ;" *ngFor="let col of columns"
                             [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}">
-                        
-                              {{col.Headers}}
-                              
-                            
+
+                            {{col.Headers}}
+
+
                         </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                     <tr>
                         <td style="width:180px" *ngFor="let col of columns"
-                            [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}">
+                            [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}" (click)="GETSAMPLEPRODUCTDETAILS(rowData)">
                             <a class="click" (click)="routeList(rowData)">
                                 {{rowData[col.Field]}}
                             </a>
@@ -153,4 +153,51 @@
             </div>
         </div>
     </div>
+</p-dialog>
+
+<p-dialog header="Sample Product Details" [modal]="true" [(visible)]="this.productDetailFlag" [style]="{ width: '50rem' }">
+
+            <div class="card-body">
+                <p-table #dt [value]="showGridData1.GridList" [columns]="showGridData1.GridHeadersList"
+                    responsiveLayout="scroll" [paginator]="true" class="prime-table" [showCurrentPageReport]="true"
+                    [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]" [totalRecords]="totalRecords"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true"
+                    (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true"
+                    [globalFilterFields]="showGridData1.SearchKey">
+                    <!-- <ng-template pTemplate="caption">
+
+
+                    </ng-template> -->
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+
+                            <th style="max-width:100px !important;" *ngFor="let col of columns"
+                                [ngClass]="{'width-12': col.Headers === 'SAMPLE_PRODUCT'}">
+
+                                {{col.Headers}}
+
+
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td style="max-width:100px !important;" *ngFor="let col of columns"
+                                [ngClass]="{'width-12': col.Headers === 'SAMPLE_PRODUCT'}">
+                                <a class="click" (click)="routeList(rowData)">
+                                    {{rowData[col.Field]}}
+                                </a>
+                               
+                            </td>
+                            <!-- <td style="width:180px" *ngFor="let col of columns"
+                             *ngIf="col.Headers === 'ACTION'">
+                          
+                                {{rowData[col.Field]}}
+                          
+                        </td> -->
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
 </p-dialog>
