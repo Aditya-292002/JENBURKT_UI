@@ -90,14 +90,14 @@
                             <label> </label>
                             <div>
                                 <p-table [value]="PRODUCT_LIST" responsiveLayout="scroll" scrollHeight="420px"
-                                    [globalFilterFields]="['DESCRIPTION', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
+                                    [globalFilterFields]="['PRODUCT_DESC', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
                                         ,'POOL_HQCOUNT','TOTAL_REQ'
                                     ]"
                                     #dt2>
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th scope="col" class="width-200">Product
-                                                <p-columnFilter class="column-filter" field="DESCRIPTION"
+                                                <p-columnFilter class="column-filter" field="PRODUCT_DESC"
                                                     matchMode="equals" [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
                                                         let-filter="filterCallback">
@@ -122,7 +122,7 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                                         <tr>
-                                            <td class="width-2">{{ data.DESCRIPTION }}</td>
+                                            <td class="width-2">{{ data.PRODUCT_DESC }}</td>
                                             <td class="width-2">{{ data.UNIT_PACK }}</td>
                                             <td class="width-2">{{ data.POOL_HQCOUNT }}</td>
                                             <td class="width-2">{{ data.INNER_PACK }}</td>

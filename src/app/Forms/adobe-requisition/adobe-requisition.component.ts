@@ -71,9 +71,9 @@ export class AdobeRequisitionComponent implements OnInit {
       this.DROPDOWN_PRODUCT_LIST = [];
       this.SAMPLE_PRODUCT_LIST = this.PRODUCT_LIST.map((item: any) => ({
         SAMPLE_PRODUCT_CODE: item.SAMPLE_PRODUCT_CODE,
-        DESCRIPTION: item.DESCRIPTION,
+        PRODUCT_DESC: item.PRODUCT_DESC,
       }));
-      const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
+      const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
       productlist.forEach((element: any) => {
         this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
       })
