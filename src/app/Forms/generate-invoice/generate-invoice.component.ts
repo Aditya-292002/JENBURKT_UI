@@ -65,8 +65,9 @@ export class GenerateInvoiceComponent implements OnInit {
   ADDRESS:any;
   IS_CHECK:any = 0;
   isHideButtons:boolean = false;
-
+TRANSPORT_NAME:any
   REF_INVOICE_NO:any;
+  TransportFlag:boolean=false
   constructor(private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService,
     private datepipe: DatePipe,private router: Router,private SharedService: SharedService) { }
 
@@ -451,6 +452,53 @@ export class GenerateInvoiceComponent implements OnInit {
       this.onSaveGenerateInvoiceClick();
       return
     }
+  }
+
+  openDialogueForTransport(){
+    this.TransportFlag=true
+  }
+
+     updateDetails() {
+      console.log('TRANSPORT_NAME',this.TRANSPORT_NAME );
+      
+    if (this.TRANSPORT_NAME === '' || this.TRANSPORT_NAME === undefined) {
+      this.toastrService.error('Please Transporter Name')
+      return
+    }
+    this.userInfo = JSON.parse(this.authService.getUserDetail());
+    let data = {
+
+      "USER_ID": (+this.userInfo.USER_ID),
+      "TRANSPORT_NAME": this.TRANSPORT_NAME
+
+    }
+
+    console.log(data);
+
+
+     this.http.postnew(this.url.ADDNEWDISPATCHER, data).then(
+      (res: any) => {
+        console.log("response", res);//PRODUCTLIST
+        this.isLoaded = false;
+
+        if (res.data[0].FLAG == true) {
+          this.toastrService.success(res.data[0].MSG);
+          this.TransportFlag=false
+            this.GetSampleInvoiceMasterList();
+
+        }
+        if (res.data[0].FLAG == false) {
+          this.toastrService.error(res.data[0].MSG);
+           this.TransportFlag=false
+        }
+
+      },
+      error => {
+        console.log(error);
+         this.TransportFlag=false;
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
   }
 
 }

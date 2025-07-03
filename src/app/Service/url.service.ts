@@ -194,6 +194,7 @@ export class URLService {
   public UPDATESAMPLEINVOICEDETAILS = this.sharedService.ApiUrl + '/api/SampleProduct/UPDATESAMPLEINVOICEDETAILS';
   public GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO';
   public APPROVEDPMTSAMPLEREQUISITIONDATA= this.sharedService.ApiUrl + '/api/SampleProduct/APPROVEDPMTSAMPLEREQUISITIONDATA';
+  public ADDNEWDISPATCHER= this.sharedService.ApiUrl + '/api/SampleProduct/ADDNEWDISPATCHER';
  
  
 

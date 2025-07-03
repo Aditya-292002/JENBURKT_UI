@@ -62,7 +62,7 @@
                                                         [disabled]="disableAllInput">
                                                     </p-dropdown>
 
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-sm-12 col-md-12 col-lg-4">
                                             <div class="mb-3">
 
@@ -126,48 +126,52 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                <div class="col-sm-12 col-md-12 col-lg-4">
-                                    <div class="mb-3">
 
-                                        <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
-                                            <label>Docket No</label>
-                                            <input type="text" class="form-control" placeholder="Docket No"
-                                                [(ngModel)]="DOCKET_NO">
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                                    <label>Docket No</label>
+                                                    <input type="text" class="form-control" placeholder="Docket No"
+                                                        [(ngModel)]="DOCKET_NO">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                                                    <label>Docket Dt</label>
+                                                    <p-calendar [(ngModel)]="DOCKET_DT" [showIcon]="true" inputId="icon"
+                                                        dateFormat="dd-mm-yy"></p-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-4">
+                                            <div class="mb-3">
+
+                                                <div class="addbtn"
+                                                    [ngClass]="{'required-field':isHighLightDispatch === 'Yes'}">
+                                                    <label>Dispatch Thru<button type="submit"
+                                                            class="addbtn btn-primary ml-2"
+                                                            (click)="openDialogueForTransport()">Add</button></label>
+                                                    <p-dropdown [options]="TRANSPORT_LIST" appendTo="body"
+                                                        optionLabel="DESCRIPTION" optionValue="ID" appendTo="body"
+                                                        placeholder="Please Select.." [(ngModel)]="DISPATCH"
+                                                        [ngModelOptions]="{standalone:true}">
+                                                    </p-dropdown>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-4">  
-                                    <div class="mb-3">
-
-                                        <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
-                                            <label>Docket Dt</label>
-                                            <p-calendar [(ngModel)]="DOCKET_DT" [showIcon]="true" inputId="icon"
-                                                dateFormat="dd-mm-yy"></p-calendar>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-4">
-                                    <div class="mb-3">
-
-                                        <div [ngClass]="{'required-field':isHighLightDispatch === 'Yes'}">
-                                            <label>Dispatch Thru</label>
-                                            <p-dropdown [options]="TRANSPORT_LIST" appendTo="body"
-                                                optionLabel="DESCRIPTION" optionValue="ID" appendTo="body"
-                                                placeholder="Please Select.." [(ngModel)]="DISPATCH"
-                                                [ngModelOptions]="{standalone:true}">
-                                            </p-dropdown>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-5" style=" border: 1px dashed #999ea3; padding:-1px">
+                                <div class="col-sm-12 col-md-12 col-lg-5"
+                                    style=" border: 1px dashed #999ea3; padding:-1px">
                                     <div class="row">
 
                                         <div class="col-sm-12 col-md-12 col-lg-6">
@@ -202,7 +206,8 @@
                                                 <div [ngClass]="{'required-field':isHighLightEmail === 'Yes'}">
                                                     <label>Email</label>
                                                     <input type="text" [(ngModel)]="EMAIL_ID" class="form-control"
-                                                        placeholder="Email" [ngModelOptions]="{standalone:true}" [disabled]="disableAllInput">
+                                                        placeholder="Email" [ngModelOptions]="{standalone:true}"
+                                                        [disabled]="disableAllInput">
                                                 </div>
 
                                             </div>
@@ -234,16 +239,16 @@
 
                                             </div>
                                         </div>
-                                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
 
-                                    <div class="mb-3">
+                                            <div class="mb-3">
 
-                                        <label>Address</label>
-                                        <textarea type="text" [(ngModel)]="ADDRESS" class="form-control"
-                                            [ngModelOptions]="{standalone:true}" placeholder="Address"
-                                            [disabled]="disableAllInput"></textarea>
-                                    </div>
-                                </div>
+                                                <label>Address</label>
+                                                <textarea type="text" [(ngModel)]="ADDRESS" class="form-control"
+                                                    [ngModelOptions]="{standalone:true}" placeholder="Address"
+                                                    [disabled]="disableAllInput"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -320,12 +325,11 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-2"> 
+                                <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-2">
                                     <div class="mb-3 ml-auto">
                                         <div class="form-group from1 form-check mb-0 header ">
                                             <input type="checkbox" class="form-check-input" id="Dispatched"
-                                                [(ngModel)]="IS_CHECK" (change)="Checked($event)"
-                                               >
+                                                [(ngModel)]="IS_CHECK" (change)="Checked($event)">
                                             <label class="form-check-label" class="is-checking-i" for="Dispatched">
                                                 Dispatched</label>
                                         </div>
@@ -367,7 +371,7 @@
                                                 <td>{{i+1}}</td>
                                                 <td>
                                                     <div class="search-dropdown">
-                                                         <input type="text" class="form-control"
+                                                        <input type="text" class="form-control"
                                                             [(ngModel)]="list.DESCRIPTION" placeholder=""
                                                             [disabled]="disableAllInput" [disabled]="list.isDisabled">
                                                         <!-- <p-dropdown [options]="list.PRODUCTLIST" appendTo="body"
@@ -499,3 +503,25 @@
             </div>
         </div>
     </div>
+
+
+    <p-dialog header="Add New Transporter" [modal]="true" [(visible)]="TransportFlag" [style]="{ width: '50rem' }">
+        <div class=" gap-3 ">
+            <div>
+                <div [ngClass]="{'required-field':isHighLightTotalGrossWt === 'Yes'}">
+                    <div class="row">
+                       
+                        <div class="col-md-8">
+                             <label>Transport Name</label> <input type="text" [(ngModel)]="TRANSPORT_NAME" class="form-control"
+                                placeholder="Enter Transport Name">
+                        </div>
+                        <div class="col-md-4 align-content-center mt-3"> <button type="submit" class="btn-primary saveButton" (click)="updateDetails()">
+                                Save </button></div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </p-dialog>

@@ -688,7 +688,8 @@ export class EditInvoiceComponent implements OnInit {
         this.isLoaded = false;
 
         if (res.data[0].FLAG == true) {
-          this.toastrService.success(res.data[0].MSG)
+          this.toastrService.success(res.data[0].MSG);
+          this.onPrintInvoiceChange();
 
         }
         if (res.data[0].FLAG == false) {
