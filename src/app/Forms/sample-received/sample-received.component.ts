@@ -44,6 +44,7 @@ export class SampleReceivedComponent implements OnInit {
     this.userInfo = JSON.parse(this.authService.getUserDetail());
     this.GETSAMPLERECEIVEDETAILSBYUSERID();
     this.GETHQLIST();
+    this.FROM_DATE=new Date(this.getOneMonthAgo())
   }
     onPageChange(event: any) {
     console.log(event.first);
@@ -235,5 +236,10 @@ GETHQLIST(){
       }
     );
       
+  }
+   getOneMonthAgo(): string {
+    const today = new Date();
+    today.setMonth(today.getMonth() - 1); // Subtract 1 month
+    return today.toISOString().split('T')[0]; // Return as YYYY-MM-DD
   }
 }

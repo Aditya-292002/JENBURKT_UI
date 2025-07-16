@@ -112,7 +112,7 @@
                                         <p-dropdown appendTo="body" [options]="periodList"
                                             [(ngModel)]="periodForDetails" [filter]="true" filterBy="PERIOD_DESC" 
                                             [ngModelOptions]="{standalone: true}" placeholder="Please Select..."
-                                            optionLabel="PERIOD_DESC" optionValue="PERIOD_ID">
+                                            optionLabel="PERIOD_DESC" optionValue="PERIOD_ID" (focusout)="select()">
                                         </p-dropdown>
                                     </div>
                                 </div>

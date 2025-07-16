@@ -135,7 +135,7 @@ export class SampleRequisitionComponent implements OnInit {
           this.isDataPickUpPopup = true;
           this.isDataPickUpPopupMess = res.SAMPLE_REQUISITION_LIST[0].MSG;
         } else {
-          this.isDataPickUpPopup = false;
+          this.isDataPickUpPopup = false; 
           this.SAMPLE_REQUISITION_LIST = res.SAMPLE_REQUISITION_LIST;
           if (this.SAMPLE_REQUISITION_LIST.length > 0) {
             this.POOL_LIST = [];

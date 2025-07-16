@@ -74,6 +74,8 @@ import { PayementExcelUploadComponent } from './Forms/payement-excel-upload/paye
 import { ApprovedPayementListComponent } from './Forms/approved-payement-list/approved-payement-list.component';
 import { SampleReceivedComponent } from './Forms/sample-received/sample-received.component';
 import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requisition.component';
+import { AdhocApprovalListComponent } from './Forms/adhoc-approval-list/adhoc-approval-list.component';
+import { PmtApprovalListComponent } from './Forms/pmt-approval-list/pmt-approval-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -152,7 +154,9 @@ const routes: Routes = [
       { path: 'paymentexcelupload', component: PayementExcelUploadComponent },
       { path: 'paymentapprovedlist', component: ApprovedPayementListComponent },
       { path: 'samplereceive', component: SampleReceivedComponent },
-      { path: 'adoberequisition', component: AdobeRequisitionComponent },
+      { path: 'adhocrequisition', component: AdobeRequisitionComponent },
+      { path: 'adhocrequisitionlist', component: AdhocApprovalListComponent },
+       { path: 'adhocpmtapproval', component: PmtApprovalListComponent },
     ]
   },
 ];
@@ -162,4 +166,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
+
 export class AppRoutingModule { }

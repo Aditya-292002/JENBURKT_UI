@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   v_post_data:any={};
   isAgree:boolean=false;
   isTermsPopUp:boolean=false;
+  IS_LIVE: string;
 
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
         // console.log("response",res);
         this.SharedService.isMenu.next(res);
         this.AuthService.setMenuList(JSON.stringify(res))
+        // this.SAMPLEREQUISITIONISLIVE()
         this.router.navigate(["/dashboard"]);
       },
       error =>{
@@ -74,5 +76,7 @@ export class LoginComponent implements OnInit {
   ClosePopUp(){
     this.isTermsPopUp = false;
   }
+
+ 
 
 }

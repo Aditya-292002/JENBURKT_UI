@@ -261,9 +261,9 @@
 
                             <ng-template pTemplate="footer">
                                 <div class="d-flex justify-content-center align-items-center p-2">
-                                    <button type="submit" class="btn-primary saveButton mr-2"
+                                    <button type="submit"  *ngIf="this.IS_DISABLED == false" class="btn-primary saveButton mr-2"
                                         (click)="SAVEHQCODEBYPOOLCODE()">Save</button>
-                                    <button type="submit" class="btn-primary formButton mr-2"
+                                    <button type="submit"   *ngIf="this.IS_DISABLED == false" class="btn-primary formButton mr-2"
                                         (click)="Cancel()">Cancel</button>
                                 </div>
                             </ng-template>
