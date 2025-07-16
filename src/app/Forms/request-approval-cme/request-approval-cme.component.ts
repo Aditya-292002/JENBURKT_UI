@@ -372,7 +372,7 @@ export class RequestApprovalCmeComponent implements OnInit {
 
 
 
-    //  console.log('CmeApproveData ->' , this.CmeApproveData)
+     console.log('CmeApproveData ->1' , this.CmeApproveData)
     let data = {
       USER_ID: this.userInfo.USER_ID,
       SALES_ROLE_ID: SALES_ROLE_ID,
@@ -391,7 +391,7 @@ export class RequestApprovalCmeComponent implements OnInit {
       if (res.FLAG == true) {
        
         this.toastrService.success(res.MSG);
-        await this.GETCMEREQUESTLISTUSERID();
+      
 
         //this.isLoaded=false;
        
@@ -399,6 +399,7 @@ export class RequestApprovalCmeComponent implements OnInit {
 
         if(this.userInfo.SALESROLE_ID == 6){
           this.CmeApproveData = [];
+        console.log('CmeApproveData ->2' , this.CmeApproveData)
 
           //added by hemant
           for (let i = 0; i < this.selectedApprovalData.length; i++) {
@@ -421,6 +422,7 @@ export class RequestApprovalCmeComponent implements OnInit {
 
             // "datalist":this.selectedApprovalData[i].datalist   // gaureshvcomment
             }
+          
             await  this.GETCMEREQUESTDATABYCMENO(data)
             await this.GetCreateBase64(this.datalist)
           
@@ -433,7 +435,7 @@ export class RequestApprovalCmeComponent implements OnInit {
             j++;
           }
            this.isLoaded=false;
-
+          
           // let k = 0;
           // for (let i = 0; i < this.selectedApprovalData.length; i++) {
           //       let data= {
@@ -456,8 +458,12 @@ export class RequestApprovalCmeComponent implements OnInit {
           
          // await this.GetCreateBase64(this.CmeApproveData)
        }else{
+        console.log('inside else of sales roleid 6');
+        
           this.isLoaded=false;
+
        }
+        await this.GETCMEREQUESTLISTUSERID();
         this.CmeApproveData = [];
         this.selectedApprovalData = [];
         this.selectAll = false;
@@ -527,6 +533,8 @@ export class RequestApprovalCmeComponent implements OnInit {
   }
 
   async GetCreateBase641(data: any) {
+    console.log('inside base64');
+    
    console.log('data ->', data[0].datalist)
    await this.GETCMEMASTERLIST();
     for (let index = 0; index < data.length; index++) {
@@ -1100,12 +1108,14 @@ export class RequestApprovalCmeComponent implements OnInit {
     //   "USER_ID": this.userInfo.USER_ID,
     //   "CME_ID": this.CME_ID,
     // }
+    console.log('inside GETCMEREQUESTDATABYCMENO');
+    
     this.isLoaded = true;
    await this.http.postnew(this.url.GETCMEREQUESTDATABYCMENO, data).then((res: any) => {
     this.datalist=[];
     this.datalist.push(res)
     console.log('this.datalist',this.datalist);
-    
+      console.log('API call  GETCMEREQUESTDATABYCMENO');
       //  console.log('step-2 ')
      //this.datalist[0] = res
     //  this.CME_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
@@ -1215,6 +1225,9 @@ export class RequestApprovalCmeComponent implements OnInit {
     //  this.GETCMEDOCTORLIST(this.HQ_CODE);
       this.isLoaded = false;
     });
+
+
+     console.log('out GETCMEREQUESTDATABYCMENO');
    // await this.GetCreateBase64( this.datalist)
   }
 

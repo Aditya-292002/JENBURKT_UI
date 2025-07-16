@@ -41,7 +41,7 @@ export class MoetargetreportComponent implements OnInit {
   headingForcomplete: any;
   FROM_DATE:Date=new Date();
   filename: any;
-  file: any;
+  file: any="MOE_TARGET_DOCS";
   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService) { }
 
   ngOnInit(): void {
@@ -187,7 +187,7 @@ export class MoetargetreportComponent implements OnInit {
   async downloadAndDecryptZip(folderPath: string) {
    await this.getFileName()
      let data = {
-      "PATH": this.file,
+      "PATH": "MOE_TARGET_DOCS",
       "FOLDER":"MOE_TARGET_DOCS",
       "PERIOD_ID":this.periodForDetails
     };
@@ -236,9 +236,9 @@ async folder(){
     if(this.periodForDetails==undefined){
       this.toastrService.error("Please select Period");
     }else{
-console.log('inside else');
+      console.log('inside else');
 
-    //  await this.getFileName()
+     await this.getFileName()
   
       await this.downloadAndDecryptZip(this.periodForDetails)
     }
@@ -266,10 +266,10 @@ console.log('inside else');
      
      (res:any)=>{
       console.log('hemant',res);
-      //  if(res !=null){
+       if(res !=null){
 
-      //    this.file=res.File[0].PERIOD_DESC;
-      //  }
+         this.file=res.File[0].PERIOD_DESC;
+       }
     
      },
      error =>{
@@ -405,6 +405,10 @@ console.log('inside else');
         this.toastrService.error("Oops, Something went wrong.");
       }
     );
+  }
+  select(){
+    console.log("periodForDetails",this.periodForDetails);
+    
   }
 }
 

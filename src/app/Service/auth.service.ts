@@ -100,5 +100,9 @@ export class AuthService {
     localStorage.clear();
     this.router.navigate([`/login`]);
   }
+   setSampleRequisitionLive(val:any){
+    localStorage.setItem("IS_LIVE",val);
+  }
+    
 
 }

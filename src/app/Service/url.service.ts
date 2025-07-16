@@ -189,13 +189,23 @@ export class URLService {
   public GETHQCODEEXCELDOWNLOADDATABYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETHQCODEEXCELDOWNLOADDATABYUSERID';
   public GETSAMPLEPRODUCTREPORT= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLEPRODUCTREPORT';
   public GETCONFORMATIONPOPUPMESS = this.sharedService.ApiUrl + '/api/SampelRequisition/GETCONFORMATIONPOPUPMESS';
-  public GETPRODUCTLISTBYCYCLEID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETPRODUCTLISTBYCYCLEID';
+  public GETPRODUCTLISTBYCYCLEID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETPRODUCTLISTFORADHOC';
   public GETPENDINGDETAILSFORINVOICE = this.sharedService.ApiUrl + '/api/SampleProduct/GETPENDINGDETAILSFORINVOICE';
   public UPDATESAMPLEINVOICEDETAILS = this.sharedService.ApiUrl + '/api/SampleProduct/UPDATESAMPLEINVOICEDETAILS';
   public GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO= this.sharedService.ApiUrl + '/api/SampleProduct/GETSAMPLERECEIVEPRODUCTDETAILSBYINVOICENO';
   public APPROVEDPMTSAMPLEREQUISITIONDATA= this.sharedService.ApiUrl + '/api/SampleProduct/APPROVEDPMTSAMPLEREQUISITIONDATA';
   public ADDNEWDISPATCHER= this.sharedService.ApiUrl + '/api/SampleProduct/ADDNEWDISPATCHER';
- 
+
+  public GETADHOCSAMPLEREQUISITIONLIST = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOCSAMPLEREQUISITIONLIST'
+  public SAVEADHOCSAMPLEREQUISITION = this.sharedService.ApiUrl + '/api/SampelRequisition/SAVEADHOCSAMPLEREQUISITION'
+  public GETADHOREQUESTLIST = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOREQUESTLIST'
+  public GETADHOCSAMPLEREQUISITIONLISTBYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOCSAMPLEREQUISITIONLISTBYUSERID'
+  public APPROVEADHOCSAMPLEREQUISITION = this.sharedService.ApiUrl + '/api/SampelRequisition/APPROVEADHOCSAMPLEREQUISITION'
+ public GETADHOCSMCALCULATEPACKQTYBYPOOLCODE = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOCSMCALCULATEPACKQTYBYPOOLCODE'
+ public GETPMTDHOCSAMPLEREQUISITIONLISTBYUSERID = this.sharedService.ApiUrl + '/api/SampelRequisition/GETPMTDHOCSAMPLEREQUISITIONLISTBYUSERID'
+ public GETADHOCPMTCALCULATEPACKQTYBYPOOLCODE = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOCPMTCALCULATEPACKQTYBYPOOLCODE'
+  public GETADHOCSAMPLEREQUISITIONLISTBYROLE = this.sharedService.ApiUrl + '/api/SampelRequisition/GETADHOCSAMPLEREQUISITIONLISTBYROLE'
+  // public SAMPLEREQUISITIONISLIVE = this.sharedService.ApiUrl + '/api/SampelRequisition/SAMPLEREQUISITIONISLIVE'
  
 
 }

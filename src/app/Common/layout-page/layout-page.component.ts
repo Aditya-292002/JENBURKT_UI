@@ -70,12 +70,18 @@ export class LayoutPageComponent implements OnInit {
   customMenuPMT_Sample_Requisition_Approval: boolean;
   customCycle_Sample_Requisition: boolean;
   customMenuAdobe_Requisition: boolean;
-
+  customMenuSample_Adhoc_Approval:boolean
+  customMenuSample_Received:boolean
+  customMenuSample_Paymnet_excel_upload:boolean;
+  customMenuSample_adhoc_pmt_approval:boolean;
+  HQ_CODE:any;
+  IS_LIVE:any
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
   }
 
   ngOnInit(): void {
+    // this.IS_LIVE=this.AuthService.SAMPLEREQUISITIONISLIVE();
     $("#menu-toggle").click(function (e: any) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
@@ -83,10 +89,14 @@ export class LayoutPageComponent implements OnInit {
     this.menuData = this.AuthService.getMenuList();
     this.menuList = JSON.parse(this.menuData);
     this.userData = this.AuthService.getUserDetail();
-    this.userName = JSON.parse(this.userData).USER_NAME;
+    this.userName = JSON.parse(this.userData).EMPLOYEE_NAME;
+        this.HQ_CODE = JSON.parse(this.userData).USER_NAME;
     this.roleName = JSON.parse(this.userData).ROLE_NAME;
     this.roleID = JSON.parse(this.userData).ROLE_ID;
     this.salesRoleId = JSON.parse(this.userData).SALESROLE_ID;
+   // localStorage.getItem("IS_LIVE")
+    //console.log('this.IS_LIVE',this.IS_LIVE);
+    
   }
   menu_list = [
     {
@@ -198,6 +208,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuAdobe_Requisition = false;
     this.customMenuPrint_Invoice = false;
     this.customMenuSample_Invoice = false;
+    this.customMenuSample_Adhoc_Approval=false;
     this.customMenuDiscount_Request = false;
     this.customMenuDiscount_Approval = false;
     this.customMenuClaim_Request = false;
@@ -231,6 +242,9 @@ export class LayoutPageComponent implements OnInit {
     this.Approvalcme = false;
     this.Discount_Details = false;
     this.Upload_Mkt_Report = false
+    this.customMenuSample_Received=false
+   this.customMenuSample_Paymnet_excel_upload=false
+   this.customMenuSample_adhoc_pmt_approval=false
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
     if (data == 'Area') {
@@ -280,6 +294,8 @@ export class LayoutPageComponent implements OnInit {
       this.customMenuPrint_Invoice = true;
     } else if (data == 'Sample_Invoice') {
       this.customMenuSample_Invoice = true;
+    }else if (data == 'Adhoc_Approval') {
+      this.customMenuSample_Adhoc_Approval = true;
     }
     else if (data == 'Discount_Request') {
       this.customMenuDiscount_Request = true;
@@ -353,6 +369,15 @@ export class LayoutPageComponent implements OnInit {
       this.Discount_Details = true;
     } else if (data == 'Upload_Mkt_Report') {
       this.Upload_Mkt_Report = true;
+    }
+    else if (data == 'Sample_Received') {
+      this.customMenuSample_Received = true;
+    }
+    else if (data == 'Paymnet_excel_upload') {
+      this.customMenuSample_Paymnet_excel_upload = true;
+    }
+    else if (data == 'adhoc_pmt_approval') {
+      this.customMenuSample_adhoc_pmt_approval = true;
     }
     // else{Upload_Mkt_Report
     //   this.customMenuClaim=false;

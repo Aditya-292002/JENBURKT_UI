@@ -106,6 +106,8 @@ import { PayementExcelUploadComponent } from './Forms/payement-excel-upload/paye
 import { ApprovedPayementListComponent } from './Forms/approved-payement-list/approved-payement-list.component';
 import { SampleReceivedComponent } from './Forms/sample-received/sample-received.component';
 import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requisition.component';
+import { AdhocApprovalListComponent } from './Forms/adhoc-approval-list/adhoc-approval-list.component';
+import { PmtApprovalListComponent } from './Forms/pmt-approval-list/pmt-approval-list.component';
 
 registerLocaleData(localeIn);
 
@@ -188,7 +190,9 @@ registerLocaleData(localeIn);
     SampleReceivedComponent,
     ApprovedPayementListComponent,
     PayementExcelUploadComponent,
-    AdobeRequisitionComponent
+    AdobeRequisitionComponent,
+    AdhocApprovalListComponent,
+    PmtApprovalListComponent
     
   ],
   imports: [
