@@ -47,6 +47,7 @@ export class UserMasterComponent implements OnInit {
   isHighLightSalesRole:string="No";
   isHighLightHQArea:string="No";
   isHighLightWEF:string="No";
+  DATE_OF_JOINING:any
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
@@ -135,6 +136,7 @@ export class UserMasterComponent implements OnInit {
     this.MobileNo = data.MOBILE_NO;
     this.Email = data.EMAIL;
     this.empCode = data.EMP_CODE;
+    this.DATE_OF_JOINING=new Date(data.DATE_OF_JOINING)
     this.SALEROLE_LIST.forEach((element:any)=>{
       if(element.SALESROLE_ID == data.SALESROLE_ID){
         this.salesRoleId = element
@@ -235,6 +237,9 @@ export class UserMasterComponent implements OnInit {
   }
   SaveUserMaster() {
     this.userInfo = this.AuthService.getUserDetail();
+    let date=this.datepipe.transform(this.DATE_OF_JOINING,'yyyy-MM-dd')
+    console.log('date ',date);
+    
     let data={
       "LOGIN_ID":this.loginId,
       "LOGIN_USER_ID":JSON.parse(this.userInfo).USER_ID,
@@ -250,9 +255,13 @@ export class UserMasterComponent implements OnInit {
       "ADDRESS":this.Address,
       "MOBILE_NO":this.MobileNo,
       "EMAIL":this.Email,
-      "ACTIVE":(this.Active==true?"1":"0")
+      "ACTIVE":(this.Active==true?"1":"0"),
+      "DATE_OF_JOINING":(this.SharedService.isValid(date)?date:null)
     }
+    console.log('data',data);
+    
 
+   // return 
     this.isLoaded = true;
     this.http.postnew(this.url.saveUserMaster, data).then(
       (res:any)=>{
@@ -289,6 +298,7 @@ export class UserMasterComponent implements OnInit {
     this.userMasterMode = "Add User Master";
     this.isAddUserMaster = false;
     this.isUserPopUp = false;
+    this.DATE_OF_JOINING=""
   }
 
   filterRoleId:any=[];
