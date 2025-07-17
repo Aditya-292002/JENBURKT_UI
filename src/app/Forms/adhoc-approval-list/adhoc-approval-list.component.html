@@ -15,7 +15,8 @@
             <button type="submit" class="btn-primary formButton mr-2" (click)="goToList()" *ngIf="toggleToList">
                 List
             </button>
-            <button type="submit" class="btn-primary saveButton mr-2" *ngIf="toggleToList && !STATUSFLAG" (click)="OpenConformationPopup()">
+            <button type="submit" class="btn-primary saveButton mr-2" *ngIf="toggleToList && !STATUSFLAG"
+                (click)="OpenConformationPopup()">
                 Approve
             </button>
             <!-- <button type="submit" class="btn-primary saveButton mr-2" (click)="saveAdhocRequisition()"
@@ -39,7 +40,7 @@
                                         ,'POOL_HQCOUNT','TOTAL_REQ'
                                     ]" #dt2>
 
-                                                                <ng-template pTemplate="caption">
+                                <ng-template pTemplate="caption">
                                     <div class="row">
                                         <div class="col-md-2 col-lg-2 col-sm-12 table-header text-center">
                                             <div class="text-left">
@@ -102,7 +103,7 @@
                                     <tr (click)="GETREQUESTDETAILS(data)">
                                         <td class="width-2">{{ data.RSM_NAME }}</td>
                                         <td class="width-2">{{ data.REQUEST_NO }}</td>
-                                                   <td class="width-2">{{ data.REQUEST_DATE | date:'dd-MM-yyy' }}</td>
+                                        <td class="width-2">{{ data.REQUEST_DATE | date:'dd-MM-yyy' }}</td>
                                         <td class="width-2">{{ data.HQ_CODE }}</td>
                                         <td class="width-2">{{ data.HQ_DESC }}</td>
                                         <td class="width-2">{{ data.REMARKS }}</td>
@@ -119,7 +120,7 @@
         </div>
     </div>
 
-        <div class="card" *ngIf="this.toggleToList">
+    <div class="card" *ngIf="this.toggleToList">
         <div class="card-body">
             <div class="">
                 <div class="row">
@@ -137,8 +138,9 @@
                         <div class="mb-3">
                             <label>Req Date</label>
                             <div>
-                                 <input type="text" class="form-control mr-2" [disabled]="true" [(ngModel)]="REQUEST_DATE"
-                                    [ngModelOptions]="{standalone:true}" placeholder="HQ_CODE">
+                                <input type="text" class="form-control mr-2" [disabled]="true"
+                                    [(ngModel)]="REQUEST_DATE" [ngModelOptions]="{standalone:true}"
+                                    placeholder="HQ_CODE">
 
                                 <!-- <p-calendar [(ngModel)]="REQUEST_DATE" appendTo="body" [showIcon]="true"
                                     dateFormat="dd.mm.yy" inputId="icon" placeholder="REQUEST DATE"></p-calendar> -->
@@ -148,7 +150,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="mb-2">
                             <label>HQ</label>
-                            
+
                             <div [ngClass]="{'required-field':isHighLightHQ=== 'Yes'}">
                                 <input type="text" class="form-control mr-2" [disabled]="true" [(ngModel)]="HQ_DESC"
                                     [ngModelOptions]="{standalone:true}" placeholder="HQ_CODE">
@@ -208,7 +210,8 @@
                             <label>Remark</label>
                             <div>
                                 <textarea name="" id="" cols="3" rows="" class="form-control" [(ngModel)]="REMARK"
-                                    [ngModelOptions]="{standalone:true}" placeholder="Please Enter..."  [disabled]="STATUSFLAG"></textarea>
+                                    [ngModelOptions]="{standalone:true}" placeholder="Please Enter..."
+                                    [disabled]="STATUSFLAG"></textarea>
                             </div>
                         </div>
                     </div>
@@ -237,7 +240,7 @@
                                     <ng-template pTemplate="header">
 
                                         <tr>
-                                             <!-- <th scope="col">Pool
+                                            <!-- <th scope="col">Pool
                                                 <p-columnFilter class="column-filter" field="POOL_DESC"
                                                     matchMode="equals" [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
@@ -254,14 +257,14 @@
                                                 </p-columnFilter>
                                             </th> -->
                                             <th scope="col" class="width-200">Product
-                                         <p-columnFilter class="column-filter" field="DESCRIPTION"
+                                                <p-columnFilter class="column-filter" field="DESCRIPTION"
                                                     matchMode="equals" [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
-                                                        let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="PRODUCT_LIST"
-                                                            (onChange)="filter($event.DESCRIPTION)" [showClear]="true"
+                                                        let-filter="filterCallback">    
+                                                        <p-dropdown [ngModel]="DESCRIPTION?.DESCRIPTION" [options]="SAMPLE_PRODUCT_LIST"
+                                                            (onChange)="filter($event.value);CHANgeon($event.value)" [showClear]="true"
                                                             appendTo="body" placeholder="Select" [filter]="true"
-                                                            [filterBy]="'SAMPLE_PRODUCT_CODE'">
+                                                            [optionLabel]="'DESCRIPTION'" [filterBy]="'DESCRIPTION'">
                                                             <ng-template let-option pTemplate="item">
                                                                 <span>{{option.DESCRIPTION}}</span>
                                                             </ng-template>
@@ -284,11 +287,11 @@
                                                     </ng-template>
                                                 </p-columnFilter> -->
                                             </th>
-                                            <th >User Info</th>
+                                            <th>User Info</th>
                                             <!-- <th  scope="col">HQ Count</th> -->
-                                            <th >Inner Pack</th>
-                                            <th >Req Inner Pack HQ</th>
-                                            <th >Total HQ Qty</th>
+                                            <th>Inner Pack</th>
+                                            <th>Req Inner Pack HQ</th>
+                                            <th>Total HQ Qty</th>
                                             <!-- <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th> -->
                                         </tr>
                                     </ng-template>
@@ -300,15 +303,15 @@
                                             <!-- <td class="width-2">{{ data.POOL_HQCOUNT }}</td> -->
                                             <td class="width-2">{{ data.INNER_PACK }}</td>
                                             <td class="width-2">
-                                                <input type="text" [(ngModel)]="data.REQ_HQ_QTY"
-                                                    class="form-control" name="pincode"
+                                                <input type="text" [(ngModel)]="data.REQ_HQ_QTY" class="form-control"
+                                                    name="pincode"
                                                     (focusout)="GETSMCALCULATEPACKQTYBYPOOLCODE(data,rowIndex)"
                                                     [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
                                                     placeholder="Req Inner Pack Qty" maxlength="4"
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
                                             </td>
                                             <td class="width-2">
-                                                {{ data.REQUESTED_PACK_QTY  }}
+                                                {{ data.REQUESTED_PACK_QTY }}
                                             </td>
                                             <!-- <td class="width-2">{{ data.REQ_HQ_QTY }}</td> -->
                                         </tr>

@@ -28,6 +28,7 @@ export class AdhocApprovalListComponent implements OnInit {
     APPROVEDFLAG: boolean=false;
   PENDINGFLAG: boolean=true;
   LISTSTATUS: string='P';
+  DESCRIPTION: any;
  constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService,private router: Router) { }
 
@@ -231,6 +232,10 @@ GETADHOCSAMPLEREQUISITIONLIST() {
        this.LISTSTATUS='R'
      this.GETADHOCSAMPLEREQUISITIONLISTBYUSERID()
    }
+}
+CHANgeon(E){
+console.log('dropdown',E);
+console.log('this.DESCRIPTION',this.DESCRIPTION);
 }
 
   
