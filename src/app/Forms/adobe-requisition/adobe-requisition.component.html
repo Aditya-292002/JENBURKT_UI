@@ -158,10 +158,10 @@
                                                     matchMode="equals" [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
                                                         let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="PRODUCT_LIST"
+                                                        <p-dropdown [ngModel]="SAMPLE_PRODUCT_CODE" [options]="SAMPLE_PRODUCT_LIST"
                                                             (onChange)="filter($event.DESCRIPTION)" [showClear]="true"
                                                             appendTo="body" placeholder="Select" [filter]="true"
-                                                            [filterBy]="'SAMPLE_PRODUCT_CODE'">
+                                                            [filterBy]="'DESCRIPTION'">
                                                             <ng-template let-option pTemplate="item">
                                                                 <span>{{option.DESCRIPTION}}</span>
                                                             </ng-template>

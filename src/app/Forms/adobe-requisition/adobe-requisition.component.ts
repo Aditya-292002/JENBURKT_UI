@@ -212,8 +212,9 @@ GETADHOCSAMPLEREQUISITIONLIST() {
         this.PRODUCT_LIST = res.ADHOC_REQUISITION_LIST;
         this.REQ_NO=this.PRODUCT_LIST[0]?.REQUEST_NO
         this.REMARK=this.PRODUCT_LIST[0]?.REMARKS 
-
         this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
+        console.log('RES', this.SAMPLE_PRODUCT_LIST);
+    
         // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
         //     productlist.forEach((element: any) => {
         //       this.PRODUCT_LIST.push({ label: element, value: element })
