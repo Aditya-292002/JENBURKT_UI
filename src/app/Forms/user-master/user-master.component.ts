@@ -136,7 +136,7 @@ export class UserMasterComponent implements OnInit {
     this.MobileNo = data.MOBILE_NO;
     this.Email = data.EMAIL;
     this.empCode = data.EMP_CODE;
-    if( this.DATE_OF_JOINING!=''){
+    if( data.DATE_OF_JOINING!=''){
 
       this.DATE_OF_JOINING=new Date(data.DATE_OF_JOINING)
     }
