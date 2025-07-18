@@ -26,7 +26,7 @@
     <app-loader *ngIf="isLoaded" ></app-loader>
     <div class="card">
       <p-table   [value]="REQUEST_APPROVAL_CME_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
-      [globalFilterFields]="['CME_DATE','CME_NO','TOPIC']"
+      [globalFilterFields]="['CME_DATE','CME_NO','TOPIC','CME_STATUS']"
      (onLazyLoad)="loadDataLazily($event)"  #dt1 >
         <ng-template pTemplate="caption">
           <div class="table-header text-right">
