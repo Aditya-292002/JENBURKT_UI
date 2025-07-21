@@ -19,7 +19,7 @@ export class AdhocApprovalListComponent implements OnInit {
   REQ_NO: any;
   REMARK: any;
   DROPDOWN_PRODUCT_LIST: any;
-  SAMPLE_PRODUCT_LIST: any;
+  SAMPLE_PRODUCT_LIST: any=[];
   HQ_DESC: any;
   REQUEST_DATE:any
   isConformationPopup: boolean=false;
@@ -98,7 +98,15 @@ GETADHOCSAMPLEREQUISITIONLIST() {
         this.REQ_NO=this.PRODUCT_LIST[0]?.REQUEST_NO
         this.REMARK=this.PRODUCT_LIST[0]?.REMARKS 
 
-        this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
+        //this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST 
+
+                    const productlist = [...new Set(res.PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
+            productlist.forEach((element: any) => {
+              this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element })
+            })
+
+        //    console.log('this.SAMPLE_PRODUCT_LIST',this.SAMPLE_PRODUCT_LIST);
+            
         // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
         //     productlist.forEach((element: any) => {
         //       this.PRODUCT_LIST.push({ label: element, value: element })
@@ -238,5 +246,8 @@ console.log('dropdown',E);
 console.log('this.DESCRIPTION',this.DESCRIPTION);
 }
 
-  
+  filter(E:any){
+    console.log(E,'E');
+    
+  }
 }

@@ -19,7 +19,7 @@ ADHOC_REQUEST_LIST:any=[]
   REQ_NO: any;
   REMARK: any;
   DROPDOWN_PRODUCT_LIST: any;
-  SAMPLE_PRODUCT_LIST: any;
+  SAMPLE_PRODUCT_LIST: any=[];
   HQ_DESC: any;
   REQUEST_DATE:any
   isConformationPopup: boolean=false;
@@ -99,7 +99,13 @@ GETADHOCSAMPLEREQUISITIONLIST() {
         this.REMARK=this.PRODUCT_LIST[0]?.REMARKS
 
 
-         this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
+        // this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
+
+
+            const productlist = [...new Set(res.PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
+            productlist.forEach((element: any) => {
+              this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element })
+            })
        // this.PRODUCT_LIST=res.PRODUCT_LIST
       //  this.DROPDOWN_PRODUCT_LIST = res.PRODUCT_LIST.map((item: any) => ({
       //         POOL_CODE: item.SAMPLE_PRODUCT_CODE,
@@ -110,8 +116,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
           //   productlist.forEach((element: any) => {
           //     this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
           //   })
-           const productlist = this.SAMPLE_PRODUCT_LIST.map((e: {DESCRIPTION: string, SAMPLE_PRODUCT_CODE: string}) => ({label: e.DESCRIPTION, value: e.SAMPLE_PRODUCT_CODE}))
-           this.SAMPLE_PRODUCT_LIST=productlist;
+         
   })}
     goToList(){
     console.log('insdide list');

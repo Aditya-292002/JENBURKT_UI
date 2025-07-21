@@ -148,7 +148,7 @@ export class RequestCmeComponent implements OnInit {
   ACCOUNT_NUMBER: any
   BANK_IFSC: any
   PAN_NO: any;
-
+ UPDATEAFTERREJECTFLAG:boolean=false;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private common: CommonService, public datePipe: DatePipe, private router: Router, public httpclient: HttpClient) {
@@ -1066,6 +1066,11 @@ export class RequestCmeComponent implements OnInit {
       this.BANK_IFSC = res.CME_REQ_DETAILS[0]?.BANK_IFSC;
       this.PAN_NO = res.CME_REQ_DETAILS[0]?.PAN_NO;
       this.ACCOUNT_NUMBER = res.CME_REQ_DETAILS[0]?.ACCOUNT_NUMBER;
+      if(res.CME_REQ_DETAILS[0]?.PMT_STATUS ==2 || res.CME_REQ_DETAILS[0]?.SM_STATUS==2 || res.CME_REQ_DETAILS[0]?.VP_STATUS ==2){
+          this.UPDATEAFTERREJECTFLAG=true;
+      }else{
+         this.UPDATEAFTERREJECTFLAG=false;
+      }
       let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = res.CME_REQ_UPDATED_USER_DETAILS;
       this.REQ_UPDATED_USER_DETAILS = this.transformData1(SAMPEL_CME_REQ_UPDATED_USER_DETAILS)
       console.log('REQ_UPDATED_USER_DETAILS', this.REQ_UPDATED_USER_DETAILS);
@@ -1796,7 +1801,36 @@ const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 }
 
 
+UPDATEAFTERREJECT(){
+  console.log('INSIDE UPDATE');
+  this.SAVECMEREQUEST(1);
+ // return
+      let data = {
 
+      "USER_ID": this.userInfo.USER_ID,
+      "CME_NO": this.common.isValid(this.CME_NO) ? this.CME_NO : 0,
+      "CME_ID": this.common.isValid(this.CME_ID) ? this.CME_ID : 0,
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID,
+    }
+        this.http.postnew(this.url.UPDATECMESTATUSFORAPPROVAL, data).then(
+      (res: any) => {
+         console.log('res ->' , res)
+           if (res.FLAG == true) {
+            this.GETCMEREQUESTDATABYCMENO();
+            this.toastrService.success(res.MSG);
+          }
+           else if (res.FLAG == false) {
+          this.toastrService.error(res.MSG);
+        }
+      },
+      error => {
+        console.log(error);
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
+
+  
+}
 
 
 

@@ -21,7 +21,7 @@
             <button type="submit" class="btn-danger  cancelButton " (click)="CANCElCMEREQUEST()"
                 *ngIf="this.CME_ID == null">Cancel</button>
             <button type="submit" class="btn btn-success  saveButton mr-2" (click)="SAVECMEREQUEST(1)"
-                *ngIf="(this.CME_ID != null && this.IS_APPROVED != 1)">Update</button>
+                *ngIf="(this.CME_ID != null && this.IS_APPROVED != 1 && !UPDATEAFTERREJECTFLAG)">Update</button>
             <button type="submit" class="btn btn-primary  formButton mr-2" (click)="BACKTOAPPROVALLIST()"
                 *ngIf="this.IS_APPROVAL == 1">Back</button>
             <button type="submit" class="btn btn-primary  formButton mr-2" (click)="BACKTOREQUESTLIST()"
@@ -37,6 +37,8 @@
                 *ngIf="this.CME_ID != null && this.IS_VIEW == 0">Approve</button>
             <button type="submit" class=" btn-danger  cancelButton " (click)="OPENREJECTCMEREQUESTPOPUP()"
                 *ngIf="this.CME_ID != null && this.IS_VIEW == 0">Reject</button>
+             <button type="submit" class="btn btn-success  saveButton mr-2" (click)="UPDATEAFTERREJECT()"
+                *ngIf="UPDATEAFTERREJECTFLAG">Update</button>    
 
         </div>
     </div>

@@ -259,12 +259,12 @@
 
                                                 <p-columnFilter class="column-filter" field="PRODUCT_DESC"
                                                     matchMode="equals" [showMenu]="false">
-                                                    <ng-template pTemplate="filter" let-value
+                                                       <ng-template pTemplate="filter" let-value
                                                         let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="SAMPLE_PRODUCT_LIST"
+                                                        <p-dropdown [ngModel]="value" [options]="PRODUCT_LIST"
                                                             (onChange)="filter($event.value)" [showClear]="true"
                                                             appendTo="body" placeholder="Select" [filter]="true"
-                                                            [filterBy]="'POOL_DESC'">
+                                                            [filterBy]="'label'">
                                                             <ng-template let-option pTemplate="item">
                                                                 <span>{{option.label}}</span>
                                                             </ng-template>
