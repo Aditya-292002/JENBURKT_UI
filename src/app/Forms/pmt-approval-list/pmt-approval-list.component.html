@@ -2,18 +2,22 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
                     aria-hidden="true"></i>Dashboard</a></li>
-        <li class="breadcrumb-item active" aria-current="page">ADHOC Requisition Approval</li>
+        <li class="breadcrumb-item active" aria-current="page">Adhoc Requisition Approval</li>
     </ol>
 </nav>
 
 <div class="col-md-12">
     <div class="d-flex mb-2">
         <div class="d-flex justify-content-start">
-            <h5 class="mb-0 headers">ADHOC Requisition Approval</h5>
+            <h5 class="mb-0 headers">Adhoc Requisition Approval</h5>
         </div>
         <div class="buttonBox ml-auto">
             <button type="submit" class="btn-primary formButton mr-2" (click)="goToList()" *ngIf="toggleToList">
                 List
+            </button>
+            <button type="submit" class="btn-primary cancelButton mr-2" *ngIf="toggleToList && !STATUSFLAG"
+                (click)="OpenRejectConformationPopup()">
+                Reject
             </button>
             <button type="submit" class="btn-primary saveButton mr-2" *ngIf="toggleToList && !STATUSFLAG"
                 (click)="OpenConformationPopup()">
@@ -257,14 +261,14 @@
                                             </th> -->
                                             <th scope="col" class="width-200">Product
 
-                                                <p-columnFilter class="column-filter" field="PRODUCT_DESC"
+                                                <p-columnFilter class="column-filter" field="DESCRIPTION"
                                                     matchMode="equals" [showMenu]="false">
-                                                       <ng-template pTemplate="filter" let-value
+                                                    <ng-template pTemplate="filter" let-value
                                                         let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="PRODUCT_LIST"
+                                                        <p-dropdown [ngModel]="value" [options]="SAMPLE_PRODUCT_LIST"
                                                             (onChange)="filter($event.value)" [showClear]="true"
                                                             appendTo="body" placeholder="Select" [filter]="true"
-                                                            [filterBy]="'label'">
+                                                            [filterBy]="label">
                                                             <ng-template let-option pTemplate="item">
                                                                 <span>{{option.label}}</span>
                                                             </ng-template>
@@ -348,6 +352,35 @@
                                 (click)="APPROVEDSAMPLEREQUISITION()">Yes</button>
                             <button type="cancel" class="btn-primary  formButton mr-2"
                                 (click)="CancelConformationPopup()">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isRejectConformationPopup">
+    <div class="modal-dialog modal-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body ">
+                <div class="col-md-12 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                        <div>
+                            <h6 class="">Are you sure you want to reject request for RSM {{this.RSM_NAME}} ?</h6>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="REJECTSAMPLEREQUISITION()">Yes</button>
+                            <button type="cancel" class="btn-primary  formButton mr-2"
+                                (click)="CancelRejectConformationPopup()">No</button>
                         </div>
                     </div>
                 </div>
