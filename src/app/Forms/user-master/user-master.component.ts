@@ -143,7 +143,7 @@ export class UserMasterComponent implements OnInit {
     this.SALEROLE_LIST.forEach((element:any)=>{
       if(element.SALESROLE_ID == data.SALESROLE_ID){
         this.salesRoleId = element
-       // this.salesRoleId = {"SALESROLE_ID":element.SALESROLE_ID,"SALESROLE_NAME":element.SALESROLE_NAME,"PARENTROLE_ID":element.PARENTROLE_ID,"ISPARENT":element.ISPARENT};
+        // this.salesRoleId = {"SALESROLE_ID":element.SALESROLE_ID,"SALESROLE_NAME":element.SALESROLE_NAME,"PARENTROLE_ID":element.PARENTROLE_ID,"ISPARENT":element.ISPARENT};
       }
     })
     this.onRoleChange();
