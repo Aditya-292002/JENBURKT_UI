@@ -669,41 +669,41 @@ export class RequestApprovalCmeComponent implements OnInit {
     for (let index = 0; index < data.length; index++) {
      // console.log('inside loop',index);
       
-      this.CME_DATE =  this.datePipe.transform(data[index].CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
-      this.CME_ID = data[index].CME_REQ_DETAILS[0].CME_ID;
-      this.CME_NO = data[index].CME_REQ_DETAILS[0].CME_NO;
-      this.HQ_CODE = data[index].CME_REQ_DETAILS[0].HQ_CODE;
-      this.HQ_DESC = data[index].CME_REQ_DETAILS[0].HQ_DESC;
-      this.DIVISION_CODE = data[index].CME_REQ_DETAILS[0].DIVISION_CODE;
-      this.DIVISION_NAME = data[index].CME_REQ_DETAILS[0].DIVISION_NAME;
-      this.CME_TYPE_ID = data[index].CME_REQ_DETAILS[0].CME_TYPE;
-      this.CAMP_TYPE_ID = data[index].CME_REQ_DETAILS[0].CAMP_TYPE;
-      this.InstName = data[index].CME_REQ_DETAILS[0].IS_INSITUTION_NAME;
-      this.REQ_BY_USER_NAME = data[index] .CME_REQ_DETAILS[0].REQ_BY_USER_NAME;
-      this.INST_NAME = data[index].CME_REQ_DETAILS[0].INST_NAME;
-      this.TOPIC = data[index].CME_REQ_DETAILS[0].TOPIC;
-      this.SPEAKER_NAME = data[index] .CME_REQ_DETAILS[0].SPK_NAME;
-      this.SPEAKER_QUALIFICATION = data[index] .CME_REQ_DETAILS[0].SPK_QUALIFICATION;
-      this.SPEAKER_SPECIALIZATION_ID = data[index] .CME_REQ_DETAILS[0].SPK_SPECIALIZATION;
-      this.VENUE = data[index] .CME_REQ_DETAILS[0].VENUE;
-      this.EXPECTED_DOCTORS = data[index].CME_REQ_DETAILS[0].EXPECTED_DOCTORS;
-      this.CME_DATE_FROM = this.datePipe.transform(data[index].CME_REQ_DETAILS[0].DATE_FROM, 'dd-MM-yyyy');
-      this.CME_TO_DATE = this.datePipe.transform(data[index].CME_REQ_DETAILS[0].DATE_TO, 'dd-MM-yyyy');
-      this.formatDateBasedOnCmeTimeFrom(data[index].CME_REQ_DETAILS[0].TIME_FROM);
-      this.formatDateBasedOnCmeToTimeFrom(data[index].CME_REQ_DETAILS[0].TIME_TO);
-      this.AMOUNT = data[index] .CME_REQ_DETAILS[0].AMOUNT;
-      this.GST = data[index] .CME_REQ_DETAILS[0].GST;
-      this.WHOM_TO_PAY_USER_ID = data[index] .CME_REQ_DETAILS[0].WHOM_TO_PAY;
-      this.isWhomToPayView = data[index] .CME_REQ_DETAILS[0].IS_WHOM_TO_PAY;
-      this.PAY_BY_DATE = this.datePipe.transform(data[index] .CME_REQ_DETAILS[0].PAY_BY_DATE, 'dd-MM-yyyy');
-      this.isSlideDeckReqd = data[index] .CME_REQ_DETAILS[0].SLIDE_DECK_REQD;
-      this.isArtWorkReqd = data[index] .CME_REQ_DETAILS[0].ART_WORK_REQD;
-      this.isAddvanceView = data[index] .CME_REQ_DETAILS[0].IS_ADVANCE;
-      this.ADVANCE = data[index] .CME_REQ_DETAILS[0].ADVANCE;
-      this.AttendingDropdowns = data[index] .CME_ATTENDING_DETAILS;
-      this.BrandDropdowns = data[index] .CME_BRANDS_DETAILS;
-      this.PromotionalMaterialReq = data[index] .CME_PROM_MATERIAL_REQ_DETAILS;
-      this.UPLOAD_DOCUMENT_LIST = data[index] .CME_DOCUMENT_DETAILS;
+      this.CME_DATE =  this.datePipe.transform(data[index].CME_REQ_DETAILS[0]?.CME_DATE, 'dd-MM-yyyy');
+      this.CME_ID = data[index].CME_REQ_DETAILS[0]?.CME_ID;
+      this.CME_NO = data[index].CME_REQ_DETAILS[0]?.CME_NO;
+      this.HQ_CODE = data[index].CME_REQ_DETAILS[0]?.HQ_CODE;
+      this.HQ_DESC = data[index].CME_REQ_DETAILS[0]?.HQ_DESC;
+      this.DIVISION_CODE = data[index].CME_REQ_DETAILS[0]?.DIVISION_CODE;
+      this.DIVISION_NAME = data[index].CME_REQ_DETAILS[0]?.DIVISION_NAME;
+      this.CME_TYPE_ID = data[index].CME_REQ_DETAILS[0]?.CME_TYPE;
+      this.CAMP_TYPE_ID = data[index].CME_REQ_DETAILS[0]?.CAMP_TYPE;
+      this.InstName = data[index].CME_REQ_DETAILS[0]?.IS_INSITUTION_NAME;
+      this.REQ_BY_USER_NAME = data[index].CME_REQ_DETAILS[0]?.REQ_BY_USER_NAME;
+      this.INST_NAME = data[index].CME_REQ_DETAILS[0]?.INST_NAME;
+      this.TOPIC = data[index].CME_REQ_DETAILS[0]?.TOPIC;
+      this.SPEAKER_NAME = data[index] .CME_REQ_DETAILS[0]?.SPK_NAME;
+      this.SPEAKER_QUALIFICATION = data[index] .CME_REQ_DETAILS[0]?.SPK_QUALIFICATION;
+      this.SPEAKER_SPECIALIZATION_ID = data[index] .CME_REQ_DETAILS[0]?.SPK_SPECIALIZATION;
+      this.VENUE = data[index] .CME_REQ_DETAILS[0]?.VENUE;
+      this.EXPECTED_DOCTORS = data[index].CME_REQ_DETAILS[0]?.EXPECTED_DOCTORS;
+      this.CME_DATE_FROM = this.datePipe.transform(data[index]?.CME_REQ_DETAILS[0]?.DATE_FROM, 'dd-MM-yyyy');
+      this.CME_TO_DATE = this.datePipe.transform(data[index]?.CME_REQ_DETAILS[0]?.DATE_TO, 'dd-MM-yyyy');
+      this.formatDateBasedOnCmeTimeFrom(data[index]?.CME_REQ_DETAILS[0]?.TIME_FROM);
+      this.formatDateBasedOnCmeToTimeFrom(data[index]?.CME_REQ_DETAILS[0]?.TIME_TO);
+      this.AMOUNT = data[index]?.CME_REQ_DETAILS[0]?.AMOUNT;
+      this.GST = data[index]?.CME_REQ_DETAILS[0]?.GST;
+      this.WHOM_TO_PAY_USER_ID = data[index]?.CME_REQ_DETAILS[0]?.WHOM_TO_PAY;
+      this.isWhomToPayView = data[index]?.CME_REQ_DETAILS[0]?.IS_WHOM_TO_PAY;
+      this.PAY_BY_DATE = this.datePipe.transform(data[index]?.CME_REQ_DETAILS[0]?.PAY_BY_DATE, 'dd-MM-yyyy');
+      this.isSlideDeckReqd = data[index]?.CME_REQ_DETAILS[0]?.SLIDE_DECK_REQD;
+      this.isArtWorkReqd = data[index]?.CME_REQ_DETAILS[0]?.ART_WORK_REQD;
+      this.isAddvanceView = data[index]?.CME_REQ_DETAILS[0]?.IS_ADVANCE;
+      this.ADVANCE = data[index]?.CME_REQ_DETAILS[0]?.ADVANCE;
+      this.AttendingDropdowns = data[index]?.CME_ATTENDING_DETAILS;
+      this.BrandDropdowns = data[index]?.CME_BRANDS_DETAILS;
+      this.PromotionalMaterialReq = data[index]?.CME_PROM_MATERIAL_REQ_DETAILS;
+      this.UPLOAD_DOCUMENT_LIST = data[index]?.CME_DOCUMENT_DETAILS;
       let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = data[index]?.CME_REQ_UPDATED_USER_DETAILS;
       this.REQ_UPDATED_USER_DETAILS = this.transformData(SAMPEL_CME_REQ_UPDATED_USER_DETAILS)
       await this.CME_TYPE_LIST.forEach((element: any) => {
@@ -744,17 +744,17 @@ export class RequestApprovalCmeComponent implements OnInit {
         this.ATTENDING_TEAM = [];
          this.ATTENDING_TEAM_LIST.forEach((user: any) => {
           if (element.USER_ID == user.USER_ID) {
-            this.ATTENDING_TEAM.push(user);
+            this.ATTENDING_TEAM.push(user);      
           }
         })
       })
      // console.log('this.BrandDropdowns',this.BrandDropdowns);
       //console.log('BRAND_LIST',this.BRAND_LIST);
-      
+       
       await this.BrandDropdowns.forEach((element: any) => {
         this.BRANDS = [];
         this.BRAND_LIST.forEach((product: any) => {
-          if (element.PRODUCT_CODE == product.PRODUCT_CODE) {
+          if (element.PRODUCT_CODE == product.PRODUCT_CODE) { 
             this.BRANDS.push(product);
           }
         })

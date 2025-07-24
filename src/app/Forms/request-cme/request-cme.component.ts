@@ -148,7 +148,7 @@ export class RequestCmeComponent implements OnInit {
   ACCOUNT_NUMBER: any
   BANK_IFSC: any
   PAN_NO: any;
-
+ UPDATEAFTERREJECTFLAG:boolean=false;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private common: CommonService, public datePipe: DatePipe, private router: Router, public httpclient: HttpClient) {
@@ -1023,49 +1023,54 @@ export class RequestCmeComponent implements OnInit {
     await this.http.postnew(this.url.GETCMEREQUESTDATABYCMENO, data).then((res: any) => {
       //  console.log('step-2 ')
       this.datalist[0] = res
-      this.CME_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
-      this.cme_date = this.datePipe.transform(res.CME_REQ_DETAILS[0].CME_DATE, 'dd-MM-yyyy');
-      this.CME_ID = res.CME_REQ_DETAILS[0].CME_ID;
-      this.CME_NO = res.CME_REQ_DETAILS[0].CME_NO;
-      this.HQ_CODE = res.CME_REQ_DETAILS[0].HQ_CODE;
-      this.DIVISION_CODE = res.CME_REQ_DETAILS[0].DIVISION_CODE;
-      this.CME_TYPE_ID = res.CME_REQ_DETAILS[0].CME_TYPE;
-      this.CAMP_TYPE_ID = res.CME_REQ_DETAILS[0].CAMP_TYPE;
-      this.InstName = res.CME_REQ_DETAILS[0].IS_INSITUTION_NAME;
-      this.REQ_BY_USER_NAME = res.CME_REQ_DETAILS[0].REQ_BY_USER_NAME;
-      this.INST_NAME = res.CME_REQ_DETAILS[0].INST_NAME;
-      this.TOPIC = res.CME_REQ_DETAILS[0].TOPIC;
-      this.TOPIC_ID = res.CME_REQ_DETAILS[0].TOPIC_ID;
-      this.SPEAKER_NAME = res.CME_REQ_DETAILS[0].SPK_NAME;
-      this.SPEAKER_QUALIFICATION = res.CME_REQ_DETAILS[0].SPK_QUALIFICATION;
-      this.SPEAKER_SPECIALIZATION_ID = res.CME_REQ_DETAILS[0].SPK_SPECIALIZATION;
-      this.VENUE = res.CME_REQ_DETAILS[0].VENUE;
-      this.EXPECTED_DOCTORS = res.CME_REQ_DETAILS[0].EXPECTED_DOCTORS;
-      this.CME_DATE_FROM = this.datePipe.transform(res.CME_REQ_DETAILS[0].DATE_FROM, 'dd-MM-yyyy');
-      this.cme_date_from = this.datePipe.transform(res.CME_REQ_DETAILS[0].DATE_FROM, 'dd-MM-yyyy');
-      this.CME_TO_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0].DATE_TO, 'dd-MM-yyyy');
-      this.cme_to_date = this.datePipe.transform(res.CME_REQ_DETAILS[0].DATE_TO, 'dd-MM-yyyy');
-      this.formatDateBasedOnCmeTimeFrom(res.CME_REQ_DETAILS[0].TIME_FROM);
-      this.formatDateBasedOnCmeToTimeFrom(res.CME_REQ_DETAILS[0].TIME_TO);
-      this.AMOUNT = res.CME_REQ_DETAILS[0].AMOUNT;
-      this.GST = res.CME_REQ_DETAILS[0].GST;
-      this.WHOM_TO_PAY_USER_ID = res.CME_REQ_DETAILS[0].WHOM_TO_PAY;
-      this.isWhomToPayView = res.CME_REQ_DETAILS[0].IS_WHOM_TO_PAY;
-      this.WHOM_TO_PAY_USER_NAME = res.CME_REQ_DETAILS[0].WHOM_TO_PAY_USER_NAME;
-      this.PAY_BY_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0].PAY_BY_DATE, 'dd-MM-yyyy');
-      this.pay_by_date = this.datePipe.transform(res.CME_REQ_DETAILS[0].PAY_BY_DATE, 'dd-MM-yyyy');
-      this.isSlideDeckReqd = res.CME_REQ_DETAILS[0].SLIDE_DECK_REQD;
-      this.isArtWorkReqd = res.CME_REQ_DETAILS[0].ART_WORK_REQD;
-      this.isAddvanceView = res.CME_REQ_DETAILS[0].IS_ADVANCE;
-      this.ADVANCE = res.CME_REQ_DETAILS[0].ADVANCE;
+      this.CME_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.CME_DATE, 'dd-MM-yyyy');
+      this.cme_date = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.CME_DATE, 'dd-MM-yyyy');
+      this.CME_ID = res.CME_REQ_DETAILS[0]?.CME_ID;
+      this.CME_NO = res.CME_REQ_DETAILS[0]?.CME_NO;
+      this.HQ_CODE = res.CME_REQ_DETAILS[0]?.HQ_CODE;
+      this.DIVISION_CODE = res.CME_REQ_DETAILS[0]?.DIVISION_CODE;
+      this.CME_TYPE_ID = res.CME_REQ_DETAILS[0]?.CME_TYPE;
+      this.CAMP_TYPE_ID = res.CME_REQ_DETAILS[0]?.CAMP_TYPE;
+      this.InstName = res.CME_REQ_DETAILS[0]?.IS_INSITUTION_NAME;
+      this.REQ_BY_USER_NAME = res.CME_REQ_DETAILS[0]?.REQ_BY_USER_NAME;
+      this.INST_NAME = res.CME_REQ_DETAILS[0]?.INST_NAME;
+      this.TOPIC = res.CME_REQ_DETAILS[0]?.TOPIC;
+      this.TOPIC_ID = res.CME_REQ_DETAILS[0]?.TOPIC_ID;
+      this.SPEAKER_NAME = res.CME_REQ_DETAILS[0]?.SPK_NAME;
+      this.SPEAKER_QUALIFICATION = res.CME_REQ_DETAILS[0]?.SPK_QUALIFICATION;
+      this.SPEAKER_SPECIALIZATION_ID = res.CME_REQ_DETAILS[0]?.SPK_SPECIALIZATION;
+      this.VENUE = res.CME_REQ_DETAILS[0]?.VENUE;
+      this.EXPECTED_DOCTORS = res.CME_REQ_DETAILS[0]?.EXPECTED_DOCTORS;
+      this.CME_DATE_FROM = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.DATE_FROM, 'dd-MM-yyyy');
+      this.cme_date_from = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.DATE_FROM, 'dd-MM-yyyy');
+      this.CME_TO_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.DATE_TO, 'dd-MM-yyyy');
+      this.cme_to_date = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.DATE_TO, 'dd-MM-yyyy');
+      this.formatDateBasedOnCmeTimeFrom(res.CME_REQ_DETAILS[0]?.TIME_FROM);
+      this.formatDateBasedOnCmeToTimeFrom(res.CME_REQ_DETAILS[0]?.TIME_TO);
+      this.AMOUNT = res.CME_REQ_DETAILS[0]?.AMOUNT;
+      this.GST = res.CME_REQ_DETAILS[0]?.GST;
+      this.WHOM_TO_PAY_USER_ID = res.CME_REQ_DETAILS[0]?.WHOM_TO_PAY;
+      this.isWhomToPayView = res.CME_REQ_DETAILS[0]?.IS_WHOM_TO_PAY;
+      this.WHOM_TO_PAY_USER_NAME = res.CME_REQ_DETAILS[0]?.WHOM_TO_PAY_USER_NAME;
+      this.PAY_BY_DATE = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.PAY_BY_DATE, 'dd-MM-yyyy');
+      this.pay_by_date = this.datePipe.transform(res.CME_REQ_DETAILS[0]?.PAY_BY_DATE, 'dd-MM-yyyy');
+      this.isSlideDeckReqd = res.CME_REQ_DETAILS[0]?.SLIDE_DECK_REQD;
+      this.isArtWorkReqd = res.CME_REQ_DETAILS[0]?.ART_WORK_REQD;
+      this.isAddvanceView = res.CME_REQ_DETAILS[0]?.IS_ADVANCE;
+      this.ADVANCE = res.CME_REQ_DETAILS[0]?.ADVANCE;
       this.AttendingDropdowns = res.CME_ATTENDING_DETAILS;
       this.BrandDropdowns = res.CME_BRANDS_DETAILS;
       this.PromotionalMaterialReq = res.CME_PROM_MATERIAL_REQ_DETAILS;
       this.UPLOAD_DOCUMENT_LIST = res.CME_DOCUMENT_DETAILS;
-      this.BANK_NAME = res.CME_REQ_DETAILS[0].BANK_NAME;
-      this.BANK_IFSC = res.CME_REQ_DETAILS[0].BANK_IFSC;
-      this.PAN_NO = res.CME_REQ_DETAILS[0].PAN_NO;
-      this.ACCOUNT_NUMBER = res.CME_REQ_DETAILS[0].ACCOUNT_NUMBER;
+      this.BANK_NAME = res.CME_REQ_DETAILS[0]?.BANK_NAME;
+      this.BANK_IFSC = res.CME_REQ_DETAILS[0]?.BANK_IFSC;
+      this.PAN_NO = res.CME_REQ_DETAILS[0]?.PAN_NO;
+      this.ACCOUNT_NUMBER = res.CME_REQ_DETAILS[0]?.ACCOUNT_NUMBER;
+      if(res.CME_REQ_DETAILS[0]?.PMT_STATUS ==2 || res.CME_REQ_DETAILS[0]?.SM_STATUS==2 || res.CME_REQ_DETAILS[0]?.VP_STATUS ==2){
+          this.UPDATEAFTERREJECTFLAG=true;
+      }else{
+         this.UPDATEAFTERREJECTFLAG=false;
+      }
       let SAMPEL_CME_REQ_UPDATED_USER_DETAILS = res.CME_REQ_UPDATED_USER_DETAILS;
       this.REQ_UPDATED_USER_DETAILS = this.transformData1(SAMPEL_CME_REQ_UPDATED_USER_DETAILS)
       console.log('REQ_UPDATED_USER_DETAILS', this.REQ_UPDATED_USER_DETAILS);
@@ -1796,7 +1801,36 @@ const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 }
 
 
+UPDATEAFTERREJECT(){
+  console.log('INSIDE UPDATE');
+  this.SAVECMEREQUEST(1);
+ // return
+      let data = {
 
+      "USER_ID": this.userInfo.USER_ID,
+      "CME_NO": this.common.isValid(this.CME_NO) ? this.CME_NO : 0,
+      "CME_ID": this.common.isValid(this.CME_ID) ? this.CME_ID : 0,
+      "SALES_ROLE_ID": this.userInfo.SALESROLE_ID,
+    }
+        this.http.postnew(this.url.UPDATECMESTATUSFORAPPROVAL, data).then(
+      (res: any) => {
+         console.log('res ->' , res)
+           if (res.FLAG == true) {
+            this.GETCMEREQUESTDATABYCMENO();
+            this.toastrService.success(res.MSG);
+          }
+           else if (res.FLAG == false) {
+          this.toastrService.error(res.MSG);
+        }
+      },
+      error => {
+        console.log(error);
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
+
+  
+}
 
 
 
