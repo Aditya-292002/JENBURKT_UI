@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+
 import { AuthService } from 'src/app/Service/auth.service';
 import { HttpService } from 'src/app/Service/http.Service';
 import { SharedService } from 'src/app/Service/shared.service';
@@ -209,16 +210,20 @@ GETADHOCSAMPLEREQUISITIONLIST() {
     }
     this.http.postnew(this.url.GETADHOCSAMPLEREQUISITIONLIST, data).then(
       (res: any) => {
+        this.SAMPLE_PRODUCT_LIST=[];
         this.PRODUCT_LIST = res.ADHOC_REQUISITION_LIST;
         this.REQ_NO=this.PRODUCT_LIST[0]?.REQUEST_NO
         this.REMARK=this.PRODUCT_LIST[0]?.REMARKS 
-
-        this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
-        // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
-        //     productlist.forEach((element: any) => {
-        //       this.PRODUCT_LIST.push({ label: element, value: element })
-        //     })
-
+       // this.STATUSFLAG=this.PRODUCT_LIST[0]?.PMT_APPROVAL 
+     //   this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
+        console.log('RES', this.SAMPLE_PRODUCT_LIST);
+    
+        const productlist = [...new Set(res.PRODUCT_LIST.map((item: any) => item.DESCRIPTION))];
+            productlist.forEach((element: any) => {
+              this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element }) 
+            })
+       // console.log();
+        
 
       //  this.DROPDOWN_PRODUCT_LIST = res.PRODUCT_LIST.map((item: any) => ({
       //         POOL_CODE: item.SAMPLE_PRODUCT_CODE,
@@ -292,6 +297,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
   goToCreate(){
   this.toggleToList= false
   this.HQ_CODE=null
+  this.STATUSFLAG=false;
    this.GETADHOCSAMPLEREQUISITIONLIST() 
   }
   
@@ -317,7 +323,11 @@ GETREQUESTDETAILS(D){
     console.log('inside if',  this.STATUSFLAG);
     
     this.STATUSFLAG=true;
-  }else if(D.STATUS==='Pending for PMT Approval'){
+  }
+  else if(D.STATUS_DESC==='R' ){
+     this.STATUSFLAG=true;
+  }
+  else if(D.STATUS==='Pending for PMT Approval'){
       this.STATUSFLAG=false;
       console.log('inside else',  this.STATUSFLAG);
       
@@ -326,7 +336,8 @@ GETREQUESTDETAILS(D){
       this.STATUSFLAG=false;
       console.log('inside else',  this.STATUSFLAG);
       
-  }else{
+  }
+  else{
        this.STATUSFLAG=false;
   }
 

@@ -63,7 +63,7 @@ export class SharedService {
   isPricing:boolean = true;
   LoginUser: string = '';
   LastLogin: any = '';
-  validationKey: any = "";  
+  validationKey: any = ""; 
   userName:any="";
   formView: boolean = false;
   buttonArray: Array<any> = [];

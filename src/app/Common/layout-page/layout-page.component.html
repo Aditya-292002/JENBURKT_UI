@@ -90,7 +90,8 @@
                             class="fa fa-file-text mr-2"></i>Sample Invoice</a>
                     <div class="collapse" id="submenu5">
                         <ul class="flex-column sub-sidebar-nav nav">
-                            <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0 " (click)="isSelectedMenu('Upload_Sample_Stock')"
+                            <!-- *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0 " -->
+                            <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('Upload_Sample_Stock')"
                                 [ngClass]="customMenuUpload_Sample_Stock == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/uploadsamplestock">Upload Sample Stock</a></li>
                             <li class="nav-item" *ngIf="salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Cycle_Sample_Requisition')"
@@ -98,10 +99,10 @@
                                     class="nav-link py-0" routerLink="/cyclesamplerequisition">Cycle Sample Requisition</a></li>
                             <li class="nav-item" *ngIf="salesRoleId == 3"  (click)="isSelectedMenu('Sample_Requisition')"
                                 [ngClass]="customMenuSample_Requisition == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition</a></li>
-                            <!-- <li class="nav-item" *ngIf="salesRoleId == 3"  (click)="isSelectedMenu('Adobe_Requisition')"
+                                    class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition-Cycle</a></li>
+                            <li class="nav-item" *ngIf="salesRoleId == 3"  (click)="isSelectedMenu('Adobe_Requisition')"
                                 [ngClass]="customMenuAdobe_Requisition == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/adhocrequisition"> ADHOC Requisition</a></li>        -->
+                                    class="nav-link py-0" routerLink="/adhocrequisition"> Adhoc Sample Requisition</a></li>       
                             <li class="nav-item" *ngIf="salesRoleId == 4" (click)="isSelectedMenu('Sample_Requisition_Approval')" 
                                 [ngClass]="customMenuSample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/samplerequisitionlist"> Sample Requisition Approval</a></li>
@@ -117,8 +118,8 @@
                                 [ngClass]="customMenuPrint_Invoice == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/editInvoice">Edit Invoice</a></li> -->
                                  <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Received')"  [ngClass]="customMenuSample_Received == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/samplereceive">Sample Receive</a></li> -->
-                                 <!-- <li class="nav-item" *ngIf="roleID == 2" (click)="isSelectedMenu('Adhoc_Approval')"  [ngClass]="customMenuSample_Adhoc_Approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocrequisitionlist">ADHOC Requisition Approval </a></li>
-                                 <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('adhoc_pmt_approval')"  [ngClass]="customMenuSample_adhoc_pmt_approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocpmtapproval">ADHOC PMT Approval</a></li> -->
+                                 <li class="nav-item" *ngIf="salesRoleId == 4"  (click)="isSelectedMenu('Adhoc_Approval')"  [ngClass]="customMenuSample_Adhoc_Approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocrequisitionlist">Adhoc Requisition Approval </a></li>
+                                 <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('adhoc_pmt_approval')"  [ngClass]="customMenuSample_adhoc_pmt_approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocpmtapproval">Adhoc PMT Approval</a></li>
                             <!-- <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Sample_Invoice')"
                                 [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li> -->
