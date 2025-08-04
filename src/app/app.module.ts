@@ -108,6 +108,7 @@ import { SampleReceivedComponent } from './Forms/sample-received/sample-received
 import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requisition.component';
 import { AdhocApprovalListComponent } from './Forms/adhoc-approval-list/adhoc-approval-list.component';
 import { PmtApprovalListComponent } from './Forms/pmt-approval-list/pmt-approval-list.component';
+import { DocumentPmtApprovalComponent } from './Forms/document-pmt-approval/document-pmt-approval.component';
 
 registerLocaleData(localeIn);
 
@@ -192,7 +193,8 @@ registerLocaleData(localeIn);
     PayementExcelUploadComponent,
     AdobeRequisitionComponent,
     AdhocApprovalListComponent,
-    PmtApprovalListComponent
+    PmtApprovalListComponent,
+    DocumentPmtApprovalComponent
     
   ],
   imports: [

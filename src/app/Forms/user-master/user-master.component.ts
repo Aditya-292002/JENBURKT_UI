@@ -137,7 +137,7 @@ export class UserMasterComponent implements OnInit {
     this.Email = data.EMAIL;
     this.empCode = data.EMP_CODE;
     if( data.DATE_OF_JOINING!=''){
-
+      console.log('inside if ');
       this.DATE_OF_JOINING=new Date(data.DATE_OF_JOINING)
     }
     this.SALEROLE_LIST.forEach((element:any)=>{
