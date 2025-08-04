@@ -208,6 +208,9 @@ export class URLService {
   public REJECTADHOCSAMPLEREQUISITION = this.sharedService.ApiUrl + '/api/SampelRequisition/REJECTADHOCSAMPLEREQUISITION'
   public UPDATECMESTATUSFORAPPROVAL = this.sharedService.ApiUrl + '/api/Cme/UPDATECMESTATUSFORAPPROVAL';
   // public SAMPLEREQUISITIONISLIVE = this.sharedService.ApiUrl + '/api/SampelRequisition/SAMPLEREQUISITIONISLIVE'
+    public GETDOCUMENTAPPROVALMASTERLIST = this.sharedService.ApiUrl + '/api/Cme/GETDOCUMENTAPPROVALMASTERLIST';
+    public SAVEDOCUMENTAPPROVAL = this.sharedService.ApiUrl + '/api/Cme/SAVEDOCUMENTAPPROVAL';
+
  
 
 }

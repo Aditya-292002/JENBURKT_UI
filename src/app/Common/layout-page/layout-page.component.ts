@@ -73,6 +73,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuSample_Adhoc_Approval:boolean
   customMenuSample_Received:boolean
   customMenuSample_Paymnet_excel_upload:boolean;
+  customMenuSample_Document_PMT_Approval:boolean;
   customMenuSample_adhoc_pmt_approval:boolean;
   HQ_CODE:any;
   IS_LIVE:any
@@ -244,6 +245,7 @@ export class LayoutPageComponent implements OnInit {
     this.Upload_Mkt_Report = false
     this.customMenuSample_Received=false
    this.customMenuSample_Paymnet_excel_upload=false
+   this.customMenuSample_Document_PMT_Approval=false
    this.customMenuSample_adhoc_pmt_approval=false
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
@@ -375,6 +377,9 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'Paymnet_excel_upload') {
       this.customMenuSample_Paymnet_excel_upload = true;
+    }
+    else if (data=='Document_PMT_Approval'){
+     this.customMenuSample_Document_PMT_Approval=true
     }
     else if (data == 'adhoc_pmt_approval') {
       this.customMenuSample_adhoc_pmt_approval = true;
