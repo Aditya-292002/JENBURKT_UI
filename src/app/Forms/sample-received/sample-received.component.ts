@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/Service/auth.service';
 import { CommonService } from 'src/app/Service/common.service';
 import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
+import { SharedService } from 'src/app/Service/shared.service';
 @Component({
   selector: 'app-sample-received',
   templateUrl: './sample-received.component.html',
@@ -38,6 +39,7 @@ export class SampleReceivedComponent implements OnInit {
   productDetailFlag: boolean;
   showGridData1: any={};
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
+    private SharedService: SharedService,
     private toastrService: ToastrService, private common: CommonService, public datePipe: DatePipe, private router: Router, public httpclient: HttpClient) {
   }
   ngOnInit(): void {
@@ -60,9 +62,11 @@ export class SampleReceivedComponent implements OnInit {
       "SALES_ROLE_ID":this.userInfo.SALESROLE_ID,
       "FROM_DATE":this.FROM_DATE,
       "TO_DATE":this.TO_DATE,
-      "HQ_CODE":this.HQ_CODE,
+      "HQ_CODE":(this.SharedService.isValid( this.HQ_CODE)?this.HQ_CODE:''),
       "STATUS":this.STATUS
     }
+  console.log('data',data);
+  
 
    // console.log('DATA ->', JSON.stringify(data))
     // return

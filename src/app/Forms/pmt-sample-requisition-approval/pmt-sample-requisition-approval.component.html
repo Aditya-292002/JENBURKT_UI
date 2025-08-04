@@ -215,6 +215,8 @@
                                                 </p-columnFilter>
                                             </th>
                                             <th pSortableColumn="STOCK" scope="col" class="width-50">Stock</th>
+                                            <th pSortableColumn="SHELF_LIFE_EXPIRY" scope="col" class="width-50">Expiry
+                                            </th>
                                             <th pSortableColumn="TOTAL_REQUESTED_QTY" scope="col" class="width-50">Req
                                                 Qty</th>
                                             <th pSortableColumn="TOTAL_REQUESTED_QTY" scope="col" class="width-150">
@@ -232,7 +234,9 @@
                                             <td class="width-2 text-right">
                                                 <a>{{data.STOCK}}</a>
                                             </td>
-
+                                            <td class="width-2 text-right">
+                                                <a>{{data.SHELF_LIFE_EXPIRY  | date:"dd-MM-yyy" }}</a>
+                                            </td>
                                             <td class="width-2 text-right">
                                                 <a>{{data.REQ_QTY}}</a>
                                             </td>
@@ -365,12 +369,12 @@
                                     </p-dropdown>
                                 </div>
                             </div>
-                             <div class="mb-2 ml-2">
-                            <div class="buttonBox mt-4 ">
-                                <button type="submit" class="btn-primary saveButton"
-                                    (click)="UpdateReqInnerpack()">Update</button>
+                            <div class="mb-2 ml-2">
+                                <div class="buttonBox mt-4 ">
+                                    <button type="submit" class="btn-primary saveButton"
+                                        (click)="UpdateReqInnerpack()">Update</button>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -529,7 +533,7 @@
                         </div>
                         <div class="d-flex justify-content-center align-items-center p-2">
                             <button type="submit" class="btn-primary  saveButton mr-2"
-                              (click)="APPROVEDPMTSAMPLEREQUISITIONDATA()"  >Yes</button>
+                                (click)="APPROVEDPMTSAMPLEREQUISITIONDATA()">Yes</button>
                             <button type="submit" class="btn-primary  formButton mr-2"
                                 (click)="CancelConformationPopup()">No</button>
                         </div>
