@@ -113,9 +113,9 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                     <tr>
-                        <td style="width:180px" *ngFor="let col of columns"
-                            [ngClass]="{'TOPIC-header': col.Headers === 'TOPIC'}" (click)="GETSAMPLEPRODUCTDETAILS(rowData)">
-                            <a class="click" (click)="routeList(rowData)">
+                        <td style="width:180px" *ngFor="let col of columns" (click)="GETSAMPLEPRODUCTDETAILS(rowData)"
+                            [ngClass]="{'TOPIC-header': col.Headers === 'HQ_CODE'}">
+                            <a class="click" (click)="routeList(rowData);">
                                 {{rowData[col.Field]}}
                             </a>
                             <span *ngIf="col.Headers === 'ACTION' && STATUS=='P'">
