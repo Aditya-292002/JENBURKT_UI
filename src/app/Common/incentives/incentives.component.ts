@@ -83,11 +83,29 @@ console.log(    this.INCENTIVE_LIST)
               // this.INCENTIVE_LIST.splice(0, 1);
             }else{
                 
-            this.historicalData.push( { month: element.PERIOD_DESC, netSales: element.PERIOD_SALES, incentive: element.INC_IFACHIEV, nextMonthAchieved: element.NM_ACHV, achievedIncentive: element.ACHV_INC }   );
-           this.historicalData.reverse();  
+            this.historicalData.push( { PERIOD_ID:element.PERIOD_ID,month: element.PERIOD_DESC, netSales: element.PERIOD_SALES, incentive: element.INC_IFACHIEV, nextMonthAchieved: element.NM_ACHV, achievedIncentive: element.ACHV_INC }   );
+           //this.historicalData.reverse();
+          // console.log(' his.historicalData',this.historicalData);
+           
+           for (let index = 0; index < this.historicalData.length-1; index++) {
+            const element =  this.historicalData[index];
+           // console.log('period Id',this.historicalData[index].PERIOD_ID,this.historicalData[index]);
+            if(this.historicalData[index].PERIOD_ID >this.historicalData[index+1].PERIOD_ID){
+              
+              let temp=this.historicalData[index]
+              this.historicalData[index]=this.historicalData[index+1]
+              this.historicalData[index+1]=temp
+
+              index = -1
+            }
+           }
+          // console.log('sortd array',this.historicalData);
+           
+            
           }
           }
         );
+        
           // if (this.dataObject[0].CM_INC > 0) {
           //   console.log('inside if');
             
