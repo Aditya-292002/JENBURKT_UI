@@ -208,9 +208,18 @@ export class URLService {
   public REJECTADHOCSAMPLEREQUISITION = this.sharedService.ApiUrl + '/api/SampelRequisition/REJECTADHOCSAMPLEREQUISITION'
   public UPDATECMESTATUSFORAPPROVAL = this.sharedService.ApiUrl + '/api/Cme/UPDATECMESTATUSFORAPPROVAL';
   // public SAMPLEREQUISITIONISLIVE = this.sharedService.ApiUrl + '/api/SampelRequisition/SAMPLEREQUISITIONISLIVE'
-    public GETDOCUMENTAPPROVALMASTERLIST = this.sharedService.ApiUrl + '/api/Cme/GETDOCUMENTAPPROVALMASTERLIST';
-    public SAVEDOCUMENTAPPROVAL = this.sharedService.ApiUrl + '/api/Cme/SAVEDOCUMENTAPPROVAL';
+  public GETDOCUMENTAPPROVALMASTERLIST = this.sharedService.ApiUrl + '/api/Cme/GETDOCUMENTAPPROVALMASTERLIST';
+  public SAVEDOCUMENTAPPROVAL = this.sharedService.ApiUrl + '/api/Cme/SAVEDOCUMENTAPPROVAL';
+  public GETSAMPLEDATAMASTERLIST = this.sharedService.ApiUrl + '/api/SampelRequisition/GETSAMPLEDATAMASTERLIST'
+    public DOWNLOADSAMPLEDATALIST = this.sharedService.ApiUrl + '/api/SampelRequisition/DOWNLOADSAMPLEDATALIST'
+     public UPDATESAMPLEREQUISITIONDATA = this.sharedService.ApiUrl + '/api/SampelRequisition/UPDATESAMPLEREQUISITIONDATA'
+  public GetMOEMASTERLIST = this.sharedService.ApiUrl + '/api/Reports/GetMOEMASTERLIST'
+  public GetROLEWISELISTBYPERIODID = this.sharedService.ApiUrl + '/api/Reports/GetROLEWISELISTBYPERIODID'
+    public ConvertPdfToBase64 = this.sharedService.ApiUrl + '/api/Reports/ConvertPdfToBase64'
 
- 
+  
+    public getrefreshtokrn = this.sharedService.ApiUrl + '/api/Authetication/RefreshToken'
+
+  
 
 }

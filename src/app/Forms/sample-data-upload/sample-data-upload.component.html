@@ -1,0 +1,54 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sample Data Upload</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex justify-content-between mb-2">
+        <div class="d-flex ">
+            <h5 class="mb-0 headers">Sample Data Upload</h5>
+        </div>
+           <div class="d-flex  ">
+               <div class="pr-2">
+                                <button (click)="fileInput.click()" class="btn btn-primary pr-2">
+                                    Upload Excel
+                                </button>
+                                <input type="file" #fileInput accept=".xlsx, .xls" style="display: none"
+                                    (change)="onFileSelected($event)" />
+                            </div>
+           
+        
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div>
+                            <label>Cycle</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightCycle === 'Yes'}">
+                                <p-dropdown [options]="PERIOD_LIST" appendTo="body" optionLabel="CYCLE_DESC"
+                                    [filter]="true" filterBy="CYCLE_DESC" optionValue="CYCLE_NO" appendTo="body"
+                                    placeholder="Please Select.." [(ngModel)]="CYCLE_NO"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 pt-4">
+                        <button (click)="exportAsXLSX()" class="btn btn-primary pr-2">
+                Template download
+            </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

@@ -109,6 +109,8 @@ import { AdobeRequisitionComponent } from './Forms/adobe-requisition/adobe-requi
 import { AdhocApprovalListComponent } from './Forms/adhoc-approval-list/adhoc-approval-list.component';
 import { PmtApprovalListComponent } from './Forms/pmt-approval-list/pmt-approval-list.component';
 import { DocumentPmtApprovalComponent } from './Forms/document-pmt-approval/document-pmt-approval.component';
+import { SampleDataUploadComponent } from './Forms/sample-data-upload/sample-data-upload.component';
+import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.component';
 
 registerLocaleData(localeIn);
 
@@ -194,7 +196,9 @@ registerLocaleData(localeIn);
     AdobeRequisitionComponent,
     AdhocApprovalListComponent,
     PmtApprovalListComponent,
-    DocumentPmtApprovalComponent
+    DocumentPmtApprovalComponent,
+    SampleDataUploadComponent,
+    MoeReportViewComponent
     
   ],
   imports: [
