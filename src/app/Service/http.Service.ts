@@ -107,12 +107,48 @@ export class HttpService {
         );
     }
 
-    
-    postnew(uri: string, inputData: any, headers?: HttpHeaders) {
+        postnewlogin(uri: string, inputData: any, headers?: HttpHeaders) {
         if (!headers)
             headers = new HttpHeaders();
+        //   var token =   localStorage.getItem("TOKEN");
+        //   console.log(token,'token')
+      //  headers = headers.set("Authorization", `Bearer ${token}`);
+        
+        // ${this.getTokenType()} ${this.getToken()}
 
-        headers = headers.set("Authorization", ``);
+        return new Promise((resolve, reject) => {
+            
+            this.http.post(uri, inputData, { headers: headers }).pipe(
+                catchError(this.handleError)
+            ).subscribe({
+                next: (res: any) => {
+                    resolve(res);
+                    
+                  },
+                  error: error => {
+                    this.AuthService.callerror(error);   
+                    reject(error);             
+                  }
+            });
+                         
+          });
+        
+    }
+
+    postnew(uri: string, inputData: any, headers?: HttpHeaders) {
+        // if (!headers)
+             headers = new HttpHeaders();
+        // var token =   localStorage.getItem("TOKEN");
+        // console.log(token,'token')
+        // headers = headers.set("Authorization", `Bearer ${token}`);
+        // console.log('headers',headers);
+        
+        var token = localStorage.getItem("TOKEN");
+if (token) {
+    headers = headers.set("Authorization", `Bearer ${token}`);
+} else {
+    console.error('No token found in localStorage');
+}
         // ${this.getTokenType()} ${this.getToken()}
 
         return new Promise((resolve, reject) => {
