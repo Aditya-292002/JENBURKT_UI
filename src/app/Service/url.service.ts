@@ -218,7 +218,8 @@ export class URLService {
     public ConvertPdfToBase64 = this.sharedService.ApiUrl + '/api/Reports/ConvertPdfToBase64'
 
   
+    public getrefreshtokrn = this.sharedService.ApiUrl + '/api/Authetication/RefreshToken'
 
- 
+  
 
 }

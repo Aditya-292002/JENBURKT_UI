@@ -6,6 +6,7 @@ import { URLService } from 'src/app/Service/url.service';
 import { AuthService } from 'src/app/Service/auth.service';
 import { SharedService } from 'src/app/Service/shared.service';
 import { CommonService } from 'src/app/Service/common.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,13 +32,21 @@ export class LoginComponent implements OnInit {
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
     this.v_post_data.PASSWORD = this.Password;
-    this.http.postnew(this.url.userLogin, this.v_post_data).then(
+    this.http.postnewlogin(this.url.userLogin, this.v_post_data).then(
       (res:any)=>{
         // console.log("response",res);
         if (res.FLAG) {
-          // this.ToastrService.success(res.MSG);
+           this.ToastrService.success(res.MSG);
           this.AuthService.setUserDetail(JSON.stringify(res));
-          this.userRoleRights();
+         ;
+            localStorage.setItem("TOKEN",res.TOKEN);
+            localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
+            console.log('token',res);
+               this.router.navigate(["/dashboard"]);
+            
+       
+      
+          // this.userRoleRights();
           // this.router.navigate(["/invoiceupdate"]);
         }
         else {
