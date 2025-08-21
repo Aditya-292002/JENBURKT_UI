@@ -17,7 +17,7 @@ export class MoeReportViewComponent implements OnInit {
   periodList:any = [];
   isLoaded:boolean=false;
   roleList: any=[];
-  AREA_CODE:any;
+  AREA_CODE:any=[];
   roleListData: any=[];
   pdfSrc: any;
   pdfSrcflag: boolean=false;
@@ -56,6 +56,7 @@ export class MoeReportViewComponent implements OnInit {
       SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
       PERIOD_ID:this.period
     }
+    this.roleList=[]
     this.http.postnew(this.url.GetROLEWISELISTBYPERIODID, data).then(
       (res:any)=>{
         this.roleListData = res.ROLElist;
@@ -66,7 +67,7 @@ export class MoeReportViewComponent implements OnInit {
         //  combinedValue: `${item.AREA_CODE}|${item.AREA_NAME}`
         }));
 
-      //console.log('periodList',this.periodList);
+      console.log('roleList',this.roleList);
      
       },
       error =>{
@@ -104,7 +105,7 @@ export class MoeReportViewComponent implements OnInit {
         console.log('RES',res);
          this.isLoaded=false;
         this.pdfSrcflag=true;
-
+  this.AREA_CODE=''
           this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
           const base64Data =this.pdfSrc
           console.log('periodList',this.pdfSrc);
