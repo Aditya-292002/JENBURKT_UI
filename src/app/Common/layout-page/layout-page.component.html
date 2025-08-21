@@ -109,6 +109,9 @@
                             <li class="nav-item" *ngIf=" roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
                                 [ngClass]="customMenuPMT_Sample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/PMTsamplerequisitionapproval"> PMT Approval</a></li>
+                                    <li class="nav-item" *ngIf=" roleID == 1 || salesRoleId===0" (click)="isSelectedMenu('sample_data_upload')"
+                                [ngClass]="customMenusample_data_upload == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/sampledataupload"> Sample Data Upload </a></li>
                             <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Allocation')"  [ngClass]="customMenuSample_Allocation == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/productdetails"> Sample Allocation</a></li> -->
                             <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Allocation_Approval')"  [ngClass]="customMenuSample_Allocation_Approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/sampleallocationapproval">Sample Allocation Approval</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/generateinvoice">Generate Invoice</a></li> -->
@@ -238,6 +241,11 @@
                                 (click)="isSelectedMenu('cmereport')"
                                 [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
+                            </li>
+                              <li class="nav-item"
+                                (click)="isSelectedMenu('MoeVieweport')"
+                                [ngClass]="IsMoeVieweport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/viewmoereport">View MOE Report</a>
                             </li>
 
                         </ul>

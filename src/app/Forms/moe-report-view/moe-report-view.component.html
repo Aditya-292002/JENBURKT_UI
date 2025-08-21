@@ -1,0 +1,91 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">View MOE Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">View MOE Report</h5>
+        </div>
+
+    </div>
+</div>
+<app-loader *ngIf="isLoaded"></app-loader>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <div>
+                                    <p-dropdown appendTo="body" [options]="periodList" [(ngModel)]="period"
+                                        [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select..." optionLabel="PERIOD_DESC" optionValue="PERIOD_ID"
+                                        (onChange)="getRoleList()">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Area Code</label>
+                            <div>
+                                <div>
+                                    <!-- <p-dropdown appendTo="body" [options]="roleList" [(ngModel)]="AREA_CODE"
+                                        [filter]="true" filterBy="AREA_CODE" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select..." optionLabel="AREA_CODE"
+                                        optionValue="AREA_CODE">
+                                    </p-dropdown> -->
+                                    <p-dropdown appendTo="body" [options]="roleList" [(ngModel)]="AREA_CODE"
+                                        [filter]="true" filterBy="AREA_CODE,AREA_NAME"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Please Select..."
+                                        optionLabel="combinedLabel" [optionValue]="AREA_CODE">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatePDFdata()">
+                                <i class="fa fa-spinner mr-2" aria-hidden="true"></i>Show
+                            </button>
+                            <!-- <button  type="submit" class="btn-primary viewButton mr-2" (click)="UploadPdf()">
+                    <i class="fa fa-spinner mr-2" aria-hidden="true"></i>download
+                </button> -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="View Moe Report" [modal]="true" [(visible)]="pdfSrc" [style]="{ width: '70rem' }">
+
+    <div class="col-sm-8 col-md-8 col-md-12 pt-4" >
+        <!-- Using iframe -->
+        <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
+
+        <!-- OR using embed -->
+        <!-- <embed [src]="pdfSrc" type="application/pdf" width="100%" height="600px" /> -->
+    </div>
+    <!-- <div class="col-sm-8 col-md-8 col-md-12 pt-4">
+
+        <div class="float-right ml-auto">
+            <button type="submit" class="btn-primary  formButton mr-2" click="!pdfSrc">
+                Close
+            </button>
+        </div>
+    </div> -->
+</p-dialog>

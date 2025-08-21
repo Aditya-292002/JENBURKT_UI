@@ -65,9 +65,11 @@ export class LayoutPageComponent implements OnInit {
   Upload_Mkt_Report: boolean;
   IsMoeTargetReport: boolean
   Iscmereport: boolean;
+  IsMoeVieweport:boolean;
   customMenuSample_Requisition: boolean;
   customMenuSample_Requisition_Approval: boolean;
   customMenuPMT_Sample_Requisition_Approval: boolean;
+  customMenusample_data_upload:boolean;
   customCycle_Sample_Requisition: boolean;
   customMenuAdobe_Requisition: boolean;
   customMenuSample_Adhoc_Approval:boolean
@@ -205,6 +207,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuSample_Allocation_Approval = false;
     this.customMenuSample_Requisition_Approval = false;
     this.customMenuPMT_Sample_Requisition_Approval = false;
+    this.customMenusample_data_upload=false;
     this.customMenuSample_Requisition = false;
     this.customMenuAdobe_Requisition = false;
     this.customMenuPrint_Invoice = false;
@@ -249,6 +252,7 @@ export class LayoutPageComponent implements OnInit {
    this.customMenuSample_adhoc_pmt_approval=false
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
+    this.IsMoeVieweport=false;
     if (data == 'Area') {
       this.customMenuArea = true;
     } else if (data == 'HQ') {
@@ -292,7 +296,10 @@ export class LayoutPageComponent implements OnInit {
       this.customMenuSample_Requisition_Approval = true;
     } else if (data == 'PMT_Sample_Allocation_Approval') {
       this.customMenuPMT_Sample_Requisition_Approval = true;
-    } else if (data == 'Print_Invoice') {
+    }else if (data == 'sample_data_upload') {
+      this.customMenusample_data_upload = true;
+    }
+     else if (data == 'Print_Invoice') {
       this.customMenuPrint_Invoice = true;
     } else if (data == 'Sample_Invoice') {
       this.customMenuSample_Invoice = true;
@@ -341,6 +348,8 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'cmereport') {
       this.Iscmereport = true;
+    }else if(data=='MoeVieweport'){
+      this.IsMoeVieweport=true;
     }
     else if (data == 'UpdateClaim') {
       $("#wrapper").toggleClass("toggled");

@@ -60,7 +60,7 @@ export class SharedService {
  // ApiUrl= "http://103.74.54.212:4201/"; //Live Server Test APIKS
   ApiUrl= "http://103.74.54.212:5000/"; //Live Server Live API
   AuthenticatedUser:boolean = false;
-  isPricing:boolean = true;l
+  isPricing:boolean = true;
   LoginUser: string = '';
   LastLogin: any = '';
   validationKey: any = ""; 
