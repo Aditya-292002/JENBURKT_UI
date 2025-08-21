@@ -83,7 +83,7 @@ console.log(    this.INCENTIVE_LIST)
               // this.INCENTIVE_LIST.splice(0, 1);
             }else{
                 
-            this.historicalData.push( { PERIOD_ID:element.PERIOD_ID,month: element.PERIOD_DESC, netSales: element.PERIOD_SALES, incentive: element.INC_IFACHIEV, nextMonthAchieved: element.NM_ACHV, achievedIncentive: element.ACHV_INC }   );
+            this.historicalData.push( { PERIOD_ID:element.PERIOD_ID,month: element.PERIOD_DESC, netSales: element.PERIOD_SALES, incentive: element.INC_IFACHIEV, nextMonthAchieved: element.NM_ACHV, achievedIncentive: element.ACHV_INC ,TARGET_MONTH:element.TARGET_MONTH}   );
            //this.historicalData.reverse();
           // console.log(' his.historicalData',this.historicalData);
            
