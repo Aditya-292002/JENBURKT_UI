@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./moe-report-view.component.css']
 })
 export class MoeReportViewComponent implements OnInit {
+  //code by hemant 21 aug 2025
   period:any;
   userInfo:any = {};
   periodList:any = [];

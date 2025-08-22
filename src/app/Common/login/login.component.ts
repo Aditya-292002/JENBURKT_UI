@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   isAgree:boolean=false;
   isTermsPopUp:boolean=false;
   IS_LIVE: string;
+  intervalId: any;
 
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
@@ -86,6 +87,23 @@ export class LoginComponent implements OnInit {
     this.isTermsPopUp = false;
   }
 
+    startStatusCheck() {
+  //  console.log('this.IS_PROCESS',this.track);
+     
+      this.intervalId=setTimeout(() => {
+     //   window.location.href ="/klikfmdev/login"
+        // eventEmitter.emit('navigate', PATH.LOGIN);
+       // this.getStatus()
+      }, 5000);
+     // this.intervalId();
+  //    console.log('inside this', this.intervalId);
+    }
+  
+  stopStatusCheck() {
+    if (this.intervalId) {
+      clearTimeout(this.intervalId);
+    }
+  }
  
 
 }
