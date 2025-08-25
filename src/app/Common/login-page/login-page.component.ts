@@ -50,4 +50,6 @@ export class LoginPageComponent implements OnInit {
   forgotPassFun(){
     this.router.navigate(["/forgotpassword"]);
   }
+  
 }
+    

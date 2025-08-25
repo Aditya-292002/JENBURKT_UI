@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   isTermsPopUp:boolean=false;
   IS_LIVE: string;
   intervalId: any;
+  EXPIRES_IN: any;
+  timeoutId: any;
 
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     sessionStorage.clear();
   }
+
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
     this.v_post_data.PASSWORD = this.Password;
@@ -42,13 +45,14 @@ export class LoginComponent implements OnInit {
          ;
             localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
-            console.log('token',res);
-               this.router.navigate(["/dashboard"]);
             
-       
-      
-          // this.userRoleRights();
-          // this.router.navigate(["/invoiceupdate"]);
+            this.EXPIRES_IN=res.EXPIRES_IN
+            const bufferTime = 30 * 1000;
+            console.log('token',res);
+            this.router.navigate(["/dashboard"]);
+            console.log("⏳ Scheduling refresh in", this.EXPIRES_IN / 1000, "seconds");
+            this.EXPIRES_IN = (this.EXPIRES_IN * 1000) - bufferTime;
+       this.startTokenRefresh(this.EXPIRES_IN)
         }
         else {
           // this.ToastrService.warning("Oops, Something went wrong while saving.");
@@ -87,23 +91,42 @@ export class LoginComponent implements OnInit {
     this.isTermsPopUp = false;
   }
 
-    startStatusCheck() {
-  //  console.log('this.IS_PROCESS',this.track);
-     
-      this.intervalId=setTimeout(() => {
-     //   window.location.href ="/klikfmdev/login"
-        // eventEmitter.emit('navigate', PATH.LOGIN);
-       // this.getStatus()
-      }, 5000);
-     // this.intervalId();
-  //    console.log('inside this', this.intervalId);
-    }
-  
-  stopStatusCheck() {
-    if (this.intervalId) {
-      clearTimeout(this.intervalId);
-    }
+ getRefreshToken(){
+  let data={
+    "REFRESH_TOKEN": localStorage.getItem('refresh_token')
   }
- 
+    this.http.postnew(this.url.getrefreshtokrn, data).then(
+      (res:any)=>{
+          localStorage.setItem("TOKEN",res.TOKEN);
+            localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
+     
+           const bufferTime = 30 * 1000;
+          this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
+   //  this.startTokenRefresh(this.EXPIRES_IN)
+    // this.timeoutId = setTimeout(() => {
+    //   console.log('refresh token started generating');
+      
+    //   this.getRefreshToken();
+    // }, this.EXPIRES_IN);
+      },
+      error =>{
+        console.log(error);
+        this.ToastrService.error("Oops, Something went wrong.");
+      }
+    );
 
+ }
+startTokenRefresh(expiryMs: number) {
+  if (this.timeoutId) {
+    clearTimeout(this.timeoutId);
+    console.log("🛑 Cleared previous timeout:", this.timeoutId);
+  }
+
+  this.timeoutId = setTimeout(() => {
+    console.log("🚀 Timeout triggered → calling getRefreshToken()");
+    this.getRefreshToken();
+  }, expiryMs);
+
+  console.log("⏳ New timeout scheduled:", this.timeoutId);
+}
 }
