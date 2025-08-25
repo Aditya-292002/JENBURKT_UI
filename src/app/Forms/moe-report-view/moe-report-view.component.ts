@@ -17,9 +17,9 @@ export class MoeReportViewComponent implements OnInit {
   periodList:any = [];
   isLoaded:boolean=false;
   roleList: any=[];
-  AREA_CODE:any;
+  AREA_CODE:any='';
   roleListData: any=[];
-  pdfSrc: any;
+  pdfSrc: any="";
   pdfSrcflag: boolean=false;
   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
 
@@ -61,10 +61,11 @@ export class MoeReportViewComponent implements OnInit {
       (res:any)=>{
         this.roleListData = res.ROLElist;
         console.log(res,'res');
-       this.roleListData.unshift(this.roleListData.pop()!);
+         this.roleList = res.ROLElist;
+        this.roleListData.unshift(this.roleListData.pop()!);
         this.roleList = this.roleListData.map(item => ({  ...item,
         combinedLabel: `${item.ROLE_NAME} -${item.AREA_CODE} - ${item.AREA_DESC}`,
-        //  combinedValue: `${item.AREA_CODE}|${item.AREA_NAME}`
+        // combinedValue: `${item.AREA_CODE}|${item.AREA_NAME}`
         }));
 
       console.log('roleList',this.roleList);
@@ -105,7 +106,7 @@ export class MoeReportViewComponent implements OnInit {
 
           this.isLoaded=false;
          this.pdfSrcflag=true;
-          //this.AREA_CODE=''
+          this.AREA_CODE=''
            this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
            const base64Data =this.pdfSrc
            console.log('periodList',this.pdfSrc);
