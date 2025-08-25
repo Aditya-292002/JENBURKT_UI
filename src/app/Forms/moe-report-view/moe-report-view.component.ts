@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./moe-report-view.component.css']
 })
 export class MoeReportViewComponent implements OnInit {
+  //code by hemant 21 aug 2025
   period:any;
   userInfo:any = {};
   periodList:any = [];
@@ -105,7 +106,7 @@ export class MoeReportViewComponent implements OnInit {
         console.log('RES',res);
          this.isLoaded=false;
         this.pdfSrcflag=true;
-  this.AREA_CODE=''
+         this.AREA_CODE=''
           this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
           const base64Data =this.pdfSrc
           console.log('periodList',this.pdfSrc);
