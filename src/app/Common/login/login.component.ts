@@ -6,7 +6,7 @@ import { URLService } from 'src/app/Service/url.service';
 import { AuthService } from 'src/app/Service/auth.service';
 import { SharedService } from 'src/app/Service/shared.service';
 import { CommonService } from 'src/app/Service/common.service';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,13 +35,15 @@ export class LoginComponent implements OnInit {
 
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
-    this.v_post_data.PASSWORD = this.Password;
+    this.v_post_data.PASSWORD = this.hashPassword(this.Password);
     this.http.postnewlogin(this.url.userLogin, this.v_post_data).then(
       (res:any)=>{
         // console.log("response",res);
         if (res.FLAG) {
            this.ToastrService.success(res.MSG);
           this.AuthService.setUserDetail(JSON.stringify(res));
+          console.log(this.hashPassword(this.Password))
+
          ;
             localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
@@ -128,5 +130,16 @@ startTokenRefresh(expiryMs: number) {
   }, expiryMs);
 
   console.log("⏳ New timeout scheduled:", this.timeoutId);
+  
 }
+
+
+hashPassword(password: string): string {
+    return CryptoJS.MD5(password).toString();
+  }
+
+  //   verifyPassword(inputPassword: string, storedHash: string): boolean {
+  //   const hashedInput = CryptoJS.MD5(inputPassword).toString();
+  //   return hashedInput === storedHash;
+  // }
 }
