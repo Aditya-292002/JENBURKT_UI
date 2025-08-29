@@ -45,8 +45,8 @@
                                         optionValue="AREA_CODE">
                                     </p-dropdown> -->
                                     <p-dropdown appendTo="body" [options]="roleList" [(ngModel)]="AREA_CODE"
-                                        [filter]="true" filterBy="AREA_CODE,AREA_NAME"
-                                        [ngModelOptions]="{standalone: true}" placeholder="Please Select..."
+                                        [filter]="true" filterBy="AREA_CODE,AREA_DESC"
+                                       placeholder="Please Select..."
                                         optionLabel="combinedLabel" [optionValue]="AREA_CODE">
                                     </p-dropdown>
                                 </div>
@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<p-dialog header="View Moe Report" [modal]="true" [(visible)]="pdfSrc" [style]="{ width: '70rem' }">
+<p-dialog header="View Moe Report" [modal]="true" [(visible)]="pdfSrcflag" [style]="{ width: '70rem' }">
 
     <div class="col-sm-8 col-md-8 col-md-12 pt-4" >
         <!-- Using iframe -->

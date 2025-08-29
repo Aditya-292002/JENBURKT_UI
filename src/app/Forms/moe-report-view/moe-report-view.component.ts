@@ -18,9 +18,9 @@ export class MoeReportViewComponent implements OnInit {
   periodList:any = [];
   isLoaded:boolean=false;
   roleList: any=[];
-  AREA_CODE:any;
+  AREA_CODE:any='';
   roleListData: any=[];
-  pdfSrc: any;
+  pdfSrc: any="";
   pdfSrcflag: boolean=false;
   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
 
@@ -57,17 +57,19 @@ export class MoeReportViewComponent implements OnInit {
       SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
       PERIOD_ID:this.period
     }
+    this.roleList=[]
     this.http.postnew(this.url.GetROLEWISELISTBYPERIODID, data).then(
       (res:any)=>{
         this.roleListData = res.ROLElist;
         console.log(res,'res');
-       this.roleListData.unshift(this.roleListData.pop()!);
+         this.roleList = res.ROLElist;
+        this.roleListData.unshift(this.roleListData.pop()!);
         this.roleList = this.roleListData.map(item => ({  ...item,
         combinedLabel: `${item.ROLE_NAME} -${item.AREA_CODE} - ${item.AREA_DESC}`,
-        //  combinedValue: `${item.AREA_CODE}|${item.AREA_NAME}`
+        // combinedValue: `${item.AREA_CODE}|${item.AREA_NAME}`
         }));
 
-      //console.log('periodList',this.periodList);
+      console.log('roleList',this.roleList);
      
       },
       error =>{
@@ -101,20 +103,27 @@ export class MoeReportViewComponent implements OnInit {
     this.isLoaded=true;
         this.http.postnew(this.url.ConvertPdfToBase64, data).then(
       (res:any)=>{
-        
-        console.log('RES',res);
-         this.isLoaded=false;
-        this.pdfSrcflag=true;
-         this.AREA_CODE=''
-          this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
-          const base64Data =this.pdfSrc
-          console.log('periodList',this.pdfSrc);
-          const fileName = res.FileName;
-          const link = document.createElement('a');
-          link.href = this.pdfSrc;
-         // link.download = fileName; // 👈 custom file name here
-          //link.click();
-          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfSrc);
+        if(res.flag==true){
+
+          this.isLoaded=false;
+         this.pdfSrcflag=true;
+          this.AREA_CODE=''         this.AREA_CODE=''
+           this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
+           const base64Data =this.pdfSrc
+           console.log('periodList',this.pdfSrc);
+           const fileName = res.FileName;
+           const link = document.createElement('a');
+           link.href = this.pdfSrc;
+          // link.download = fileName; // 👈 custom file name here
+           //link.click();
+           this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfSrc);
+         //  this.toastrService.success(res.Message);
+        }
+        else if(res.flag==false){
+            this.isLoaded=false;
+            this.toastrService.error(res.Message);
+        }
+       // console.log('RES',res);
       },
       error =>{
          this.isLoaded=false;
