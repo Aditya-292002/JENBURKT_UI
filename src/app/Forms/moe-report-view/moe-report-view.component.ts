@@ -107,7 +107,7 @@ export class MoeReportViewComponent implements OnInit {
 
           this.isLoaded=false;
          this.pdfSrcflag=true;
-          this.AREA_CODE=''         this.AREA_CODE=''
+          this.AREA_CODE=''  
            this.pdfSrc=`data:application/pdf;base64,${res.Base64Pdf}`
            const base64Data =this.pdfSrc
            console.log('periodList',this.pdfSrc);
