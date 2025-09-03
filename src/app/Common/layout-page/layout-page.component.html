@@ -11,7 +11,15 @@
                 </a>
             </li>
             <div class="card-responsive1">
-                <li>
+                 <li *ngIf="roleID == 6">
+                    <a class="nav-link  px-2" routerLink="/generateorder"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Generate Order</a>
+                </li>
+                <li *ngIf="roleID == 6">
+                    <a class="nav-link  px-2" routerLink="/superstockistmaster"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Super Stockist Master</a>
+                </li>
+                <li *ngIf="roleID != 6">
                     <a class="nav-link  px-2" routerLink="/dashboard"><i class="fa fa-home mr-2"
                             aria-hidden="true"></i>Dashboard</a>
                 </li>
@@ -193,7 +201,7 @@
                         </ul>
                     </div>
                 </li>
-                <li>
+                <li *ngIf="roleID != 6">
                     <a class="nav-link px-2" href="#submenu2" data-toggle="collapse" data-target="#submenu2"><i
                             class="fa fa-folder-open-o mr-2"></i>Report</a>
                     <div class="collapse" id="submenu2">

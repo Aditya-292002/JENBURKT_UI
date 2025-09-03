@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   intervalId: any;
   EXPIRES_IN: any;
   timeoutId: any;
+  userList: any;
 
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     sessionStorage.clear();
   }
+
 
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
@@ -47,13 +49,18 @@ export class LoginComponent implements OnInit {
          ;
             localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
-            
+            this.userInfo = this.AuthService.getUserDetail();
             this.EXPIRES_IN=res.EXPIRES_IN
-            const bufferTime = 30 * 1000;
+            const bufferTime = 300 * 1000;
             console.log('token',res);
-            this.router.navigate(["/dashboard"]);
-            console.log("⏳ Scheduling refresh in", this.EXPIRES_IN / 1000, "seconds");
+            if(JSON.parse(this.userInfo).ROLE_ID!=6){
+
+              this.router.navigate(["/dashboard"]);
+            }else{
+               this.router.navigate(["/generateorder"]);
+            }
             this.EXPIRES_IN = (this.EXPIRES_IN * 1000) - bufferTime;
+            console.log("⏳ Scheduling refresh in", this.EXPIRES_IN , "seconds");
        this.startTokenRefresh(this.EXPIRES_IN)
         }
         else {
@@ -102,8 +109,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
      
-           const bufferTime = 30 * 1000;
-          this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
+          // const bufferTime = 30 * 1000;
+          //this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
    //  this.startTokenRefresh(this.EXPIRES_IN)
     // this.timeoutId = setTimeout(() => {
     //   console.log('refresh token started generating');
