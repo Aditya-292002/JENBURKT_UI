@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
-    this.v_post_data.PASSWORD = this.hashPassword(this.Password);
+    this.v_post_data.PASSWORD = this.Password;
     this.http.postnewlogin(this.url.userLogin, this.v_post_data).then(
       (res:any)=>{
         // console.log("response",res);
