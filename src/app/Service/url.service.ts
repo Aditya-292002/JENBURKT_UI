@@ -220,8 +220,9 @@ export class URLService {
   
     public getrefreshtokrn = this.sharedService.ApiUrl + '/api/Authetication/RefreshToken'
 
-   public GETSUPERSTOCKISTDATABYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTDATABYPERIODID'
-   public GETSUPERSTOCKISTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTMASTERLIST'
+     public GETSUPERSTOCKISTDATABYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTDATABYPERIODID'
+     public GETSUPERSTOCKISTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTMASTERLIST'
+     public SAVESUPERSTOCKISTMASTERDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTMASTERDATA';
 
 
 }

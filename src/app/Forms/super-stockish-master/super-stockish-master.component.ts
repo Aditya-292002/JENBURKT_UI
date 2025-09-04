@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { URLService } from 'src/app/Service/url.service';
 import * as FileSaver from 'file-saver';
 import { DatePipe } from '@angular/common';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-super-stockish-master',
   templateUrl: './super-stockish-master.component.html',
@@ -238,7 +238,7 @@ export class SuperStockishMasterComponent implements OnInit {
       "EMAIL":this.Email,
       "ACTIVE":(this.Active==true?"1":"0"),
       "DATE_OF_JOINING":(this.SharedService.isValid(date)?date:null),
-      "PASSWORD":this.PASSSWORD,
+      "PASSWORD":this.hashPassword(this.PASSSWORD),
     
     }
 
@@ -247,7 +247,7 @@ export class SuperStockishMasterComponent implements OnInit {
 
     //return 
     this.isLoaded = true;
-    this.http.postnew(this.url.saveUserMaster, data).then(
+    this.http.postnew(this.url.SAVESUPERSTOCKISTMASTERDATA, data).then(
       (res:any)=>{
         if(res.data[0].FLAG==1){
           this.isLoaded= false;
@@ -438,5 +438,9 @@ export class SuperStockishMasterComponent implements OnInit {
         }
       });
   }
+  
+  hashPassword(password: string): string {
+      return CryptoJS.MD5(password).toString();
+    }
 
 }
