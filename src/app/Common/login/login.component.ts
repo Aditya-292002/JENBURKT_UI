@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
-    this.v_post_data.PASSWORD = this.hashPassword(this.Password);
+    this.v_post_data.PASSWORD = this.Password;
     this.http.postnewlogin(this.url.userLogin, this.v_post_data).then(
       (res:any)=>{
         // console.log("response",res);
@@ -109,8 +109,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
      
-          // const bufferTime = 30 * 1000;
-          //this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
+           const bufferTime = 600 * 1000;
+          this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
    //  this.startTokenRefresh(this.EXPIRES_IN)
     // this.timeoutId = setTimeout(() => {
     //   console.log('refresh token started generating');
