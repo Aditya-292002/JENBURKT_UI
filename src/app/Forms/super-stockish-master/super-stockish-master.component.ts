@@ -137,7 +137,12 @@ export class SuperStockishMasterComponent implements OnInit {
     this.Address = data.ADDRESS;
     this.MobileNo = data.MOBILE;
     this.Email = data.EMAIL_ID;
-    this.userMasterMode = "Edit User Master";
+    if(this.USER_ID==0 || this.USER_ID==undefined){
+
+      this.userMasterMode = "Add Superstockist Master";
+    }else{
+        this.userMasterMode = "Edit Superstockist Master";
+    }
     this.isUserPopUp=false;
     this.isValidSalesRoleId =true;
     this.roleId=data.ROLE_ID
@@ -158,62 +163,71 @@ export class SuperStockishMasterComponent implements OnInit {
 
   OnSaveUserMasterClick(){
     console.log(this.hqAreaCode,"hq",this.roleId,"role")
-     this.SaveUserMaster();
+     
 
     this.isHighLightLogin = "No";
     this.isHighLightRole = "No";
     this.isHighLightSalesRole = "No";
     this.isHighLightHQArea = "No";
     this.isHighLightWEF = "No";
-    if(this.loginId == "" || this.loginId == undefined){
-      this.isHighLightLogin = "Yes";
-    }else{
-      this.isHighLightLogin = "No";
-    }
+    // if(this.loginId == "" || this.loginId == undefined){
+    //   this.isHighLightLogin = "Yes";
+    // }else{
+    //   this.isHighLightLogin = "No";
+    // }
 
     if(this.isHighLightLogin == "Yes"){
       this.ToastrService.error("Please enter value in Login Id.");
     }else{
-      if(this.roleId == "" || this.roleId == undefined){
-        this.isHighLightRole = "Yes";
-      }else{
-        this.isHighLightRole = "No";
+      if(this.Email=='' || this.Email==undefined){
+         this.ToastrService.error("Please enter value in Email Id.");
+         return;
       }
-      if((this.salesRoleId == "" || this.salesRoleId == undefined) && this.roleId.SALES_ROLE == true){
-        this.isHighLightSalesRole = "Yes";
-      }else{
-        this.isHighLightSalesRole = "No";
-      }
+      //      if(this.PASSSWORD=='' || this.PASSSWORD==undefined){
+      //    this.ToastrService.error("Please enter value in New Password");
+      //    return;
+      // }
+      // if(this.roleId == "" || this.roleId == undefined){
+      //   this.isHighLightRole = "Yes";
+      // }else{
+      //   this.isHighLightRole = "No";
+      // }
+      // if((this.salesRoleId == "" || this.salesRoleId == undefined) && this.roleId.SALES_ROLE == true){
+      //   this.isHighLightSalesRole = "Yes";
+      // }else{
+      //   this.isHighLightSalesRole = "No";
+      // }
       // if((this.hqAreaCode == "" || this.hqAreaCode == undefined) && this.roleId.SALES_ROLE == true){
       //   this.isHighLightHQArea = "Yes";
       // }
       // else{
       //   this.isHighLightHQArea = "No";
       // }
-      if(this.wefId == "" || this.wefId == undefined){
-        this.isHighLightWEF = "Yes";
-      }else{
-        this.isHighLightWEF = "No";
-      }
+      // if(this.wefId == "" || this.wefId == undefined){
+      //   this.isHighLightWEF = "Yes";
+      // }else{
+      //   this.isHighLightWEF = "No";
+      // }
 
-      if(this.isHighLightRole == "Yes"){
-        this.ToastrService.error("Please select a role.");
-      }
-      if(this.isHighLightSalesRole == "Yes"){
-        this.ToastrService.error("Please select a sales role.");
-      }
+      // if(this.isHighLightRole == "Yes"){
+      //   this.ToastrService.error("Please select a role.");
+      // }
+      // // if(this.isHighLightSalesRole == "Yes"){
+      //   this.ToastrService.error("Please select a sales role.");
+      // }
       // if(this.isHighLightHQArea == "Yes"){
       //   this.ToastrService.error("Please select a HQ Area.");
       // }
-      if(this.isHighLightWEF == "Yes"){
-        this.ToastrService.error("Please select a Wef.");
-      }
+      // if(this.isHighLightWEF == "Yes"){
+      //   this.ToastrService.error("Please select a Wef.");
+      // }
 
-      if(this.isHighLightRole != "Yes" && this.isHighLightSalesRole != "Yes" && this.isHighLightHQArea != "Yes" && this.isHighLightWEF != "Yes"){
-       // this.SaveUserMaster();
-        this.isShowdropdown=false
-      }
+      // if(this.isHighLightRole != "Yes" && this.isHighLightSalesRole != "Yes" && this.isHighLightHQArea != "Yes" && this.isHighLightWEF != "Yes"){
+       
+        // this.isShowdropdown=false
+     // }
     }
+     this.SaveUserMaster();
   }
   SaveUserMaster() {
     this.userInfo = this.AuthService.getUserDetail();
@@ -236,7 +250,7 @@ export class SuperStockishMasterComponent implements OnInit {
       "ADDRESS":this.Address,
       "MOBILE_NO":this.MobileNo,
       "EMAIL":this.Email,
-      "ACTIVE":(this.Active==true?"1":"0"),
+      "ACTIVE":1,//(this.Active==true?"1":"0"),
       "DATE_OF_JOINING":(this.SharedService.isValid(date)?date:null),
       "PASSWORD":this.hashPassword(this.PASSSWORD),
     
@@ -282,7 +296,10 @@ export class SuperStockishMasterComponent implements OnInit {
     this.userMasterMode = "Superstockist Master";
     this.isAddUserMaster = false;
     this.isUserPopUp = false;
-    this.DATE_OF_JOINING=""
+    this.DATE_OF_JOINING="";
+    this.MobileNo='';
+    this.Email='';
+    this.PASSSWORD='';
   }
 
   filterRoleId:any=[];

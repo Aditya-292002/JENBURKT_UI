@@ -30,6 +30,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuPool_To_Pool: boolean;
   customMenuUpload_Document: boolean;
   customMenuSample_Product: boolean;
+  customMenuSuper_stockist:boolean ;
   customMenuSample_Allocation: boolean;
   customMenuUpload_Sample_Stock: boolean;
   customMenuSample_Allocation_Approval: boolean;
@@ -201,6 +202,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuPool_To_Pool = false;
     this.customMenuUpload_Document = false;
     this.customMenuSample_Product = false;
+    this.customMenuSuper_stockist=false;
     this.customMenuSample_Allocation = false;
     this.customMenuUpload_Sample_Stock = false;
     this.customCycle_Sample_Requisition = false;
@@ -279,7 +281,10 @@ export class LayoutPageComponent implements OnInit {
       this.customMenuUpload_Document = true;
     } else if (data == 'Sample_Product') {
       this.customMenuSample_Product = true;
-    } else if (data == 'Sample_Allocation') {
+    } 
+    else if (data == 'SUPER_STOCKIST_MASTER') {
+      this.customMenuSuper_stockist = true;
+    }else if (data == 'Sample_Allocation') {
       this.customMenuSample_Allocation = true;
     } else if (data == 'Upload_Sample_Stock') {
       this.customMenuUpload_Sample_Stock = true;

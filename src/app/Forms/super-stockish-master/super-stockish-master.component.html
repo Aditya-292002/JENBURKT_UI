@@ -39,7 +39,7 @@
                     [(ngModel)]="loginId"
                     [ngModelOptions]="{standalone:true}"
                     placeholder="SuperStockist Code"
-                    [disabled]="isAddUserMaster"
+                    [disabled]="true"
                   />
                 </div>
               </div>
@@ -55,13 +55,14 @@
                   [(ngModel)]="userName"
                   [ngModelOptions]="{standalone:true}"
                   placeholder="SuperStockist Name"
+                   [disabled]="true"
                 />
               </div>
             </div>
 
 
         <div class="col-12 col-md-6 col-lg-4">
-              <div class="mb-2">
+              <div class="mb-2" >
                 <label>Email</label>
                 <input
                   type="text"
@@ -72,25 +73,7 @@
                 />
               </div>
             </div>
-
-                                    <div class="col-12 col-md-6">
-              <div class="mb-2">
-                <label>State</label>
-                <p-dropdown
-                  [options]="STATE_LIST"
-                  appendTo="body"
-                  optionLabel="STATE_DESC"
-                  [(ngModel)]="stateCode"
-                  [filter]="true"
-                  filterBy="STATE_DESC"
-                  [ngModelOptions]="{standalone:true}"
-                  placeholder="Please Select..."
-                ></p-dropdown>
-              </div>
-            </div>
-
-
-            <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-8">
                 <div class="mb-2">
             <label>Address</label>
             <textarea
@@ -102,6 +85,11 @@
             ></textarea>
           </div>
             </div>
+
+
+
+
+
             
             
             <!-- Mobile -->
@@ -118,7 +106,23 @@
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-6 col-lg-4">
+                         <div class="col-12 col-md-8">
+              <div class="mb-2">
+                <label>State</label>
+                <p-dropdown
+                  [options]="STATE_LIST"
+                  appendTo="body"
+                  optionLabel="STATE_DESC"
+                  [(ngModel)]="stateCode"
+                  [filter]="true"
+                  filterBy="STATE_DESC"
+                  [ngModelOptions]="{standalone:true}"
+                  placeholder="Please Select..."
+                ></p-dropdown>
+              </div>
+            </div>
+
+            <!-- <div class="col-sm-6 col-md-6 col-lg-4">
                         <div class="mb-2">
                             <label>WEF</label>
                             <div [ngClass]="{'required-field':isHighLightWEF=== 'Yes'}">
@@ -126,11 +130,11 @@
                                 </p-dropdown>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                       <div class="col-12 col-md-6 col-lg-4">
+                       <!-- <div class="col-12 col-md-6 col-lg-4">
               <div class="mb-2">
-                <label>Password</label>
+                <label>New Password</label>
                 <input
                   type="text"
                   class="form-control"
@@ -139,7 +143,7 @@
                   placeholder="Enter password"
                 />
               </div>
-            </div>
+            </div> -->
 
           </div>
           <!-- Row 3 -->
@@ -168,7 +172,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">User Master</h5>
+                <h5 class="modal-title">SuperStockist User Master</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePopUp()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -180,7 +184,7 @@
                             <p-table [value]="userList" [autoLayout]="true" styleClass="p-datatable-lg"
                                 responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
                                 scrollHeight="400px" #dt
-                                [globalFilterFields]="['LOGIN_ID','ROLE_NAME','SALESROLE_NAME','AREA_NAME','STATE_NAME','PERIOD_DESC']">
+                                [globalFilterFields]="['SUPERSTOCKIST_NAME','ROLE_NAME','SUPERSTOCKIST_NAME','STATE_NAME']">
                                 <ng-template pTemplate="caption">
                                     <div class="input-group search-group px-3"
                                         style="width: 250px; margin-left: 440px;">
@@ -196,13 +200,13 @@
                                 </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th pSortableColumn="LOGIN_ID" class="width-130">
+                                        <th pSortableColumn="SUPERSTOCKIST_CODE" class="width-130">
                                             SuperStockist Code
                                         </th>
-                                        <th pSortableColumn="ROLE_NAME" class="width-130">
+                                        <th pSortableColumn="SUPERSTOCKIST_NAME" class="width-130">
                                             SuperStockist Name
                                         </th>
-                                        <th pSortableColumn="SALESROLE_NAME" class="width-130">
+                                        <th pSortableColumn="ROLE_NAME" class="width-130">
                                              Role Name
                                         </th>
                                         <th pSortableColumn="AREA_NAME" class="width-130">
@@ -211,8 +215,8 @@
                                         <th pSortableColumn="STATE_NAME" class="width-130">
                                             Email
                                         </th>
-                                        <th pSortableColumn="PERIOD_DESC" class="width-130">
-                                            State Code
+                                        <th pSortableColumn="STATE_NAME" class="width-130">
+                                            State
                                         </th>
 
                                     </tr>
@@ -236,7 +240,7 @@
                                         </td>
                                         <td class="width-130">
                                             <a class="click" (click)="onUserSelected(rowData)">
-                                                {{rowData.EMAIL}}</a>
+                                                {{rowData.EMAIL_ID}}</a>
                                         </td>
                                         <td class="width-130">
                                             <a class="click" (click)="onUserSelected(rowData)">
