@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
       },
       error =>{
         console.log(error);
-        this.ToastrService.error("Oops, Something went wrong.");
+      //  this.ToastrService.error("Oops, Something went wrong.");
       }
     );
 
