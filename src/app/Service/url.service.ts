@@ -220,6 +220,6 @@ export class URLService {
   
     public getrefreshtokrn = this.sharedService.ApiUrl + '/api/Authetication/RefreshToken'
 
-  
+    public DivisionSalesReportExcelDownload = this.sharedService.ApiUrl + '/api/Reports/DivisionSalesReportExcelDownload';
 
 }
