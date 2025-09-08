@@ -34,7 +34,7 @@ export class GenerateOrderComponent implements OnInit {
        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
        SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID
      }
-     this.http.postnew(this.url.GetMOEMASTERLIST, data).then(
+     this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
        (res:any)=>{
          this.periodList = res.periodlist;
        //console.log('periodList',this.periodList);

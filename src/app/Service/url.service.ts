@@ -223,6 +223,7 @@ export class URLService {
      public GETSUPERSTOCKISTDATABYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTDATABYPERIODID'
      public GETSUPERSTOCKISTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTMASTERLIST'
      public SAVESUPERSTOCKISTMASTERDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTMASTERDATA';
+     public GETGENERATEORDERMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETGENERATEORDERMASTERLIST';
 
 
 }

@@ -34,7 +34,7 @@ isHighLightSample: any = "NO";
       "USER_ID": this.USER_ID,
       "FYEAR": "2025"
     }
-    this.http.postnew(this.url.GETSAMPLEREQUISITIONMASTERLIST, data).then(
+    this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
       (res: any) => {
         this.PERIOD_LIST = res.PERIOD_LIST;
       });
