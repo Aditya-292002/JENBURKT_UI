@@ -113,6 +113,7 @@ import { SampleDataUploadComponent } from './Forms/sample-data-upload/sample-dat
 import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.component';
 import { GenerateOrderComponent } from './Forms/generate-order/generate-order.component';
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
+import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
 
 registerLocaleData(localeIn);
 
@@ -202,7 +203,8 @@ registerLocaleData(localeIn);
     SampleDataUploadComponent,
     MoeReportViewComponent,
     GenerateOrderComponent,
-    SuperStockishMasterComponent
+    SuperStockishMasterComponent,
+    CycleSuperstockistComponent
     
   ],
   imports: [

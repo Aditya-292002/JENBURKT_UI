@@ -9,6 +9,14 @@
         <div class="d-flex justify-content-start">
             <h5 class="mb-0 headers">Generate Order</h5>
         </div>
+         <div class="buttonBox ml-auto">
+                       <button type="submit" *ngIf="this.IS_DISABLED == false" class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
+                Save As Draft
+            </button>
+            <button type="submit" *ngIf="this.IS_DISABLED == false" class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(2)">
+                Submit
+            </button>
+        </div>
 
     </div>
 </div>

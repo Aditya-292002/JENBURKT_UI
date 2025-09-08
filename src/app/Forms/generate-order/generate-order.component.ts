@@ -22,10 +22,9 @@ export class GenerateOrderComponent implements OnInit {
    pdfSrc: any="";
    pdfSrcflag: boolean=false;
   PRODUCT_LIST: any;
+  IS_DISABLED:boolean
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
- 
- 
-   ngOnInit(): void {
+    ngOnInit(): void {
      this.getPeriodListData();
    }
      getPeriodListData(){
@@ -103,6 +102,9 @@ export class GenerateOrderComponent implements OnInit {
         // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
       }
     });
+   }
+   SAVESUPERSTOCKIST(){
+
    }
 
 }
