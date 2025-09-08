@@ -130,7 +130,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
         // Commented by Gauresh
         // console.log("response",res);
         //ADDED BY HEMANT
-          this.SalesReportListFOREXCEL=res;
+          // this.SalesReportListFOREXCEL=res;
         // console.log(' this.SalesReportList', this.SalesReportList);
        
 
@@ -345,77 +345,85 @@ export class DivisionWiseSalesReportComponent implements OnInit {
      delete obj[oldKey];
    }
    exportExcel(){
-    if(this.counter==0 || this.counter==undefined ){
-    var exportableObj = JSON.parse(JSON.stringify(this.SalesReportList));
+      this.userInfo = this.AuthService.getUserDetail();
+    console.log("this.this.QTY_VALUE.NAME:-",this.QTY_VALUE.NAME);
+    let data={
+      USER_ID : JSON.parse(this.userInfo).USER_ID,
+      FromMonth : (+this.fromDate.PERIOD_ID),
+      ToMonth : (+this.toDate.PERIOD_ID),
+      // UnderEmpCode : (+this.underEmployee.USER_ID),
+      UnderEmpCode : 0,
+      key_figure : 1,
+      qty_val : "Value"
     }
-    else if(this.counter==1){
-      
-      var exportableObj = JSON.parse(JSON.stringify(this.SalesList1));
-    }else if(this.counter==2){
-       var exportableObj = JSON.parse(JSON.stringify(this.SalesList2));
-    }else if(this.counter==3){
-     var exportableObj = JSON.parse(JSON.stringify(this.SalesList3));
-    }else if(this.counter==3){
-       var exportableObj = JSON.parse(JSON.stringify(this.SalesList4));
-    }
-   var exportableObj = JSON.parse(JSON.stringify(this.SalesReportListFOREXCEL));
-   exportableObj.forEach( (obj:any) => {
-     this.renameKey( obj, 'Keyfigure_Name', 'Key Figure' )
-   //  if(this.isQualitySelected == false){
-       this.renameKey( obj, 'HB-NET', 'HYBRID_NET' )
-       this.renameKey( obj, 'HB-TARGET', 'HYBRID_TARGET' )
-       this.renameKey( obj, 'HB-ACHV', 'HYBRID_ACHV' )
-       this.renameKey( obj, 'NV-NET','NOVA_NET')
-       this.renameKey( obj, 'NV-TARGET', 'NOVA_TARGET' )
-       this.renameKey( obj, 'NV-ACHV', 'NOVA_ACHV' )
-      // delete obj['Net_Qty'];delete obj['Expiry_Val'];delete obj['Return_Qty'];delete obj['Sales_Qty'];
-     //  delete obj['Target_Qty'];
-    // }else{
-       this.renameKey( obj, 'ZR-NET', 'ZORA_NET' )
-       this.renameKey( obj, 'ZR-TARGET', 'ZORA_TARGET' )
-       this.renameKey( obj, 'ZR-ACHV', 'ZORA_ACHV' )
-      // this.renameKey( obj, 'Expiry_Per','Expiry %')
-       this.renameKey( obj, 'TOTAL-NET', 'TOTAL_NET' )
-       this.renameKey( obj, 'TOTAL-TARGET', 'TOTAL_TARGET' )
-        this.renameKey( obj, 'TOTAL ↵-ACHV', 'TOTAL_ACHV' )
-    //   delete obj['Keyfigure_Code'];delete obj['Parent_Code'];delete obj['Return_Val'];delete obj['Net_Val'];
-     //  delete obj['Target_Val'];
-    // }
-    // this.renameKey( obj, 'Pending_Val','Pending')
-   //  this.renameKey( obj, 'ACHIEVE_PER','Achievement %')
- 
-     delete obj['Keyfigure_Code'];
-     delete obj['Keyfigure_para'];
-     delete obj['LASTPULLDATAON'];
-    delete obj['Parent_Code'];
-   // delete obj['Expiry_Qty'];delete obj['Pending_Qty'];
-   })
-   const columnOrder = [
-     'Key Figure',
-     'HYBRID_NET', 'HYBRID_TARGET', 'HYBRID_ACHV',
-     'ZORA_NET', 'ZORA_TARGET', 'ZORA_ACHV',
-     'NOVA_NET', 'NOVA_TARGET', 'NOVA_ACHV',
-     'TOTAL_NET', 'TOTAL_TARGET', 'TOTAL_ACHV'
-    ]
-    const reordered = exportableObj.map((obj: any) => {
-      const newObj: any = {};
-      columnOrder.forEach(col => {
-        // Fix wrong key "TOTAL ↵-ACHV"
-        if (col === 'TOTAL_ACHV' && obj['TOTAL ↵-ACHV'] !== undefined) {
-          newObj[col] = obj['TOTAL ↵-ACHV'];
-        } else {
-          newObj[col] = obj[col] ?? '';
-        }
-      });
-      return newObj;
-    });
-    console.log('exportableObj',reordered);
-    import("xlsx").then(xlsx => {
-     const worksheet = xlsx.utils.json_to_sheet(reordered);
+    this.isLoaded = false;
+    this.http.postnew(this.url.DivisionSalesReportExcelDownload, data).then(
+      (res:any)=>{
+        // Commented by Gauresh
+        // console.log("response",res);
+        //ADDED BY HEMANT
+          this.SalesReportListFOREXCEL=res;
+        // console.log(' this.SalesReportList', this.SalesReportList);
+        var exportableObj = JSON.parse(JSON.stringify(this.SalesReportListFOREXCEL));
+           import("xlsx").then(xlsx => {
+     const worksheet = xlsx.utils.json_to_sheet(exportableObj);
      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
      this.saveAsExcelFile(excelBuffer, "Sales Report");
    });
+      })
+  //  exportableObj.forEach( (obj:any) => {
+  //    this.renameKey( obj, 'Keyfigure_Name', 'Key Figure' )
+  //  //  if(this.isQualitySelected == false){
+  //      this.renameKey( obj, 'HB-NET', 'HYBRID_NET' )
+  //      this.renameKey( obj, 'HB-TARGET', 'HYBRID_TARGET' )
+  //      this.renameKey( obj, 'HB-ACHV', 'HYBRID_ACHV' )
+  //      this.renameKey( obj, 'NV-NET','NOVA_NET')
+  //      this.renameKey( obj, 'NV-TARGET', 'NOVA_TARGET' )
+  //      this.renameKey( obj, 'NV-ACHV', 'NOVA_ACHV' )
+  //     // delete obj['Net_Qty'];delete obj['Expiry_Val'];delete obj['Return_Qty'];delete obj['Sales_Qty'];
+  //    //  delete obj['Target_Qty'];
+  //   // }else{
+  //      this.renameKey( obj, 'ZR-NET', 'ZORA_NET' )
+  //      this.renameKey( obj, 'ZR-TARGET', 'ZORA_TARGET' )
+  //      this.renameKey( obj, 'ZR-ACHV', 'ZORA_ACHV' )
+  //     // this.renameKey( obj, 'Expiry_Per','Expiry %')
+  //      this.renameKey( obj, 'TOTAL-NET', 'TOTAL_NET' )
+  //      this.renameKey( obj, 'TOTAL-TARGET', 'TOTAL_TARGET' )
+  //       this.renameKey( obj, 'TOTAL ↵-ACHV', 'TOTAL_ACHV' )
+  //   //   delete obj['Keyfigure_Code'];delete obj['Parent_Code'];delete obj['Return_Val'];delete obj['Net_Val'];
+  //    //  delete obj['Target_Val'];
+  //   // }
+  //   // this.renameKey( obj, 'Pending_Val','Pending')
+  //  //  this.renameKey( obj, 'ACHIEVE_PER','Achievement %')
+ 
+  //    delete obj['Keyfigure_Code'];
+  //    delete obj['Keyfigure_para'];
+  //    delete obj['LASTPULLDATAON'];
+  //   delete obj['Parent_Code'];
+  //  // delete obj['Expiry_Qty'];delete obj['Pending_Qty'];
+  //  })
+  //  const columnOrder = [
+  //    'Key Figure',
+  //    'HYBRID_NET', 'HYBRID_TARGET', 'HYBRID_ACHV',
+  //    'ZORA_NET', 'ZORA_TARGET', 'ZORA_ACHV',
+  //    'NOVA_NET', 'NOVA_TARGET', 'NOVA_ACHV',
+  //    'TOTAL_NET', 'TOTAL_TARGET', 'TOTAL_ACHV'
+  //   ]
+  //   const reordered = exportableObj.map((obj: any) => {
+  //     const newObj: any = {};
+  //     columnOrder.forEach(col => {
+  //       // Fix wrong key "TOTAL ↵-ACHV"
+  //       if (col === 'TOTAL_ACHV' && obj['TOTAL ↵-ACHV'] !== undefined) {
+  //         newObj[col] = obj['TOTAL ↵-ACHV'];
+  //       } else {
+  //         newObj[col] = obj[col] ?? '';
+  //       }
+  //     });
+  //     return newObj;
+  //   });
+   // console.log('exportableObj',reordered);
+
  }
  
  saveAsExcelFile(buffer: any, fileName: string): void {
