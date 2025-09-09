@@ -24,6 +24,8 @@ export class UpdateUserPasswordComponent implements OnInit {
   isHighLightUsername:string="No";
   isHighLightNewpassword:string="No";
   userData:any;
+  isPasswordVisible:boolean = false;
+  isConfirmPasswordVisible:boolean=false;
   constructor(private router: Router,private authService: AuthService,private url: URLService,private http: HttpService,
     private toastrService:ToastrService,public datepipe: DatePipe) { }
 
@@ -134,4 +136,19 @@ console.log('data',data)
   hashPassword(password: string): string {
       return CryptoJS.MD5(password).toString();
     }
+
+    
+    clear(){
+      this.PASSWORD='';
+      this.CONFIRM_PASSWORD='';
+    }
+
+
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  toggleConfirmPassword(){
+     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+  }
+
 }

@@ -4,7 +4,7 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ApiService } from 'src/app/Service/api.service';
 import { CommonService } from 'src/app/Service/common.service';
 import { ToastrNotificationService } from 'src/app/Service/toastr-notification.service';
-import { UrlService } from 'src/app/Service/url.service';
+import { URLService } from 'src/app/Service/url.service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +13,7 @@ import { UrlService } from 'src/app/Service/url.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(private router: Router, private urlService: UrlService, public commonservice: CommonService,
+  constructor(private router: Router, private urlService: URLService, public commonservice: CommonService,
     private toastrService: ToastrNotificationService, private apiService: ApiService,) { }
     LOGIN_ID: any;
     PASSWORD: any;

@@ -55,6 +55,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
    ViewPopUp:boolean=false;
    ProductReportList:any=[]
   isLoaded1: boolean;
+  SalesReportListFOREXCEL: any=[];
  //   REPORT_LIST=[{"HQ_CODE":"BNBRM001","HQ_DESC":"BEGUSARAI","POOL_CODE":"ANBRP003","FM_CODE":"ANFM0039","FM_NAME":"DARBHANGA FM",
  //   "RSM_CODE":"ANRSM011","RSM_NAME":"JAMSHEDPUR RSM","SM_CODE":"ANSM0003","SM_NAME":"U P SINGH","NET_SALES":"63126",}
  // ,{"HQ_CODE":"BNBRM001","HQ_DESC":"BEGUSARAI","POOL_CODE":"ANBRP003","FM_CODE":"ANFM0039","FM_NAME":"DARBHANGA FM",
@@ -128,9 +129,10 @@ export class DivisionWiseSalesReportComponent implements OnInit {
       (res:any)=>{
         // Commented by Gauresh
         // console.log("response",res);
-        // this.SalesReportList=res;
+        //ADDED BY HEMANT
+          // this.SalesReportListFOREXCEL=res;
         // console.log(' this.SalesReportList', this.SalesReportList);
-
+       
 
         // Added by gauresh
         res.forEach((element:any) => {
@@ -140,7 +142,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
 
         });
 
-        console.log(this.SalesReportList,"sales-report")
+        console.log(this.SalesReportList,"sales-report",this.counter,'counter')
         if(this.SalesReportList.length > 0){
           this.totalRecords = this.SalesReportList.length;
           this.LAST_DATE_ON = this.SalesReportList[0].LASTPULLDATAON;
@@ -262,10 +264,10 @@ export class DivisionWiseSalesReportComponent implements OnInit {
      // }
      console.log(this.SalesReportList,"list")
      this.counter = this.counter +1;
-     console.log("SalesList1",this.SalesList1);
-     console.log("SalesList2",this.SalesList2);
-     console.log("SalesList3",this.SalesList3);
-     console.log("SalesList4",this.SalesList4);
+     console.log("SalesList1",this.SalesList1,'this.counter',this.counter);
+     console.log("SalesList2",this.SalesList2,'this.counter',this.counter);
+     console.log("SalesList3",this.SalesList3,'this.counter',this.counter);
+     console.log("SalesList4",this.SalesList4,'this.counter',this.counter);
    }
    OnBackClick(){
      this.SalesReportList = [];
@@ -343,41 +345,85 @@ export class DivisionWiseSalesReportComponent implements OnInit {
      delete obj[oldKey];
    }
    exportExcel(){
-   var exportableObj = JSON.parse(JSON.stringify(this.SalesReportList));
-   exportableObj.forEach( (obj:any) => {
-     this.renameKey( obj, 'Keyfigure_Name', 'Key Figure' )
-     if(this.isQualitySelected == false){
-       this.renameKey( obj, 'Sales_Val', 'Sales' )
-       this.renameKey( obj, 'Return_Val', 'Return' )
-       this.renameKey( obj, 'Expiry_Val', 'Expiry' )
-       this.renameKey( obj, 'Expiry_Per','Expiry %')
-       this.renameKey( obj, 'Net_Val', 'Net' )
-       this.renameKey( obj, 'Target_Val', 'Target' )
-       delete obj['Net_Qty'];delete obj['Expiry_Val'];delete obj['Return_Qty'];delete obj['Sales_Qty'];
-       delete obj['Target_Qty'];
-     }else{
-       this.renameKey( obj, 'Sales_Qty', 'Sales Qty' )
-       this.renameKey( obj, 'Return_Qty', 'Return Qty' )
-       this.renameKey( obj, 'Expiry_Qty', 'Expiry Qty' )
-       this.renameKey( obj, 'Expiry_Per','Expiry %')
-       this.renameKey( obj, 'Net_Qty', 'Net Qty' )
-       this.renameKey( obj, 'Target_Qty', 'Target Qty' )
-       delete obj['Sales_Val'];delete obj['Expiry_Val'];delete obj['Return_Val'];delete obj['Net_Val'];
-       delete obj['Target_Val'];
-     }
-     this.renameKey( obj, 'Pending_Val','Pending')
-     this.renameKey( obj, 'ACHIEVE_PER','Achievement %')
- 
-     delete obj['Keyfigure_Code'];delete obj['Keyfigure_para'];delete obj['LASTPULLDATAON'];
-     delete obj['Parent_Code'];delete obj['Expiry_Qty'];delete obj['Pending_Qty'];
-   })
- 
-   import("xlsx").then(xlsx => {
+      this.userInfo = this.AuthService.getUserDetail();
+    console.log("this.this.QTY_VALUE.NAME:-",this.QTY_VALUE.NAME);
+    let data={
+      USER_ID : JSON.parse(this.userInfo).USER_ID,
+      FromMonth : (+this.fromDate.PERIOD_ID),
+      ToMonth : (+this.toDate.PERIOD_ID),
+      // UnderEmpCode : (+this.underEmployee.USER_ID),
+      UnderEmpCode : 0,
+      key_figure : 1,
+      qty_val : "Value"
+    }
+    this.isLoaded = false;
+    this.http.postnew(this.url.DivisionSalesReportExcelDownload, data).then(
+      (res:any)=>{
+        // Commented by Gauresh
+        // console.log("response",res);
+        //ADDED BY HEMANT
+          this.SalesReportListFOREXCEL=res;
+        // console.log(' this.SalesReportList', this.SalesReportList);
+        var exportableObj = JSON.parse(JSON.stringify(this.SalesReportListFOREXCEL));
+           import("xlsx").then(xlsx => {
      const worksheet = xlsx.utils.json_to_sheet(exportableObj);
      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
      this.saveAsExcelFile(excelBuffer, "Sales Report");
    });
+      })
+  //  exportableObj.forEach( (obj:any) => {
+  //    this.renameKey( obj, 'Keyfigure_Name', 'Key Figure' )
+  //  //  if(this.isQualitySelected == false){
+  //      this.renameKey( obj, 'HB-NET', 'HYBRID_NET' )
+  //      this.renameKey( obj, 'HB-TARGET', 'HYBRID_TARGET' )
+  //      this.renameKey( obj, 'HB-ACHV', 'HYBRID_ACHV' )
+  //      this.renameKey( obj, 'NV-NET','NOVA_NET')
+  //      this.renameKey( obj, 'NV-TARGET', 'NOVA_TARGET' )
+  //      this.renameKey( obj, 'NV-ACHV', 'NOVA_ACHV' )
+  //     // delete obj['Net_Qty'];delete obj['Expiry_Val'];delete obj['Return_Qty'];delete obj['Sales_Qty'];
+  //    //  delete obj['Target_Qty'];
+  //   // }else{
+  //      this.renameKey( obj, 'ZR-NET', 'ZORA_NET' )
+  //      this.renameKey( obj, 'ZR-TARGET', 'ZORA_TARGET' )
+  //      this.renameKey( obj, 'ZR-ACHV', 'ZORA_ACHV' )
+  //     // this.renameKey( obj, 'Expiry_Per','Expiry %')
+  //      this.renameKey( obj, 'TOTAL-NET', 'TOTAL_NET' )
+  //      this.renameKey( obj, 'TOTAL-TARGET', 'TOTAL_TARGET' )
+  //       this.renameKey( obj, 'TOTAL ↵-ACHV', 'TOTAL_ACHV' )
+  //   //   delete obj['Keyfigure_Code'];delete obj['Parent_Code'];delete obj['Return_Val'];delete obj['Net_Val'];
+  //    //  delete obj['Target_Val'];
+  //   // }
+  //   // this.renameKey( obj, 'Pending_Val','Pending')
+  //  //  this.renameKey( obj, 'ACHIEVE_PER','Achievement %')
+ 
+  //    delete obj['Keyfigure_Code'];
+  //    delete obj['Keyfigure_para'];
+  //    delete obj['LASTPULLDATAON'];
+  //   delete obj['Parent_Code'];
+  //  // delete obj['Expiry_Qty'];delete obj['Pending_Qty'];
+  //  })
+  //  const columnOrder = [
+  //    'Key Figure',
+  //    'HYBRID_NET', 'HYBRID_TARGET', 'HYBRID_ACHV',
+  //    'ZORA_NET', 'ZORA_TARGET', 'ZORA_ACHV',
+  //    'NOVA_NET', 'NOVA_TARGET', 'NOVA_ACHV',
+  //    'TOTAL_NET', 'TOTAL_TARGET', 'TOTAL_ACHV'
+  //   ]
+  //   const reordered = exportableObj.map((obj: any) => {
+  //     const newObj: any = {};
+  //     columnOrder.forEach(col => {
+  //       // Fix wrong key "TOTAL ↵-ACHV"
+  //       if (col === 'TOTAL_ACHV' && obj['TOTAL ↵-ACHV'] !== undefined) {
+  //         newObj[col] = obj['TOTAL ↵-ACHV'];
+  //       } else {
+  //         newObj[col] = obj[col] ?? '';
+  //       }
+  //     });
+  //     return newObj;
+  //   });
+   // console.log('exportableObj',reordered);
+
  }
  
  saveAsExcelFile(buffer: any, fileName: string): void {
@@ -617,7 +663,7 @@ getProductDetails(val){
 
       // });
 
-      console.log(this.ProductReportList,"sales-report")
+      console.log(this.ProductReportList,"sales-report",this.counter,'counter')
       // if(this.SalesReportList.length > 0){
       //   this.totalRecords = this.SalesReportList.length;
       //   this.LAST_DATE_ON = this.SalesReportList[0].LASTPULLDATAON;
