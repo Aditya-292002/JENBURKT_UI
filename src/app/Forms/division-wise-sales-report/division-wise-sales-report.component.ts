@@ -369,7 +369,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
      const worksheet = xlsx.utils.json_to_sheet(exportableObj);
      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-     this.saveAsExcelFile(excelBuffer, "Sales Report");
+     this.saveAsExcelFile(excelBuffer, "Division Wise Sales Report");
    });
       })
   //  exportableObj.forEach( (obj:any) => {
