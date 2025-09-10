@@ -224,6 +224,7 @@ export class URLService {
      public GETSUPERSTOCKISTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTMASTERLIST'
      public SAVESUPERSTOCKISTMASTERDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTMASTERDATA';
      public GETGENERATEORDERMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETGENERATEORDERMASTERLIST';
-
-
+     public DivisionSalesReportExcelDownload = this.sharedService.ApiUrl + '/api/Reports/DivisionSalesReportExcelDownload';
+     public SAVESUPERSTOCKISTCYCLEDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTCYCLEDATA';
+ 
 }

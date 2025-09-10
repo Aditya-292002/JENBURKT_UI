@@ -22,7 +22,9 @@ export class GenerateOrderComponent implements OnInit {
    pdfSrc: any="";
    pdfSrcflag: boolean=false;
   PRODUCT_LIST: any;
-  IS_DISABLED:boolean
+  IS_DISABLED:boolean;
+  isHighLightSample:any
+  SAMPLE_PRODUCT_LIST: any=[];
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
@@ -36,7 +38,7 @@ export class GenerateOrderComponent implements OnInit {
      }
      this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
        (res:any)=>{
-         this.periodList = res.periodlist;
+         this.periodList = res.PERIOD_LIST;
        //console.log('periodList',this.periodList);
       
        },
@@ -72,9 +74,21 @@ export class GenerateOrderComponent implements OnInit {
      this.isLoaded=true;
          this.http.postnew(this.url.GETSUPERSTOCKISTDATABYPERIODID, data).then(
        (res:any)=>{
+          this.SAMPLE_PRODUCT_LIST=[];
          this.isLoaded=false;
         this.PRODUCT_LIST=res.PRODUCT_DETAILS
 
+        const productlist = [...new Set(res.PRODUCT_DETAILS.map((item: any) => item.PRODUCT_DESC))];
+            productlist.forEach((element: any) => {
+              this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element }) 
+            })
+
+      console.log('PRODUCT_LIST',this.SAMPLE_PRODUCT_LIST);
+      
+      // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
+      // productlist.forEach((element: any) => {
+      //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
+      // })
          console.log('GETSUPERSTOCKISTDATABYPERIODID',res);
          
        },
@@ -103,7 +117,7 @@ export class GenerateOrderComponent implements OnInit {
       }
     });
    }
-   SAVESUPERSTOCKIST(){
+   SAVESUPERSTOCKIST(VALUE:any){
 
    }
 

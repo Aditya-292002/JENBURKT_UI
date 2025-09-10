@@ -15,6 +15,10 @@
                     <a class="nav-link  px-2" routerLink="/generateorder"><i class="fa fa-home mr-2"
                             aria-hidden="true"></i>Generate Order</a>
                 </li>
+                <li *ngIf="roleID == 6">
+                    <a class="nav-link  px-2" routerLink="/cyclesuperstockist"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Cycle SuperStockist</a>
+                </li>
                 <!-- <li *ngIf="roleID == 6">
                     <a class="nav-link  px-2" routerLink="/superstockistmaster"><i class="fa fa-home mr-2"
                             aria-hidden="true"></i>Super Stockist Master</a>

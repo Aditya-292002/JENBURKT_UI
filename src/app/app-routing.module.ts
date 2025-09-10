@@ -81,6 +81,7 @@ import { SampleDataUploadComponent } from './Forms/sample-data-upload/sample-dat
 import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.component';
 import { GenerateOrderComponent } from './Forms/generate-order/generate-order.component';
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
+import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -166,7 +167,9 @@ const routes: Routes = [
       { path: 'sampledataupload', component: SampleDataUploadComponent },
       {path:'viewmoereport',component:MoeReportViewComponent},
        { path: 'generateorder', component: GenerateOrderComponent },
-      {path:'superstockistmaster',component:SuperStockishMasterComponent}
+      {path:'superstockistmaster',component:SuperStockishMasterComponent},
+      {path:'cyclesuperstockist',component:CycleSuperstockistComponent}
+
     ]
   },
 ];

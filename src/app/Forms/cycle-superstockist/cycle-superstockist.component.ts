@@ -49,12 +49,15 @@ isHighLightSample: any = "NO";
       "USER_ID": this.USER_ID,
       "CYCLE_ID": this.CYCLE_NO
     }
-    this.http.postnew(this.url.SAVESAMPLEREQUISITIONCYCLEDATA, data).then(
+    console.log('DATA',data);
+    
+    //return
+    this.http.postnew(this.url.SAVESUPERSTOCKISTCYCLEDATA, data).then(
       (res: any) => {
-        if (res.FLAG == 1) {
-        this.toastrService.success(res.MSG);
-      } else if (res.FLAG == 0) {
-        this.toastrService.error(res.MSG);
+        if (res.data[0].FLAG == 1) {
+        this.toastrService.success(res.data[0].MSG);
+      } else if (res.data[0].FLAG == 0) {
+        this.toastrService.error(res.data[0].MSG);
       }
       });
   }
