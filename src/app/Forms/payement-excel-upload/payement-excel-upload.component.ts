@@ -81,7 +81,7 @@ export class PayementExcelUploadComponent implements OnInit {
 
   // }
 
-  onFileSelected(event: any): void {
+ onFileSelected(event: any): void {
   this.FileName = "";
   const file: File = event.target.files[0];
   this.FileName = file.name;
@@ -120,16 +120,16 @@ export class PayementExcelUploadComponent implements OnInit {
 
    //   console.log('Excel JSON with fixed date:', this.jsonData);
     };
-
+  
     reader.readAsArrayBuffer(file);
   }
 }
 
 
   savePayement() {
-    this.jsonData.forEach((element: any) => {
-      element.PAYMENT_DATE = new Date(element.PAYMENT_DATE);
-    })
+    // this.jsonData.forEach((element: any) => {
+    //   element.PAYMENT_DATE = new Date(element.PAYMENT_DATE);
+    // })
     let data = {
       "USER_ID": this.userInfo.USER_ID,
       "CME_PAYMENT_DATA": this.jsonData
@@ -159,6 +159,7 @@ export class PayementExcelUploadComponent implements OnInit {
   }
 
   saveValidationPayement() {
+    
     let data = {
       "USER_ID": this.userInfo.USER_ID,
       "CME_PAYMENT_DATA": this.jsonData
@@ -200,12 +201,14 @@ export class PayementExcelUploadComponent implements OnInit {
            else {
           this.showGridData = []
           console.log('inside else validation');
-
+          
            this.savePayement()
+            this.isLoaded=false;
         }
 
         }else{
           this.toastrService.error("something went wrong");
+          this.isLoaded=false;
         }
        
 
