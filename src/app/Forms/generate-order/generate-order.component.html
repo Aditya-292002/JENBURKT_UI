@@ -10,10 +10,10 @@
             <h5 class="mb-0 headers">Generate Order</h5>
         </div>
          <div class="buttonBox ml-auto">
-                       <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
+                       <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(0)" [disabled]="ORDER_STATUS">
                 Save As Draft
             </button>
-            <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(2)">
+            <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
                 Submit
             </button>
         </div>
@@ -40,13 +40,27 @@
                         </div>
                     </div>
 
-                   <div class="col-sm-12 col-md-12 col-lg-2 ">
+
+
+                   <div class="col-sm-12 col-md-12 col-lg-1 ">
                         <div class="buttonBox mt-4 ">
                             <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
-                                <i class="fa fa-spinner mr-2" aria-hidden="true"></i>Show
+                                <!-- <i class="fa fa-spinner mr-2" aria-hidden="true"></i> -->
+                                Show
                             </button>
                             
 
+                        </div>
+                    </div>
+
+                                                            <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="mb-3 ">
+                            <label>Order Date</label>
+                            <div>
+                                <p-calendar [(ngModel)]="ORDER_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="Order date"
+                                    ></p-calendar>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +143,7 @@
 
                                                 </p-columnFilter>
                                             </th>
+                                            <th>Shipper</th>
                                             <th>Closing Stock</th>
                                             <!-- <th  scope="col">HQ Count</th> -->
                                             <th>Recommended Qty</th>
@@ -142,6 +157,7 @@
                                         <tr>
                                            <td class="width-2">{{ data.PRODUCT_CODE }}</td>
                                             <td class="width-2">{{ data.PRODUCT_DESC }}</td>
+                                            <td class="width-2">{{ data.SHIPPER}}</td>
                                             <td class="width-2">{{ data.CLOSING_STOCK }}</td>
                            
                                             <td class="width-2">{{ data.RECOMMENDED_QTY }}</td>
@@ -153,7 +169,7 @@
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
                                             </td> -->
                                             <td class="width-2">
-                                                <input type="text" [(ngModel)]="data.FIRST_DISPATCH" class="form-control"
+                                                <input type="text" [(ngModel)]="data.FIRST_DISPATCH_QTY" class="form-control"
                                                     name="pincode"
                                                     (focusout)="getcalculatetotalqty(data,rowIndex)"
                                                     placeholder="Enter 1st dispatch Qty"
@@ -161,7 +177,7 @@
                                                 
                                             </td>
                                                  <td class="width-2">
-                                                     <input type="text" [(ngModel)]="data.SECOND_DISPATCH" class="form-control"
+                                                     <input type="text" [(ngModel)]="data.SECOND_DISPATCH_QTY" class="form-control"
                                                     name="pincode"
                                                     (focusout)="getcalculatetotalqty(data,rowIndex)"
                                                     placeholder="Enter 2nd dispatch Qty" 

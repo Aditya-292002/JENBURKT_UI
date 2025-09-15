@@ -25,6 +25,8 @@ export class GenerateOrderComponent implements OnInit {
   IS_DISABLED:boolean;
   isHighLightSample:any
   SAMPLE_PRODUCT_LIST: any=[];
+  ORDER_DATE:any=new Date();
+  ORDER_STATUS:boolean=false;
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
@@ -77,7 +79,11 @@ export class GenerateOrderComponent implements OnInit {
           this.SAMPLE_PRODUCT_LIST=[];
          this.isLoaded=false;
         this.PRODUCT_LIST=res.PRODUCT_DETAILS
-
+        this.ORDER_STATUS=res.ORDER_STATUS[0].STATUS==1? true:false;
+        
+        this.ORDER_DATE=new Date(res.ORDER_STATUS[0].ORDER_DATE);
+        console.log('123',this.ORDER_STATUS,this.ORDER_DATE);
+        
         const productlist = [...new Set(res.PRODUCT_DETAILS.map((item: any) => item.PRODUCT_DESC))];
             productlist.forEach((element: any) => {
               this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element }) 
@@ -106,8 +112,8 @@ export class GenerateOrderComponent implements OnInit {
     
         this.PRODUCT_LIST.forEach((element: any,i:number) => {
       if (index===i ) {
-        let FIRST_DISPATCH = Number(element.FIRST_DISPATCH) || 0;
-        let SECOND_DISPATCH = Number(element.SECOND_DISPATCH) || 0;
+        let FIRST_DISPATCH = Number(element.FIRST_DISPATCH_QTY) || 0;
+        let SECOND_DISPATCH = Number(element.SECOND_DISPATCH_QTY) || 0;
       
         // let sampleCost = Number(element.SAMPLE_COST) || 0;
         element.TOTAL_QTY = FIRST_DISPATCH + SECOND_DISPATCH;
@@ -118,7 +124,43 @@ export class GenerateOrderComponent implements OnInit {
     });
    }
    SAVESUPERSTOCKIST(VALUE:any){
-
+    if(this.ORDER_DATE==null || this.ORDER_DATE==undefined){
+        this.toastrService.error("Please select order date");
+        return;
+    }
+        if(this.period==null || this.period==undefined){
+        this.toastrService.error("Please select order date");
+        return;
+    }
+   let data={
+        USER_ID : JSON.parse(this.userInfo).USER_ID,
+        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
+        PERIOD_ID:this.period,
+        STATUS:(VALUE==1?'1':'0'),
+        ORDER_DATE:this.ORDER_DATE,
+        PRODUCT_LIST: this.PRODUCT_LIST
+        
+     }  
+     console.log(data,'data');
+    // return
+     this.isLoaded=true;
+         this.http.postnew(this.url.SAVEGENERATEORDER, data).then(
+       (res:any)=>{
+      
+        this.toastrService.success(res);
+      // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
+      // productlist.forEach((element: any) => {
+      //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
+      // })
+         console.log('SAVEGENERATEORDER',res);
+        this.isLoaded=false;
+       },
+       error =>{
+          this.isLoaded=false;
+         //console.log(error);
+         this.toastrService.error("Oops, Something went wrong.");
+       }
+     );
    }
 
 }
