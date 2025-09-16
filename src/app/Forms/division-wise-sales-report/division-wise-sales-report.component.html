@@ -1,4 +1,4 @@
-<app-loader *ngIf="isLoaded1" ></app-loader>
+<app-loader *ngIf="isLoaded1"></app-loader>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
@@ -24,14 +24,15 @@
                             <label>From</label>
                             <div>
                                 <div>
-                                    <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC" [(ngModel)]="fromDate" [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
-                                     placeholder="Please Select...">
+                                    <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC"
+                                        [(ngModel)]="fromDate" [filter]="true" filterBy="PERIOD_DESC"
+                                        [ngModelOptions]="{standalone: true}" placeholder="Please Select...">
                                     </p-dropdown>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
+                    <!-- <div class="col-sm-6 col-md-6 col-lg-3">
                         <div class="mb-2">
                             <label>To</label>
                             <div>
@@ -40,7 +41,7 @@
                                 </p-dropdown>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="mb-2">
                             <label>Key Figure</label>
@@ -79,19 +80,22 @@
                         <div class="mb-2">
                             <label>Figure In</label>
                             <div>
-                                <div class="form-check form-check-inline"    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                <div class="form-check form-check-inline"
+                                    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio1" value="option1" (change)="getFigureIn(1)" checked >
+                                        id="inlineRadio1" value="option1" (change)="getFigureIn(1)" checked>
                                     <label class="form-check-label" for="inlineRadio1">Actual</label>
                                 </div>
-                                <div class="form-check form-check-inline"     [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                <div class="form-check form-check-inline"
+                                    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio2" value="option2" (change)="getFigureIn(2)" >
+                                        id="inlineRadio2" value="option2" (change)="getFigureIn(2)">
                                     <label class="form-check-label" for="inlineRadio2">Thousands</label>
                                 </div>
-                                <div class="form-check form-check-inline"    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
+                                <div class="form-check form-check-inline"
+                                    [ngClass]="isDisabled == true ? 'content-disabled' : 'content-enabled'">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio3" value="option3" (change)="getFigureIn(3)" >
+                                        id="inlineRadio3" value="option3" (change)="getFigureIn(3)">
                                     <label class="form-check-label" for="inlineRadio3">Lakhs</label>
                                 </div>
                             </div>
@@ -100,14 +104,15 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-3 p-0">
                         <div class="buttonBox mt-4">
-                            <button *ngIf="isLoaded" type="submit" class="btn-primary viewButton mr-2" (click)="onViewReport()">
+                            <button *ngIf="isLoaded" type="submit" class="btn-primary viewButton mr-2"
+                                (click)="onViewReport()">
                                 <i class="fa fa-eye mr-2" aria-hidden="true"></i>View
                             </button>
-                            <button *ngIf="!isLoaded"  type="submit" class="btn-primary viewButton mr-2">
+                            <button *ngIf="!isLoaded" type="submit" class="btn-primary viewButton mr-2">
                                 <i class="fa fa-eye mr-2" aria-hidden="true"></i>Loading...
                             </button>
-                            <button type="submit" class="btn-primary formButton" (click)="exportExcel()"><i class="fa fa-upload mr-2"
-                                    aria-hidden="true"></i>Export</button>
+                            <button type="submit" class="btn-primary formButton" (click)="exportExcel()"><i
+                                    class="fa fa-upload mr-2" aria-hidden="true"></i>Export</button>
 
 
                         </div>
@@ -116,18 +121,21 @@
                 <hr class="hrStyle">
                 <div class="row ">
                     <div class="col-md-12">
-                        <div class="buttonBox mt-4"*ngIf="counter > 0">
-                            <button  type="submit" class="btn-primary viewButton mr-2" (click)="OnBackClick()">
+                        <div class="buttonBox mt-4" *ngIf="counter > 0">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="OnBackClick()">
                                 <i class="fa fa-eye mr-2" aria-hidden="true"></i>back
                             </button>
                         </div>
-                        <div class="row" style="justify-content: space-between; margin-left: 6px; margin-right: 12px; align-items: center;">
+                        <div class="row"
+                            style="justify-content: space-between; margin-left: 6px; margin-right: 12px; align-items: center;">
 
-                            <p>Last   On:- <b style="color: #191616; font-weight: 600;">{{LAST_DATE_ON | date :'dd-MMM-YYYY HH:MM'}}</b> </p>
+                            <p>Last On:- <b style="color: #191616; font-weight: 600;">{{LAST_DATE_ON | date
+                                    :'dd-MMM-YYYY HH:MM'}}</b> </p>
                             <th>
                                 <span class="p-input-icon-right ml-auto">
                                     <i class="pi pi-search"></i>
-                                    <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'Keyfigure_Name', 'contains')">
+                                    <input pInputText type="text" class="form-control"
+                                        (input)="dt.filter($event.target.value, 'Keyfigure_Name', 'contains')">
                                 </span>
 
 
@@ -135,37 +143,61 @@
                         </div>
 
                         <!-- [rowsPerPageOptions]="[10, 25, 50, 100]" -->
-                        <p-table #dt  id="childTable" [value]="SalesReportList" responsiveLayout="scroll" [paginator]="true"  class="prime-table"
-                        [showCurrentPageReport]="true"  [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"  [totalRecords]="totalRecords"
+                        <p-table #dt id="childTable" [value]="SalesReportList" responsiveLayout="scroll"
+                            [paginator]="true" class="prime-table" [showCurrentPageReport]="true" [first]="first"
+                            [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]" [totalRecords]="totalRecords"
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                            [autoLayout]="true" (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true" >
+                            [autoLayout]="true" (onPageChange)="onPageChange($event)" [scrollable]="true"
+                            [resizableColumns]="true">
                             <ng-template pTemplate="header">
-                         
-                              
+
+
                                 <tr>
                                     <th pFrozenColumn class="width-30"></th>
-                                    <th class="text-center justify-content-center width-20" >HYBRID</th>
-                                    <th  class="text-center justify-content-center width-20">NOVA</th>
-                                    <th  class="text-center justify-content-center width-20">ZORA</th>
-                                    <th  class="text-center justify-content-center width-20" >TOTAL</th>
-                                    <th  class="width-40"></th>
+                                    <th class="text-center justify-content-center width-20">HYBRID</th>
+                                    <th class="text-center justify-content-center width-20">NOVA</th>
+                                    <th class="text-center justify-content-center width-20">ZORA</th>
+                                    <th class="text-center justify-content-center width-20">TOTAL</th>
+                                    <th class="width-40"></th>
                                 </tr>
-                                
+
                                 <tr>
                                     <th pFrozenColumn class="width-30"></th>
-                                    <th class="width-10" >NET SALES
+                                    <th class="width-10">NET SALES
                                         <p-columnFilter type="text" field="HB-NET" display="menu"></p-columnFilter>
                                     </th>
-                                    <th class="width-10">	 TARGET
+                                    <th class="width-10"> TARGET
                                         <p-columnFilter type="text" field="HB-TARGET" display="menu"></p-columnFilter>
-                                     
+
                                     </th>
-                                    <th class="width-5"  >ACHV%
+                                    <th class="width-5">ACHV%
                                         <p-columnFilter type="text" field="HB-ACHV" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                                     </th>
-                                   
-                                    <th  class="width-10">NET SALES
+                                    <!-- <th pFrozenColumn class="width-30"></th> -->
+                                    <th class="width-12">CUMM NET SALES
+                                        <p-columnFilter type="text" field="HB-NET" display="menu"></p-columnFilter>
+                                    </th>
+                                    <th class="width-12"> CUMM TARGET
+                                        <p-columnFilter type="text" field="HB-CUMM_TARGET" display="menu"></p-columnFilter>
+
+                                    </th>
+                                    <th class="width-12">CUMM ACHV%
+                                        <p-columnFilter type="text" field="HB-CUMM_ACHV" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th class="width-5">GROWTH
+                                        <p-columnFilter type="text" field="HB-GROWTH" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+
+                                    <th class="width-5">PCPM
+                                        <p-columnFilter type="text" field="HB-PCPM" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+
+
+                                    <th class="width-10">NET SALES
                                         <p-columnFilter type="text" field="NV-NET" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                                     </th>
@@ -173,43 +205,105 @@
                                         <p-columnFilter type="text" field="NV-TARGET" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                                     </th>
-                                    <th  class="width-5">ACHV%
+                                    <th class="width-5">ACHV%
                                         <p-columnFilter type="text" field="NV-ACHV" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                                     </th>
+
+                                    <th class="width-12">CUMM NET SALES
+                                        <p-columnFilter type="text" field="NV-CUMM-NET" display="menu"></p-columnFilter>
+                                    </th>
+                                    <th class="width-12"> CUMM TARGET
+                                        <p-columnFilter type="text" field="NV-CUMM_TARGET" display="menu"></p-columnFilter>
+
+                                    </th>
+                                    <th class="width-12">CUMM ACHV%
+                                        <p-columnFilter type="text" field="NV-CUMM_ACHV" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th class="width-5">GROWTH
+                                        <p-columnFilter type="text" field="NV-GROWTH" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                                                        <th class="width-5">PCPM
+                                        <p-columnFilter type="text" field="NV-PCPM" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+
                                     <th class="width-10">NET SALES
                                         <p-columnFilter type="text" field="ZR-NET" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                                     </th>
-                                    <th class="width-10" >	 TARGET
+                                    <th class="width-10"> TARGET
                                         <p-columnFilter type="text" field="ZR-TARGET" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                                     </th>
-                                    <th  class="width-5">ACHV%
+                                    <th class="width-5">ACHV%
                                         <p-columnFilter type="text" field="ZR-ACHV" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                                     </th>
-                                    <th  class="width-10">NET SALES
+                                    <th class="width-12">CUMM NET SALES
+                                        <p-columnFilter type="text" field="ZR-CUMM_NET" display="menu"></p-columnFilter>
+                                    </th>
+                                    <th class="width-12"> CUMM TARGET
+                                        <p-columnFilter type="text" field="ZR-CUMM_TARGET" display="menu"></p-columnFilter>
+
+                                    </th>
+                                    <th class="width-12">CUMM ACHV%
+                                        <p-columnFilter type="text" field="ZR-CUMM_ACHV" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th class="width-5">GROWTH
+                                        <p-columnFilter type="text" field="ZR-CUMM_ACHV" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                                                        <th class="width-5">PCPM
+                                        <p-columnFilter type="text" field="ZR-PCPM" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+
+                                    <th class="width-10">NET SALES
                                         <p-columnFilter type="text" field="TOTAL-NET" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                                     </th>
-                                    <th  class="width-10">	 TARGET
-                                        <p-columnFilter type="text" field="TOTAL-TARGET" display="menu"></p-columnFilter>
+                                    <th class="width-10"> TARGET
+                                        <p-columnFilter type="text" field="TOTAL-TARGET"
+                                            display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                                     </th>
                                     <th class="width-10">ACHV%
                                         <p-columnFilter type="text" field="TOTAL-ACHV" display="menu"></p-columnFilter>
                                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                                     </th>
+                                    <th class="width-12">CUMM NET SALES
+                                        <p-columnFilter type="text" field="TOTAL-CUMM_NET" display="menu"></p-columnFilter>
+                                    </th>
+                                    <th class="width-12"> CUMM TARGET
+                                        <p-columnFilter type="text" field="TOTAL-CUMM_TARGET" display="menu"></p-columnFilter>
+
+                                    </th>
+                                    <th class="width-12">CUMM ACHV%
+                                        <p-columnFilter type="text" field="TOTAL-CUMM_ACHV" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                    <th class="width-5">GROWTH
+                                        <p-columnFilter type="text" field="TOTAL-GROWTH" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+                                                                        <th class="width-5">PCPM
+                                        <p-columnFilter type="text" field="TOTAL-PCPM" display="menu"></p-columnFilter>
+                                        <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
+                                    </th>
+
                                     <!-- <th pFrozenColumn class="width-30">Action</th> -->
                                     <th class="width-40">Action</th>
                                 </tr>
-                     
+
                             </ng-template>
                             <ng-template pTemplate="body" let-report>
                                 <tr>
                                     <!-- <td> -->
-                                        <!-- <a class="click"  *ngIf="report.Keyfigure_Name == 'GRAND TOTAL'" >
+                                    <!-- <a class="click"  *ngIf="report.Keyfigure_Name == 'GRAND TOTAL'" >
                                             {{report.Keyfigure_Name}}
                                         </a>
                                         <a class="click" *ngIf="report.Keyfigure_Name != 'GRAND TOTAL'" (click)="FilterList(report.Keyfigure_Code)">
@@ -221,32 +315,95 @@
                                     <!-- <td class="text-right" >{{ report['Keyfigure_Name'] }}</td> -->
 
                                     <!-- Added By Gauresh -->
-                                    <td pFrozenColumn class="text-left width-30"  *ngIf=" report['Keyfigure_Name'] == 'GRAND TOTAL'" style="width: 200px;">{{ report['Keyfigure_Name'] }}</td>
-                                    <td  pFrozenColumn class="text-left width-30"  *ngIf=" report['Keyfigure_Name'] != 'GRAND TOTAL'" 
+                                    <td pFrozenColumn class="text-left width-30"
+                                        *ngIf=" report['Keyfigure_Name'] == 'GRAND TOTAL'" style="width: 200px;">{{
+                                        report['Keyfigure_Name'] }}</td>
+                                    <td pFrozenColumn class="text-left width-30"
+                                        *ngIf=" report['Keyfigure_Name'] != 'GRAND TOTAL'"
                                         (click)="FilterList(report.Keyfigure_Code)">{{ report['Keyfigure_Name'] }}
                                     </td>
 
                                     <!-- <td class="justify-content-end width-10">{{(getValue(report['HB-NET']).toFixed(2)) | number}}</td> -->
-                                    <td class="justify-content-end width-10">{{ (report['HB-NET'] != null ? (getValue(report['HB-NET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['HB-TARGET'] != null ?  (getValue(report['HB-TARGET']).toFixed(2))  : 0 )| number }}</td>
-                                    <td class="justify-content-end width-10">{{ (report['HB-ACHV'] != null ? report['HB-ACHV'] : 0).toFixed(2) | number}}</td>
-                                    
-                                    <td class="justify-content-end width-10">{{ (report['NV-NET'] != null ?(getValue(report['NV-NET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['NV-TARGET'] != null ? (getValue(report['NV-TARGET']).toFixed(2))  : 0 )| number }}</td>
-                                    <td class="justify-content-end width-10">{{ (report['NV-ACHV'] != null ? report['NV-ACHV'] : 0).toFixed(2)| number}}</td>
-                                    
-                                    <td class="justify-content-end width-10">{{ (report['ZR-NET'] != null ?(getValue(report['ZR-NET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['ZR-TARGET'] != null ?(getValue(report['ZR-TARGET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['ZR-ACHV'] != null ? report['ZR-ACHV'] : 0).toFixed(2)| number}}</td>
-                                    
-                                    <td class="justify-content-end width-10">{{ (report['TOTAL-NET'] != null ? (getValue(report['TOTAL-NET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['TOTAL-TARGET'] != null ? (getValue(report['TOTAL-TARGET']).toFixed(2))  : 0 )| number}}</td>
-                                    <td class="justify-content-end width-10">{{ (report['TOTAL-ACHV'] != null ? report['TOTAL-ACHV'] : 0).toFixed(2)| number}}</td>
-                                     <td class="width-40">  
+                                    <td class="justify-content-end width-10">{{ (report['HB-NET'] != null ?
+                                        (getValue(report['HB-NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['HB-TARGET'] != null ?
+                                        (getValue(report['HB-TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-10">{{ (report['HB-ACHV'] != null ?
+                                        report['HB-ACHV'] : 0).toFixed(2) | number}}</td>
+
+                                    <td class="justify-content-end width-12">{{ (report['HB-CUMM_NET'] != null ?
+                                        (getValue(report['HB-CUMM_NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-12">{{ (report['HB-CUMM_TARGET'] != null ?
+                                        (getValue(report['HB-CUMM_TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-12">{{ (report['HB-CUMM_ACHV'] != null ?
+                                        report['HB-CUMM_ACHV'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['HB-GROWTH'] != null ?
+                                        report['HB-GROWTH'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['HB-PCPM'] != null ?
+                                        report['HB-PCPM'] : 0).toFixed(2) | number}}</td>
+
+
+                                    <td class="justify-content-end width-10">{{ (report['NV-NET'] != null
+                                        ?(getValue(report['NV-NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['NV-TARGET'] != null ?
+                                        (getValue(report['NV-TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-10">{{ (report['NV-ACHV'] != null ?
+                                        report['NV-ACHV'] : 0).toFixed(2)| number}}</td>
+                                    <td class="justify-content-end width-12">{{ (report['NV-CUMM_NET'] != null ?
+                                        (getValue(report['NV-CUMM_NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-12">{{ (report['NV-CUMM_TARGET'] != null ?
+                                        (getValue(report['NV-CUMM_TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-12">{{ (report['NV-CUMM_ACHV'] != null ?
+                                        report['NV-CUMM_ACHV'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['NV-GROWTH'] != null ?
+                                        report['NV-GROWTH'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['NV-PCPM'] != null ?
+                                        report['NV-PCPM'] : 0).toFixed(2) | number}}</td>
+
+                                    <td class="justify-content-end width-10">{{ (report['ZR-NET'] != null
+                                        ?(getValue(report['ZR-NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['ZR-TARGET'] != null
+                                        ?(getValue(report['ZR-TARGET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['ZR-ACHV'] != null ?
+                                        report['ZR-ACHV'] : 0).toFixed(2)| number}}</td>
+
+                                    <td class="justify-content-end width-12">{{ (report['ZR-CUMM_NET'] != null ?
+                                        (getValue(report['ZR-CUMM_NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-12">{{ (report['ZR-CUMM_TARGET'] != null ?
+                                        (getValue(report['ZR-CUMM_TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-12">{{ (report['ZR-CUMM_ACHV'] != null ?
+                                        report['ZR-CUMM_ACHV'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['ZR-GROWTH'] != null ?
+                                        report['ZR-GROWTH'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['ZR-PCPM'] != null ?
+                                        report['ZR-PCPM'] : 0).toFixed(2) | number}}</td>
+
+
+                                    <td class="justify-content-end width-10">{{ (report['TOTAL-NET'] != null ?
+                                        (getValue(report['TOTAL-NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['TOTAL-TARGET'] != null ?
+                                        (getValue(report['TOTAL-TARGET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-10">{{ (report['TOTAL-ACHV'] != null ?
+                                        report['TOTAL-ACHV'] : 0).toFixed(2)| number}}</td>
+
+                                    <td class="justify-content-end width-12">{{ (report['TOTAL-CUMM_NET'] != null ?
+                                        (getValue(report['TOTAL-CUMM_NET']).toFixed(2)) : 0 )| number}}</td>
+                                    <td class="justify-content-end width-12">{{ (report['TOTAL-CUMM_TARGET'] != null ?
+                                        (getValue(report['TOTAL-CUMM_TARGET']).toFixed(2)) : 0 )| number }}</td>
+                                    <td class="justify-content-end width-12">{{ (report['TOTAL-CUMM_ACHV'] != null ?
+                                        report['TOTAL-CUMM_ACHV'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['TOTAL-GROWTH'] != null ?
+                                        report['TOTAL-GROWTH'] : 0).toFixed(2) | number}}</td>
+                                    <td class="justify-content-end width-5">{{ (report['TOTAL-PCPM'] != null ?
+                                        report['HB-PCPM'] : 0).toFixed(2) | number}}</td>
+
+
+                                    <td class="width-40">
                                         <!-- <button  type="submit" class="btn-primary viewButton mr-2"> -->
-                                        <i class="fa fa-eye mr-2" aria-hidden="true" (click)="getProductDetails(report['Keyfigure_Code'])"></i>
-                                    <!-- </button> -->
-                                </td>
+                                        <i class="fa fa-eye mr-2" aria-hidden="true"
+                                            (click)="getProductDetails(report['Keyfigure_Code'])"></i>
+                                        <!-- </button> -->
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -258,8 +415,8 @@
 </div>
 
 <p-dialog header="Product List" [modal]="true" [(visible)]="ViewPopUp" [style]="{ width: '80rem' }">
-  <div class="row"> 
-    
+    <div class="row">
+
         <div class="col-sm-12 col-md-12 col-lg-4 ">
         </div>
         <div class="col-sm-12 col-md-12 col-lg-4 ">
@@ -268,7 +425,8 @@
             <th>
                 <span class="p-input-icon-right ml-auto">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" class="form-control" (input)="dt1.filter($event.target.value, 'Keyfigure_Name', 'contains')">
+                    <input pInputText type="text" class="form-control"
+                        (input)="dt1.filter($event.target.value, 'Keyfigure_Name', 'contains')">
                 </span>
 
 
@@ -277,37 +435,38 @@
     </div>
     <div class="mt-2">
         <!-- <h6 class="modal-title">Promotional Material Req</h6> -->
-        <p-table #dt1 [value]="ProductReportList" responsiveLayout="scroll" [paginator]="true"  class="prime-table"
-        [showCurrentPageReport]="true"  [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"  [totalRecords]="totalRecords"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [autoLayout]="true" (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true" >
+        <p-table #dt1 [value]="ProductReportList" responsiveLayout="scroll" [paginator]="true" class="prime-table"
+            [showCurrentPageReport]="true" [first]="first" [rows]="10" [rowsPerPageOptions]="[10, 25, 50, 100]"
+            [totalRecords]="totalRecords"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [autoLayout]="true"
+            (onPageChange)="onPageChange($event)" [scrollable]="true" [resizableColumns]="true">
             <ng-template pTemplate="header">
-         
-              
+
+
                 <tr>
                     <th pFrozenColumn class="width-50"></th>
-                    <th class="text-center justify-content-center width-20" >HYBRID</th>
-                    <th  class="text-center justify-content-center width-20">NOVA</th>
-                    <th  class="text-center justify-content-center width-20">ZORA</th>
-                    <th  class="text-center justify-content-center width-20" >TOTAL</th>
+                    <th class="text-center justify-content-center width-20">HYBRID</th>
+                    <th class="text-center justify-content-center width-20">NOVA</th>
+                    <th class="text-center justify-content-center width-20">ZORA</th>
+                    <th class="text-center justify-content-center width-20">TOTAL</th>
                     <!-- <th  class="width-40"></th> -->
                 </tr>
-                
+
                 <tr>
                     <th pFrozenColumn class="width-50"></th>
-                    <th class="width-10" >NET SALES
+                    <th class="width-10">NET SALES
                         <p-columnFilter type="text" field="HB-NET" display="menu"></p-columnFilter>
                     </th>
-                    <th class="width-10">	 TARGET
+                    <th class="width-10"> TARGET
                         <p-columnFilter type="text" field="HB-TARGET" display="menu"></p-columnFilter>
-                     
+
                     </th>
-                    <th class="width-5"  >ACHV%
+                    <th class="width-5">ACHV%
                         <p-columnFilter type="text" field="HB-ACHV" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                     </th>
-                   
-                    <th  class="width-10">NET SALES
+
+                    <th class="width-10">NET SALES
                         <p-columnFilter type="text" field="NV-NET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                     </th>
@@ -315,7 +474,7 @@
                         <p-columnFilter type="text" field="NV-TARGET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                     </th>
-                    <th  class="width-5">ACHV%
+                    <th class="width-5">ACHV%
                         <p-columnFilter type="text" field="NV-ACHV" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                     </th>
@@ -323,19 +482,19 @@
                         <p-columnFilter type="text" field="ZR-NET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                     </th>
-                    <th class="width-10" >	 TARGET
+                    <th class="width-10"> TARGET
                         <p-columnFilter type="text" field="ZR-TARGET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                     </th>
-                    <th  class="width-5">ACHV%
+                    <th class="width-5">ACHV%
                         <p-columnFilter type="text" field="ZR-ACHV" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Expiry_Val"></p-sortIcon> -->
                     </th>
-                    <th  class="width-10">NET SALES
+                    <th class="width-10">NET SALES
                         <p-columnFilter type="text" field="TOTAL-NET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Sales_Val"></p-sortIcon> -->
                     </th>
-                    <th  class="width-10">	 TARGET
+                    <th class="width-10"> TARGET
                         <p-columnFilter type="text" field="TOTAL-TARGET" display="menu"></p-columnFilter>
                         <!-- <p-sortIcon field="Return_Val"></p-sortIcon> -->
                     </th>
@@ -346,12 +505,12 @@
                     <!-- <th pFrozenColumn class="width-30">Action</th> -->
                     <!-- <th class="width-40">Action</th> -->
                 </tr>
-     
+
             </ng-template>
             <ng-template pTemplate="body" let-report>
                 <tr>
                     <!-- <td> -->
-                        <!-- <a class="click"  *ngIf="report.Keyfigure_Name == 'GRAND TOTAL'" >
+                    <!-- <a class="click"  *ngIf="report.Keyfigure_Name == 'GRAND TOTAL'" >
                             {{report.Keyfigure_Name}}
                         </a>
                         <a class="click" *ngIf="report.Keyfigure_Name != 'GRAND TOTAL'" (click)="FilterList(report.Keyfigure_Code)">
@@ -363,28 +522,41 @@
                     <!-- <td class="text-right" >{{ report['Keyfigure_Name'] }}</td> -->
 
                     <!-- Added By Gauresh -->
-                    <td pFrozenColumn class="text-left width-50"  *ngIf=" report['Keyfigure_Name'] == 'GRAND TOTAL'" style="width: 200px;">{{ report['Keyfigure_Name'] }}</td>
-                    <td  pFrozenColumn class="text-left width-50"  *ngIf=" report['Keyfigure_Name'] != 'GRAND TOTAL'" 
+                    <td pFrozenColumn class="text-left width-50" *ngIf=" report['Keyfigure_Name'] == 'GRAND TOTAL'"
+                        style="width: 200px;">{{ report['Keyfigure_Name'] }}</td>
+                    <td pFrozenColumn class="text-left width-50" *ngIf=" report['Keyfigure_Name'] != 'GRAND TOTAL'"
                         (click)="FilterList(report.Keyfigure_Code)">{{ report['Keyfigure_Name'] }}
                     </td>
 
                     <!-- <td class="justify-content-end width-10">{{(getValue(report['HB-NET']).toFixed(2)) | number}}</td> -->
-                    <td class="justify-content-end width-10">{{ (report['HB-NET'] != null ? (getValue(report['HB-NET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['HB-TARGET'] != null ?  (getValue(report['HB-TARGET']).toFixed(2))  : 0 )| number }}</td>
-                    <td class="justify-content-end width-10">{{ (report['HB-ACHV'] != null ? report['HB-ACHV'] : 0).toFixed(2) | number}}</td>
-                    
-                    <td class="justify-content-end width-10">{{ (report['NV-NET'] != null ?(getValue(report['NV-NET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['NV-TARGET'] != null ? (getValue(report['NV-TARGET']).toFixed(2))  : 0 )| number }}</td>
-                    <td class="justify-content-end width-10">{{ (report['NV-ACHV'] != null ? report['NV-ACHV'] : 0).toFixed(2)| number}}</td>
-                    
-                    <td class="justify-content-end width-10">{{ (report['ZR-NET'] != null ?(getValue(report['ZR-NET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['ZR-TARGET'] != null ?(getValue(report['ZR-TARGET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['ZR-ACHV'] != null ? report['ZR-ACHV'] : 0).toFixed(2)| number}}</td>
-                    
-                    <td class="justify-content-end width-10">{{ (report['TOTAL-NET'] != null ? (getValue(report['TOTAL-NET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['TOTAL-TARGET'] != null ? (getValue(report['TOTAL-TARGET']).toFixed(2))  : 0 )| number}}</td>
-                    <td class="justify-content-end width-10">{{ (report['TOTAL-ACHV'] != null ? report['TOTAL-ACHV'] : 0).toFixed(2)| number}}</td>
-                     <!-- <td class="width-40">  
+                    <td class="justify-content-end width-10">{{ (report['HB-NET'] != null ?
+                        (getValue(report['HB-NET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['HB-TARGET'] != null ?
+                        (getValue(report['HB-TARGET']).toFixed(2)) : 0 )| number }}</td>
+                    <td class="justify-content-end width-10">{{ (report['HB-ACHV'] != null ? report['HB-ACHV'] :
+                        0).toFixed(2) | number}}</td>
+
+                    <td class="justify-content-end width-10">{{ (report['NV-NET'] != null
+                        ?(getValue(report['NV-NET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['NV-TARGET'] != null ?
+                        (getValue(report['NV-TARGET']).toFixed(2)) : 0 )| number }}</td>
+                    <td class="justify-content-end width-10">{{ (report['NV-ACHV'] != null ? report['NV-ACHV'] :
+                        0).toFixed(2)| number}}</td>
+
+                    <td class="justify-content-end width-10">{{ (report['ZR-NET'] != null
+                        ?(getValue(report['ZR-NET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['ZR-TARGET'] != null
+                        ?(getValue(report['ZR-TARGET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['ZR-ACHV'] != null ? report['ZR-ACHV'] :
+                        0).toFixed(2)| number}}</td>
+
+                    <td class="justify-content-end width-10">{{ (report['TOTAL-NET'] != null ?
+                        (getValue(report['TOTAL-NET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['TOTAL-TARGET'] != null ?
+                        (getValue(report['TOTAL-TARGET']).toFixed(2)) : 0 )| number}}</td>
+                    <td class="justify-content-end width-10">{{ (report['TOTAL-ACHV'] != null ? report['TOTAL-ACHV'] :
+                        0).toFixed(2)| number}}</td>
+                    <!-- <td class="width-40">  
                         {{ (report['HB-TARGET'] != null ? report['HB-TARGET'] : 0)}}
                      
                         <i class="fa fa-eye mr-2" aria-hidden="true" (click)="getProductDetails(report['Keyfigure_Code'])"></i>
