@@ -444,7 +444,7 @@
 
 
                 <tr>
-                    <th pFrozenColumn class="width-30"></th>
+                    <th pFrozenColumn class="width-25"></th>
                     <th class="text-center justify-content-center width-20">HYBRID</th>
                     <th class="text-center justify-content-center width-20">NOVA</th>
                     <th class="text-center justify-content-center width-20">ZORA</th>
@@ -453,7 +453,7 @@
                 </tr>
 
                                                 <tr>
-                                    <th pFrozenColumn class="width-30"></th>
+                                    <th pFrozenColumn class="width-25"></th>
                                     <th class="width-10">NET SALES
                                         <p-columnFilter type="text" field="HB-NET" display="menu"></p-columnFilter>
                                     </th>
@@ -606,10 +606,10 @@
                     <!-- <td class="text-right" >{{ report['Keyfigure_Name'] }}</td> -->
 
                    
-                    <td pFrozenColumn class="text-left width-30" *ngIf=" report['Keyfigure_Name'] == 'GRAND TOTAL'"
-                        style="width: 200px;">{{ report['Keyfigure_Name'] }}</td>
-                    <td pFrozenColumn class="text-left width-30" *ngIf=" report['Keyfigure_Name'] != 'GRAND TOTAL'"
-                        (click)="FilterList(report.Keyfigure_Code)">{{ report['Keyfigure_Name'] }}
+                    <td pFrozenColumn class="text-left width-25" *ngIf=" report['PRODUCT_DESC'] == 'GRAND TOTAL'"
+                        style="width: 200px;">{{ report['PRODUCT_DESC'] }}</td>
+                    <td pFrozenColumn class="text-left width-25" *ngIf=" report['PRODUCT_DESC'] != 'GRAND TOTAL'"
+                        (click)="FilterList(report.Keyfigure_Code)">{{ report['PRODUCT_DESC'] }}
                     </td>
 
                     <!-- <td class="justify-content-end width-10">{{(getValue(report['HB-NET']).toFixed(2)) | number}}</td> -->
@@ -680,7 +680,7 @@
                                     <td class="justify-content-end width-5">{{ (report['TOTAL-GROWTH'] != null ?
                                         report['TOTAL-GROWTH'] : 0).toFixed(2) | number}}</td>
                                     <td class="justify-content-end width-5">{{ (report['TOTAL-PCPM'] != null ?
-                                        report['HB-PCPM'] : 0).toFixed(2) | number}}</td>
+                                        report['TOTAL-PCPM'] : 0).toFixed(2) | number}}</td>
                     <!-- <td class="width-40">  
                         {{ (report['HB-TARGET'] != null ? report['HB-TARGET'] : 0)}}
                      
