@@ -127,9 +127,9 @@ export class PayementExcelUploadComponent implements OnInit {
 
 
   savePayement() {
-    this.jsonData.forEach((element: any) => {
-      element.PAYMENT_DATE = new Date(element.PAYMENT_DATE);
-    })
+    // this.jsonData.forEach((element: any) => {
+    //   element.PAYMENT_DATE = new Date(element.PAYMENT_DATE);
+    // })
     let data = {
       "USER_ID": this.userInfo.USER_ID,
       "CME_PAYMENT_DATA": this.jsonData
