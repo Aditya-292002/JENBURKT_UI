@@ -11,14 +11,7 @@
                 </a>
             </li>
             <div class="card-responsive1">
-                <li *ngIf="roleID == 6">
-                    <a class="nav-link  px-2" routerLink="/generateorder"><i class="fa fa-home mr-2"
-                            aria-hidden="true"></i>Generate Order</a>
-                </li>
-                <li *ngIf="roleID == 6">
-                    <a class="nav-link  px-2" routerLink="/cyclesuperstockist"><i class="fa fa-home mr-2"
-                            aria-hidden="true"></i>Cycle SuperStockist</a>
-                </li>
+
                 <!-- <li *ngIf="roleID == 6">
                     <a class="nav-link  px-2" routerLink="/superstockistmaster"><i class="fa fa-home mr-2"
                             aria-hidden="true"></i>Super Stockist Master</a>
@@ -103,6 +96,22 @@
                             <li class="nav-item" (click)="isSelectedMenu('Upload_Mkt_Report')"
                                 [ngClass]="Upload_Mkt_Report == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
                                     routerLink="/uploadmktreport">Upload Mkt Report </a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li *ngIf=" roleID == 6">
+                    <a class="nav-link px-2" href="#submenu13" data-toggle="collapse" data-target="#submenu13"><i
+                            class="fa fa-inr mr-2"></i>Order Management</a>
+                    <div class="collapse" id="submenu13">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Generate_Order')"
+                                [ngClass]="customMenuGenerate_Order == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/generateorder">Generate Order</a></li>
+
+
+                            <li class="nav-item" (click)="isSelectedMenu('Cycle_Super_Stockist')"
+                                [ngClass]="customMenuCycle_Super_Stockist == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/cyclesuperstockist">Cycle SuperStockist</a></li>
                         </ul>
                     </div>
                 </li>
@@ -199,7 +208,8 @@
                             <li class="nav-item" (click)="isSelectedMenu('Product_Group_update')"
                                 [ngClass]="Product_Group_update == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"
-                                    routerLink="/productgroupupdate">Product Request Update</a></li>
+                                    routerLink="/productgroupupdate">Product Request Update</a>
+                            </li>
                             <li class="nav-item" (click)="isSelectedMenu('disocunt_claim_update')"
                                 [ngClass]="disocunt_claim_update == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"

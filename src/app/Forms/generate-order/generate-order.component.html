@@ -31,15 +31,27 @@
                         <div class="mb-2">
                             <label>Period<span style="color: red;">*</span></label>
                             <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
-                                <p-dropdown [options]="periodList" appendTo="body" optionLabel="CYCLE_DESC"
-                                    optionValue="CYCLE_NO" [filter]="true" filterBy="CYCLE_DESC"
+                                               <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC"
+                                    optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"
                                     placeholder="Please Select" [(ngModel)]="period"
                                     [ngModelOptions]="{standalone:true}">
                                 </p-dropdown>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
 
+                        <div class="mb-2">
+                            <label>SuperStockist<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                <p-dropdown [options]="superStockistList" appendTo="body" optionLabel="SUPERSTOCKIST_NAME"
+                                    optionValue="SUPERSTOCKIST_CODE" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
+                                    placeholder="Please Select" [(ngModel)]="SUPERSTOCKIST_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
 
 
                    <div class="col-sm-12 col-md-12 col-lg-1 ">
@@ -125,8 +137,8 @@
                                                 </p-columnFilter>
                                             </th> -->
                                             <th>Product Code</th>
-                                            <th scope="col" class="width-200">Description
-                                                <p-columnFilter class="column-filter" field="PRODUCT_DESC"
+                                            <th scope="col" class="width-5">Description
+                                                <!-- <p-columnFilter class="column-filter" field="PRODUCT_DESC"
                                                     matchMode="equals" [showMenu]="false">
                                                     <ng-template pTemplate="filter" let-value
                                                         let-filter="filterCallback">
@@ -141,10 +153,15 @@
                                                     </ng-template>
 
 
-                                                </p-columnFilter>
+                                                </p-columnFilter> -->
                                             </th>
                                             <th>Shipper</th>
+                                            <th>MOE Rate</th>
+                                            <th>Prev Month Sale</th>
+                                            <th>Prev Month Receipt</th>
+                                            <th>Prev Month Adjustment</th>
                                             <th>Closing Stock</th>
+                                            <th>Opening Stock</th>
                                             <!-- <th  scope="col">HQ Count</th> -->
                                             <th>Recommended Qty</th>
                                             <th>1st Dispatch(Shipper)</th>
@@ -156,10 +173,14 @@
                                     <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                                         <tr>
                                            <td class="width-2">{{ data.PRODUCT_CODE }}</td>
-                                            <td class="width-2">{{ data.PRODUCT_DESC }}</td>
+                                            <td class="width-5">{{ data.PRODUCT_DESC }}</td>
                                             <td class="width-2">{{ data.SHIPPER}}</td>
+                                            <td class="width-2">{{ data.MOE_RATE }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_SALE }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_RECEIPT }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_ADJUSTMENT }}</td>
                                             <td class="width-2">{{ data.CLOSING_STOCK }}</td>
-                           
+                                            <td class="width-2">{{ data.OPENING_STOCK }}</td>
                                             <td class="width-2">{{ data.RECOMMENDED_QTY }}</td>
                                             <!-- <td class="width-2">
                                                 <input type="text" [(ngModel)]="data.REQ_HQ_QTY" class="form-control"

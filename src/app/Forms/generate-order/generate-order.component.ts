@@ -27,6 +27,9 @@ export class GenerateOrderComponent implements OnInit {
   SAMPLE_PRODUCT_LIST: any=[];
   ORDER_DATE:any=new Date();
   ORDER_STATUS:boolean=false;
+  superStockistList: any=[];
+  superStockistCode: any;
+  SUPERSTOCKIST_CODE:any
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
@@ -41,6 +44,7 @@ export class GenerateOrderComponent implements OnInit {
      this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
        (res:any)=>{
          this.periodList = res.PERIOD_LIST;
+         this.superStockistList = res.DATA_LIST;
        //console.log('periodList',this.periodList);
       
        },
@@ -63,14 +67,15 @@ export class GenerateOrderComponent implements OnInit {
     //    return;
     //  }
      let data={
-        USER_ID : JSON.parse(this.userInfo).USER_ID,
+       USER_ID : JSON.parse(this.userInfo).USER_ID,
        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
-       SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
+      //  SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
        PERIOD_ID:this.period,
-       AREA_CODE:this.AREA_CODE.AREA_CODE,
+      //  AREA_CODE:this.AREA_CODE.AREA_CODE,
        ROLE_NAME:this.AREA_CODE.ROLE_NAME,
        PERIOD_DESC:this.AREA_CODE.PERIOD_DESC,
-       SALESROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID
+      //  SALESROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
+       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE
      }
      console.log(data,'data');
      this.isLoaded=true;
@@ -138,8 +143,8 @@ export class GenerateOrderComponent implements OnInit {
         PERIOD_ID:this.period,
         STATUS:(VALUE==1?'1':'0'),
         ORDER_DATE:this.ORDER_DATE,
+        SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
         PRODUCT_LIST: this.PRODUCT_LIST
-        
      }  
      console.log(data,'data');
     // return

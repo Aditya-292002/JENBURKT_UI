@@ -14,11 +14,13 @@ import { URLService } from 'src/app/Service/url.service';
 export class CycleSuperstockistComponent implements OnInit {
 isHighLightSample: any = "NO";
   PERIOD_LIST: any = [];
-  CYCLE_NO: any;
+  PERIOD_ID: any;
   isLoaded: boolean = false;
   UserDetail: any = {};
   USER_ID: any;
-
+  superStockistList: any = [];
+  SUPERSTOCKIST_CODE:any
+  userInfo: any;
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService, private router: Router) { }
 
@@ -30,28 +32,32 @@ isHighLightSample: any = "NO";
   }
 
   GETSAMPLEREQUISITIONMASTERLIST() {
+    this.userInfo = this.authService.getUserDetail();
     let data = {
       "USER_ID": this.USER_ID,
-      "FYEAR": "2025"
+      "FYEAR": "2025",
+      "LOGIN_ID": JSON.parse(this.userInfo).USER_NAME,
     }
     this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
       (res: any) => {
         this.PERIOD_LIST = res.PERIOD_LIST;
+        this.superStockistList = res.DATA_LIST;
       });
   }
 
   SAVESAMPLEREQUISITIONCYCLEDATA() {
-     if (!this.SharedService.isValid(this.CYCLE_NO)) {
+     if (!this.SharedService.isValid(this.PERIOD_ID)) {
       this.toastrService.error('Select a Period');
       return
     }
   let data = {
       "USER_ID": this.USER_ID,
-      "CYCLE_ID": this.CYCLE_NO
+      "PERIOD_ID": this.PERIOD_ID,
+      "SUPERSTOCKIST_CODE":this.SUPERSTOCKIST_CODE,
     }
     console.log('DATA',data);
     
-    //return
+   // return
     this.http.postnew(this.url.SAVESUPERSTOCKISTCYCLEDATA, data).then(
       (res: any) => {
         if (res.data[0].FLAG == 1) {

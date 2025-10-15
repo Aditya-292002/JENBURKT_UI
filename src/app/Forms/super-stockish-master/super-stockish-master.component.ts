@@ -50,6 +50,7 @@ export class SuperStockishMasterComponent implements OnInit {
   isHighLightWEF:string="No";
   DATE_OF_JOINING:any
   PASSSWORD:any;
+  CUST_CODE:any;
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
@@ -137,6 +138,7 @@ export class SuperStockishMasterComponent implements OnInit {
     this.Address = data.ADDRESS;
     this.MobileNo = data.MOBILE;
     this.Email = data.EMAIL_ID;
+    this.CUST_CODE = data.CUST_CODE;
     if(this.USER_ID==0 || this.USER_ID==undefined){
 
       this.userMasterMode = "Add Superstockist Master";
@@ -253,12 +255,10 @@ export class SuperStockishMasterComponent implements OnInit {
       "ACTIVE":1,//(this.Active==true?"1":"0"),
       "DATE_OF_JOINING":(this.SharedService.isValid(date)?date:null),
       "PASSWORD":this.hashPassword(this.PASSSWORD),
-    
+      "CUST_CODE":this.CUST_CODE
     }
 
     console.log('data',data);
-    
-
     //return 
     this.isLoaded = true;
     this.http.postnew(this.url.SAVESUPERSTOCKISTMASTERDATA, data).then(

@@ -80,6 +80,8 @@ export class LayoutPageComponent implements OnInit {
   customMenuSample_adhoc_pmt_approval:boolean;
   HQ_CODE:any;
   IS_LIVE:any
+  customMenuGenerate_Order: boolean;
+  customMenuCycle_Super_Stockist: boolean;
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
   }
@@ -255,7 +257,9 @@ export class LayoutPageComponent implements OnInit {
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
     this.IsMoeVieweport=false;
-    if (data == 'Area') {
+    this.customMenuGenerate_Order=false
+    this.customMenuCycle_Super_Stockist=false
+       if (data == 'Area') {
       this.customMenuArea = true;
     } else if (data == 'HQ') {
       this.customMenuHQ = true;
@@ -271,7 +275,9 @@ export class LayoutPageComponent implements OnInit {
     } else if (data == 'Chemist') {
       this.customMenuChemist = true;
     }
-    else if (data == 'Invoice') {
+    else if (data == 'Generate_Order') {
+      this.customMenuGenerate_Order = true;
+    } else if (data == 'Invoice') {
       this.customMenuInvoice = true;
     } else if (data == 'ITD') {
       this.customMenuITD = true;
@@ -284,7 +290,11 @@ export class LayoutPageComponent implements OnInit {
     } 
     else if (data == 'SUPER_STOCKIST_MASTER') {
       this.customMenuSuper_stockist = true;
-    }else if (data == 'Sample_Allocation') {
+    }
+    else if(data=='Cycle_Super_Stockist'){
+      this.customMenuCycle_Super_Stockist = true;
+    }
+    else if (data == 'Sample_Allocation') {
       this.customMenuSample_Allocation = true;
     } else if (data == 'Upload_Sample_Stock') {
       this.customMenuUpload_Sample_Stock = true;
