@@ -82,6 +82,7 @@ import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.
 import { GenerateOrderComponent } from './Forms/generate-order/generate-order.component';
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
 import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
+import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -168,8 +169,8 @@ const routes: Routes = [
       {path:'viewmoereport',component:MoeReportViewComponent},
        { path: 'generateorder', component: GenerateOrderComponent },
       {path:'superstockistmaster',component:SuperStockishMasterComponent},
-      {path:'cyclesuperstockist',component:CycleSuperstockistComponent}
-
+      {path:'cyclesuperstockist',component:CycleSuperstockistComponent},
+      {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent}
     ]
   },
 ];

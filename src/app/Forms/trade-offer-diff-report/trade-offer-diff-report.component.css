@@ -1,0 +1,71 @@
+.width-5{
+    min-width: 200px !important;
+}
+.width-2{
+    min-width: 100px !important;
+}
+
+.width-30 {
+  /* max-width: 150px !important; */
+  min-width: 300px !important
+}
+.width-20 {
+  
+  min-width: 1000px !important;
+}
+ .width-10 {
+  min-width: 100px !important;
+}
+
+/* hemant added css */
+/*
+
+.width-12 {
+  min-width: 400px !important;
+}
+
+.width-20 {
+  min-width: 1000px !important;
+}
+
+.width-30 {
+  max-width: 150px !important;
+  min-width: 150px !important
+}
+
+.width-5 {
+  min-width: 10px !important;
+}
+
+.width-15 {
+  min-width: 120px !important;
+}
+
+.width-40 {
+  min-width: 101px !important;
+  max-width: 101px !important;
+}
+
+.width-50 {
+  min-width: 175px !important;
+}
+
+.width-25 {
+  max-width: 250px !important;
+  min-width: 250px !important
+}
+
+:host ::ng-deep {
+  #childTable {
+    .p-datatable-thead {
+      z-index: 0;
+    }
+  }
+} */
+
+:host ::ng-deep .p-datatable-scrollable-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}

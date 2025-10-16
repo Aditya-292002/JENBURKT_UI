@@ -114,6 +114,7 @@ import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.
 import { GenerateOrderComponent } from './Forms/generate-order/generate-order.component';
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
 import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
+import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 
 registerLocaleData(localeIn);
 
@@ -204,7 +205,8 @@ registerLocaleData(localeIn);
     MoeReportViewComponent,
     GenerateOrderComponent,
     SuperStockishMasterComponent,
-    CycleSuperstockistComponent
+    CycleSuperstockistComponent,
+    TradeOfferDiffReportComponent
     
   ],
   imports: [

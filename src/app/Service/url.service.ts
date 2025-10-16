@@ -227,5 +227,6 @@ export class URLService {
      public DivisionSalesReportExcelDownload = this.sharedService.ApiUrl + '/api/Reports/DivisionSalesReportExcelDownload';
      public SAVESUPERSTOCKISTCYCLEDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTCYCLEDATA';
       public SAVEGENERATEORDER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVEGENERATEORDER';
+       public GETRADEDIFFREPORTBYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETRADEDIFFREPORTBYPERIODID';
  
 }
