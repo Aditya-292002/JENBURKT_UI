@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
 import { AuthService } from 'src/app/Service/auth.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CommonService } from 'src/app/Service/common.service';
 
 @Component({
   selector: 'app-trade-offer-diff-report',
@@ -31,7 +32,9 @@ export class TradeOfferDiffReportComponent {
   superStockistList: any=[];
   superStockistCode: any;
   SUPERSTOCKIST_CODE:any
-   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
+   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer
+    ,private comman:CommonService,
+   ) { }
     ngOnInit(): void {
      this.getPeriodListData();
    }
@@ -168,5 +171,10 @@ export class TradeOfferDiffReportComponent {
        }
      );
    }
+
+  exportExcel(){
+    this.comman.exportExcel(this.PRODUCT_LIST)
+    //this.comman.exportFormatedAsExcel(this.reportGrid.v_detail,'_report_',[],'Test','')
+  }
 
 }
