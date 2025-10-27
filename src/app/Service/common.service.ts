@@ -154,6 +154,16 @@ isValid(inputValue: any): boolean {
 
 
   }
+    exportExcelSuperstockist(exportableObj:any){
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(exportableObj);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "Trade_Offer_Diff_Report");
+    });
+
+
+  }
   saveAsExcelFile(buffer: any, fileName: string): void {
   let EXCEL_TYPE =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";

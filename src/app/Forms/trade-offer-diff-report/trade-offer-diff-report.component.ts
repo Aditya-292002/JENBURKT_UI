@@ -173,7 +173,7 @@ export class TradeOfferDiffReportComponent {
    }
 
   exportExcel(){
-    this.comman.exportExcel(this.PRODUCT_LIST)
+    this.comman.exportExcelSuperstockist(this.PRODUCT_LIST)
     //this.comman.exportFormatedAsExcel(this.reportGrid.v_detail,'_report_',[],'Test','')
   }
 
