@@ -67,7 +67,7 @@ ADHOC_REQUEST_LIST:any=[]
     if(D.STATUS==='Approved') {
     console.log('inside if',  this.STATUSFLAG);
     this.STATUSFLAG=true;
-  }else if(D.STATUS_DESC='R'){
+  }else if(D.STATUS_DESC=='R'){
       this.STATUSFLAG=true;
   }
   else{
@@ -87,7 +87,7 @@ ADHOC_REQUEST_LIST:any=[]
   this.REQUEST_DATE=formattedDate
   this.GETADHOCSAMPLEREQUISITIONLIST() 
   this.toggleToList= true;
-  
+  console.log(this.toggleToList,this.STATUSFLAG);
 }
 
 GETADHOCSAMPLEREQUISITIONLIST() {
