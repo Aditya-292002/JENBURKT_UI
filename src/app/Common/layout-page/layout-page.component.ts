@@ -67,6 +67,7 @@ export class LayoutPageComponent implements OnInit {
   IsMoeTargetReport: boolean
   Iscmereport: boolean;
   IsMoeVieweport:boolean;
+  IsPaymentReport:boolean;
   customMenuSample_Requisition: boolean;
   customMenuSample_Requisition_Approval: boolean;
   customMenuPMT_Sample_Requisition_Approval: boolean;
@@ -259,6 +260,7 @@ export class LayoutPageComponent implements OnInit {
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
     this.IsMoeVieweport=false;
+    this.IsPaymentReport=false;
     this.customMenuGenerate_Order=false
     this.customMenuCycle_Super_Stockist=false
     this.customMenuTrade_Offer_Diff_Report=false
@@ -371,6 +373,9 @@ export class LayoutPageComponent implements OnInit {
       this.Iscmereport = true;
     }else if(data=='MoeVieweport'){
       this.IsMoeVieweport=true;
+    }
+    else if(data=='PaymentReport'){
+      this.IsPaymentReport=true;
     }
     else if (data == 'UpdateClaim') {
       $("#wrapper").toggleClass("toggled");

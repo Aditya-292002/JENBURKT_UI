@@ -1,0 +1,67 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">CME Payment List</li>
+    </ol>
+  </nav>    
+  
+  <div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">CME Payment Report</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+        
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="container-fluid">
+    <app-loader *ngIf="isLoaded" ></app-loader>
+    <div class="card">
+      <p-table   [value]="CME_PAYMENT_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
+      [globalFilterFields]="['PAYMENT_DATE','CME_NO','PAY_AMOUNT','ACCOUNT_NUMBER']"
+     (onLazyLoad)="loadDataLazily($event)"  #dt1 >
+        <ng-template pTemplate="caption">
+          <div class="table-header text-right">
+                    <span class="p-input-icon-right ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" class="form-control" (input)="dt1.filterGlobal($event.target.value, 'contains')"  />
+              </span>
+          </div>  
+      </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                
+                <th pSortableColumn="CME">CME NO
+                
+                </th>
+                <th pSortableColumn="CLAIM_DATE" class="width-12">PAYMENT DATE <p-sortIcon field="CLAIM_DATE"></p-sortIcon></th>
+                <th pSortableColumn="REQ_BY" class="width-12">PAY_AMOUNT <p-sortIcon field="CLAIM_DATE"></p-sortIcon></th>
+                <th pSortableColumn="HQ_CODE">ACCOUNT_NUMBER 
+              
+                </th>
+                <!-- <th pSortableColumn="INVOICE_SALE_QTY">SM NAME </th> -->
+                <th pSortableColumn="INVOICE_SALE_QTY">BANK_IFSC </th>
+                <th pSortableColumn="INVOICE_SALE_QTY">TRANSACTION_STATUS </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+              <tr>
+     
+                <td  >{{ data.CME_NO }}</td>
+                <td  class="width-12">{{ data.PAYMENT_DATE | date:'dd-MM-yyyy' }}</td>
+                <td  >{{ data.PAY_AMOUNT | indianCurrency }}</td>
+                <td >{{ data.ACCOUNT_NUMBER  }}</td>
+ 
+                <td> {{ data.BANK_IFSC }} </td>
+                <td>{{ data.TRANSACTION_STATUS }}</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+    </div>
+  

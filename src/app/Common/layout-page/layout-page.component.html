@@ -288,11 +288,11 @@
                                 [ngClass]="IsMoeTargetReport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/moetargetreport">MOE Target Report</a>
                             </li>
-                            <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
+                            <!-- <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
                                 (click)="isSelectedMenu('cmereport')"
                                 [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item" (click)="isSelectedMenu('MoeVieweport')"
                                 [ngClass]="IsMoeVieweport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/viewmoereport">View MOE Report</a>
@@ -336,6 +336,15 @@
                             <li class="nav-item" *ngIf="roleID == 4" (click)="isSelectedMenu('Document_PMT_Approval')"
                                 [ngClass]="customMenuSample_Document_PMT_Approval == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/documentapproval">Document PMT Approval</a>
+                            </li>
+                             <li class="nav-item" (click)="isSelectedMenu('PaymentReport')"
+                                [ngClass]="IsPaymentReport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/paymentreport">CME Payment Report</a>
+                            </li>
+                             <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
+                                (click)="isSelectedMenu('cmereport')"
+                                [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
                             </li>
                             <!-- <li class="nav-item" *ngIf="roleID == 4"
                                 (click)="isSelectedMenu(Document_PMT_Approval')"
