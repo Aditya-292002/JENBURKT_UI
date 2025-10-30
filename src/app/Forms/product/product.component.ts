@@ -38,7 +38,9 @@ export class ProductComponent implements OnInit {
   isHighLightBrand:string="No";
   isHighLightMOERate:string="No";
   isHighLightWEF:string="No";
-
+  isHighLightshipper:string="No";
+  //added by hemant 02 sep 2025
+  Shipper:any
   v_save_data:any={};
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
@@ -208,7 +210,8 @@ export class ProductComponent implements OnInit {
     "DIVISION_CODE":this.divCode.DIV_CODE,
     "BRAND_CODE":this.brandCode.BRAND_CODE,
     "MOE_RATE":this.moeRate,
-    "WFM_CODE":this.wefCode.PERIOD_NO
+    "WFM_CODE":this.wefCode.PERIOD_NO,
+    "SHIPPER":this.Shipper
   }
     this.isLoaded = true;
     this.http.postnew(this.url.saveProductData, this.v_save_data).then(
@@ -240,6 +243,7 @@ export class ProductComponent implements OnInit {
     this.productMasterMode = "Add Product Master";
     this.isAddProductMaster = false;
     this.isProductPopUp = false;
+    this.Shipper=''
   }
 
   filterGroupCode:any=[];

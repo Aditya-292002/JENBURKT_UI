@@ -11,7 +11,12 @@
                 </a>
             </li>
             <div class="card-responsive1">
-                <li>
+
+                <!-- <li *ngIf="roleID == 6">
+                    <a class="nav-link  px-2" routerLink="/superstockistmaster"><i class="fa fa-home mr-2"
+                            aria-hidden="true"></i>Super Stockist Master</a>
+                </li> -->
+                <li *ngIf="roleID != 6">
                     <a class="nav-link  px-2" routerLink="/dashboard"><i class="fa fa-home mr-2"
                             aria-hidden="true"></i>Dashboard</a>
                 </li>
@@ -53,6 +58,15 @@
                             <li class="nav-item" (click)="isSelectedMenu('Sample_Product')"
                                 [ngClass]="customMenuSample_Product == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
+
+                            <li class="nav-item" (click)="isSelectedMenu('SUPER_STOCKIST_MASTER')"
+                                [ngClass]="customMenuSuper_stockist == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/superstockistmaster">Super Stockist Master</a>
+                            </li>
+
+                            <!-- <li>
+                                <a class="nav-link  px-2" routerLink="/superstockistmaster">Super Stockist Master</a>
+                            </li> -->
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/sampleproduct">Sample Product</a></li>
                     <li class="nav-item"><a class="nav-link py-0" routerLink="/productdetails"> Product Details</a></li> -->
                         </ul>
@@ -85,31 +99,61 @@
                         </ul>
                     </div>
                 </li>
+                <li *ngIf=" roleID == 6">
+                    <a class="nav-link px-2" href="#submenu13" data-toggle="collapse" data-target="#submenu13"><i
+                            class="fa fa-folder-open-o mr-2"></i>Order Management</a>
+                    <div class="collapse" id="submenu13">
+                        <ul class="flex-column sub-sidebar-nav nav">
+                            <li class="nav-item" (click)="isSelectedMenu('Generate_Order')"
+                                [ngClass]="customMenuGenerate_Order == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/generateorder">Generate Order</a></li>
+
+
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Cycle_Super_Stockist')"
+                                [ngClass]="customMenuCycle_Super_Stockist == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/cyclesuperstockist">Cycle SuperStockist</a></li> -->
+
+                                    <li class="nav-item" (click)="isSelectedMenu('Trade_Offer_Diff_Report')"
+                                [ngClass]="customMenuTrade_Offer_Diff_Report == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/tradeofferdiffreport">Trade Offer Diff Report</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li *ngIf="roleID == 1 || roleID == 2 || roleID == 4">
                     <a class="nav-link px-2" href="#submenu5" data-toggle="collapse" data-target="#submenu5"><i
                             class="fa fa-file-text mr-2"></i>Sample Invoice</a>
                     <div class="collapse" id="submenu5">
                         <ul class="flex-column sub-sidebar-nav nav">
                             <!-- *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0 " -->
-                            <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('Upload_Sample_Stock')"
+                            <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0"
+                                (click)="isSelectedMenu('Upload_Sample_Stock')"
                                 [ngClass]="customMenuUpload_Sample_Stock == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/uploadsamplestock">Upload Sample Stock</a></li>
-                            <li class="nav-item" *ngIf="salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Cycle_Sample_Requisition')"
+                            <li class="nav-item" *ngIf="salesRoleId == 4 || salesRoleId===0"
+                                (click)="isSelectedMenu('Cycle_Sample_Requisition')"
                                 [ngClass]="customCycle_Sample_Requisition == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/cyclesamplerequisition">Cycle Sample Requisition</a></li>
-                            <li class="nav-item" *ngIf="salesRoleId == 3"  (click)="isSelectedMenu('Sample_Requisition')"
+                                    class="nav-link py-0" routerLink="/cyclesamplerequisition">Cycle Sample
+                                    Requisition</a></li>
+                            <li class="nav-item" *ngIf="salesRoleId == 3" (click)="isSelectedMenu('Sample_Requisition')"
                                 [ngClass]="customMenuSample_Requisition == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition-Cycle</a></li>
-                            <li class="nav-item" *ngIf="salesRoleId == 3"  (click)="isSelectedMenu('Adobe_Requisition')"
+                                    class="nav-link py-0" routerLink="/samplerequisition"> Sample Requisition-Cycle</a>
+                            </li>
+                            <li class="nav-item" *ngIf="salesRoleId == 3" (click)="isSelectedMenu('Adobe_Requisition')"
                                 [ngClass]="customMenuAdobe_Requisition == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/adhocrequisition"> Adhoc Sample Requisition</a></li>       
-                            <li class="nav-item" *ngIf="salesRoleId == 4" (click)="isSelectedMenu('Sample_Requisition_Approval')" 
+                                    class="nav-link py-0" routerLink="/adhocrequisition"> Adhoc Sample Requisition</a>
+                            </li>
+                            <li class="nav-item" *ngIf="salesRoleId == 4"
+                                (click)="isSelectedMenu('Sample_Requisition_Approval')"
                                 [ngClass]="customMenuSample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/samplerequisitionlist"> Sample Requisition Approval</a></li>
-                            <li class="nav-item" *ngIf=" roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
+                                    class="nav-link py-0" routerLink="/samplerequisitionlist"> Sample Requisition
+                                    Approval</a></li>
+                            <li class="nav-item" *ngIf=" roleID == 4 || salesRoleId===0"
+                                (click)="isSelectedMenu('PMT_Sample_Allocation_Approval')"
                                 [ngClass]="customMenuPMT_Sample_Requisition_Approval == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/PMTsamplerequisitionapproval"> PMT Approval</a></li>
-                                    <li class="nav-item" *ngIf=" roleID == 1 || salesRoleId===0" (click)="isSelectedMenu('sample_data_upload')"
+                                    class="nav-link py-0" routerLink="/PMTsamplerequisitionapproval"> PMT Approval</a>
+                            </li>
+                            <li class="nav-item" *ngIf=" roleID == 1 || salesRoleId===0"
+                                (click)="isSelectedMenu('sample_data_upload')"
                                 [ngClass]="customMenusample_data_upload == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/sampledataupload"> Sample Data Upload </a></li>
                             <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Allocation')"  [ngClass]="customMenuSample_Allocation == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/productdetails"> Sample Allocation</a></li> -->
@@ -117,12 +161,18 @@
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/generateinvoice">Generate Invoice</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link py-0" routerLink="/printinvoice">Print Invioce</a></li>
                      -->
-                              <li class="nav-item" *ngIf=" roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('Print_Invoice')"
+                            <!-- <li class="nav-item" *ngIf=" roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('Print_Invoice')"
                                 [ngClass]="customMenuPrint_Invoice == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/editInvoice">Edit Invoice</a></li>
-                                 <li class="nav-item" (click)="isSelectedMenu('Sample_Received')"  [ngClass]="customMenuSample_Received == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/samplereceive">Sample Receive</a></li>
-                                 <li class="nav-item" *ngIf="salesRoleId == 4"  (click)="isSelectedMenu('Adhoc_Approval')"  [ngClass]="customMenuSample_Adhoc_Approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocrequisitionlist">Adhoc Requisition Approval </a></li>
-                                 <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0" (click)="isSelectedMenu('adhoc_pmt_approval')"  [ngClass]="customMenuSample_adhoc_pmt_approval == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/adhocpmtapproval">Adhoc PMT Approval</a></li>
+                                    class="nav-link py-0" routerLink="/editInvoice">Edit Invoice</a></li> -->
+                            <!-- <li class="nav-item" (click)="isSelectedMenu('Sample_Received')"  [ngClass]="customMenuSample_Received == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0" routerLink="/samplereceive">Sample Receive</a></li> -->
+                            <li class="nav-item" *ngIf="salesRoleId == 4" (click)="isSelectedMenu('Adhoc_Approval')"
+                                [ngClass]="customMenuSample_Adhoc_Approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adhocrequisitionlist">Adhoc Requisition Approval
+                                </a></li>
+                            <li class="nav-item" *ngIf="roleID == 4 || salesRoleId===0"
+                                (click)="isSelectedMenu('adhoc_pmt_approval')"
+                                [ngClass]="customMenuSample_adhoc_pmt_approval == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adhocpmtapproval">Adhoc PMT Approval</a></li>
                             <!-- <li class="nav-item" *ngIf="salesRoleId == 3 || salesRoleId == 4 || salesRoleId===0" (click)="isSelectedMenu('Sample_Invoice')"
                                 [ngClass]="customMenuSample_Invoice == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/sampleInvoice">Sample Invoice</a></li> -->
@@ -143,7 +193,7 @@
                     <a class="nav-link px-2" href="#submenu6" data-toggle="collapse" data-target="#submenu6"><i
                             class="fa fa-calculator mr-2"></i>Discount</a>
                     <div class="collapse" id="submenu6">
-                        <ul class="flex-column sub-sidebar-nav nav">  
+                        <ul class="flex-column sub-sidebar-nav nav">
                             <li class="nav-item" (click)="isSelectedMenu('Discount_Request')"
                                 [ngClass]="customMenuDiscount_Request == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/adddiscount">Discount Request</a></li>
@@ -162,7 +212,8 @@
                             <li class="nav-item" (click)="isSelectedMenu('Product_Group_update')"
                                 [ngClass]="Product_Group_update == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"
-                                    routerLink="/productgroupupdate">Product Request Update</a></li>
+                                    routerLink="/productgroupupdate">Product Request Update</a>
+                            </li>
                             <li class="nav-item" (click)="isSelectedMenu('disocunt_claim_update')"
                                 [ngClass]="disocunt_claim_update == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" *ngIf="roleID == 4 || roleID == 1"
@@ -193,7 +244,7 @@
                         </ul>
                     </div>
                 </li>
-                <li>
+                <li *ngIf="roleID != 6">
                     <a class="nav-link px-2" href="#submenu2" data-toggle="collapse" data-target="#submenu2"><i
                             class="fa fa-folder-open-o mr-2"></i>Report</a>
                     <div class="collapse" id="submenu2">
@@ -207,10 +258,10 @@
                                 <a class="nav-link py-0" routerLink="/DivisionWisesalesreport">Division wise Sales
                                     Report</a>
                             </li>
-                            <li class="nav-item" (click)="isSelectedMenu('Incentive')" 
-                        [ngClass]="customMenuIncentive == true ? 'isSelectedMenu' : ''">
-                        <a class="nav-link py-0" routerLink="/incentivereport">Incentive Report</a>
-                    </li>
+                            <li class="nav-item" (click)="isSelectedMenu('Incentive')"
+                                [ngClass]="customMenuIncentive == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/incentivereport">Incentive Report</a>
+                            </li>
                             <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('Expense')"
                                 [ngClass]="customMenuExpense == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/expensereport">Expense Report</a>
@@ -242,8 +293,7 @@
                                 [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
                             </li>
-                              <li class="nav-item"
-                                (click)="isSelectedMenu('MoeVieweport')"
+                            <li class="nav-item" (click)="isSelectedMenu('MoeVieweport')"
                                 [ngClass]="IsMoeVieweport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/viewmoereport">View MOE Report</a>
                             </li>
@@ -283,12 +333,11 @@
                                 [ngClass]="customMenuSample_Paymnet_excel_upload == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/paymentexcelupload">Payment Excel Upload</a>
                             </li>
-                                     <li class="nav-item" *ngIf="roleID == 4"
-                                (click)="isSelectedMenu('Document_PMT_Approval')"
+                            <li class="nav-item" *ngIf="roleID == 4" (click)="isSelectedMenu('Document_PMT_Approval')"
                                 [ngClass]="customMenuSample_Document_PMT_Approval == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/documentapproval">Document PMT Approval</a>
                             </li>
-                                <!-- <li class="nav-item" *ngIf="roleID == 4"
+                            <!-- <li class="nav-item" *ngIf="roleID == 4"
                                 (click)="isSelectedMenu(Document_PMT_Approval')"
                                 [ngClass]="customMenuSample_Document_PMT_Approval == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/paymentexcelupload">Document PMT Approval</a>
@@ -439,7 +488,7 @@
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left w-100 text-center">
                                                                     <div class="widget-heading">{{userName}}</div>
-                                                                       <div class="widget-heading">{{HQ_CODE}}</div>
+                                                                    <div class="widget-heading">{{HQ_CODE}}</div>
                                                                     <div class="widget-subheading opacity-8">
                                                                         {{roleName}}</div>
                                                                 </div>

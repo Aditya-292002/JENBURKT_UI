@@ -6,7 +6,7 @@ import { URLService } from 'src/app/Service/url.service';
 import { AuthService } from 'src/app/Service/auth.service';
 import { SharedService } from 'src/app/Service/shared.service';
 import { CommonService } from 'src/app/Service/common.service';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   intervalId: any;
   EXPIRES_IN: any;
   timeoutId: any;
+  userList: any;
 
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     sessionStorage.clear();
   }
 
+
   logInClick() {
     this.v_post_data.USER_NAME = this.UserName;
     this.v_post_data.PASSWORD = this.Password;
@@ -42,16 +44,23 @@ export class LoginComponent implements OnInit {
         if (res.FLAG) {
            this.ToastrService.success(res.MSG);
           this.AuthService.setUserDetail(JSON.stringify(res));
+          console.log(this.hashPassword(this.Password))
+
          ;
             localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
-            
+            this.userInfo = this.AuthService.getUserDetail();
             this.EXPIRES_IN=res.EXPIRES_IN
-            const bufferTime = 30 * 1000;
+            const bufferTime = 300 * 1000;
             console.log('token',res);
-            this.router.navigate(["/dashboard"]);
-            console.log("⏳ Scheduling refresh in", this.EXPIRES_IN / 1000, "seconds");
+            if(JSON.parse(this.userInfo).ROLE_ID!=6){
+
+              this.router.navigate(["/dashboard"]);
+            }else{
+               this.router.navigate(["/generateorder"]);
+            }
             this.EXPIRES_IN = (this.EXPIRES_IN * 1000) - bufferTime;
+            console.log("⏳ Scheduling refresh in", this.EXPIRES_IN , "seconds");
        this.startTokenRefresh(this.EXPIRES_IN)
         }
         else {
@@ -100,7 +109,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("TOKEN",res.TOKEN);
             localStorage.setItem('refresh_token', res.REFRESH_TOKEN);
      
-           const bufferTime = 30 * 1000;
+           const bufferTime = 600 * 1000;
           this.EXPIRES_IN = (res.expires_in * 1000) - bufferTime;
    //  this.startTokenRefresh(this.EXPIRES_IN)
     // this.timeoutId = setTimeout(() => {
@@ -111,7 +120,7 @@ export class LoginComponent implements OnInit {
       },
       error =>{
         console.log(error);
-        this.ToastrService.error("Oops, Something went wrong.");
+      //  this.ToastrService.error("Oops, Something went wrong.");
       }
     );
 
@@ -128,5 +137,16 @@ startTokenRefresh(expiryMs: number) {
   }, expiryMs);
 
   console.log("⏳ New timeout scheduled:", this.timeoutId);
+  
 }
+
+
+hashPassword(password: string): string {
+    return CryptoJS.MD5(password).toString();
+  }
+
+  //   verifyPassword(inputPassword: string, storedHash: string): boolean {
+  //   const hashedInput = CryptoJS.MD5(inputPassword).toString();
+  //   return hashedInput === storedHash;
+  // }
 }

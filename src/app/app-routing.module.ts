@@ -79,6 +79,10 @@ import { PmtApprovalListComponent } from './Forms/pmt-approval-list/pmt-approval
 import { DocumentPmtApprovalComponent } from './Forms/document-pmt-approval/document-pmt-approval.component';
 import { SampleDataUploadComponent } from './Forms/sample-data-upload/sample-data-upload.component';
 import { MoeReportViewComponent } from './Forms/moe-report-view/moe-report-view.component';
+import { GenerateOrderComponent } from './Forms/generate-order/generate-order.component';
+import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
+import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
+import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -162,7 +166,11 @@ const routes: Routes = [
        { path: 'adhocpmtapproval', component: PmtApprovalListComponent },
       { path: 'documentapproval', component: DocumentPmtApprovalComponent },
       { path: 'sampledataupload', component: SampleDataUploadComponent },
-      {path:'viewmoereport',component:MoeReportViewComponent}
+      {path:'viewmoereport',component:MoeReportViewComponent},
+       { path: 'generateorder', component: GenerateOrderComponent },
+      {path:'superstockistmaster',component:SuperStockishMasterComponent},
+      {path:'cyclesuperstockist',component:CycleSuperstockistComponent},
+      {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent}
     ]
   },
 ];

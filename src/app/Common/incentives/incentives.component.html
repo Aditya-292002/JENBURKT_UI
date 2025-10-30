@@ -165,7 +165,9 @@
         <thead>
           <tr>
             <th>Month</th>
+            <th>Target</th>
             <th>Net Sales</th>
+            <th>Percentage</th>
             <!-- <th>Incentive</th> -->
             <th>Next Month Achieved</th>
             <th>Achieved Incentive</th>
@@ -174,7 +176,9 @@
         <tbody>
           <tr *ngFor="let item of historicalData">
             <td>{{ item.month }}</td>
+            <td>{{formatCurrency(item.TARGET_MONTH)}}</td>
             <td>{{ formatCurrency(item.netSales) }}</td>
+            <td>{{((item.netSales/item.TARGET_MONTH)*100).toFixed(2)}}%</td>
             <!-- <td>{{ formatCurrency(item.incentive) }}</td> -->
             <td>
               <span class="status-badge" [class.success]="item.nextMonthAchieved === 'Y'" 

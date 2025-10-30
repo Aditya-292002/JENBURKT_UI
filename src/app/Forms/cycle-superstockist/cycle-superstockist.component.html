@@ -1,0 +1,58 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Cycle SuperStockist</a></li>
+        <!-- <li class="breadcrumb-item active" aria-current="page">Cycle SuperStockist</li> -->
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Cycle SuperStockist</h5>
+        </div>
+        <div class="buttonBox ml-auto">
+            <button type="submit" class="btn-primary  saveButton mr-2"
+                (click)="SAVESAMPLEREQUISITIONCYCLEDATA()">Save</button>
+            <!-- <button type="submit" class="btn-primary  cancelButton" (click)="clearForm()">Cancel</button> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid ">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-2">
+                            <label>Period<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                <p-dropdown [options]="PERIOD_LIST" appendTo="body" optionLabel="PERIOD_DESC"
+                                    optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"
+                                    placeholder="Please Select" [(ngModel)]="PERIOD_ID"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                                        <!-- <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>SuperStockist<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                <p-dropdown [options]="superStockistList" appendTo="body" optionLabel="SUPERSTOCKIST_NAME"
+                                    optionValue="SUPERSTOCKIST_CODE" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
+                                    placeholder="Please Select" [(ngModel)]="SUPERSTOCKIST_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

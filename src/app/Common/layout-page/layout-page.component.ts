@@ -30,6 +30,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuPool_To_Pool: boolean;
   customMenuUpload_Document: boolean;
   customMenuSample_Product: boolean;
+  customMenuSuper_stockist:boolean ;
   customMenuSample_Allocation: boolean;
   customMenuUpload_Sample_Stock: boolean;
   customMenuSample_Allocation_Approval: boolean;
@@ -79,6 +80,10 @@ export class LayoutPageComponent implements OnInit {
   customMenuSample_adhoc_pmt_approval:boolean;
   HQ_CODE:any;
   IS_LIVE:any
+  customMenuGenerate_Order: boolean;
+  customMenuCycle_Super_Stockist: boolean;
+  customMenuTrade_Offer_Diff_Report: boolean;
+  
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
   }
@@ -201,6 +206,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuPool_To_Pool = false;
     this.customMenuUpload_Document = false;
     this.customMenuSample_Product = false;
+    this.customMenuSuper_stockist=false;
     this.customMenuSample_Allocation = false;
     this.customMenuUpload_Sample_Stock = false;
     this.customCycle_Sample_Requisition = false;
@@ -253,7 +259,10 @@ export class LayoutPageComponent implements OnInit {
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
     this.IsMoeVieweport=false;
-    if (data == 'Area') {
+    this.customMenuGenerate_Order=false
+    this.customMenuCycle_Super_Stockist=false
+    this.customMenuTrade_Offer_Diff_Report=false
+       if (data == 'Area') {
       this.customMenuArea = true;
     } else if (data == 'HQ') {
       this.customMenuHQ = true;
@@ -269,7 +278,9 @@ export class LayoutPageComponent implements OnInit {
     } else if (data == 'Chemist') {
       this.customMenuChemist = true;
     }
-    else if (data == 'Invoice') {
+    else if (data == 'Generate_Order') {
+      this.customMenuGenerate_Order = true;
+    } else if (data == 'Invoice') {
       this.customMenuInvoice = true;
     } else if (data == 'ITD') {
       this.customMenuITD = true;
@@ -279,7 +290,17 @@ export class LayoutPageComponent implements OnInit {
       this.customMenuUpload_Document = true;
     } else if (data == 'Sample_Product') {
       this.customMenuSample_Product = true;
-    } else if (data == 'Sample_Allocation') {
+    } 
+    else if (data == 'SUPER_STOCKIST_MASTER') {
+      this.customMenuSuper_stockist = true;
+    }
+    else if(data=='Cycle_Super_Stockist'){
+      this.customMenuCycle_Super_Stockist = true;
+    }
+    else if (data == 'Trade_Offer_Diff_Report') {
+      this.customMenuTrade_Offer_Diff_Report = true;
+    }
+    else if (data == 'Sample_Allocation') {
       this.customMenuSample_Allocation = true;
     } else if (data == 'Upload_Sample_Stock') {
       this.customMenuUpload_Sample_Stock = true;

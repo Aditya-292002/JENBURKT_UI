@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/Service/auth.service';
 import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-update-user-password',
   templateUrl: './update-user-password.component.html',
@@ -18,10 +18,14 @@ export class UpdateUserPasswordComponent implements OnInit {
   updateuserPasswordHideShow:boolean;
   USERNAME:any;
   NEW_PASSWORD:any;
+  PASSWORD:any;
+  CONFIRM_PASSWORD:any;
   CURRENT_PASSWORD:any;
   isHighLightUsername:string="No";
   isHighLightNewpassword:string="No";
   userData:any;
+  isPasswordVisible:boolean = false;
+  isConfirmPasswordVisible:boolean=false;
   constructor(private router: Router,private authService: AuthService,private url: URLService,private http: HttpService,
     private toastrService:ToastrService,public datepipe: DatePipe) { }
 
@@ -63,9 +67,30 @@ export class UpdateUserPasswordComponent implements OnInit {
     }else{
       this.isHighLightUsername="No";
     }
-    if(this.NEW_PASSWORD==undefined || this.NEW_PASSWORD==""){
+    // if(this.NEW_PASSWORD==undefined || this.NEW_PASSWORD==""){
+    //   this.isHighLightNewpassword="Yes";
+    //   this.toastrService.error("Please Enter New Password..");
+    //   return;
+    // }else{
+    //   this.isHighLightNewpassword="No";
+    // }
+      if(this.PASSWORD==undefined || this.PASSWORD==""){
       this.isHighLightNewpassword="Yes";
-      this.toastrService.error("Please Enter New Password..");
+      this.toastrService.error("Please Enter new Password..");
+      return;
+    }else{
+      this.isHighLightNewpassword="No";
+    }
+          if(this.CONFIRM_PASSWORD==undefined || this.CONFIRM_PASSWORD==""){
+      this.isHighLightNewpassword="Yes";
+      this.toastrService.error("Please Enter Confirm Password..");
+      return;
+    }else{
+      this.isHighLightNewpassword="No";
+    }
+     if(this.PASSWORD!=this.CONFIRM_PASSWORD || this.PASSWORD==""){
+    //  this.isHighLightNewpassword="Yes";
+      this.toastrService.error("Password and confirm password doent matches ");
       return;
     }else{
       this.isHighLightNewpassword="No";
@@ -76,10 +101,11 @@ export class UpdateUserPasswordComponent implements OnInit {
     console.log(' this.userData', this.userData)
     let data={
       USER_ID:this.userData,
-      UPDATED_PASSWORD:this.NEW_PASSWORD
+      UPDATED_PASSWORD:this.hashPassword( this.CONFIRM_PASSWORD)
 
     }
 console.log('data',data)
+//return
     this.http.postnew(this.url.UPDATEUSERPASSWORDBYUSERID, data).then(
       (res: any) => {
 
@@ -104,5 +130,25 @@ console.log('data',data)
   onClearFormData(){
     this.USERNAME="";
     this.NEW_PASSWORD="";
+    this.PASSWORD='';
+    this.CONFIRM_PASSWORD='';
   }
+  hashPassword(password: string): string {
+      return CryptoJS.MD5(password).toString();
+    }
+
+    
+    clear(){
+      this.PASSWORD='';
+      this.CONFIRM_PASSWORD='';
+    }
+
+
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  toggleConfirmPassword(){
+     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+  }
+
 }

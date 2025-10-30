@@ -1,13 +1,31 @@
-.width-10 {
+.width-5{
+    min-width: 200px !important;
+}
+.width-2{
+    min-width: 100px !important;
+}
+
+.width-30 {
+  /* max-width: 150px !important; */
+  min-width: 300px !important
+}
+.width-20 {
+  
+  min-width: 1000px !important;
+}
+ .width-10 {
   min-width: 100px !important;
 }
 
+/* hemant added css */
+/*
+
 .width-12 {
-  min-width: 140px !important;
+  min-width: 400px !important;
 }
 
 .width-20 {
-  min-width: 550px !important;
+  min-width: 1000px !important;
 }
 
 .width-30 {
@@ -43,4 +61,11 @@
       z-index: 0;
     }
   }
+} */
+
+:host ::ng-deep .p-datatable-scrollable-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
 }

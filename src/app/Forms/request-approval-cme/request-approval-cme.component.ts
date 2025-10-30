@@ -1231,7 +1231,19 @@ export class RequestApprovalCmeComponent implements OnInit {
    // await this.GetCreateBase64( this.datalist)
   }
 
+// async getRequest(){
+//   console.log('inside123');
+// //  return
+//                 let data= {
+//                                   "USER_ID": this.userInfo.USER_ID,
+//                                   "CME_ID": 3132
+//                                 }
 
+                                  
+//             await  this.GETCMEREQUESTDATABYCMENO(data)
+//             await this.GetCreateBase64(this.datalist)
+
+// }
 
 
 }

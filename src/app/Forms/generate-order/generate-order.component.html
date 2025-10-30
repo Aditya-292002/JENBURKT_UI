@@ -1,0 +1,219 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Generate Order</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Generate Order</h5>
+        </div>
+         <div class="buttonBox ml-auto">
+                       <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(0)" [disabled]="ORDER_STATUS">
+                Save As Draft
+            </button>
+            <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
+                Submit
+            </button>
+        </div>
+
+    </div>
+</div>
+<app-loader *ngIf="isLoaded"></app-loader>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>Period<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                               <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC"
+                                    optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"
+                                    placeholder="Please Select" [(ngModel)]="period"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>SuperStockist<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                <p-dropdown [options]="superStockistList" appendTo="body" optionLabel="SUPERSTOCKIST_NAME"
+                                    optionValue="SUPERSTOCKIST_CODE" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
+                                    placeholder="Please Select" [(ngModel)]="SUPERSTOCKIST_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+
+                   <div class="col-sm-12 col-md-12 col-lg-1 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
+                                <!-- <i class="fa fa-spinner mr-2" aria-hidden="true"></i> -->
+                                Show
+                            </button>
+                            
+
+                        </div>
+                    </div>
+
+                                                            <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="mb-3 ">
+                            <label>Order Date</label>
+                            <div>
+                                <p-calendar [(ngModel)]="ORDER_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="Order date"
+                                    ></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <div>
+                                    <p-dropdown appendTo="body" [options]="periodList" [(ngModel)]="period"
+                                        [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select..." optionLabel="PERIOD_DESC" optionValue="PERIOD_ID"
+                                        >
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
+                                <i class="fa fa-spinner mr-2" aria-hidden="true"></i>Show
+                            </button>
+                            
+
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+                    <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="mb-2">
+                            <label> </label>
+                            <div>
+                                <p-table [value]="PRODUCT_LIST" responsiveLayout="scroll" scrollHeight="420px"
+                                    [globalFilterFields]="['PRODUCT_DESC', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
+                                        ,'POOL_HQCOUNT','TOTAL_REQ'
+                                    ]" #dt2>
+                                   
+                                    <ng-template pTemplate="header">
+
+                                        <tr>
+                                            <!-- <th scope="col">Pool
+                                                <p-columnFilter class="column-filter" field="POOL_DESC"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="POOL_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+                                                </p-columnFilter>
+                                            </th> -->
+                                            <th>Product Code</th>
+                                            <th scope="col" class="width-5">Description
+                                                <!-- <p-columnFilter class="column-filter" field="PRODUCT_DESC"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="SAMPLE_PRODUCT_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+
+
+                                                </p-columnFilter> -->
+                                            </th>
+                                            <th>Shipper</th>
+                                            <th>MOE Rate</th>
+                                            <th>Prev Month Sale</th>
+                                            <th>Prev Month Receipt</th>
+                                            <th>Prev Month Adjustment</th>
+                                            <th>Closing Stock</th>
+                                            <th>Opening Stock</th>
+                                            <!-- <th  scope="col">HQ Count</th> -->
+                                            <th>Recommended Qty</th>
+                                            <th>1st Dispatch(Shipper)</th>
+                                            <th>2nd Dispatch(Shipper)</th>
+                                            <th>Total Qty</th>
+                                            <!-- <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th> -->
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                        <tr>
+                                           <td class="width-2">{{ data.PRODUCT_CODE }}</td>
+                                            <td class="width-5">{{ data.PRODUCT_DESC }}</td>
+                                            <td class="width-2">{{ data.SHIPPER}}</td>
+                                            <td class="width-2">{{ data.MOE_RATE }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_SALES }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_RECEIPT }}</td>
+                                            <td class="width-2">{{ data.PREV_MONTH_ADJUSTMENT }}</td>
+                                            <td class="width-2">{{ data.CLOSING_STOCK }}</td>
+                                            <td class="width-2">{{ data.OPENING_STOCK }}</td>
+                                            <td class="width-2">{{ data.RECOMMENDED_QTY }}</td>
+                                            <!-- <td class="width-2">
+                                                <input type="text" [(ngModel)]="data.REQ_HQ_QTY" class="form-control"
+                                                    name="pincode"
+                                                    (focusout)="GETCALCULATEPACKQTYBYPOOLCODE(data,rowIndex)"
+                                                    placeholder="Req Inner Pack Qty" maxlength="4"
+                                                    appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
+                                            </td> -->
+                                            <td class="width-2">
+                                                <input type="text" [(ngModel)]="data.FIRST_DISPATCH_QTY" class="form-control"
+                                                    name="pincode"
+                                                    (focusout)="getcalculatetotalqty(data,rowIndex)"
+                                                    placeholder="Enter 1st dispatch Qty"
+                                                    appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
+                                                
+                                            </td>
+                                                 <td class="width-2">
+                                                     <input type="text" [(ngModel)]="data.SECOND_DISPATCH_QTY" class="form-control"
+                                                    name="pincode"
+                                                    (focusout)="getcalculatetotalqty(data,rowIndex)"
+                                                    placeholder="Enter 2nd dispatch Qty" 
+                                                    appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
+                                              
+                                            </td>
+                                            <td class="width-2">
+                                                {{ data.TOTAL_QTY }}
+                                            </td>
+                                            <!-- <td class="width-2">{{ data.REQ_HQ_QTY }}</td> -->
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>

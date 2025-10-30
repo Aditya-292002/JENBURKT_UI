@@ -220,6 +220,13 @@ export class URLService {
   
     public getrefreshtokrn = this.sharedService.ApiUrl + '/api/Authetication/RefreshToken'
 
-  
-
+     public GETSUPERSTOCKISTDATABYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTDATABYPERIODID'
+     public GETSUPERSTOCKISTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTMASTERLIST'
+     public SAVESUPERSTOCKISTMASTERDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTMASTERDATA';
+     public GETGENERATEORDERMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETGENERATEORDERMASTERLIST';
+     public DivisionSalesReportExcelDownload = this.sharedService.ApiUrl + '/api/Reports/DivisionSalesReportExcelDownload';
+     public SAVESUPERSTOCKISTCYCLEDATA = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTCYCLEDATA';
+      public SAVEGENERATEORDER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVEGENERATEORDER';
+       public GETRADEDIFFREPORTBYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETRADEDIFFREPORTBYPERIODID';
+ 
 }
