@@ -23,7 +23,7 @@
     <app-loader *ngIf="isLoaded" ></app-loader>
     <div class="card">
       <p-table   [value]="CME_PAYMENT_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
-      [globalFilterFields]="['PAYMENT_DATE','CME_NO','PAY_AMOUNT','ACCOUNT_NUMBER']"
+      [globalFilterFields]="['PAYMENT_DATE','CME_NO','PAY_AMOUNT','ACCOUNT_NUMBER','BANK_IFSC','UTR_NO','TRANSACTION_REF_NO','TRANSACTION_STATUS','BENIFICIARY_NAME']"
      (onLazyLoad)="loadDataLazily($event)"  #dt1 >
         <ng-template pTemplate="caption">
           <div class="table-header text-right">
@@ -40,12 +40,15 @@
                 
                 </th>
                 <th pSortableColumn="CLAIM_DATE" class="width-12">PAYMENT DATE <p-sortIcon field="CLAIM_DATE"></p-sortIcon></th>
+                <th>BENEFICIARY NAME</th>
                 <th pSortableColumn="REQ_BY" class="width-12">PAY_AMOUNT <p-sortIcon field="CLAIM_DATE"></p-sortIcon></th>
                 <th pSortableColumn="HQ_CODE">ACCOUNT_NUMBER 
               
                 </th>
                 <!-- <th pSortableColumn="INVOICE_SALE_QTY">SM NAME </th> -->
                 <th pSortableColumn="INVOICE_SALE_QTY">BANK_IFSC </th>
+                <th>UTR NO</th>
+                <th>TRANSACTION REF NO</th>
                 <th pSortableColumn="INVOICE_SALE_QTY">TRANSACTION_STATUS </th>
               </tr>
           </ng-template>
@@ -54,10 +57,13 @@
      
                 <td  >{{ data.CME_NO }}</td>
                 <td  class="width-12">{{ data.PAYMENT_DATE | date:'dd-MM-yyyy' }}</td>
+                <td>{{ data.BENIFICIARY_NAME }}</td>
                 <td  >{{ data.PAY_AMOUNT | indianCurrency }}</td>
                 <td >{{ data.ACCOUNT_NUMBER  }}</td>
  
                 <td> {{ data.BANK_IFSC }} </td>
+                <td>{{ data.UTR_NO }}</td>
+                <td>{{ data.TRANSACTION_REF_NO }}</td>
                 <td>{{ data.TRANSACTION_STATUS }}</td>
               </tr>
           </ng-template>

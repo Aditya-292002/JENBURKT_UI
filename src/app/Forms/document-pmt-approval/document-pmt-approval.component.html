@@ -39,6 +39,21 @@
                             </div>
                         </div>
                     </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-3 pb-2">
+                        <div>
+                            <label>Document received at HO on</label>
+                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
+                                   <p-calendar [showIcon]="true" [(ngModel)]="RECEIVED_AT_HO" inputId="icon"
+                                    dateFormat="dd.mm.yy"></p-calendar>
+                                <!-- <p-dropdown appendTo="body" [options]="UNIT_LIST" appendTo="body" [filter]="true"
+                                    filterBy="UNIT_DESC" optionLabel="UNIT_DESC" optionValue="UNIT_CODE"
+                                    placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown> -->
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="col-sm-12 col-md-12 col-lg-3 pb-2">
                         <div>
                             <label>Documents submitted to Accounts on</label>
@@ -54,22 +69,6 @@
 
                         </div>
                     </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-3 pb-2">
-                        <div>
-                            <label>Document received at HO on</label>
-                            <div class="search-dropdown" [ngClass]="{'required-field':isHighLightUnit === 'Yes'}">
-                                   <p-calendar [showIcon]="true" [(ngModel)]="RECEIVED_AT_HO" inputId="icon"
-                                    dateFormat="dd.mm.yy"></p-calendar>
-                                <!-- <p-dropdown appendTo="body" [options]="UNIT_LIST" appendTo="body" [filter]="true"
-                                    filterBy="UNIT_DESC" optionLabel="UNIT_DESC" optionValue="UNIT_CODE"
-                                    placeholder="Please Select.." [(ngModel)]="UNIT_CODE"
-                                    [ngModelOptions]="{standalone:true}">
-                                </p-dropdown> -->
-                            </div>
-
-                        </div>
-                    </div>
-
                     <div class="col-sm-12 col-md-12 col-lg-3">
                         <!-- <div>
                             <div class="input-group mt-4">
