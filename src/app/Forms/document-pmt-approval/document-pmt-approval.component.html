@@ -79,11 +79,12 @@
                         <div class="mb-2">
                             <div>
                                 <label for="docs">Document Submitted by</label>
-                                <p-dropdown appendTo="body" [options]="USER_LIST" appendTo="body" [filter]="true"
+                                  <input type="text" class="form-control" [(ngModel)]="USER_NAME" placeholder="Please Select.." readonly/>
+                                <!-- <p-dropdown appendTo="body" [options]="USER_LIST" appendTo="body" [filter]="true"
                                     filterBy="USER_NAME" optionLabel="USER_NAME" optionValue="USER_ID"
                                     placeholder="Please Select.." [(ngModel)]="USER_NAME"
                                     [ngModelOptions]="{standalone:true}">
-                                </p-dropdown>
+                                </p-dropdown> -->
 
                             </div>
                         </div>
