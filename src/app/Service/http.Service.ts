@@ -7,6 +7,9 @@ import { AuthService } from './auth.service';
     providedIn: 'root'
 })
 export class HttpService {
+     
+     
+       
     
     constructor(private http: HttpClient,
         private AuthService : AuthService) {
@@ -136,14 +139,17 @@ export class HttpService {
     }
 
     postnew(uri: string, inputData: any, headers?: HttpHeaders) {
+         
         // if (!headers)
              headers = new HttpHeaders();
         // var token =   localStorage.getItem("TOKEN");
         // console.log(token,'token')
-        // headers = headers.set("Authorization", `Bearer ${token}`);
+        //headers = headers.set("Authorization", `Bearer ${token}`);
         // console.log('headers',headers);
         
         var token = localStorage.getItem("TOKEN");
+        console.log('Token:', token);
+        
 if (token) {
     headers = headers.set("Authorization", `Bearer ${token}`);
 } else {

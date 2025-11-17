@@ -323,7 +323,7 @@
                                 [ngClass]="Approvalcme == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/approvalcme">Download CME Request</a>
                             </li>
-                            <li class="nav-item" *ngIf="roleID == 5 || roleID == 1"
+                            <li class="nav-item" *ngIf="roleID == 5 || roleID == 1 || roleID == 4"
                                 (click)="isSelectedMenu('paymentcme')"
                                 [ngClass]="Paymentcme == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/paymentcme">Payment</a>

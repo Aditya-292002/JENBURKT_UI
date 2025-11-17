@@ -229,5 +229,6 @@ export class URLService {
       public SAVEGENERATEORDER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVEGENERATEORDER';
        public GETRADEDIFFREPORTBYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETRADEDIFFREPORTBYPERIODID';
        public GETTPAYMENTLISTBYUSERID = this.sharedService.ApiUrl + '/api/Cme/GETTPAYMENTLISTBYUSERID';
+         public SAVECHANGEPASSWORD = this.sharedService.ApiUrl + '/api/Authetication/ChangePassword';
  
 }
