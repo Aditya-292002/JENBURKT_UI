@@ -41,12 +41,15 @@ oldWEFHQList:any=[];
   isHighLightPoolHQ:string="No";
   isHighLightUnderFM:string="No";
   isHighLightWEF:string="No";
+  isHighLightDiv:string="No";
   MODE:any;
   isHighLightMR:string="No";
   isHighLightActive:string="No";
   isValidateDate:boolean=true;
   ValidateDateMessage:any;
   v_post_data:any={};
+  DIV_LIST: any=[];
+  divCode: any;
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private Common:CommonService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
@@ -154,6 +157,7 @@ oldWEFHQList:any=[];
         this.FMHQList = res.FMLIST;
         this.WEFHQList = res.periodlist;
         this.MRHQList = res.MRLIST;
+        this.DIV_LIST = res.DIV_LIST;
 
         this.poolHQList.forEach((value:any)=>{
           value.DisplayName = (value.POOL_CODE == '' ? '' : (value.POOL_CODE+ "-" +value.POOL_DESC));
@@ -171,6 +175,7 @@ oldWEFHQList:any=[];
     this.isHighLightHQDescription = "No";
     this.isHighLightPoolHQ = "No";
     this.isHighLightUnderFM = "No";
+    this.isHighLightDiv = "No";
     this.isHighLightWEF = "No";
     this.isHighLightMR = "No";
     this.isHighLightActive = "No";
@@ -207,6 +212,11 @@ oldWEFHQList:any=[];
         this.isHighLightUnderFM = "Yes";
       }else{
         this.isHighLightUnderFM = "No";
+      }
+            if(this.divCode =="" || this.divCode == undefined){
+        this.isHighLightDiv = "Yes";
+      }else{
+        this.isHighLightDiv = "No";
       }
       if(this.WEFCode =="" || this.WEFCode == undefined){
         this.isHighLightWEF = "Yes";
@@ -246,6 +256,7 @@ oldWEFHQList:any=[];
     "MR_CODE": this.Common.isValid(this.MRCode) ? this.MRCode : "",
     "FM_CODE":this.underFMCode,
     "WFM_CODE":this.WEFCode,
+    "DIV_CODE":this.divCode.DIVISION_CODE,
     "ACTIVE":(this.active == true ? "1": "0")
   }
     this.isLoaded = true;
