@@ -1,0 +1,62 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
+                    aria-hidden="true"></i>Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Schema Upload</li>
+    </ol>
+</nav>
+<!-- <div class="container-fluid"> -->
+<div class="col-md-12">
+    <div class="d-flex mb-2 justify-content-between ">
+        <div class="">
+
+            <h5 class="mb-0 headers">Schema Upload</h5>
+        </div>
+        <div>
+            <!-- <button (click)="exportAsXLSX()" class="btn btn-primary pr-2">
+                Template download
+            </button> -->
+            <!-- <i class="fa fa-file-excel-o" style="font-size:24px;color:blue" (click)="exportAsXLSX()"></i> -->
+        </div>
+        <!-- <div class="buttonBox ml-auto">
+                <button type="submit" class="btn-primary  saveButton mr-2">Save</button>
+                <button type="submit" class="btn-primary  cancelButton">Cancel</button>
+            </div> -->
+    </div>
+</div>
+<div class="container-fluid ">
+    <app-loader *ngIf="isLoaded"></app-loader>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6 col-lg-4 ">
+                        <h6 class="pl-2">File Name </h6>
+                        <input type="text" [(ngModel)]="FileName"
+                                                    class="form-control" 
+                                                    disabled
+                                                    placeholder="please upload excel"
+                                                >
+                        <!-- <p *ngIf="this.FileName!=null">{{this.FileName}}</p> -->
+                    </div>
+                    <div class="col-sm-6     col-md-6 col-lg-4">
+                        <div class="buttonBox mt-4 d-flex flex-row">
+                            <div class="pr-2">
+                                <button (click)="fileInput.click()" class="btn btn-primary pr-2">
+                                    Upload Excel
+                                </button>
+                                <input type="file" #fileInput accept=".xlsx, .xls" style="display: none"
+                                    (change)="onFileSelected($event)" />
+                            </div>
+                            <button type="submit" class="btn-primary  saveButton mr-2"
+                                (click)="saveSchema()">Save</button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="hrStyle">
+            </div>
+        </div>
+</div>

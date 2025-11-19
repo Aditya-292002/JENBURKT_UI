@@ -116,6 +116,7 @@ import { SuperStockishMasterComponent } from './Forms/super-stockish-master/supe
 import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
 import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
+import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 
 registerLocaleData(localeIn);
 
@@ -208,7 +209,8 @@ registerLocaleData(localeIn);
     SuperStockishMasterComponent,
     CycleSuperstockistComponent,
     TradeOfferDiffReportComponent,
-    CmePaymentReportComponent
+    CmePaymentReportComponent,
+    SchemaUploadComponent
   ],
   imports: [
     BrowserModule,

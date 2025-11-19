@@ -105,17 +105,19 @@ export class ProductComponent implements OnInit {
     this.ProductName = data.PRODUCT_DESC;
     this.moeRate=data.MOE_RATE;
     this.brandCode = {"BRAND_CODE":data.BRAND_CODE,"BRAND_NAME":data.BRAND_NAME};
-    this.divCode = {"DIVISION_CODE":data.DIVISION_CODE,"DIVISION_NAME":data.DIVISION_NAME};
+    this.divCode = {"DIVISION_CODE":data.DIVISION_CODE,"DIV_DESC":data.DIVISION_NAME};
     this.groupCode = {"GROUP_CODE":data.GROUP_CODE,"GROUP_DESC":data.GROUP_DESC};
-   // this.wefCode = {"PERIOD_":data.WFM_CODE,"PERIOD_DESC":data.PERIOD_DESC};
-    this.ProductMasterList.forEach((element:any) => {
-      if(+element.WFM_CODE == +data.WFM_CODE){
-        this.wefCode=element.WFM_CODE
-       // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
+    this.wefCode = {"PERIOD_NO":data.PERIOD_NO,"PERIOD_DESC":data.WFM_CODE};
+    console.log(' this.wefCode', this.wefCode);
+    
+    // this.ProductMasterList.forEach((element:any) => {
+    //   if(+element.WFM_CODE == +data.WFM_CODE){
+    //     this.wefCode=element.WFM_CODE
+    //    // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
 
-        console.log( this.wefCode,"code")
-      }
-    });
+    //     console.log( this.wefCode,"code")
+    //   }
+    // });
    // this.wefCode=data.WFM_CODE
     console.log('wefCode',this.wefCode)
     console.log("product edit data:-",data);
