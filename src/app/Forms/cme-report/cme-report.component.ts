@@ -191,13 +191,13 @@ userInfo: any;
 
 
   GetMasterData(){
-  
+   this.userInfo = this.authService.getUserDetail();
    
     let data={
-      
+      "USER_ID": JSON.parse(this.userInfo).USER_ID,
+      "ROLE_ID": JSON.parse(this.userInfo).ROLE_ID,
+      "SALES_ROLE_ID": JSON.parse(this.userInfo).SALESROLE_ID,
     }
-
-  
 
     this.http.postnew(this.url.GETMASTERLISTFORCMEREPORT,data).then(
       (res:any)=>{

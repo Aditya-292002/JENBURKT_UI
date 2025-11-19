@@ -341,7 +341,7 @@
                                 [ngClass]="IsPaymentReport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/paymentreport">CME Payment Report</a>
                             </li>
-                             <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
+                             <li class="nav-item" *ngIf="roleID == 1 || roleID == 4|| salesRoleId == 3||salesRoleId == 4 || salesRoleId == 5"
                                 (click)="isSelectedMenu('cmereport')"
                                 [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
