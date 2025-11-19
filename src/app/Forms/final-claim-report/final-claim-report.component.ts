@@ -77,6 +77,14 @@ export class FinalClaimReportComponent implements OnInit {
   }
 
   onViewReport(){
+    if(this.superStockist == undefined || this.superStockist == ''){
+      this.toastrService.error("Please select Super Stockist")
+      return;
+    }
+    if(this.FM == undefined || this.FM == ''){
+      this.toastrService.error("Please select FM")
+      return;
+    }
 
     this.userInfo = this.authService.getUserDetail();
     let fromDate = this.datepipe.transform(this.fromDate, "yyyy-MM-dd");
