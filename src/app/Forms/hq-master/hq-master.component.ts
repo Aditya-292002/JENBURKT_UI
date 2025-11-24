@@ -8,6 +8,7 @@ import { URLService } from 'src/app/Service/url.service';
 import * as FileSaver from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { CommonService } from 'src/app/Service/common.service';
+
 @Component({
   selector: 'app-hq-master',
   templateUrl: './hq-master.component.html',
@@ -50,6 +51,7 @@ oldWEFHQList:any=[];
   v_post_data:any={};
   DIV_LIST: any=[];
   divCode: any;
+  disableDropdown: boolean=false;
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private Common:CommonService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
@@ -85,30 +87,35 @@ oldWEFHQList:any=[];
       "HQ_CODE":this.HQCode
     }
     this.isLoaded = true;
+    this.disableDropdown = false;
     this.http.postnew(this.url.GETHQWEFLIST, data).then(
       (res:any)=>{
+       // this.oldWEFHQList=[];
+        //this.oldWEFCode = PERIOD_ID;
         this.isLoaded= false;
         this.oldWEFHQList = res.periodlist;
-
-        this.WEFHQList.forEach((element:any) => {
+setTimeout(() => {
+         res?.periodlist.forEach((element:any) => {
           if(+element.PERIOD_ID == +PERIOD_ID){
-            this.WEFCode = element.PERIOD_ID
-           // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
-
-            console.log( this.WEFCode,"code")
-          }
-        });
-
-
-        this.oldWEFHQList.forEach((element:any) => {
-          if(+element.PERIOD_ID == +PERIOD_ID){
-            this.oldWEFCode = element.PERIOD_ID
+              this.oldWEFCode = Number(element.PERIOD_ID);
+            console.log('oldWEFCode', this.oldWEFCode,element);
+            
            // this.oldWEFCode  = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC,"FROM_DATE":element.FROM_DATE};
            // this.oldperiodId = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC,"FROM_DATE":element.FROM_DATE};
           }
 
         });
+        this.WEFHQList.forEach((element:any) => {
+          if(+element.PERIOD_ID == +PERIOD_ID){
+            // this.WEFCode = element.PERIOD_ID
+              this.WEFCode    = Number(element.PERIOD_ID);
+           // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
+            console.log( this.WEFCode,"code")
+          }
+        });
+}, 1000);
 
+      this.disableDropdown = true; 
       },
       error =>{
         console.log(error);
@@ -116,6 +123,8 @@ oldWEFHQList:any=[];
         // this.isLoaded = false;
       }
     );
+    console.log('oldWEFCode',this.oldWEFCode);
+    
   }
   onEditListClick(){
     this.isHQPopUp = true;
@@ -130,6 +139,8 @@ oldWEFHQList:any=[];
     this.isShowdropdown=false
   }
   onHQSelected(data:any){
+    console.log('datat',data);
+    this.WEFCode=""
     this.HQCode = data.HQ_CODE;
     this.HQDescription = data.HQ_DESC;
     this.active=data.ACTIVE;
@@ -138,7 +149,7 @@ oldWEFHQList:any=[];
     // this.underFMCode = {"FM_CODE":data.FM_CODE,"FM_NAME":data.FM_NAME};
     this.poolHQCode=data.POOL_CODE;
     this.underFMCode=data.FM_CODE
-
+    this.divCode=data.DIVISION_CODE//{"DIVISION_CODE":data.DIVISION_CODE,"DIV_DESC":data.DIVISION_NAME};
     this.MRCode = {"MR_CODE":data.MR_CODE,"MR_NAME":data.MR_NAME};
     this.HQMasterMode = "Edit HQ Master";
     this.isAddHQMaster = true;
@@ -446,6 +457,8 @@ oldWEFHQList:any=[];
     console.log('poolHQCode',this.poolHQCode)
     console.log('underFMCode',this.underFMCode)
     console.log('WEFCode',this.WEFCode)
-    console.log('oldWEFCode',this.underFMCode)
+    console.log('oldWEFCode',this.oldWEFCode)
+    // console.log();
+
   }
 }

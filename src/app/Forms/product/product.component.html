@@ -45,7 +45,7 @@
                           <div class="mb-2">
                               <label>Group Code</label>
                               <div class="search-dropdown" [ngClass]="{'required-field':isHighLightGroupCode === 'Yes'}">
-                                  <p-dropdown class="" [options]="GROUPCODE_LIST" [(ngModel)]="groupCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="GROUP_DESC" [filter]="true" filterBy="GROUP_DESC" placeholder="Please Select...">
+                                  <p-dropdown class="" [options]="GROUPCODE_LIST" [(ngModel)]="groupCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="GROUP_DESC" optionValue="GROUP_CODE" [filter]="true" filterBy="GROUP_DESC" placeholder="Please Select...">
                                   </p-dropdown>
                               </div>
                           </div>
@@ -56,7 +56,7 @@
                             <div class="mb-2">
                                 <label>Div</label>
                                 <div class="search-dropdown" [ngClass]="{'required-field':isHighLightDiv=== 'Yes'}">
-                                    <p-dropdown class="" [options]="DIV_LIST" [(ngModel)]="divCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="DIV_DESC" [filter]="true" filterBy="DIV_DESC" placeholder="Please Select...">
+                                    <p-dropdown class="" [options]="DIV_LIST" [(ngModel)]="divCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="DIV_DESC" [filter]="true" optionValue="DIVISION_CODE" filterBy="DIV_DESC" placeholder="Please Select...">
                                     </p-dropdown>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                             <div class="mb-2">
                                 <label>Brand </label>
                                 <div class="search-dropdown" [ngClass]="{'required-field':isHighLightBrand=== 'Yes'}">
-                                    <p-dropdown [options]="BRAND_LIST" [(ngModel)]="brandCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="BRAND_CODE_DESC" [filter]="true" filterBy="BRAND_CODE_DESC"
+                                    <p-dropdown [options]="BRAND_LIST" [(ngModel)]="brandCode" [ngModelOptions]="{standalone: true}" appendTo="body" optionLabel="BRAND_CODE_DESC" [filter]="true" optionValue="BRAND_CODE" filterBy="BRAND_CODE_DESC"
                                     placeholder="Please Select...">
                                     </p-dropdown>
                                 </div>

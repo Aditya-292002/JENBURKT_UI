@@ -83,3 +83,28 @@
   .width-11{
     width: 100px !important;
   }
+  /* added by hemant 24-nov-2025 */
+  /* Prevent table rows from splitting across pages */
+.no-split tr,
+.no-split td,
+.no-split th {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+/* Also prevent divs inside rows from breaking */
+.no-split .no-break {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+/* Make table more PDF-friendly */
+.no-split table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#pdfContainer {
+  width: 100% !important;
+  max-width: 100% !important;
+  background: white;
+}
