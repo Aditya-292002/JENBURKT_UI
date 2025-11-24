@@ -1,4 +1,5 @@
 
+<app-loader *ngIf="isLoaded"></app-loader>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="fa fa-home mr-2"
@@ -16,7 +17,7 @@
     </div>
   </div>
   
-  <div class="container-fluid">
+  <div class="container-fluid" >
   <div class="card">
     <div class="card-body">
       <div class="">
@@ -76,6 +77,8 @@
                   </button>
                  <button *ngIf="userDetails.ROLE_ID == 1 || userDetails.ROLE_ID == 4" type="submit" class="btn-primary formButton mr-2 " (click)="exportExcel()"><i class="fa fa-upload mr-2"
                           aria-hidden="true"></i>Export</button> 
+                                     <button *ngIf="userDetails.ROLE_ID != 1 && userDetails.ROLE_ID != 4" type="submit" class="btn-primary formButton mr-2 " (click)="printReport1('print-new')"><i class="fa fa-upload mr-2"
+                          aria-hidden="true"></i>Export As Pdf</button>     
                   <button type="submit" class="btn-primary formButton" (click)="printReport('print-new')"><i class="fa fa-upload mr-2"
                             aria-hidden="true"></i>Print</button>
               </div>
@@ -108,7 +111,7 @@
  
 <div class="container-fluid print-horizontal" id="print-new" [hidden]="true">
     <div class="bg-white ">
-        <table class="table">
+        <table class="table no-split">
             <tbody>
                 <tr>
                     <td  style="vertical-align: bottom;text-align: center; " colspan="17">

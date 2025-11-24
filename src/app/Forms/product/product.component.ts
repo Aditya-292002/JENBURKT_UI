@@ -122,10 +122,10 @@ export class ProductComponent implements OnInit {
 
     console.log(this.MASTER_WEF_LIST.length,'BEFORE LOOP',oneMonthAgo);
     
-for (let index = 0; index < this.MASTER_WEF_LIST.length; index++) {
+   for (let index = 0; index < this.MASTER_WEF_LIST.length; index++) {
     const item = this.MASTER_WEF_LIST[index];
 
-    const exists = this.WEF_LIST.some(x => x.PERIOD_NO === item.PERIOD_NO);
+    const exists = this.WEF_LIST.some(x => x.PERIOD_ID === item.PERIOD_NO);
 
     if (!exists) {
         if (new Date(item.TO_DATE) > oneMonthAgo) {
