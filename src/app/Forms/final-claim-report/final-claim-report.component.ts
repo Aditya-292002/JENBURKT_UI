@@ -181,101 +181,121 @@ splitIntoPages(data: any[], rowsPerPage: number) {
   }
   return pages;
 }
+
 async printReport1(divName: string) {
-  this.isLoaded= true;
+
+  this.isLoaded = true;
+
   if (!this.REPORT_DATA || this.REPORT_DATA.length === 0) {
-      this.isLoaded= false;
+    this.isLoaded = false;
     this.toastrService.error('No Records Found');
     return;
   }
 
   const element = document.getElementById(divName);
   if (!element) {
-    this.isLoaded= false;
+    this.isLoaded = false;
     return;
   }
 
-  element.hidden = false;
-  element.style.display = 'block';
+  // ---------------------------------------------------
+  // FIX 1 — Force stable desktop layout (even in mobile mode)
+  // ---------------------------------------------------
+  const originalWidth = element.style.width;
+  element.style.width = "1400px";       // Force desktop width
 
-  const pdf = new jsPDF({
-    unit: 'mm',
-    format: 'a4',
-    orientation: 'landscape',
+  // FIXED: TypeScript-safe zoom
+  document.documentElement.style.setProperty("zoom", "1");
+  document.body.style.setProperty("zoom", "1");
+
+  // ---------------------------------------------------
+  // FIX 2 — Fix devicePixelRatio issues in mobile emulation
+  // ---------------------------------------------------
+  const originalDPR = window.devicePixelRatio;
+  Object.defineProperty(window, "devicePixelRatio", {
+    get: () => 1
   });
 
-  // Wait for DOM render
+  element.hidden = false;
+  element.style.display = "block";
+
+  // Wait DOM refresh
   this.cdr.detectChanges();
   await new Promise(res => setTimeout(res, 200));
 
+  // ---------------------------------------------------
+  // FIX 3 — Force html2canvas to capture at desktop width
+  // ---------------------------------------------------
   const fullCanvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
+    windowWidth: 1400,
+    windowHeight: element.scrollHeight,
+  });
+
+  // Restore DPR
+  Object.defineProperty(window, "devicePixelRatio", {
+    get: () => originalDPR
+  });
+
+  // ---------------------------------------------------
+  // PDF GENERATION
+  // ---------------------------------------------------
+  const pdf = new jsPDF({
+    unit: "mm",
+    format: "a4",
+    orientation: "landscape",
   });
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-  // Margins
   const topMargin = 10;
   const bottomMargin = 10;
   const sideMargin = 10;
 
-  // Usable PDF area (inside margins)
   const usableWidth = pageWidth - sideMargin * 2;
   const usableHeight = pageHeight - topMargin - bottomMargin;
 
-  // Canvas size
   const canvasWidth = fullCanvas.width;
   const canvasHeight = fullCanvas.height;
 
-  // Ratio for mm ↔ px conversion
   const ratio = canvasWidth / usableWidth;
-
-  // Height of one PDF page slice in px
   const viewportHeightPx = usableHeight * ratio;
 
   let currentY = 0;
 
   while (currentY < canvasHeight) {
 
-    // Remaining px in source canvas
     const remainingPx = canvasHeight - currentY;
-
-    // The slice’s height must NOT exceed the remaining px (fixes black area)
     const sliceHeightPx = Math.min(viewportHeightPx, remainingPx);
 
-    // Prepare slice canvas
     const sliceCanvas = document.createElement("canvas");
     sliceCanvas.width = canvasWidth;
     sliceCanvas.height = sliceHeightPx;
 
     const sliceCtx = sliceCanvas.getContext("2d");
-
-    // Draw only the valid remaining part
     sliceCtx.drawImage(
       fullCanvas,
-      0,              // source x
-      currentY,       // source y
-      canvasWidth,    
-      sliceHeightPx,  // source height
-      0,              // destination x
-      0,              // destination y
-      canvasWidth,    
+      0,
+      currentY,
+      canvasWidth,
+      sliceHeightPx,
+      0,
+      0,
+      canvasWidth,
       sliceHeightPx
     );
 
     const imgData = sliceCanvas.toDataURL("image/jpeg", 1);
-
-    // Convert slice height to mm
     const sliceHeightMM = sliceHeightPx / ratio;
 
     pdf.addImage(
       imgData,
       "JPEG",
-      sideMargin,      // Left margin
-      topMargin,       // Top margin
+      sideMargin,
+      topMargin,
       usableWidth,
       sliceHeightMM
     );
@@ -287,9 +307,122 @@ async printReport1(divName: string) {
 
   pdf.save("Final_Claim_Report.pdf");
 
+  // Restore original styles
+  element.style.width = originalWidth;
   element.hidden = true;
-  this.isLoaded= false;
+
+  this.isLoaded = false;
 }
+
+// async printReport1(divName: string) {
+//   this.isLoaded= true;
+//   if (!this.REPORT_DATA || this.REPORT_DATA.length === 0) {
+//       this.isLoaded= false;
+//     this.toastrService.error('No Records Found');
+//     return;
+//   }
+
+//   const element = document.getElementById(divName);
+//   if (!element) {
+//     this.isLoaded= false;
+//     return;
+//   }
+
+//   element.hidden = false;
+//   element.style.display = 'block';
+
+//   const pdf = new jsPDF({
+//     unit: 'mm',
+//     format: 'a4',
+//     orientation: 'landscape',
+//   });
+
+//   // Wait for DOM render
+//   this.cdr.detectChanges();
+//   await new Promise(res => setTimeout(res, 200));
+
+//   const fullCanvas = await html2canvas(element, {
+//     scale: 2,
+//     useCORS: true,
+//     backgroundColor: '#ffffff',
+//   });
+
+//   const pageWidth = pdf.internal.pageSize.getWidth();
+//   const pageHeight = pdf.internal.pageSize.getHeight();
+
+//   // Margins
+//   const topMargin = 10;
+//   const bottomMargin = 10;
+//   const sideMargin = 10;
+
+//   // Usable PDF area (inside margins)
+//   const usableWidth = pageWidth - sideMargin * 2;
+//   const usableHeight = pageHeight - topMargin - bottomMargin;
+
+//   // Canvas size
+//   const canvasWidth = fullCanvas.width;
+//   const canvasHeight = fullCanvas.height;
+
+//   // Ratio for mm ↔ px conversion
+//   const ratio = canvasWidth / usableWidth;
+
+//   // Height of one PDF page slice in px
+//   const viewportHeightPx = usableHeight * ratio;
+
+//   let currentY = 0;
+
+//   while (currentY < canvasHeight) {
+
+//     // Remaining px in source canvas
+//     const remainingPx = canvasHeight - currentY;
+
+//     // The slice’s height must NOT exceed the remaining px (fixes black area)
+//     const sliceHeightPx = Math.min(viewportHeightPx, remainingPx);
+
+//     // Prepare slice canvas
+//     const sliceCanvas = document.createElement("canvas");
+//     sliceCanvas.width = canvasWidth;
+//     sliceCanvas.height = sliceHeightPx;
+
+//     const sliceCtx = sliceCanvas.getContext("2d");
+
+//     // Draw only the valid remaining part
+//     sliceCtx.drawImage(
+//       fullCanvas,
+//       0,              // source x
+//       currentY,       // source y
+//       canvasWidth,    
+//       sliceHeightPx,  // source height
+//       0,              // destination x
+//       0,              // destination y
+//       canvasWidth,    
+//       sliceHeightPx
+//     );
+
+//     const imgData = sliceCanvas.toDataURL("image/jpeg", 1);
+
+//     // Convert slice height to mm
+//     const sliceHeightMM = sliceHeightPx / ratio;
+
+//     pdf.addImage(
+//       imgData,
+//       "JPEG",
+//       sideMargin,      // Left margin
+//       topMargin,       // Top margin
+//       usableWidth,
+//       sliceHeightMM
+//     );
+
+//     currentY += sliceHeightPx;
+
+//     if (currentY < canvasHeight) pdf.addPage();
+//   }
+
+//   pdf.save("Final_Claim_Report.pdf");
+
+//   element.hidden = true;
+//   this.isLoaded= false;
+// }
 
 
 
