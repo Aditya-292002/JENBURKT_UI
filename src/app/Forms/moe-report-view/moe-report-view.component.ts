@@ -103,8 +103,7 @@ export class MoeReportViewComponent implements OnInit {
     this.isLoaded=true;
         this.http.postnew(this.url.ConvertPdfToBase64, data).then(
       (res:any)=>{
-        if(res.flag==true){
-
+        // if(res.flag==true){
           this.isLoaded=false;
          this.pdfSrcflag=true;
           this.AREA_CODE=''         
@@ -118,11 +117,11 @@ export class MoeReportViewComponent implements OnInit {
            //link.click();
            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfSrc);
          //  this.toastrService.success(res.Message);
-        }
-        else if(res.flag==false){
+        // }
+        // else if(res.flag==false){
             this.isLoaded=false;
-            this.toastrService.error(res.Message);
-        }
+            // this.toastrService.error(res.Message);
+        // }
        // console.log('RES',res);
       },
       error =>{
