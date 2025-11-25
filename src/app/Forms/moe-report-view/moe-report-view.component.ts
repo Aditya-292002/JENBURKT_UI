@@ -127,7 +127,7 @@ export class MoeReportViewComponent implements OnInit {
       error =>{
          this.isLoaded=false;
         //console.log(error);
-        this.toastrService.error("Oops, Something went wrong.");
+        this.toastrService.error("File Not Found!");
       }
     );
   }
