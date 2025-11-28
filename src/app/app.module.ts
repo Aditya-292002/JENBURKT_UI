@@ -115,6 +115,8 @@ import { GenerateOrderComponent } from './Forms/generate-order/generate-order.co
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
 import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
 import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
+import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
+import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 
 registerLocaleData(localeIn);
 
@@ -206,8 +208,9 @@ registerLocaleData(localeIn);
     GenerateOrderComponent,
     SuperStockishMasterComponent,
     CycleSuperstockistComponent,
-    TradeOfferDiffReportComponent
-    
+    TradeOfferDiffReportComponent,
+    CmePaymentReportComponent,
+    SchemaUploadComponent
   ],
   imports: [
     BrowserModule,

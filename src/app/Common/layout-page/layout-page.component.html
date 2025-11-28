@@ -63,7 +63,9 @@
                                 [ngClass]="customMenuSuper_stockist == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/superstockistmaster">Super Stockist Master</a>
                             </li>
-
+                              <!-- <li class="nav-item" *ngIf="roleID == 1" (click)="isSelectedMenu('SchemaUpload')"
+                                [ngClass]="customMenuSchemaUpload == true ? 'isSelectedMenu' : ''"><a class="nav-link py-0"
+                                    routerLink="/schemaupload">Scheme Upload</a></li> -->
                             <!-- <li>
                                 <a class="nav-link  px-2" routerLink="/superstockistmaster">Super Stockist Master</a>
                             </li> -->
@@ -288,15 +290,18 @@
                                 [ngClass]="IsMoeTargetReport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/moetargetreport">MOE Target Report</a>
                             </li>
-                            <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
+                            <!-- <li class="nav-item" *ngIf="roleID == 1 || roleID == 4"
                                 (click)="isSelectedMenu('cmereport')"
                                 [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item" (click)="isSelectedMenu('MoeVieweport')"
                                 [ngClass]="IsMoeVieweport == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/viewmoereport">View MOE Report</a>
                             </li>
+                            <li class="nav-item" *ngIf="roleID == 1 || roleID == 4" (click)="isSelectedMenu('Trade_Offer_Diff_Report')"
+                                [ngClass]="customMenuTrade_Offer_Diff_Report == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/tradeofferdiffreport">Trade Offer Diff Report</a></li>
 
                         </ul>
                     </div>
@@ -307,7 +312,7 @@
                             class="fa fa-file mr-2"></i>CME</a>
                     <div class="collapse" id="cmesubmenu">
                         <ul class="flex-column sub-sidebar-nav nav">
-                            <li class="nav-item"
+                            <li class="nav-item"    
                                 *ngIf="roleID == 1 || salesRoleId == 3 || salesRoleId == 4 || salesRoleId == 6|| salesRoleId == 7"
                                 (click)="isSelectedMenu('requestcme')"
                                 [ngClass]="Requestcme == true ? 'isSelectedMenu' : ''">
@@ -323,7 +328,7 @@
                                 [ngClass]="Approvalcme == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/approvalcme">Download CME Request</a>
                             </li>
-                            <li class="nav-item" *ngIf="roleID == 5 || roleID == 1"
+                            <li class="nav-item" *ngIf="roleID == 5 || roleID == 1 || roleID == 4"
                                 (click)="isSelectedMenu('paymentcme')"
                                 [ngClass]="Paymentcme == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/paymentcme">Payment</a>
@@ -336,6 +341,15 @@
                             <li class="nav-item" *ngIf="roleID == 4" (click)="isSelectedMenu('Document_PMT_Approval')"
                                 [ngClass]="customMenuSample_Document_PMT_Approval == true ? 'isSelectedMenu' : ''">
                                 <a class="nav-link py-0" routerLink="/documentapproval">Document PMT Approval</a>
+                            </li>
+                             <li class="nav-item" (click)="isSelectedMenu('PaymentReport')"
+                                [ngClass]="IsPaymentReport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/paymentreport">CME Payment Report</a>
+                            </li>
+                             <li class="nav-item" *ngIf="roleID == 1 || roleID == 4|| salesRoleId == 3||salesRoleId == 4 || salesRoleId == 5"
+                                (click)="isSelectedMenu('cmereport')"
+                                [ngClass]="Iscmereport == true ? 'isSelectedMenu' : ''">
+                                <a class="nav-link py-0" routerLink="/cmereport">CME Report</a>
                             </li>
                             <!-- <li class="nav-item" *ngIf="roleID == 4"
                                 (click)="isSelectedMenu(Document_PMT_Approval')"

@@ -67,6 +67,7 @@ export class LayoutPageComponent implements OnInit {
   IsMoeTargetReport: boolean
   Iscmereport: boolean;
   IsMoeVieweport:boolean;
+  IsPaymentReport:boolean;
   customMenuSample_Requisition: boolean;
   customMenuSample_Requisition_Approval: boolean;
   customMenuPMT_Sample_Requisition_Approval: boolean;
@@ -83,6 +84,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuGenerate_Order: boolean;
   customMenuCycle_Super_Stockist: boolean;
   customMenuTrade_Offer_Diff_Report: boolean;
+  customMenuSchemaUpload:boolean;
   
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
@@ -259,9 +261,11 @@ export class LayoutPageComponent implements OnInit {
     this.IsMoeTargetReport = false;
     this.Iscmereport = false;
     this.IsMoeVieweport=false;
+    this.IsPaymentReport=false;
     this.customMenuGenerate_Order=false
     this.customMenuCycle_Super_Stockist=false
     this.customMenuTrade_Offer_Diff_Report=false
+    this.customMenuSchemaUpload=false
        if (data == 'Area') {
       this.customMenuArea = true;
     } else if (data == 'HQ') {
@@ -293,6 +297,9 @@ export class LayoutPageComponent implements OnInit {
     } 
     else if (data == 'SUPER_STOCKIST_MASTER') {
       this.customMenuSuper_stockist = true;
+    }
+        else if (data == 'SchemaUpload') {
+      this.customMenuSchemaUpload = true;
     }
     else if(data=='Cycle_Super_Stockist'){
       this.customMenuCycle_Super_Stockist = true;
@@ -371,6 +378,9 @@ export class LayoutPageComponent implements OnInit {
       this.Iscmereport = true;
     }else if(data=='MoeVieweport'){
       this.IsMoeVieweport=true;
+    }
+    else if(data=='PaymentReport'){
+      this.IsPaymentReport=true;
     }
     else if (data == 'UpdateClaim') {
       $("#wrapper").toggleClass("toggled");

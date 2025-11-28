@@ -137,9 +137,11 @@
   <div class="progress-section">
     <h3>Target Achievement Progress</h3>
     <div class="progress-bar">
+  <p class="progress-text">{{ getProgressPercentage().toFixed(1) }}% of target achieved</p>
       <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+    
     </div>
-    <p class="progress-text">{{ getProgressPercentage().toFixed(1) }}% of target achieved</p>
+   
   </div>
 
   <!-- Charts Container -->

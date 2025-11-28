@@ -19,11 +19,18 @@ export class DocumentPmtApprovalComponent implements OnInit {
   CME_CODE:any;
   SUBMITTED_ON=new Date();
   USER_NAME:any;
+  RECEIVED_AT_HO:Date=new Date();
+  isShowEditPopup: boolean=false;
+  isShowdropdown: boolean=false;
+  enabler: boolean = true;
    constructor(private authService: AuthService, private url: URLService, private http: HttpService, private toastrService: ToastrService,) { }
  
   ngOnInit(): void {
      this.userInfo = this.authService.getUserDetail();
+     this.USER_NAME = JSON.parse(this.userInfo).USER_NAME;
       this.getDocumentMasterList();
+      // console.log('test ', this.userInfo);
+      
   }
    getDocumentMasterList(){
    this.userInfo = this.authService.getUserDetail();
@@ -50,10 +57,11 @@ export class DocumentPmtApprovalComponent implements OnInit {
   let data={
     "CME_NO":this.CME_CODE,
     "DOC_SUBMITTED_ON":this.SUBMITTED_ON,
-    "USER_ID":this.USER_NAME
+    "USER_ID": JSON.parse(this.userInfo).USER_ID,
+    "DOC_RECEIVED_AT_HO":this.RECEIVED_AT_HO
   }
-
-  console.log('USER_ID',data);
+  //console.log('USER_ID',data);
+  
    this.isLoaded = true;
     this.http.postnew(this.url.SAVEDOCUMENTAPPROVAL, data).then(
       (res: any) => { 
@@ -74,4 +82,30 @@ export class DocumentPmtApprovalComponent implements OnInit {
     );
  }
 
+   onEditListClick() {
+    this.isShowEditPopup = true;
+    this.isShowdropdown = true;
+  }
+    onAreaSelected(rowData: any) {
+    console.log(rowData, 'rowData');
+    this.CME_CODE = rowData.CME_NO;
+    // this.CHEMIST_NAME = rowData.CHEMIST_NAME;
+    // this.HQ_CODE = rowData.HQ_CODE;
+    this.isShowEditPopup = false;
+    this.isShowdropdown = false;
+   // this.isDisabled = true;
+  }
+    OnCancelClick() {
+    this.isShowEditPopup = false;
+    this.isShowdropdown = false;
+
+    this.Enabler();
+  }
+  Enabler() {
+    this.enabler = true;
+    console.log(this.enabler, 'Enabler');
+  }
+    ClosePopUp() {
+    this.isShowEditPopup = false;
+  }
 }

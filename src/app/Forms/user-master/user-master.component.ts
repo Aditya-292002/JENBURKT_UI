@@ -47,12 +47,14 @@ export class UserMasterComponent implements OnInit {
   isHighLightSalesRole:string="No";
   isHighLightHQArea:string="No";
   isHighLightWEF:string="No";
-  DATE_OF_JOINING:any
+  DATE_OF_JOINING:any;
+  ISDISSABLED:boolean=false;
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.userMasterMode = "Add User Master";
+    this.ISDISSABLED=false;
     this.GetUserList();
     this.GetUserMasterList();
   }
@@ -75,7 +77,12 @@ export class UserMasterComponent implements OnInit {
   }
   ClosePopUp(){
     this.isUserPopUp = false;
-    this.isAddUserMaster = false;
+    if(this.userMasterMode == "Add User Master"){
+          this.isAddUserMaster = false;
+    }else{
+     this.isAddUserMaster = true;
+    }
+  
   }
   GetUserMasterList() {
     this.userInfo = this.AuthService.getUserDetail();
@@ -179,6 +186,8 @@ export class UserMasterComponent implements OnInit {
     this.userMasterMode = "Edit User Master";
     this.isUserPopUp=false;
     this.isValidSalesRoleId =true;
+    this.ISDISSABLED=true;
+    this.isAddUserMaster = true;
   }
 
   OnSaveUserMasterClick(){

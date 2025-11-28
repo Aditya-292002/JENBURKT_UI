@@ -83,6 +83,8 @@ import { GenerateOrderComponent } from './Forms/generate-order/generate-order.co
 import { SuperStockishMasterComponent } from './Forms/super-stockish-master/super-stockish-master.component';
 import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-superstockist.component';
 import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
+import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
+import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -170,7 +172,9 @@ const routes: Routes = [
        { path: 'generateorder', component: GenerateOrderComponent },
       {path:'superstockistmaster',component:SuperStockishMasterComponent},
       {path:'cyclesuperstockist',component:CycleSuperstockistComponent},
-      {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent}
+      {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent},
+      {path:'paymentreport',component:CmePaymentReportComponent},
+       {path:'schemaupload',component:SchemaUploadComponent}
     ]
   },
 ];

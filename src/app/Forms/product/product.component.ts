@@ -42,6 +42,7 @@ export class ProductComponent implements OnInit {
   //added by hemant 02 sep 2025
   Shipper:any
   v_save_data:any={};
+  MASTER_WEF_LIST: any;
   constructor(private router: Router,private SharedService: SharedService,private AuthService: AuthService,
     private ToastrService: ToastrService,private url: URLService,private http: HttpService, public datepipe: DatePipe) { }
 
@@ -80,7 +81,19 @@ export class ProductComponent implements OnInit {
         this.BRAND_LIST = res.BRANDLIST;
         this.DIV_LIST = res.DIVLIST;
         this.GROUPCODE_LIST = res.GROUPCODELIST;
-        this.WEF_LIST=res.periodlist
+        this.MASTER_WEF_LIST=res.periodlist
+
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    console.log(this.MASTER_WEF_LIST.length,'BEFORE LOOP',oneMonthAgo);
+    
+      for (let index = 0; index < this.MASTER_WEF_LIST.length; index++) {
+        if (new Date(this.MASTER_WEF_LIST[index].TO_DATE) > oneMonthAgo) {
+            this.WEF_LIST.push(this.MASTER_WEF_LIST[index]);
+        }
+        
+      }
       },
       error =>{
         console.log(error);
@@ -101,26 +114,60 @@ export class ProductComponent implements OnInit {
     this.isAddProductMaster = false;
   }
   onProductSelected(data:any){
+   // this.WEF_LIST=[]
+    const today = new Date();
+    const oneMonthAgo = new Date();
+
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    console.log(this.MASTER_WEF_LIST.length,'BEFORE LOOP',oneMonthAgo);
+    
+   for (let index = 0; index < this.MASTER_WEF_LIST.length; index++) {
+    const item = this.MASTER_WEF_LIST[index];
+
+    const exists = this.WEF_LIST.some(x => x.PERIOD_ID === item.PERIOD_NO);
+
+    if (!exists) {
+        if (new Date(item.TO_DATE) > oneMonthAgo) {
+            this.WEF_LIST.push(item);
+        }
+        if (data.PERIOD_ID == item.PERIOD_NO) {
+            this.WEF_LIST.push(item);
+        }
+        else if(data.PERIOD_ID != item.PERIOD_NO && new Date(item.TO_DATE) <= oneMonthAgo) {
+          console.log('inside else if');
+            this.WEF_LIST.splice(index, 1);
+        }
+    }
+}
+
     this.ProductCode = data.PRODUCT_CODE;
     this.ProductName = data.PRODUCT_DESC;
     this.moeRate=data.MOE_RATE;
     this.brandCode = {"BRAND_CODE":data.BRAND_CODE,"BRAND_NAME":data.BRAND_NAME};
-    this.divCode = {"DIVISION_CODE":data.DIVISION_CODE,"DIVISION_NAME":data.DIVISION_NAME};
-    this.groupCode = {"GROUP_CODE":data.GROUP_CODE,"GROUP_DESC":data.GROUP_DESC};
-   // this.wefCode = {"PERIOD_":data.WFM_CODE,"PERIOD_DESC":data.PERIOD_DESC};
-    this.ProductMasterList.forEach((element:any) => {
-      if(+element.WFM_CODE == +data.WFM_CODE){
-        this.wefCode=element.WFM_CODE
-       // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
+    this.divCode =data.DIVISION_CODE //{"DIVISION_CODE":data.DIVISION_CODE,"DIV_DESC":data.DIVISION_NAME};
+    this.groupCode =data.GROUP_CODE//{"GROUP_CODE":data.GROUP_CODE,"GROUP_DESC":data.GROUP_DESC};
+    this.wefCode =data.PERIOD_NO //{"PERIOD_NO":data.PERIOD_NO,"PERIOD_DESC":data.WFM_CODE};
+    console.log(' this.wefCode', this.wefCode);
+    console.log('GROUP_CODE',data.GROUP_CODE,this.groupCode);
+    this.wefCode =data.PERIOD_ID
+    this.Shipper=data.SHIPPER
 
-        console.log( this.wefCode,"code")
-      }
-    });
+
+    // this.ProductMasterList.forEach((element:any) => {
+    //   if(+element.WFM_CODE == +data.WFM_CODE){
+    //     this.wefCode=element.WFM_CODE
+    //    // this.WEFCode = {"PERIOD_ID":element.PERIOD_ID,"PERIOD_DESC":element.PERIOD_DESC};
+
+    //     console.log( this.wefCode,"code")
+    //   }
+    // });
    // this.wefCode=data.WFM_CODE
     console.log('wefCode',this.wefCode)
     console.log("product edit data:-",data);
     this.productMasterMode = "Edit Product Master";
     this.isProductPopUp = false;
+    this.WEF_LIST.sort((a, b) => b.PERIOD_NO - a.PERIOD_NO);
   }
   OnSaveProductMasterClick(){
     this.isHighLightProductCode ="No";
@@ -207,12 +254,14 @@ export class ProductComponent implements OnInit {
     "PRODUCT_CODE":this.ProductCode,
     "PRODUCT_DESC":this.ProductName,
     "GROUP_CODE":this.groupCode.GROUP_CODE,
-    "DIVISION_CODE":this.divCode.DIV_CODE,
+    "DIVISION_CODE":this.divCode.DIVISION_CODE == undefined || this.divCode.DIVISION_CODE == null ? this.divCode.DIVISION_CODE : this.divCode.DIVISION_CODE,
     "BRAND_CODE":this.brandCode.BRAND_CODE,
     "MOE_RATE":this.moeRate,
-    "WFM_CODE":this.wefCode.PERIOD_NO,
-    "SHIPPER":this.Shipper
+    "WFM_CODE":this.wefCode== undefined || this.wefCode == null ? "" : this.wefCode,
+    "SHIPPER":this.Shipper == undefined || this.Shipper == null ? "" : this.Shipper
   }
+  console.log('test',this.v_save_data);
+  
     this.isLoaded = true;
     this.http.postnew(this.url.saveProductData, this.v_save_data).then(
       (res:any)=>{
