@@ -117,6 +117,7 @@ import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-s
 import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
 import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
+import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
 
 registerLocaleData(localeIn);
 
@@ -210,7 +211,8 @@ registerLocaleData(localeIn);
     CycleSuperstockistComponent,
     TradeOfferDiffReportComponent,
     CmePaymentReportComponent,
-    SchemaUploadComponent
+    SchemaUploadComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

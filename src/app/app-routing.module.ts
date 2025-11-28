@@ -85,11 +85,13 @@ import { CycleSuperstockistComponent } from './Forms/cycle-superstockist/cycle-s
 import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/trade-offer-diff-report.component';
 import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
 import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
+import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'changepassword', component: ChangePasswordPageComponent },
+   {path:'forgotpassword',component:ForgotPasswordComponent},
   {
     path: '',
     canActivate: [AuthGuard],
@@ -174,7 +176,7 @@ const routes: Routes = [
       {path:'cyclesuperstockist',component:CycleSuperstockistComponent},
       {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent},
       {path:'paymentreport',component:CmePaymentReportComponent},
-       {path:'schemaupload',component:SchemaUploadComponent}
+       {path:'schemaupload',component:SchemaUploadComponent},
     ]
   },
 ];

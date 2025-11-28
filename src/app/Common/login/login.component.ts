@@ -149,4 +149,10 @@ hashPassword(password: string): string {
   //   const hashedInput = CryptoJS.MD5(inputPassword).toString();
   //   return hashedInput === storedHash;
   // }
+
+  clickForgetPassword(){
+    console.log('clicked forgot password');
+    
+        this.router.navigate(["/forgotpassword"]);
+  }
 }
