@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   EXPIRES_IN: any;
   timeoutId: any;
   userList: any;
-
+showPassword: boolean = false;
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
     }

@@ -20,18 +20,37 @@
                     <div class="col-md-12">
                         <div class="mb-2">
                             <label>Password</label>
-                            <input type="password" class="form-control" [(ngModel)]="Password"
-                                [ngModelOptions]="{standalone : true}" placeholder="Enter Password">
+                            <div class="input-group align-items-center position-relative">
+                                <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+                                    [(ngModel)]="Password" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Enter Password" />
+
+                                <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                                    (click)="showPassword = !showPassword" style="cursor: pointer;
+    position: absolute;
+    right: 5px;" aria-hidden="true">
+                                </i>
+                            </div>
+
+                            <!-- 
+  <button type="button" class="btn btn-outline-secondary"
+          (click)="showPassword = !showPassword">
+    {{ showPassword ? 'Hide' : 'Show' }}
+  </button> -->
+                            <!-- <input type="password" class="form-control" [(ngModel)]="Password"
+                                [ngModelOptions]="{standalone : true}" placeholder="Enter Password"> -->
                         </div>
                         <div class="d-flex justify-content-end">
-                          <label>  <a class="text-primary" (click)="clickForgetPassword()">Forget Password?</a></label>
+                            <label> <a class="text-primary" (click)="clickForgetPassword()">Forget Password?</a></label>
                             <!-- <a (click)="clickForgetPassword()" >Forget Password?</a> -->
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group form-check ">
-                            <input type="checkbox" class="form-check-input" [(ngModel)]="isAgree" [ngModelOptions]="{standalone : true}" id="Check1">
-                            <label class="form-check-label" for="Check1">I agree to <a class="text-primary" (click)="showTermModel()">Terms &
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="isAgree"
+                                [ngModelOptions]="{standalone : true}" id="Check1">
+                            <label class="form-check-label" for="Check1">I agree to <a class="text-primary"
+                                    (click)="showTermModel()">Terms &
                                     Condition</a></label>
                         </div>
                     </div>
@@ -39,7 +58,8 @@
                         <a class="text-danger" href="javascript:void(0);">Forgot Password?</a>
 
                     </div> -->
-                    <button type="submit" class="btn btn-primary mb-4" (click)="logInClick()"[disabled]="!isAgree">LOG IN</button>
+                    <button type="submit" class="btn btn-primary mb-4" (click)="logInClick()" [disabled]="!isAgree">LOG
+                        IN</button>
                     <div class="copyright mt-2">
                         <p class="terms text-center">© Comflex Technologies Pvt. Ltd.</p>
                     </div>
@@ -52,7 +72,8 @@
     </div>
 </div>
 
-<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true" *ngIf="isTermsPopUp">
+<div class="modal " tabindex="-1" style="display: block;" id="popup" role="dialog" aria-hidden="true"
+    *ngIf="isTermsPopUp">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,9 +87,14 @@
                     <div class="">
                         <div class="">
                             <ol>
-                                <li>Data will be stored at the headquarter since employees may choose to stay or leave the firm, however the headquarter will stay.</li>
-                                <li>Due to the rounding of data down to the material level, pool headquarter may experience some modifications</li>
-                                <li>The figures/calculation is only for your information in terms of a approximate incentive calculation. The actual computation will vary depending on several additional parameters, like base year, the subsequent month's average sale, and many other elements.</li>
+                                <li>Data will be stored at the headquarter since employees may choose to stay or leave
+                                    the firm, however the headquarter will stay.</li>
+                                <li>Due to the rounding of data down to the material level, pool headquarter may
+                                    experience some modifications</li>
+                                <li>The figures/calculation is only for your information in terms of a approximate
+                                    incentive calculation. The actual computation will vary depending on several
+                                    additional parameters, like base year, the subsequent month's average sale, and many
+                                    other elements.</li>
                             </ol>
                         </div>
                     </div>

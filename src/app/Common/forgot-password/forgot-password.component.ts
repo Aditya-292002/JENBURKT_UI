@@ -18,6 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   OTP: string;
   MOBILE_NUMBER:any
   isNumberVerfied: boolean=false;
+  isLoaded:boolean=false;
 
   constructor(private router: Router, private urlService: URLService, public commonservice: CommonService,
     private toastrService: ToastrService, private apiService: ApiService,private http:HttpService) { }
@@ -69,9 +70,10 @@ export class ForgotPasswordComponent implements OnInit {
     let data ={
       "MOBILE_NUMBER":this.MOBILE_NUMBER
     }
+        this.isLoaded=true
   this.http.postnew(this.urlService.VERIFYUSERNUMBER, data).then(
         (res: any) => {
-
+this.isLoaded=false
           if (res.FLAG == true) {
             this.isNumberVerfied=true;
           this.toastrService.success(res.MSG);
@@ -88,9 +90,10 @@ forgotPasswordClick(){
       "OTP":this.OTP,
       "NEW_PASSWORD":this.hashPassword(this.NEW_PASSWORD)
     }
+    this.isLoaded=true
   this.http.postnew(this.urlService.VERIFYOTP, data).then(
         (res: any) => {
-
+          this.isLoaded=false
           if (res.FLAG == true) {
              this.logInClick()
             // this.isNumberVerfied=true;
