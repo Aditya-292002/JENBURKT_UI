@@ -253,9 +253,9 @@ export class ProductComponent implements OnInit {
     "LOGIN_USER_ID":JSON.parse(this.userInfo).USER_ID,
     "PRODUCT_CODE":this.ProductCode,
     "PRODUCT_DESC":this.ProductName,
-    "GROUP_CODE":this.groupCode.GROUP_CODE,
-    "DIVISION_CODE":this.divCode.DIVISION_CODE == undefined || this.divCode.DIVISION_CODE == null ? this.divCode.DIVISION_CODE : this.divCode.DIVISION_CODE,
-    "BRAND_CODE":this.brandCode.BRAND_CODE,
+    "GROUP_CODE": this.groupCode == undefined ||this.groupCode == null ? '' :this.groupCode,
+    "DIVISION_CODE":this.divCode == undefined || this.divCode == null ? '' : this.divCode,
+    "BRAND_CODE":this.brandCode==undefined || this.brandCode==null ? '' :this.brandCode,
     "MOE_RATE":this.moeRate,
     "WFM_CODE":this.wefCode== undefined || this.wefCode == null ? "" : this.wefCode,
     "SHIPPER":this.Shipper == undefined || this.Shipper == null ? "" : this.Shipper
