@@ -231,5 +231,9 @@ export class URLService {
        public GETTPAYMENTLISTBYUSERID = this.sharedService.ApiUrl + '/api/Cme/GETTPAYMENTLISTBYUSERID';
          public SAVECHANGEPASSWORD = this.sharedService.ApiUrl + '/api/Authetication/ChangePassword';
          public SAVESCHEMA=this.sharedService.ApiUrl + '/api/UploadDocument/SAVESCHEMA';
+
+         //forget password
+          public VERIFYUSERNUMBER=this.sharedService.ApiUrl + '/api/ForgotPassword/VERIFYUSERNUMBER';
+          public VERIFYOTP=this.sharedService.ApiUrl + '/api/ForgotPassword/VERIFYOTP';
  
 }

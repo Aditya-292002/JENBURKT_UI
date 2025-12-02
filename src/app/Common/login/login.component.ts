@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   EXPIRES_IN: any;
   timeoutId: any;
   userList: any;
-
+showPassword: boolean = false;
   constructor(private router: Router,private http: HttpService,private SharedService: SharedService,
     private ToastrService: ToastrService,private url: URLService,private AuthService: AuthService,private coommon:CommonService) { 
     }
@@ -149,4 +149,10 @@ hashPassword(password: string): string {
   //   const hashedInput = CryptoJS.MD5(inputPassword).toString();
   //   return hashedInput === storedHash;
   // }
+
+  clickForgetPassword(){
+    console.log('clicked forgot password');
+    
+        this.router.navigate(["/forgotpassword"]);
+  }
 }
