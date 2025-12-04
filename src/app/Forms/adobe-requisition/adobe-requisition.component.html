@@ -63,13 +63,14 @@
                                 </p-dropdown> -->
                                 <p-dropdown [options]="HQ_CODE_LIST" [(ngModel)]="HQ_CODE"
                                     [ngModelOptions]="{standalone:true}"
-                                    (ngModelChange)="GETADHOCSAMPLEREQUISITIONLIST()"
+                                   
                                     placeholder="Please Select HQ Code" appendTo="body" optionValue="HQ_CODE"
                                     optionLabel="HQ_DESC" [filter]="true" filterBy="HQ_DESC" [disabled]="STATUSFLAG">
                                 </p-dropdown>
+                                        <!-- (ngModelChange)="GETADHOCSAMPLEREQUISITIONLIST()" -->
                             </div>
                         </div>
-
+ <!-- (ngModelChange)="GETADHOCSAMPLEREQUISITIONLIST()" -->
                     </div>
 
                     <!-- <div class="col-sm-12 col-md-12 col-lg-4">
@@ -206,6 +207,7 @@
                                                  <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY" class="form-control"
                                                     name="pincode"
                                                      maxlength="4"
+                                                     placeholder="Requested Pack Qty"
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
                                              
                                             </td>

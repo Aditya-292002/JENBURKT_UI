@@ -98,6 +98,7 @@ export class AdobeRequisitionComponent implements OnInit {
   selectedFilesData: any[];
   DOCUMENT_TYPE_LIST: any=[];
   UploadDocumentListPopUp: boolean=false;
+  REQUEST_ID: any;
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService,private common: CommonService) { }
 
@@ -196,10 +197,11 @@ GETHQLIST(){
        }
       this.http.postnew(this.url.GETHQFORSAMPLERECEIVELIST, data).then(
       (res: any) => {
-        console.log('res',res);
+        console.log('res GETHQLIST',res);
         
           // if(res.data[0].FLAG == true){
              this.HQ_CODE_LIST=res.HQ_LIST
+             this.PRODUCT_LIST = res.PRODUCT_LIST;
           this.isLoaded = false;
           
        
@@ -218,7 +220,8 @@ GETHQLIST(){
 GETADHOCSAMPLEREQUISITIONLIST() {
     let data = {
       "USER_ID": this.userInfo.USER_ID,
-      "HQ_CODE": this.HQ_CODE
+      "HQ_CODE": this.HQ_CODE,
+      "REQUEST_ID": this.REQUEST_ID
     }
     this.http.postnew(this.url.GETADHOCSAMPLEREQUISITIONLIST, data).then(
       (res: any) => {
@@ -294,6 +297,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
       (res: any) => {
         if (res.data[0].FLAG == 1) {
         this.toastrService.success(res.data[0].MSG);
+        this.UPLOAD_DOCUMENT_LIST=[];
         this.GETADHOREQUESTLIST();
         this.toggleToList=true;
       } else if (res.data[0].FLAG == 0) {
@@ -304,7 +308,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
   }
   goToList(){
     console.log('insdide list');
-    
+    this.UPLOAD_DOCUMENT_LIST=[];
     this.toggleToList= true
     this.GETADHOREQUESTLIST()
   }
@@ -312,7 +316,8 @@ GETADHOCSAMPLEREQUISITIONLIST() {
   this.toggleToList= false
   this.HQ_CODE=null
   this.STATUSFLAG=false;
-   this.GETADHOCSAMPLEREQUISITIONLIST() 
+  this.GETHQLIST()
+  //  this.GETADHOCSAMPLEREQUISITIONLIST() 
   }
   
   GETADHOREQUESTLIST() {
@@ -333,6 +338,7 @@ GETREQUESTDETAILS(D){
   console.log('d',D);
   
   this.HQ_CODE=D.HQ_CODE
+  this.REQUEST_ID=D.REQUEST_ID
    if(D.STATUS==='Approved') {
     console.log('inside if',  this.STATUSFLAG);
     

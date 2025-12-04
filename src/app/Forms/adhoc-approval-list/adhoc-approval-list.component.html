@@ -173,7 +173,7 @@
                         </div>
 
                     </div>
-
+               
                     <!-- <div class="col-sm-12 col-md-12 col-lg-4">
       <div class="mb-2">
         <label>Product</label>
@@ -218,6 +218,12 @@
                                     [disabled]="STATUSFLAG"></textarea>
                             </div>
                         </div>
+                    </div>
+                    
+                                    <div class="col-sm-12 col-md-12 col-lg-4 pt-4">
+                      <button type="submit" class="btn-primary  formButton " (click)="OpenUploadDocumentPopUp()">
+                            View Attachment
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -304,8 +310,8 @@
                                             </th>
                                             <th>User Info</th>
                                             <!-- <th  scope="col">HQ Count</th> -->
-                                            <th>Inner Pack</th>
-                                            <th>Req Inner Pack HQ</th>
+                                            <!-- <th>Inner Pack</th> -->
+                                            <!-- <th>Req Inner Pack HQ</th> -->
                                             <th>Total HQ Qty</th>
                                             <!-- <th pSortableColumn="TOTAL_REQ" scope="col">Total Req.</th> -->
                                         </tr>
@@ -316,17 +322,24 @@
                                             <td class="width-2">{{ data.DESCRIPTION }}</td>
                                             <td class="width-2">{{ data.UNIT_PACK }}</td>
                                             <!-- <td class="width-2">{{ data.POOL_HQCOUNT }}</td> -->
-                                            <td class="width-2">{{ data.INNER_PACK }}</td>
-                                            <td class="width-2">
+                                            <!-- <td class="width-2">{{ data.INNER_PACK }}</td> -->
+                                            <!-- <td class="width-2">
                                                 <input type="text" [(ngModel)]="data.REQ_HQ_QTY" class="form-control"
                                                     name="pincode"
                                                     (focusout)="GETSMCALCULATEPACKQTYBYPOOLCODE(data,rowIndex)"
                                                     [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
                                                     placeholder="Req Inner Pack Qty" maxlength="4"
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
-                                            </td>
+                                            </td> -->
+                                            
                                             <td class="width-2">
-                                                {{ data.REQUESTED_PACK_QTY }}
+                                                 <input type="text" [(ngModel)]="data.REQUESTED_PACK_QTY" class="form-control"
+                                                    name="pincode"
+                                                     maxlength="4"
+                                                     placeholder="Requested Pack Qty"
+                                                     [disabled]="data.HQ_UPDATED == 1 || this.IS_DISABLED == true"
+                                                    appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
+                                            
                                             </td>
                                             <!-- <td class="width-2">{{ data.REQ_HQ_QTY }}</td> -->
                                         </tr>
@@ -401,3 +414,53 @@
         </div>
     </div>
 </div>
+
+<p-dialog header="Document Details" [modal]="true" [(visible)]="ViewDocumentListPopUp" [style]="{ width: '40rem' }">
+                                    <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h6 class="modal-title">
+                        <!-- <span *ngIf="this.isDocumentMandatory == true"
+                            style="color: red;">*</span> -->
+                        </h6>
+                    <p-table [value]="UPLOAD_DOCUMENT_LIST" responsiveLayout="scroll" [paginator]="false"
+                        class="prime-table" [showCurrentPageReport]="true" [rows]="10"
+                        [rowsPerPageOptions]="[10, 25, 50, 100]"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [autoLayout]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th> Sr No </th>
+                                <th> Document Type </th>
+                                <th> Document Name </th>
+                                <th> Download Document </th>
+                                <th> Action </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                            <tr>
+                                <td>{{ rowIndex + 1 }}</td>
+                                <td>{{ data.DOCUMENT_DESC }}</td>
+                                <td>{{ data.FILE_NAME }}</td>
+                                <td>
+                                    <!-- <a style="color: rgb(55, 111, 156);cursor: pointer;text-decoration: underline;"
+                                            (click)="Imageview.toggle($event)" >View</a>
+                                            <p-overlayPanel #Imageview>
+                                                <img [src]="data.FILE_BASE64" alt="No Documnet Found" style="width: 100%;
+                                                 height: 200px;" />
+                                            </p-overlayPanel> -->
+                                    <button class="btn-primary formButton "
+                                        (click)="DownloadDocument(data.FILE_BASE64,data.FILE_EXTENSION,data.FILE_NAME )">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td >
+                                    <button class="btn-danger cancelButton " (click)="RemoveDocument(rowIndex)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            </p-dialog>
