@@ -216,6 +216,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
       "USER_ID": this.userInfo.USER_ID,
       "HQ_CODE":this.HQ_CODE,
       "REQUEST_NO":this.REQ_NO,
+      "REQUEST_ID": this.REQUEST_ID,
       "PRODUCT_LIST":this.PRODUCT_LIST
     }
     
