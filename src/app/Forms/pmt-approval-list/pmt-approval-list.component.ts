@@ -30,6 +30,9 @@ ADHOC_REQUEST_LIST:any=[]
   LISTSTATUS: string='P';
   isLoaded:Boolean=false;
   isRejectConformationPopup:Boolean=false
+  REQUEST_ID: any;
+  ViewDocumentListPopUp: boolean;
+  UPLOAD_DOCUMENT_LIST: any=[];
  constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private SharedService: SharedService) { }
 
@@ -63,7 +66,7 @@ ADHOC_REQUEST_LIST:any=[]
   this.HQ_DESC=D.HQ_DESC
   this.RSM_NAME=D.RSM_NAME
   const inputDate=D.REQUEST_DATE;
-
+  this.REQUEST_ID=D.REQUEST_ID
     if(D.STATUS==='Approved') {
     console.log('inside if',  this.STATUSFLAG);
     this.STATUSFLAG=true;
@@ -93,7 +96,8 @@ ADHOC_REQUEST_LIST:any=[]
 GETADHOCSAMPLEREQUISITIONLIST() {
     let data = {
       "USER_ID": this.userInfo.USER_ID,
-      "HQ_CODE": this.HQ_CODE
+      "HQ_CODE": this.HQ_CODE,
+      "REQUEST_ID": this.REQUEST_ID
     }
     this.http.postnew(this.url.GETADHOCSAMPLEREQUISITIONLISTBYROLE, data).then(
       (res: any) => {
@@ -101,7 +105,7 @@ GETADHOCSAMPLEREQUISITIONLIST() {
         this.PRODUCT_LIST = res.ADHOC_REQUISITION_LIST;
         this.REQ_NO=this.PRODUCT_LIST[0]?.REQUEST_NO
         this.REMARK=this.PRODUCT_LIST[0]?.REMARKS
-
+         this.UPLOAD_DOCUMENT_LIST = res.DOCUMENT_DETAILS;
 
         // this.SAMPLE_PRODUCT_LIST=res.PRODUCT_LIST
 
@@ -211,6 +215,8 @@ GETADHOCSAMPLEREQUISITIONLIST() {
       "USER_ID": this.userInfo.USER_ID,
       "HQ_CODE":this.HQ_CODE,
       "REQUEST_NO":this.REQ_NO,
+      "REQUEST_ID": this.REQUEST_ID,
+      "PRODUCT_LIST":this.PRODUCT_LIST
     }
     console.log('data',data);
     
@@ -280,6 +286,56 @@ OpenRejectConformationPopup() {
       }
     });
   }
+  OpenUploadDocumentPopUp(){
+    this.ViewDocumentListPopUp=true
+  }
+      DownloadDocument(value: any, extension: any, filename: any) {
+    let base64 = this.cleanBase64(value);
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
 
+    if (extension == '.png') {
+      var fileBlob = new Blob([byteArray], { type: 'image/png' }); // Change type for different image formats
+    } else if (extension == '.jpg') {
+      var fileBlob = new Blob([byteArray], { type: 'image/jpg' }); // Change type for different image formats
+    } else if (extension == '.jpeg') {
+      var fileBlob = new Blob([byteArray], { type: 'image/jpeg' }); // Change type for different image formats
+    } else if (extension == '.pdf') {
+      var fileBlob = new Blob([byteArray], { type: 'application/pdf' }); // Change type for different image formats
+    }
+
+    const fileURL = URL.createObjectURL(fileBlob);
+
+    const a = document.createElement('a');
+    a.href = fileURL;
+    a.download = filename; // Change filename for different image formats
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+      cleanBase64(base64String: string): string {
+    // Remove data URI scheme and other unnecessary parts (e.g., data:image/png;base64,)
+    const parts = base64String.split(',');
+    if (parts.length > 1) {
+      base64String = parts[1];
+    } else {
+      base64String = parts[0];
+    }
+
+    // Remove whitespace characters
+    base64String = base64String.trim().replace(/\s+/g, '');
+
+    // Add padding if necessary
+    const missingPadding = base64String.length % 4;
+    if (missingPadding !== 0) {
+      base64String += '='.repeat(4 - missingPadding);
+    }
+
+    return base64String;
+  }
 
 }
