@@ -86,6 +86,7 @@ import { TradeOfferDiffReportComponent } from './Forms/trade-offer-diff-report/t
 import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payment-report.component';
 import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
+import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -177,6 +178,7 @@ const routes: Routes = [
       {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent},
       {path:'paymentreport',component:CmePaymentReportComponent},
        {path:'schemaupload',component:SchemaUploadComponent},
+       {path:'superstockistransfer',component:SuperstockistTransferComponent}
     ]
   },
 ];

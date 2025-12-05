@@ -82,6 +82,7 @@ export class LayoutPageComponent implements OnInit {
   HQ_CODE:any;
   IS_LIVE:any
   customMenuGenerate_Order: boolean;
+  customMenuSuperstockist_transfer:boolean;
   customMenuCycle_Super_Stockist: boolean;
   customMenuTrade_Offer_Diff_Report: boolean;
   customMenuSchemaUpload:boolean;
@@ -263,6 +264,7 @@ export class LayoutPageComponent implements OnInit {
     this.IsMoeVieweport=false;
     this.IsPaymentReport=false;
     this.customMenuGenerate_Order=false
+    this.customMenuSuperstockist_transfer=false
     this.customMenuCycle_Super_Stockist=false
     this.customMenuTrade_Offer_Diff_Report=false
     this.customMenuSchemaUpload=false
@@ -284,7 +286,10 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'Generate_Order') {
       this.customMenuGenerate_Order = true;
-    } else if (data == 'Invoice') {
+    }     else if (data == 'Superstockist_Transfer') {
+      this.customMenuSuperstockist_transfer = true;
+    }
+    else if (data == 'Invoice') {
       this.customMenuInvoice = true;
     } else if (data == 'ITD') {
       this.customMenuITD = true;

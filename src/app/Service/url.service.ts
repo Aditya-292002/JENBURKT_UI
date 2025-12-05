@@ -235,5 +235,15 @@ export class URLService {
          //forget password
           public VERIFYUSERNUMBER=this.sharedService.ApiUrl + '/api/ForgotPassword/VERIFYUSERNUMBER';
           public VERIFYOTP=this.sharedService.ApiUrl + '/api/ForgotPassword/VERIFYOTP';
+
+
+          //super stockist transfer
+
+          public GETSUPERSTOCKISTTRANSFERMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTTRANSFERMASTERLIST';
+           public SAVESUPERSTOCKISTRANSFER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVESUPERSTOCKISTRANSFER';
+ 
+            public GETSUPERSTOCKISTTRANSFERLISTBYROLEID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTTRANSFERLISTBYROLEID';
+            public GETSUPERSTOCKISTTRANSFERDETAILS = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTTRANSFERDETAILS';
+ 
  
 }

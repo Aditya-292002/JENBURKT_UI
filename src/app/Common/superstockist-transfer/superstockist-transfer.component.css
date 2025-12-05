@@ -1,0 +1,39 @@
+.width-5 {
+    width: 30%;
+
+}
+.formButton{
+    font-weight: 600;
+    border: 1px solid #2b6cb0;
+    color: #2b6cb0;
+    background-color: transparent;
+    /* padding: 0.35rem 0.75rem; */
+    padding: 4px 10px;
+}
+
+table td {
+    border: 0;
+    padding: 0.2rem 0.2rem;
+    vertical-align: middle;
+}
+table .width-1{
+    width: 280px;
+}
+table .width-2{
+    width: 100px;
+}
+table .width-3{
+    width: 160px;
+}
+table .formButton{
+    border: 1px solid #c5c9cd
+}
+.required-field input.form-control {
+    border-color: #E4002B !important;
+}
+.required-field .form-control {
+    border-color: #E4002B !important;
+}
+.required-field .search-dropdown {
+    border-color: #E4002B !important;
+}
