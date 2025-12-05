@@ -56,6 +56,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
   ProductReportList: any = []
   isLoaded1: boolean;
   SalesReportListFOREXCEL: any = [];
+  PRODUCT_KEYFIGURE: any;
   //   REPORT_LIST=[{"HQ_CODE":"BNBRM001","HQ_DESC":"BEGUSARAI","POOL_CODE":"ANBRP003","FM_CODE":"ANFM0039","FM_NAME":"DARBHANGA FM",
   //   "RSM_CODE":"ANRSM011","RSM_NAME":"JAMSHEDPUR RSM","SM_CODE":"ANSM0003","SM_NAME":"U P SINGH","NET_SALES":"63126",}
   // ,{"HQ_CODE":"BNBRM001","HQ_DESC":"BEGUSARAI","POOL_CODE":"ANBRP003","FM_CODE":"ANFM0039","FM_NAME":"DARBHANGA FM",
@@ -633,6 +634,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
   }
   getProductDetails(val) {
     this.userInfo = this.AuthService.getUserDetail();
+    this.PRODUCT_KEYFIGURE = val;
     // this.ViewPopUp=true;
     //console.log("this.this.QTY_VALUE.NAME:-",this.QTY_VALUE.NAME);
     let data = {
@@ -659,7 +661,7 @@ export class DivisionWiseSalesReportComponent implements OnInit {
 
         // console.log("response",res);
         this.ProductReportList = res;
-
+       
         // console.log(' this.SalesReportList', this.SalesReportList);
         // Added by gauresh
         // res.forEach((element:any) => {
@@ -691,4 +693,16 @@ export class DivisionWiseSalesReportComponent implements OnInit {
     );
   }
 
+exportPRODUCTToExcel(){
+ import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.ProductReportList);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+       this.saveAsExcelFile(excelBuffer,this.PRODUCT_KEYFIGURE);
+    });
+       
+}
 }  
