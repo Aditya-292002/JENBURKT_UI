@@ -109,7 +109,7 @@
                                 <tr>
                                     <td class="width-1 pl-0">
                                         <div class="search-dropdown" [ngClass]="{'required-field':isHighLightProduct=== 'Yes'}">
-                                            <p-dropdown [options]="SAMPLE_PRODUCT_LIST" appendTo="body" optionLabel="label" optionValue="value" [(ngModel)]="PRODUCT_CODE" 
+                                            <p-dropdown [options]="SAMPLE_PRODUCT_LIST" appendTo="body" optionLabel="label" [(ngModel)]="PRODUCT_CODE" 
                                                 placeholder="Product" [ngModelOptions]="{standalone: true}"  [filter]="true" filterBy="label">
                                             </p-dropdown>
                                         </div>
@@ -124,14 +124,16 @@
                                     </td> -->
                                     <td class="width-2">
                                         <div [ngClass]="{'required-field':isHighLightQuantity=== 'Yes'}">
-                                            <input type="text" class="form-control text-right" placeholder="Qty" [(ngModel)]="FREE_QTY" [ngModelOptions]="{standalone: true}"
-                                            (change)="onQuantityChange($event,i)">
+                                            <input type="text" class="form-control text-right" placeholder="Free Qty" [(ngModel)]="FREE_QTY" [ngModelOptions]="{standalone: true}"
+                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)"
+                                           >
                                         </div>
                                     </td>
                                     <td class="width-2">
                                         <div [ngClass]="{'required-field':isHighLightRate=== 'Yes'}">
-                                            <input type="text" class="form-control text-right" placeholder="Rate" [(ngModel)]="SALE_QTY" [ngModelOptions]="{standalone: true}"
-                                            (change)="onQuantityChange($event,i)">
+                                            <input type="text" class="form-control text-right" placeholder="Sale Qty" [(ngModel)]="SALE_QTY" [ngModelOptions]="{standalone: true}"
+                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)"
+                                           >
                                         </div>
                                     </td>
                                     <!-- <td class="width-3">
@@ -141,18 +143,18 @@
                                     </td> -->
                                     <td class="">
                                         <div>
-                                            <button  (click)="addProductList(list,i)" class="btn-primary formButton text-success mr-2"><i class="fa fa-plus"
+                                            <button  (click)="addProductList(list,i)" class="btn-primary formButton1 text-success mr-2"><i class="fa fa-plus"
                                                 aria-hidden="true"></i></button>
-                                                <button (click)="deleteProductList(i)"  class="btn-primary formButton text-danger"><i class="fa fa-trash-o "
+                                                <button (click)="deleteProductList(i)"  class="btn-primary formButton1 text-danger"><i class="fa fa-trash-o "
                                                     aria-hidden="true"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" ><p class="text-right mb-0"><b>Total</b></p></td>
+                                    <td colspan="2" ><p class="text-right mb-0"><b>Total</b></p></td>
                                     <td class="width-3">
                                         <div>
-                                            <input type="text" class="form-control text-right" placeholder="Value" [(ngModel)]="TOTAL_QTY"
+                                            <input type="text" class="form-control text-right" placeholder="Total Qty" [(ngModel)]="TOTAL_QTY"
                                             [ngModelOptions]="{standalone: true}" disabled="true">
                                         </div>
                                     </td>
@@ -211,7 +213,7 @@
             <div class="mb-2">
                 <label> </label>
                 <div>
-                    <p-table [value]="PRODUCT_LIST" responsiveLayout="scroll" scrollHeight="420px" [globalFilterFields]="['PRODUCT_DESC', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
+                    <p-table [value]="PRODUCT_TABLE_LIST" responsiveLayout="scroll" scrollHeight="420px" [globalFilterFields]="['PRODUCT_DESC', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
                                         ,'POOL_HQCOUNT','TOTAL_REQ'
                                     ]" #dt2>
 
@@ -268,17 +270,19 @@
                                 <td class="width-5">{{ data.PRODUCT_DESC }}</td>
                       
                                 <td class="width-2">
-                                    <input type="text" [(ngModel)]="data.SALE_QTY" class="form-control"
+                                      {{ data.SALE_QTY }}
+                                    <!-- <input type="text" [(ngModel)]="data.SALE_QTY" class="form-control"
                                         name="pincode" (focusout)="getcalculatetotalqty(data,rowIndex)"
                                         placeholder="Enter Sale Qty" appTwoDigitDecimaNumber
-                                        [disabled]="STATUSFLAG">
+                                        [disabled]="STATUSFLAG"> -->
 
                                 </td>
                                 <td class="width-2">
-                                    <input type="text" [(ngModel)]="data.FREE_QTY" class="form-control"
+                                      {{ data.FREE_QTY }}
+                                    <!-- <input type="text" [(ngModel)]="data.FREE_QTY" class="form-control"
                                         name="pincode" (focusout)="getcalculatetotalqty(data,rowIndex)"
                                         placeholder="Enter Free Qty" appTwoDigitDecimaNumber
-                                        [disabled]="STATUSFLAG">
+                                        [disabled]="STATUSFLAG"> -->
 
                                 </td>
                                 <td class="width-2">

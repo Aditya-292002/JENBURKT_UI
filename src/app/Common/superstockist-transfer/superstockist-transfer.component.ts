@@ -42,7 +42,10 @@ period:any;
   REQUEST_LIST: any;
   HEADER_LIST: any;
   PRODUCT_CODE;any;
-  PRODUCT_TABLE_LIST=[{TRF_ID:0,"PRODUCT_CODE":"","TO_POOL":"","SALE_QTY":0,"FREE_QTY":0,"TOTAL_QTY":0,"PRODUCT_DESC":""}];
+  SALE_QTY:any;
+  FREE_QTY  :any;
+  TOTAL_QTY :any;
+  PRODUCT_TABLE_LIST=[];
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getMasterList();
@@ -136,21 +139,27 @@ period:any;
    }
  
 
-   getcalculatetotalqty(data: any,index){
-    console.log('INSIDE',index);
-    
-        this.PRODUCT_LIST.forEach((element: any,i:number) => {
-      if (index===i ) {
-        let SALE_QTY = Number(element.SALE_QTY) || 0;
-        let FREE_QTY = Number(element.FREE_QTY) || 0;
+   getcalculatetotalqty(a: any,b){
+   console.log('inside',a,b);
+   
+          let SALE_QTY = Number(a) || 0;
+          let FREE_QTY = Number(b) || 0;
       
-        // let sampleCost = Number(element.SAMPLE_COST) || 0;
-        element.TOTAL_QTY = SALE_QTY + FREE_QTY;
+         this.TOTAL_QTY = SALE_QTY + FREE_QTY;
+         
+        //  this.STATUSFLAG=true
+      //  this.PRODUCT_LIST.forEach((element: any,i:number) => {
+    //   if (index===i ) {
+    //     let SALE_QTY = Number(element.SALE_QTY) || 0;
+    //     let FREE_QTY = Number(element.FREE_QTY) || 0;
+      
+    //     // let sampleCost = Number(element.SAMPLE_COST) || 0;
+    //     element.TOTAL_QTY = SALE_QTY + FREE_QTY;
      
-        // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
-        // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
-      }
-    });
+    //     // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
+    //     // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
+    //   }
+    // });
    }
    SAVESUPERSTOCKIST(VALUE:any){
     if(this.DATE==null || this.DATE==undefined){
@@ -174,6 +183,10 @@ period:any;
         this.toastrService.error("Please enter quantity for at least one product");
         return;
     }
+        if(this.PRODUCT_TABLE_LIST.length==0){
+        this.toastrService.error("Please enter quantity for at least one product");
+        return;
+    }
    let data={
         USER_ID : JSON.parse(this.userInfo).USER_ID,
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
@@ -182,7 +195,8 @@ period:any;
         TO_SUPERSTOCKIST_CODE:this.TO_SUPERSTOCKIST_CODE,
         TRF_NO:this.TRF_NO==null || this.TRF_NO==undefined?0:this.TRF_NO,
         REMARK:this.REMARK ? this.REMARK :'',
-        PRODUCT_LIST: this.PRODUCT_LIST.filter((item: any) => item.TOTAL_QTY > 0),
+           PRODUCT_LIST: this.PRODUCT_TABLE_LIST.filter((item: any) => item.TOTAL_QTY > 0),
+        // PRODUCT_LIST: this.PRODUCT_LIST.filter((item: any) => item.TOTAL_QTY > 0),
      }  
      console.log(data,'data');
      //return
@@ -288,8 +302,14 @@ goToCreate(){
     this.getMasterList();
    }
   addProductList(value:any,index:number){
-    
-    this.PRODUCT_TABLE_LIST.push({TRF_ID:0,"PRODUCT_CODE":"","TO_POOL":"","SALE_QTY":0,"FREE_QTY":0,"TOTAL_QTY":0,"PRODUCT_DESC":""});
+    console.log('PRODUCT_CODE',this.PRODUCT_CODE);
+
+    this.PRODUCT_TABLE_LIST.push({TRF_ID:0,"PRODUCT_CODE":this.PRODUCT_CODE.value,"SALE_QTY":this.SALE_QTY,"FREE_QTY":this.FREE_QTY,"TOTAL_QTY":this.TOTAL_QTY,"PRODUCT_DESC":this.PRODUCT_CODE.label});
+  this.PRODUCT_CODE=null;
+  this.SALE_QTY=0;   
+  this.FREE_QTY=0;
+  this.TOTAL_QTY=0;
+
   }
   deleteProductList(index:any){
     // const index = this.PRODUCT_TABLE_LIST.indexOf(data);
