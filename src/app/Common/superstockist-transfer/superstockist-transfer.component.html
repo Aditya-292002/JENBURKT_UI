@@ -123,18 +123,20 @@
                                         </div>
                                     </td> -->
                                     <td class="width-2">
-                                        <div [ngClass]="{'required-field':isHighLightQuantity=== 'Yes'}">
-                                            <input type="text" class="form-control text-right" placeholder="Free Qty" [(ngModel)]="FREE_QTY" [ngModelOptions]="{standalone: true}"
-                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)"
+                                       <div [ngClass]="{'required-field':isHighLightRate=== 'Yes'}">
+                                            <input type="text" class="form-control text-right" placeholder="Sale Qty" [(ngModel)]="SALE_QTY" [ngModelOptions]="{standalone: true}"
+                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)" [disabled]="STATUSFLAG"
                                            >
                                         </div>
                                     </td>
                                     <td class="width-2">
-                                        <div [ngClass]="{'required-field':isHighLightRate=== 'Yes'}">
-                                            <input type="text" class="form-control text-right" placeholder="Sale Qty" [(ngModel)]="SALE_QTY" [ngModelOptions]="{standalone: true}"
-                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)"
+                                         <div [ngClass]="{'required-field':isHighLightQuantity=== 'Yes'}">
+                                            <input type="text" class="form-control text-right" placeholder="Free Qty" [(ngModel)]="FREE_QTY" [ngModelOptions]="{standalone: true}"
+                                            (change)="getcalculatetotalqty(FREE_QTY,SALE_QTY)" [disabled]="STATUSFLAG"
                                            >
                                         </div>
+
+                                       
                                     </td>
                                     <!-- <td class="width-3">
                                         <div>
@@ -143,9 +145,9 @@
                                     </td> -->
                                     <td class="">
                                         <div>
-                                            <button  (click)="addProductList(list,i)" class="btn-primary formButton1 text-success mr-2"><i class="fa fa-plus"
+                                            <button  (click)="addProductList(list,i)" class="btn-primary formButton1 text-success mr-2" [disabled]="STATUSFLAG"><i class="fa fa-plus"
                                                 aria-hidden="true"></i></button>
-                                                <button (click)="deleteProductList(i)"  class="btn-primary formButton1 text-danger"><i class="fa fa-trash-o "
+                                                <button (click)="deleteProduct()"  class="btn-primary formButton1 text-danger" [disabled]="STATUSFLAG"><i class="fa fa-trash-o "
                                                     aria-hidden="true"></i></button>
                                         </div>
                                     </td>
@@ -261,6 +263,7 @@
                                 <th>Sale Qty</th>
                                 <th>Free Qty</th>
                                 <th>Total Qty</th>
+                                <th>Action</th>
                                 
                             </tr>
                         </ng-template>
@@ -288,6 +291,12 @@
                                 <td class="width-2">
                                     {{ data.TOTAL_QTY }}
                                 </td>
+                                <td class="width-2">
+                                    <button (click)="deleteProductList(rowIndex)" class="btn-primary formButton1 text-danger mr-2"
+                                        [disabled]="STATUSFLAG"><i class="fa fa-trash-o " aria-hidden="true"></i></button>
+
+                                         <button (click)="editProductList(rowIndex)" class="btn-primary formButton1"
+                                        [disabled]="STATUSFLAG"><i class="fa fa-edit " aria-hidden="true"></i></button>
                                 <!-- <td class="width-2">{{ data.REQ_HQ_QTY }}</td> -->
                             </tr>
                         </ng-template>

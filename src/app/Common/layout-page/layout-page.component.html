@@ -117,7 +117,7 @@
                                 [ngClass]="customMenuCycle_Super_Stockist == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/cyclesuperstockist">Cycle SuperStockist</a></li> -->
 
-                                    <li class="nav-item" (click)="isSelectedMenu('Trade_Offer_Diff_Report')" *ngIf="roleID == 6"
+                                    <li class="nav-item" (click)="isSelectedMenu('Trade_Offer_Diff_Report')" *ngIf="roleID == 6 || roleID == 0 || roleID == 1 "
                                 [ngClass]="customMenuTrade_Offer_Diff_Report == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/tradeofferdiffreport">Trade Offer Diff Report</a></li>
                         </ul>

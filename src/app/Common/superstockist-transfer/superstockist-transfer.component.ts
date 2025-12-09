@@ -81,63 +81,7 @@ period:any;
      );
    }
 
- 
-   generatedata(){
-   //  console.log('this.AREA_CODE',this.AREA_CODE);
-     if(this.period==undefined || this.period==null){
-       this.toastrService.error("Please Select Period");
-       return;
-     }
-    //  if(this.AREA_CODE==undefined || this.AREA_CODE==null){
-    //    this.toastrService.error("Please Select Area Code");
-    //    return;
-    //  }
-     let data={
-       USER_ID : JSON.parse(this.userInfo).USER_ID,
-       LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
-      //  SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       PERIOD_ID:this.period,
-      //  AREA_CODE:this.AREA_CODE.AREA_CODE,
-       ROLE_NAME:this.AREA_CODE.ROLE_NAME,
-       PERIOD_DESC:this.AREA_CODE.PERIOD_DESC,
-      //  SALESROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE
-     }
-     console.log(data,'data');
-     this.isLoaded=true;
-     return
-         this.http.postnew(this.url.GETSUPERSTOCKISTDATABYPERIODID, data).then(
-       (res:any)=>{
-          this.SAMPLE_PRODUCT_LIST=[];
-         this.isLoaded=false;
-        this.PRODUCT_LIST=res.PRODUCT_DETAILS
-        this.ORDER_STATUS=res.ORDER_STATUS[0].STATUS==1? true:false;
-        
-        this.ORDER_DATE=new Date(res.ORDER_STATUS[0].ORDER_DATE);
-        console.log('123',this.ORDER_STATUS,this.ORDER_DATE);
-        
-        const productlist = [...new Set(res.PRODUCT_DETAILS.map((item: any) => item.PRODUCT_DESC))];
-            productlist.forEach((element: any) => {
-              this.SAMPLE_PRODUCT_LIST.push({ label: element, value: element }) 
-            })
 
-      console.log('PRODUCT_LIST',this.SAMPLE_PRODUCT_LIST);
-      
-      // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
-      // productlist.forEach((element: any) => {
-      //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
-      // })
-         console.log('GETSUPERSTOCKISTDATABYPERIODID',res);
-         
-       },
-       error =>{
-          this.isLoaded=false;
-         //console.log(error);
-         this.toastrService.error("Oops, Something went wrong.");
-       }
-     );
-   }
- 
 
    getcalculatetotalqty(a: any,b){
    console.log('inside',a,b);
@@ -179,11 +123,13 @@ period:any;
         return;
     }
 
-    if((this.PRODUCT_LIST.filter((item: any) => item.TOTAL_QTY > 0)).length==0){
-        this.toastrService.error("Please enter quantity for at least one product");
-        return;
-    }
-        if(this.PRODUCT_TABLE_LIST.length==0){
+    // if((this.PRODUCT_LIST.filter((item: any) => item.TOTAL_QTY > 0)).length==0){
+    //     this.toastrService.error("Please enter quantity for at least one product");
+    //     return;
+    // }
+    console.log(this.PRODUCT_TABLE_LIST.length,'length');
+    
+        if(this.PRODUCT_TABLE_LIST.length == 0){
         this.toastrService.error("Please enter quantity for at least one product");
         return;
     }
@@ -205,7 +151,9 @@ period:any;
        (res:any)=>{
          console.log('RES SAVESUPERSTOCKISTRANSFER',res);
          
-        this.toastrService.success(res);
+        this.toastrService.success("Super Stockist Transfer Saved Successfully");
+        this.getSuperStockistTransferList()
+        this.toggleToList=true;
       // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
       // productlist.forEach((element: any) => {
       //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
@@ -273,7 +221,7 @@ goToCreate(){
          this.FROM_SUPERSTOCKIST_CODE=this.HEADER_LIST[0]?.FROM_SUPERSTOCKIST_CODE;
          this.TO_SUPERSTOCKIST_CODE=this.HEADER_LIST[0]?.TO_SUPERSTOCKIST_CODE;
          this.REMARK=this.HEADER_LIST[0]?.REMARK;
-         this.PRODUCT_LIST=res.DETAIL_LIST;
+         this.PRODUCT_TABLE_LIST=res.DETAIL_LIST;
          this.toggleToList=false;
          this.STATUSFLAG=true;
          
@@ -291,14 +239,17 @@ goToCreate(){
      );
    }
    clearData(){
-    
     this.TRF_NO=null;
     this.DATE=new Date();
     this.FROM_SUPERSTOCKIST_CODE=null;
     this.TO_SUPERSTOCKIST_CODE=null;
     this.REMARK=null;
     this.STATUSFLAG=false;
-    this.PRODUCT_LIST=[];
+    this.PRODUCT_TABLE_LIST=[];
+    this.PRODUCT_CODE=null;
+    this.SALE_QTY="";   
+    this.FREE_QTY='';
+    this.TOTAL_QTY='';
     this.getMasterList();
    }
   addProductList(value:any,index:number){
@@ -316,5 +267,21 @@ goToCreate(){
     this.PRODUCT_TABLE_LIST.splice(index, 1);
     // this.calculateTotalValue();
   //  this.getcalculatetotalqty();
+  }
+    deleteProduct(){
+  this.PRODUCT_CODE=null;
+  this.SALE_QTY=null;
+  this.FREE_QTY  =null;
+  this.TOTAL_QTY =null;
+  }
+  editProductList(index:any){
+    console.log('index',index);
+    
+    const editData = this.PRODUCT_TABLE_LIST[index];
+    this.PRODUCT_CODE={label:editData.PRODUCT_DESC,value:editData.PRODUCT_CODE};
+    this.SALE_QTY=editData.SALE_QTY;   
+    this.FREE_QTY=editData.FREE_QTY;
+    this.TOTAL_QTY=editData.TOTAL_QTY;
+    this.PRODUCT_TABLE_LIST.splice(index, 1);
   }
 }

@@ -121,7 +121,7 @@ export class GenerateOrderComponent implements OnInit {
         let SECOND_DISPATCH = Number(element.SECOND_DISPATCH_QTY) || 0;
       
         // let sampleCost = Number(element.SAMPLE_COST) || 0;
-        element.TOTAL_QTY = FIRST_DISPATCH + SECOND_DISPATCH;
+        element.TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
      
         // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
         // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
