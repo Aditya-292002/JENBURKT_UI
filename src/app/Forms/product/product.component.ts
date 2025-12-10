@@ -267,6 +267,7 @@ export class ProductComponent implements OnInit {
       (res:any)=>{
         if(res.data[0].FLAG==1){
           this.isLoaded= false;
+          this.GetProductList();
           this.ToastrService.success(res.data[0].MSG);
           this.ClearFormData();
         } else{
