@@ -19,8 +19,8 @@ export class MyClaimRequestDetailsComponent implements OnInit {
     OnSMShowHide:boolean;
     OnPMTShowHide:boolean;
     isLoaded:boolean;
-
-    imageData:any;
+    INVOICE_DATE:any;
+    imageData:any='';
     myclaimrequestImage:boolean;
   constructor(private router: Router,private authService: AuthService,private url: URLService,private http: HttpService,
     private toastrService:ToastrService,public datepipe: DatePipe,private _sanitizer: DomSanitizer) { }
@@ -28,7 +28,10 @@ export class MyClaimRequestDetailsComponent implements OnInit {
   ngOnInit(): void {
    this.myClaimRequst= JSON.parse(localStorage.getItem("MY_CLAIM_REQUEST"));
    console.log(' this.myClaimRequst', this.myClaimRequst)
-
+ if (this.myClaimRequst?.INVOICE_DATE) {
+    this.myClaimRequst.INVOICE_DATE =
+      new Date(this.myClaimRequst.INVOICE_DATE);
+  }
    if(this.myClaimRequst.FMSTATUS!=null){
     this.OnFMShowHide=true;
 
@@ -87,4 +90,29 @@ export class MyClaimRequestDetailsComponent implements OnInit {
   onBackClick(){
     this.router.navigate(['/myclaimrequest'])
   }
+
+    updateInvoiceDate(){
+    let data={
+      CLAIM_NO:this.myClaimRequst.CLAIM_NO,
+      CLAIM_ID:this.myClaimRequst.CLAIM_ID,
+      INVOICE_DATE:this.myClaimRequst.INVOICE_DATE
+    }
+    console.log('data',data);
+
+    this.isLoaded= true;
+    this.http.postnew(this.url.UPDATEiNVOICEDATE,data).then(
+      (res:any)=>{
+        this.isLoaded= false;
+      console.log('res',res)
+      // this.onBackClick();
+      this.toastrService.success("Invoice Date Updated Successfully");
+      },
+      error =>{
+        console.log(error);
+        this.isLoaded= false;
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
+  }
+
 }
