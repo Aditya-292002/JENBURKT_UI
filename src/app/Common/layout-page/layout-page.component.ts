@@ -86,7 +86,7 @@ export class LayoutPageComponent implements OnInit {
   customMenuCycle_Super_Stockist: boolean;
   customMenuTrade_Offer_Diff_Report: boolean;
   customMenuSchemaUpload:boolean;
-  
+  customMenuAdhoc_Generate_Order:boolean;
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
   }
@@ -267,6 +267,7 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuSuperstockist_transfer=false
     this.customMenuCycle_Super_Stockist=false
     this.customMenuTrade_Offer_Diff_Report=false
+    this.customMenuAdhoc_Generate_Order=false
     this.customMenuSchemaUpload=false
        if (data == 'Area') {
       this.customMenuArea = true;
@@ -311,6 +312,9 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'Trade_Offer_Diff_Report') {
       this.customMenuTrade_Offer_Diff_Report = true;
+    }
+        else if (data == 'Adhoc_Generate_Order') {
+      this.customMenuAdhoc_Generate_Order = true;
     }
     else if (data == 'Sample_Allocation') {
       this.customMenuSample_Allocation = true;

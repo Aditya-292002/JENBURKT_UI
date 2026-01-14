@@ -148,6 +148,7 @@ export class PostCmeComponent implements OnInit {
   RECEIVED_AMOUNT:any;
   ACTUAL_OUTSTANDING:any;
   ACTUAL_AMOUNT:any;
+  BILL_STATUS: any;
 
   constructor(private   url:URLService,private http:HttpService,private common:CommonService,
     private toastrService:ToastrService,private authService:AuthService,private router:Router,
@@ -305,6 +306,7 @@ export class PostCmeComponent implements OnInit {
         return
       }
     }
+    if(this.BILL_STATUS ==1){
     for(const  data of this.BillDetailsList){
       if(!this.common.isValid(data.BILL_NO)){
           this.toastrService.error('Enter a  Bill No')
@@ -320,6 +322,7 @@ export class PostCmeComponent implements OnInit {
       }
    
     }
+     }
     
     this.UploadDocumentdetails.forEach((element:any)=>{
       this.removeMimeTypePrefix(element.FILE_BASE64);
@@ -558,6 +561,7 @@ var IS_UPDATE = 1
     this.isAdd=true;
     this.IsAction = true;
     this.IsDraft = true;
+    this.BILL_STATUS= data.BILL_STATUS;
     this.GETCMEDOCTORLIST(this.HQ_CODE);
     this.GETPOSTCMEMASTERLIST();
   }

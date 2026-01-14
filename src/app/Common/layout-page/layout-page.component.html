@@ -120,6 +120,10 @@
                                     <li class="nav-item" (click)="isSelectedMenu('Trade_Offer_Diff_Report')" *ngIf="roleID == 6 || roleID == 0 || roleID == 1 "
                                 [ngClass]="customMenuTrade_Offer_Diff_Report == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/tradeofferdiffreport">Trade Offer Diff Report</a></li>
+                                    
+                                    <li class="nav-item" (click)="isSelectedMenu('Adhoc_Generate_Order')" *ngIf="roleID == 6 || roleID == 0 || roleID == 1 "
+                                [ngClass]="customMenuAdhoc_Generate_Order == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adhocgenerateorder">Adhoc Generate Order</a></li>
                         </ul>
                     </div>
                 </li>

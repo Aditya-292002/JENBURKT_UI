@@ -37,6 +37,7 @@ isHighLightSample: any = "NO";
       "USER_ID": this.USER_ID,
       "FYEAR": "2025",
       "LOGIN_ID": JSON.parse(this.userInfo).USER_NAME,
+      "TYPE": 'All'
     }
     this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
       (res: any) => {

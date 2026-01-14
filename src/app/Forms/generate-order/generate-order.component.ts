@@ -39,7 +39,8 @@ export class GenerateOrderComponent implements OnInit {
      let data={
        USER_ID : JSON.parse(this.userInfo).USER_ID,
        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
-       SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID
+       SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
+       TYPE:'GENERATE'
      }
      this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
        (res:any)=>{
@@ -75,7 +76,8 @@ export class GenerateOrderComponent implements OnInit {
        ROLE_NAME:this.AREA_CODE.ROLE_NAME,
        PERIOD_DESC:this.AREA_CODE.PERIOD_DESC,
       //  SALESROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE
+       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
+            //  TYPE :'GENERATE'
      }
      console.log(data,'data');
      this.isLoaded=true;
@@ -117,12 +119,34 @@ export class GenerateOrderComponent implements OnInit {
     
         this.PRODUCT_LIST.forEach((element: any,i:number) => {
       if (index===i ) {
+        console.log('inside ',i);
+        
         let FIRST_DISPATCH = Number(element.FIRST_DISPATCH_QTY) || 0;
         let SECOND_DISPATCH = Number(element.SECOND_DISPATCH_QTY) || 0;
       
         // let sampleCost = Number(element.SAMPLE_COST) || 0;
-        element.TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
-     
+        // element.TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
+        // if( SECOND_DISPATCH==0 || SECOND_DISPATCH==null || SECOND_DISPATCH==undefined || SECOND_DISPATCH >0){
+        //   element.SECOND_DISPATCH_QTY=element.RECOMMENDED_QTY - FIRST_DISPATCH;
+        //     element.TOTAL_QTY = ( FIRST_DISPATCH) + (  element.SECOND_DISPATCH_QTY);
+        // }else{
+        //   element.FIRST_DISPATCH_QTY=element.RECOMMENDED_QTY - element.SECOND_DISPATCH_QTY;
+        //     element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( SECOND_DISPATCH);
+        // }
+      // element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( element.SECOND_DISPATCH_QTY);
+        element.TOTAL_QTY = ( Number(element.FIRST_DISPATCH_QTY) ) + ( Number(element.SECOND_DISPATCH_QTY) );
+        element.SHORT_FALL=0;
+        if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
+          this.toastrService.warning("Total Qty should not be greater than Recommended Qty");
+        element.SHORT_FALL=element.RECOMMENDED_QTY-element.TOTAL_QTY ;
+        }
+      // if(element.TOTAL_QTY<element.RECOMMENDED_QTY){
+      //     this.toastrService.warning("Total Qty should not be less than Recommended Qty");
+      //     element.FIRST_DISPATCH=0;
+      //     element.SECOND_DISPATCH=0;
+      //     element.TOTAL_QTY=0;
+      //     element.SHORT_FALL=0;
+      //   }
         // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
         // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
       }
@@ -134,7 +158,7 @@ export class GenerateOrderComponent implements OnInit {
         return;
     }
         if(this.period==null || this.period==undefined){
-        this.toastrService.error("Please select order date");
+        this.toastrService.error("Please select period");
         return;
     }
    let data={
@@ -147,7 +171,7 @@ export class GenerateOrderComponent implements OnInit {
         PRODUCT_LIST: this.PRODUCT_LIST
      }  
      console.log(data,'data');
-    // return
+    //  return
      this.isLoaded=true;
          this.http.postnew(this.url.SAVEGENERATEORDER, data).then(
        (res:any)=>{

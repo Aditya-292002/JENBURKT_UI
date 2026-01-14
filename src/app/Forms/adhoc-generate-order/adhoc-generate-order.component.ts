@@ -5,15 +5,12 @@ import { HttpService } from 'src/app/Service/http.Service';
 import { URLService } from 'src/app/Service/url.service';
 import { AuthService } from 'src/app/Service/auth.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CommonService } from 'src/app/Service/common.service';
-
 @Component({
-  selector: 'app-trade-offer-diff-report',
-  templateUrl: './trade-offer-diff-report.component.html',
-  styleUrls: ['./trade-offer-diff-report.component.css']
+  selector: 'app-adhoc-generate-order',
+  templateUrl: './adhoc-generate-order.component.html',
+  styleUrls: ['./adhoc-generate-order.component.css']
 })
-export class TradeOfferDiffReportComponent {
-
+export class AdhocGenerateOrderComponent {
    period:any;
    userInfo:any = {};
    periodList:any = [];
@@ -32,9 +29,7 @@ export class TradeOfferDiffReportComponent {
   superStockistList: any=[];
   superStockistCode: any;
   SUPERSTOCKIST_CODE:any
-   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer
-    ,private comman:CommonService,
-   ) { }
+   constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
    }
@@ -44,7 +39,7 @@ export class TradeOfferDiffReportComponent {
        USER_ID : JSON.parse(this.userInfo).USER_ID,
        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
        SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       TYPE:'All'
+       TYPE:'GENERATE'
      }
      this.http.postnew(this.url.GETGENERATEORDERMASTERLIST, data).then(
        (res:any)=>{
@@ -63,10 +58,10 @@ export class TradeOfferDiffReportComponent {
  
    generatedata(){
    //  console.log('this.AREA_CODE',this.AREA_CODE);
-     if(this.period==undefined || this.period==null){
-       this.toastrService.error("Please Select Period");
-       return;
-     }
+    //  if(this.period==undefined || this.period==null){
+    //    this.toastrService.error("Please Select Period");
+    //    return;
+    //  }
     //  if(this.AREA_CODE==undefined || this.AREA_CODE==null){
     //    this.toastrService.error("Please Select Area Code");
     //    return;
@@ -75,16 +70,17 @@ export class TradeOfferDiffReportComponent {
        USER_ID : JSON.parse(this.userInfo).USER_ID,
        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
       //  SALES_ROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       PERIOD_ID:this.period,
+       PERIOD_ID:this.period?this.period:'',
       //  AREA_CODE:this.AREA_CODE.AREA_CODE,
        ROLE_NAME:this.AREA_CODE.ROLE_NAME,
        PERIOD_DESC:this.AREA_CODE.PERIOD_DESC,
       //  SALESROLE_ID:JSON.parse(this.userInfo).SALESROLE_ID,
-       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE
+       SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
+      //  TYPE :'GENERATE'
      }
      console.log(data,'data');
      this.isLoaded=true;
-         this.http.postnew(this.url.GETRADEDIFFREPORTBYPERIODID, data).then(
+         this.http.postnew(this.url.GETSUPERSTOCKISTDATABYPERIODID, data).then(
        (res:any)=>{
           this.SAMPLE_PRODUCT_LIST=[];
          this.isLoaded=false;
@@ -122,12 +118,33 @@ export class TradeOfferDiffReportComponent {
     
         this.PRODUCT_LIST.forEach((element: any,i:number) => {
       if (index===i ) {
+        console.log('inside ',i);
+        
         let FIRST_DISPATCH = Number(element.FIRST_DISPATCH_QTY) || 0;
         let SECOND_DISPATCH = Number(element.SECOND_DISPATCH_QTY) || 0;
       
         // let sampleCost = Number(element.SAMPLE_COST) || 0;
-        element.TOTAL_QTY = FIRST_DISPATCH + SECOND_DISPATCH;
-     
+        // element.TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
+        // if( SECOND_DISPATCH==0 || SECOND_DISPATCH==null || SECOND_DISPATCH==undefined || SECOND_DISPATCH >0){
+        //   element.SECOND_DISPATCH_QTY=element.RECOMMENDED_QTY - FIRST_DISPATCH;
+        //     element.TOTAL_QTY = ( FIRST_DISPATCH) + (  element.SECOND_DISPATCH_QTY);
+        // }else{
+        //   element.FIRST_DISPATCH_QTY=element.RECOMMENDED_QTY - element.SECOND_DISPATCH_QTY;
+        //     element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( SECOND_DISPATCH);
+        // }
+      // element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( element.SECOND_DISPATCH_QTY);
+        element.TOTAL_QTY = ( Number(element.FIRST_DISPATCH_QTY) ) + ( Number(element.SECOND_DISPATCH_QTY) );
+        if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
+          this.toastrService.warning("Total Qty should not be greater than Recommended Qty");
+        element.SHORT_FALL=element.TOTAL_QTY - element.RECOMMENDED_QTY;
+        }
+      // if(element.TOTAL_QTY<element.RECOMMENDED_QTY){
+      //     this.toastrService.warning("Total Qty should not be less than Recommended Qty");
+      //     element.FIRST_DISPATCH=0;
+      //     element.SECOND_DISPATCH=0;
+      //     element.TOTAL_QTY=0;
+      //     element.SHORT_FALL=0;
+      //   }
         // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
         // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
       }
@@ -138,10 +155,10 @@ export class TradeOfferDiffReportComponent {
         this.toastrService.error("Please select order date");
         return;
     }
-        if(this.period==null || this.period==undefined){
-        this.toastrService.error("Please select order date");
-        return;
-    }
+    //     if(this.period==null || this.period==undefined){
+    //     this.toastrService.error("Please select order date");
+    //     return;
+    // }
    let data={
         USER_ID : JSON.parse(this.userInfo).USER_ID,
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
@@ -152,7 +169,7 @@ export class TradeOfferDiffReportComponent {
         PRODUCT_LIST: this.PRODUCT_LIST
      }  
      console.log(data,'data');
-    // return
+      return
      this.isLoaded=true;
          this.http.postnew(this.url.SAVEGENERATEORDER, data).then(
        (res:any)=>{
@@ -172,10 +189,5 @@ export class TradeOfferDiffReportComponent {
        }
      );
    }
-
-  exportExcel(){
-    this.comman.exportExcelSuperstockist(this.PRODUCT_LIST)
-    //this.comman.exportFormatedAsExcel(this.reportGrid.v_detail,'_report_',[],'Test','')
-  }
 
 }

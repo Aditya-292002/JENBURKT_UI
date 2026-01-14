@@ -119,6 +119,7 @@ import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payme
 import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
 import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
+import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
 
 registerLocaleData(localeIn);
 
@@ -214,7 +215,8 @@ registerLocaleData(localeIn);
     CmePaymentReportComponent,
     SchemaUploadComponent,
     ForgotPasswordComponent,
-    SuperstockistTransferComponent
+    SuperstockistTransferComponent,
+    AdhocGenerateOrderComponent
   ],
   imports: [
     BrowserModule,

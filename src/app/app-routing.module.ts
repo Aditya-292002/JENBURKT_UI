@@ -87,6 +87,8 @@ import { CmePaymentReportComponent } from './Common/cme-payment-report/cme-payme
 import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.component';
 import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
 import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
+import { generate } from 'rxjs';
+import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -168,17 +170,18 @@ const routes: Routes = [
       { path: 'samplereceive', component: SampleReceivedComponent },
       { path: 'adhocrequisition', component: AdobeRequisitionComponent },
       { path: 'adhocrequisitionlist', component: AdhocApprovalListComponent },
-       { path: 'adhocpmtapproval', component: PmtApprovalListComponent },
+      { path: 'adhocpmtapproval', component: PmtApprovalListComponent },
       { path: 'documentapproval', component: DocumentPmtApprovalComponent },
       { path: 'sampledataupload', component: SampleDataUploadComponent },
       {path:'viewmoereport',component:MoeReportViewComponent},
-       { path: 'generateorder', component: GenerateOrderComponent },
+      { path: 'generateorder', component: GenerateOrderComponent },
       {path:'superstockistmaster',component:SuperStockishMasterComponent},
       {path:'cyclesuperstockist',component:CycleSuperstockistComponent},
       {path:'tradeofferdiffreport',component:TradeOfferDiffReportComponent},
       {path:'paymentreport',component:CmePaymentReportComponent},
-       {path:'schemaupload',component:SchemaUploadComponent},
-       {path:'superstockistransfer',component:SuperstockistTransferComponent}
+      {path:'schemaupload',component:SchemaUploadComponent},
+      {path:'superstockistransfer',component:SuperstockistTransferComponent},
+      {path:'adhocgenerateorder',component:AdhocGenerateOrderComponent}
     ]
   },
 ];
