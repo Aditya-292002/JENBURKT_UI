@@ -80,7 +80,7 @@ export class AdhocGenerateOrderComponent {
      }
      console.log(data,'data');
      this.isLoaded=true;
-         this.http.postnew(this.url.GETSUPERSTOCKISTDATABYPERIODID, data).then(
+         this.http.postnew(this.url.GETAHOCSUPERSTOCKISTDATABYPERIODID, data).then(
        (res:any)=>{
           this.SAMPLE_PRODUCT_LIST=[];
          this.isLoaded=false;
@@ -162,19 +162,23 @@ export class AdhocGenerateOrderComponent {
    let data={
         USER_ID : JSON.parse(this.userInfo).USER_ID,
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
-        PERIOD_ID:this.period,
-        STATUS:(VALUE==1?'1':'0'),
         ORDER_DATE:this.ORDER_DATE,
         SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
         PRODUCT_LIST: this.PRODUCT_LIST
      }  
      console.log(data,'data');
-      return
+     // return
      this.isLoaded=true;
-         this.http.postnew(this.url.SAVEGENERATEORDER, data).then(
+         this.http.postnew(this.url.SAVEADHOCGENERATEORDER, data).then(
        (res:any)=>{
-      
-        this.toastrService.success(res);
+         if(res.FLAG==true){
+          this.toastrService.success(res.MSG);
+           this.isLoaded=false;
+        }else{
+          this.toastrService.error(res.MSG);
+           this.isLoaded=false;
+        }
+        // this.toastrService.success(res);
       // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
       // productlist.forEach((element: any) => {
       //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })

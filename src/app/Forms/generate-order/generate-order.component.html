@@ -195,7 +195,7 @@
                                             <td class="width-2">
                                                 <input type="text" [(ngModel)]="data.FIRST_DISPATCH_QTY" class="form-control"
                                                     name="pincode"
-                                                    (focusout)="getcalculatetotalqty(data,rowIndex)"
+                                                    (focusout)="getcalculatetotalqty(data,rowIndex,'a')"    
                                                     placeholder="Enter 1st dispatch Qty"
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
                                                 
@@ -203,7 +203,7 @@
                                                  <td class="width-2">
                                                      <input type="text" [(ngModel)]="data.SECOND_DISPATCH_QTY" class="form-control"
                                                     name="pincode"
-                                                    (focusout)="getcalculatetotalqty(data,rowIndex)"
+                                                    (focusout)="getcalculatetotalqty(data,rowIndex,'b')"
                                                     placeholder="Enter 2nd dispatch Qty" 
                                                     appTwoDigitDecimaNumber [disabled]="STATUSFLAG">
                                               

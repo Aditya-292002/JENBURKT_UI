@@ -114,44 +114,87 @@ export class GenerateOrderComponent implements OnInit {
    }
  
 
-   getcalculatetotalqty(data: any,index){
+   getcalculatetotalqty(data: any,index, type: string){
     console.log('INSIDE',index);
     
         this.PRODUCT_LIST.forEach((element: any,i:number) => {
       if (index===i ) {
         console.log('inside ',i);
         
-        let FIRST_DISPATCH = Number(element.FIRST_DISPATCH_QTY) || 0;
-        let SECOND_DISPATCH = Number(element.SECOND_DISPATCH_QTY) || 0;
-      
+        let FIRST_DISPATCH_QTY = Number(element.FIRST_DISPATCH_QTY) || 0;
+        let SECOND_DISPATCH_QTY = Number(element.SECOND_DISPATCH_QTY) || 0;
+        let TOTAL_QTY = Number(element.TOTAL_QTY) || 0;
+         let RECOMMENDED_QTY = Number(element.RECOMMENDED_QTY) || 0;
         // let sampleCost = Number(element.SAMPLE_COST) || 0;
-        // element.TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
-        // if( SECOND_DISPATCH==0 || SECOND_DISPATCH==null || SECOND_DISPATCH==undefined || SECOND_DISPATCH >0){
-        //   element.SECOND_DISPATCH_QTY=element.RECOMMENDED_QTY - FIRST_DISPATCH;
-        //     element.TOTAL_QTY = ( FIRST_DISPATCH) + (  element.SECOND_DISPATCH_QTY);
+        // TOTAL_QTY = (element.SHIPPER *FIRST_DISPATCH) + (element.SHIPPER * SECOND_DISPATCH);
+        element.TOTAL_QTY=0;
+        if(type=='a') {
+          if(Number(element.FIRST_DISPATCH_QTY)>RECOMMENDED_QTY){
+            this.toastrService.warning("First Dispatch Qty should not be greater than Recommended Qty");
+            element.FIRST_DISPATCH_QTY=0;
+            element.TOTAL_QTY= Number(element.FIRST_DISPATCH_QTY) + Number( element.SECOND_DISPATCH_QTY);
+            element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
+          }else{
+           element.SECOND_DISPATCH_QTY=RECOMMENDED_QTY - element.FIRST_DISPATCH_QTY;
+           element.TOTAL_QTY= Number(element.FIRST_DISPATCH_QTY) + element.SECOND_DISPATCH_QTY;
+           element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
+          }
+
+          
+        }else if(type=='b'){
+          if(Number(element.SECOND_DISPATCH_QTY)>RECOMMENDED_QTY){
+            this.toastrService.warning("Second Dispatch Qty should not be greater than Recommended Qty");
+            element.SECOND_DISPATCH_QTY=0;
+            element.TOTAL_QTY= Number(element.FIRST_DISPATCH_QTY) + Number( element.SECOND_DISPATCH_QTY);
+            element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
+          }
+          else{
+         // element.FIRST_DISPATCH_QTY=RECOMMENDED_QTY - element.SECOND_DISPATCH_QTY;
+          element.TOTAL_QTY=Number( element.FIRST_DISPATCH_QTY) +Number( element.SECOND_DISPATCH_QTY);
+          element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
+          }
+        }
+        // element.SECOND_DISPATCH_QTY=RECOMMENDED_QTY - element.FIRST_DISPATCH_QTY;
+        // element.FIRST_DISPATCH_QTY=RECOMMENDED_QTY - element.SECOND_DISPATCH_QTY;
+        // element.TOTAL_QTY= element.FIRST_DISPATCH_QTY + element.SECOND_DISPATCH_QTY;
+        //  element.SHORT_FALL=element.RECOMMENDED_QTY-element.TOTAL_QTY ;
+        // if( Number(element.FIRST_DISPATCH_QTY)==null || Number(element.FIRST_DISPATCH_QTY)==undefined){
+        //   console.log('inside if first 0');
+          
+        //   if(Number(element.SECOND_DISPATCH_QTY)>=Number(element.RECOMMENDED_QTY)){
+        //       console.log('inside if 2');
+        //     this.toastrService.warning("Second Dispatch Qty should not be greater than Recommended Qty");
+        //     element.FIRST_DISPATCH_QTY=0;
+        //     element.TOTAL_QTY= element.FIRST_DISPATCH_QTY;
+        //   }else{
+        //       console.log('inside else  SECOND_DISPATCH_QTY)>= 11');``
+        //       element.FIRST_DISPATCH_QTY=RECOMMENDED_QTY -  element.FIRST_DISPATCH_QTY;
+        //        element.TOTAL_QTY =element.FIRST_DISPATCH_QTY + element.FIRST_DISPATCH_QTY;
+        //   }
+        
         // }else{
-        //   element.FIRST_DISPATCH_QTY=element.RECOMMENDED_QTY - element.SECOND_DISPATCH_QTY;
-        //     element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( SECOND_DISPATCH);
+        //     console.log('else if 1',element.FIRST_DISPATCH_QTY);
+        //     if(Number(element.FIRST_DISPATCH_QTY)>=Number(element.RECOMMENDED_QTY)){
+        //         console.log('inside else if 1');
+        //        this.toastrService.warning("First Dispatch Qty should not be greater than Recommended Qty");
+        //      element.FIRST_DISPATCH_QTY=0;
+        //     element.TOTAL_QTY= element.FIRST_DISPATCH_QTY;
+        //     }else{
+        //         console.log('else if 2');
+        //     element.SECOND_DISPATCH_QTY=RECOMMENDED_QTY - element.FIRST_DISPATCH_QTY;
+        //     element.TOTAL_QTY =   element.FIRST_DISPATCH_QTY +   element.FIRST_DISPATCH_QTY;
+        //     }
         // }
-      // element.TOTAL_QTY = (  element.FIRST_DISPATCH_QTY) + ( element.SECOND_DISPATCH_QTY);
-        element.TOTAL_QTY = ( Number(element.FIRST_DISPATCH_QTY) ) + ( Number(element.SECOND_DISPATCH_QTY) );
         element.SHORT_FALL=0;
         if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
           this.toastrService.warning("Total Qty should not be greater than Recommended Qty");
         element.SHORT_FALL=element.RECOMMENDED_QTY-element.TOTAL_QTY ;
         }
-      // if(element.TOTAL_QTY<element.RECOMMENDED_QTY){
-      //     this.toastrService.warning("Total Qty should not be less than Recommended Qty");
-      //     element.FIRST_DISPATCH=0;
-      //     element.SECOND_DISPATCH=0;
-      //     element.TOTAL_QTY=0;
-      //     element.SHORT_FALL=0;
-      //   }
-        // let REQ_VALUE = element.TOTAL_REQUESTED_QTY * sampleCost;
-        // element.REQ_VALUE = Number(REQ_VALUE.toFixed(1));
+     
       }
     });
    }
+
    SAVESUPERSTOCKIST(VALUE:any){
     if(this.ORDER_DATE==null || this.ORDER_DATE==undefined){
         this.toastrService.error("Please select order date");
@@ -161,6 +204,15 @@ export class GenerateOrderComponent implements OnInit {
         this.toastrService.error("Please select period");
         return;
     }
+    if(this.PRODUCT_LIST.length>0){
+      for(let i=0;i<this.PRODUCT_LIST.length;i++){
+        let element=this.PRODUCT_LIST[i];
+        if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
+          this.toastrService.error("Total Qty should not be greater than Recommended Qty for Product "+element.PRODUCT_DESC);
+          return;
+        }
+      }
+    } 
    let data={
         USER_ID : JSON.parse(this.userInfo).USER_ID,
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
@@ -175,8 +227,11 @@ export class GenerateOrderComponent implements OnInit {
      this.isLoaded=true;
          this.http.postnew(this.url.SAVEGENERATEORDER, data).then(
        (res:any)=>{
-      
-        this.toastrService.success(res);
+        if(res.FLAG==true){
+          this.toastrService.success(res.MSG);
+        }else{
+          this.toastrService.error(res.MSG);
+        }
       // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
       // productlist.forEach((element: any) => {
       //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })

@@ -89,6 +89,7 @@ import { ForgotPasswordComponent } from './Common/forgot-password/forgot-passwor
 import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
 import { generate } from 'rxjs';
 import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
+import { AdhocOrderRequestListComponent } from './Forms/adhoc-order-request-list/adhoc-order-request-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -181,7 +182,8 @@ const routes: Routes = [
       {path:'paymentreport',component:CmePaymentReportComponent},
       {path:'schemaupload',component:SchemaUploadComponent},
       {path:'superstockistransfer',component:SuperstockistTransferComponent},
-      {path:'adhocgenerateorder',component:AdhocGenerateOrderComponent}
+      {path:'adhocgenerateorder',component:AdhocGenerateOrderComponent},
+      {path:'adhocorderequestlist',component:AdhocOrderRequestListComponent}
     ]
   },
 ];

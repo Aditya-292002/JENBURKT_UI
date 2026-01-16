@@ -120,6 +120,7 @@ import { SchemaUploadComponent } from './Forms/schema-upload/schema-upload.compo
 import { ForgotPasswordComponent } from './Common/forgot-password/forgot-password.component';
 import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
 import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
+import { AdhocOrderRequestListComponent } from './Forms/adhoc-order-request-list/adhoc-order-request-list.component';
 
 registerLocaleData(localeIn);
 
@@ -216,7 +217,8 @@ registerLocaleData(localeIn);
     SchemaUploadComponent,
     ForgotPasswordComponent,
     SuperstockistTransferComponent,
-    AdhocGenerateOrderComponent
+    AdhocGenerateOrderComponent,
+    AdhocOrderRequestListComponent
   ],
   imports: [
     BrowserModule,

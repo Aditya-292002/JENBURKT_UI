@@ -109,21 +109,27 @@
                             <li class="nav-item" (click)="isSelectedMenu('Generate_Order')" *ngIf="roleID == 6"
                                 [ngClass]="customMenuGenerate_Order == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/generateorder">Generate Order</a></li>
-                                  <li class="nav-item" (click)="isSelectedMenu('superstockist_transfer')"
-                                [ngClass]="customMenuSuperstockist_transfer == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/superstockistransfer">Superstockist Transfer</a></li>
-
+                        
                             <!-- <li class="nav-item" (click)="isSelectedMenu('Cycle_Super_Stockist')"
                                 [ngClass]="customMenuCycle_Super_Stockist == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/cyclesuperstockist">Cycle SuperStockist</a></li> -->
+                                    
+                                    <li class="nav-item" (click)="isSelectedMenu('Adhoc_Generate_Order')" *ngIf="roleID == 6"
+                                [ngClass]="customMenuAdhoc_Generate_Order == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adhocgenerateorder">Adhoc Generate Order</a></li>
 
+                                       <li class="nav-item" (click)="isSelectedMenu('Adhoc_Request_List')" *ngIf="roleID == 6"
+                                [ngClass]="customMenuAdhoc_request_List == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/adhocorderequestlist">Adhoc Request List</a></li>
+
+                                      <li class="nav-item" (click)="isSelectedMenu('superstockist_transfer')"
+                                [ngClass]="customMenuSuperstockist_transfer == true ? 'isSelectedMenu' : ''"><a
+                                    class="nav-link py-0" routerLink="/superstockistransfer">Superstockist Transfer</a></li>
+
+                                    
                                     <li class="nav-item" (click)="isSelectedMenu('Trade_Offer_Diff_Report')" *ngIf="roleID == 6 || roleID == 0 || roleID == 1 "
                                 [ngClass]="customMenuTrade_Offer_Diff_Report == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/tradeofferdiffreport">Trade Offer Diff Report</a></li>
-                                    
-                                    <li class="nav-item" (click)="isSelectedMenu('Adhoc_Generate_Order')" *ngIf="roleID == 6 || roleID == 0 || roleID == 1 "
-                                [ngClass]="customMenuAdhoc_Generate_Order == true ? 'isSelectedMenu' : ''"><a
-                                    class="nav-link py-0" routerLink="/adhocgenerateorder">Adhoc Generate Order</a></li>
                         </ul>
                     </div>
                 </li>

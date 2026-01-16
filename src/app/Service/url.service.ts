@@ -244,6 +244,8 @@ export class URLService {
  
             public GETSUPERSTOCKISTTRANSFERLISTBYROLEID = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTTRANSFERLISTBYROLEID';
             public GETSUPERSTOCKISTTRANSFERDETAILS = this.sharedService.ApiUrl + '/api/SuperStockist/GETSUPERSTOCKISTTRANSFERDETAILS';
- 
+            public GETAHOCSUPERSTOCKISTDATABYPERIODID= this.sharedService.ApiUrl + '/api/SuperStockist/GETAHOCSUPERSTOCKISTDATABYPERIODID';
+            public SAVEADHOCGENERATEORDER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVEADHOCGENERATEORDER';
+  
  
 }
