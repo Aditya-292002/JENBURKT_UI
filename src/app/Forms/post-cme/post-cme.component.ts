@@ -1179,6 +1179,40 @@ clearGlobalFilter(input: HTMLInputElement) {
   input.value = '';
   // this.dt1.clear(); // clears all filters including global
 }
+  updatePostPoneCmeRequest(num: any) {
+    // let datefrom = this.convertDate(this.CME_DATE_FROM);
+    // let dateto = this.convertDate(this.CME_TO_DATE);
 
+    let data = {
+      "CME_ID": this.CME_ID,
+      "USER_ID": this.userInfo.USER_ID,
+      "MODE": num == 1 ? 'POSTPONED' : 'CANCEL',
+      // "VENUE": this.VENUE,
+      // "FROM_DATE": datefrom,
+      // "TO_DATE": dateto,
+      // "TIME_FROM": this.CME_TIME_FROM,
+      // "TIME_TO": this.CME_TO_TIME
+    }
+    this.http.postnew(this.url.UPDATEPOSTPONECMEREQUEST, data).then(
+      (res: any) => {
+        // console.log('res ->' , res)
+        if (res.FLAG == true) {
+          this.toastrService.success(res.MSG);
+          // this.vissibleCancel = false;
+          this.OnBackClick();
+             this.GETPOSTCMELISTBYUSERID('P');
+        } else if (res.FLAG == false) {
+          this.toastrService.error(res.MSG);
+          // this.vissibleCancel = false;
+        }
+      },
+      error => {
+        console.log(error);
+        this.toastrService.error("Oops, Something went wrong.");
+        // this.vissibleCancel = false;
+      }
+    );
+
+  }
 
 }
