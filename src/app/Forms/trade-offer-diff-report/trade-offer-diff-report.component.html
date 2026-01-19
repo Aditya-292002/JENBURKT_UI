@@ -131,6 +131,7 @@
 
             <!-- Column Headers -->
             <tr pFrozenColumn>
+              <th class="width-10"  *ngIf="SUPERSTOCKIST_CODE=='0'">Superstockist Code</th>
               <th class="width-10">Product Code</th>
               <th class="width-30">Product Description</th>
               <th class="width-10">From Date</th>
@@ -204,6 +205,7 @@
           <!-- ===== TABLE BODY ===== -->
           <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
             <tr>
+                 <td class="width-10"  *ngIf="SUPERSTOCKIST_CODE=='0'">{{ data.SUPERSTOCKIST_CODE }}</td>
               <td class="width-10">{{ data.PRODUCT_CODE }}</td>
               <td class="width-30">{{ data.PRODUCT_DESC }}</td>
               <td class="width-10">{{ data.FROM_DATE | date: 'dd-MM-yyyy' }}</td>
