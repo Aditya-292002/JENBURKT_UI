@@ -1,3 +1,6 @@
 .width-5{
     min-width: 200px !important;
 }
+.textalign-right{
+    text-align: right !important;
+}

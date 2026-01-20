@@ -30,6 +30,7 @@ export class GenerateOrderComponent implements OnInit {
   superStockistList: any=[];
   superStockistCode: any;
   SUPERSTOCKIST_CODE:any
+  SUPERSTOKIST_DROPDOWN_FLAG: boolean=false;
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
@@ -46,6 +47,10 @@ export class GenerateOrderComponent implements OnInit {
        (res:any)=>{
          this.periodList = res.PERIOD_LIST;
          this.superStockistList = res.DATA_LIST;
+          if(this.superStockistList.length==1){
+           this.SUPERSTOCKIST_CODE=this.superStockistList[0].SUPERSTOCKIST_CODE;
+         }
+        // this.SUPERSTOKIST_DROPDOWN_FLAG=this.superStockistList.length==1?true:false;
        //console.log('periodList',this.periodList);
       
        },
@@ -120,7 +125,12 @@ export class GenerateOrderComponent implements OnInit {
         this.PRODUCT_LIST.forEach((element: any,i:number) => {
       if (index===i ) {
         console.log('inside ',i);
-        
+        if(element.FIRST_DISPATCH_QTY=='' ){
+          element.FIRST_DISPATCH_QTY=0;
+        }
+        if(element.SECOND_DISPATCH_QTY=='' ){
+          element.SECOND_DISPATCH_QTY=0;
+        }
         let FIRST_DISPATCH_QTY = Number(element.FIRST_DISPATCH_QTY) || 0;
         let SECOND_DISPATCH_QTY = Number(element.SECOND_DISPATCH_QTY) || 0;
         let TOTAL_QTY = Number(element.TOTAL_QTY) || 0;
@@ -130,8 +140,8 @@ export class GenerateOrderComponent implements OnInit {
         element.TOTAL_QTY=0;
         if(type=='a') {
           if(Number(element.FIRST_DISPATCH_QTY)>RECOMMENDED_QTY){
-            this.toastrService.warning("First Dispatch Qty should not be greater than Recommended Qty");
-            element.FIRST_DISPATCH_QTY=0;
+            // this.toastrService.warning("First Dispatch Qty should not be greater than Recommended Qty");
+            // element.FIRST_DISPATCH_QTY=0;
             element.TOTAL_QTY= Number(element.FIRST_DISPATCH_QTY) + Number( element.SECOND_DISPATCH_QTY);
             element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
           }else{
@@ -143,8 +153,8 @@ export class GenerateOrderComponent implements OnInit {
           
         }else if(type=='b'){
           if(Number(element.SECOND_DISPATCH_QTY)>RECOMMENDED_QTY){
-            this.toastrService.warning("Second Dispatch Qty should not be greater than Recommended Qty");
-            element.SECOND_DISPATCH_QTY=0;
+            // this.toastrService.warning("Second Dispatch Qty should not be greater than Recommended Qty");
+            // element.SECOND_DISPATCH_QTY=0;
             element.TOTAL_QTY= Number(element.FIRST_DISPATCH_QTY) + Number( element.SECOND_DISPATCH_QTY);
             element.SHORT_FALL=Number(element.RECOMMENDED_QTY)-Number(element.TOTAL_QTY );
           }
@@ -187,8 +197,13 @@ export class GenerateOrderComponent implements OnInit {
         // }
         element.SHORT_FALL=0;
         if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
-          this.toastrService.warning("Total Qty should not be greater than Recommended Qty");
+          // this.toastrService.warning("Total Qty should not be greater than Recommended Qty");
         element.SHORT_FALL=element.RECOMMENDED_QTY-element.TOTAL_QTY ;
+        }else{
+           element.SHORT_FALL=element.RECOMMENDED_QTY-element.TOTAL_QTY ;
+        }
+        if(element.SHORT_FALL>0){
+          this.toastrService.warning("Order Quantity cannot be lesser than Recommended Quantity for Product "+element.PRODUCT_DESC);
         }
      
       }
@@ -204,15 +219,15 @@ export class GenerateOrderComponent implements OnInit {
         this.toastrService.error("Please select period");
         return;
     }
-    if(this.PRODUCT_LIST.length>0){
-      for(let i=0;i<this.PRODUCT_LIST.length;i++){
-        let element=this.PRODUCT_LIST[i];
-        if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
-          this.toastrService.error("Total Qty should not be greater than Recommended Qty for Product "+element.PRODUCT_DESC);
-          return;
-        }
-      }
-    } 
+    // if(this.PRODUCT_LIST.length>0){
+    //   for(let i=0;i<this.PRODUCT_LIST.length;i++){
+    //     let element=this.PRODUCT_LIST[i];
+    //     if(element.TOTAL_QTY>element.RECOMMENDED_QTY){
+    //       this.toastrService.error("Total Qty should not be greater than Recommended Qty for Product "+element.PRODUCT_DESC);
+    //       return;
+    //     }
+    //   }
+    // } 
    let data={
         USER_ID : JSON.parse(this.userInfo).USER_ID,
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
