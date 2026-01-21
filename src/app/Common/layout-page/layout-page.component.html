@@ -122,7 +122,7 @@
                                 [ngClass]="customMenuAdhoc_request_List == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/adhocorderequestlist">Adhoc Request List</a></li> -->
 
-                                      <li class="nav-item" (click)="isSelectedMenu('superstockist_transfer')"
+                                      <li class="nav-item" (click)="isSelectedMenu('superstockist_transfer')" *ngIf="roleID == 0 || roleID == 1 "
                                 [ngClass]="customMenuSuperstockist_transfer == true ? 'isSelectedMenu' : ''"><a
                                     class="nav-link py-0" routerLink="/superstockistransfer">Superstockist Transfer</a></li>
 

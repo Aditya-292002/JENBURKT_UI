@@ -20,15 +20,23 @@ export class AdhocGenerateOrderComponent {
    roleListData: any=[];
    pdfSrc: any="";
    pdfSrcflag: boolean=false;
-  PRODUCT_LIST: any;
+  PRODUCT_LIST: any=[];
   IS_DISABLED:boolean;
   isHighLightSample:any
   SAMPLE_PRODUCT_LIST: any=[];
   ORDER_DATE:any=new Date();
-  ORDER_STATUS:boolean=false;
+  ORDER_STATUS:any;
   superStockistList: any=[];
   superStockistCode: any;
   SUPERSTOCKIST_CODE:any
+  toListFlag: boolean=false;
+  ADHOC_ORDER_REQUEST_LIST: any;
+  headerlist: any;
+  detailslist: any;
+  detailviewFlag: boolean=false;
+  ORDER_PURCHASE_ID: any;
+  ORDER_PURCHASE_NO: any;
+  SUPERSTOKIST_DROPDOWN_FLAG: boolean=false;
    constructor(private AuthService:AuthService,private url:URLService,private http:HttpService,private toastrService:ToastrService,private fileDownloadService: ApiService,private sanitizer: DomSanitizer) { }
     ngOnInit(): void {
      this.getPeriodListData();
@@ -45,6 +53,11 @@ export class AdhocGenerateOrderComponent {
        (res:any)=>{
          this.periodList = res.PERIOD_LIST;
          this.superStockistList = res.DATA_LIST;
+
+         if(this.superStockistList.length==1){
+           this.SUPERSTOCKIST_CODE=this.superStockistList[0].SUPERSTOCKIST_CODE;
+         }
+        // this.SUPERSTOKIST_DROPDOWN_FLAG=this.superStockistList.length==1?true:false;
        //console.log('periodList',this.periodList);
       
        },
@@ -85,7 +98,7 @@ export class AdhocGenerateOrderComponent {
           this.SAMPLE_PRODUCT_LIST=[];
          this.isLoaded=false;
         this.PRODUCT_LIST=res.PRODUCT_DETAILS
-        this.ORDER_STATUS=res.ORDER_STATUS[0].STATUS==1? true:false;
+       // this.ORDER_STATUS=res.ORDER_STATUS[0].STATUS==1? true:false;
         
         this.ORDER_DATE=new Date(res.ORDER_STATUS[0].ORDER_DATE);
         console.log('123',this.ORDER_STATUS,this.ORDER_DATE);
@@ -164,6 +177,9 @@ export class AdhocGenerateOrderComponent {
         LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
         ORDER_DATE:this.ORDER_DATE,
         SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
+        STATUS:VALUE,
+        ORDER_PURCHASE_ID:this.ORDER_PURCHASE_ID?this.ORDER_PURCHASE_ID:0,
+        ORDER_PURCHASE_NO:this.ORDER_PURCHASE_NO?this.ORDER_PURCHASE_NO:0,
         PRODUCT_LIST: this.PRODUCT_LIST
      }  
      console.log(data,'data');
@@ -173,6 +189,8 @@ export class AdhocGenerateOrderComponent {
        (res:any)=>{
          if(res.FLAG==true){
           this.toastrService.success(res.MSG);
+          this.toListFlag=true;
+          this.GETADHOCORDERREQUESTLIST();
            this.isLoaded=false;
         }else{
           this.toastrService.error(res.MSG);
@@ -193,5 +211,94 @@ export class AdhocGenerateOrderComponent {
        }
      );
    }
+
+  goToList(){
+
+   this.toListFlag=!this.toListFlag;
+   this.detailviewFlag=false;
+      this.ORDER_STATUS='';
+   if(this.toListFlag){
+
+     this.GETADHOCORDERREQUESTLIST();
+   }
+  }
+    addnew(){
+
+   this.toListFlag=!this.toListFlag;
+   this.detailviewFlag=false;
+   this.PRODUCT_LIST=[];
+   this.superStockistList='';
+     this.getPeriodListData()
+
+this.ORDER_DATE=new Date();
+  }
+  GETADHOCORDERREQUESTLIST(){
+   let data={
+        USER_ID : JSON.parse(this.userInfo).USER_ID,
+        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
+        SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE
+     } 
+          this.isLoaded=true;
+         this.http.postnew(this.url.GETAHOCORDEREQUESTLIST, data).then(
+       (res:any)=>{
+           this.ADHOC_ORDER_REQUEST_LIST=res.PRODUCT_DETAILS;
+        // this.toastrService.success(res);
+      // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
+      // productlist.forEach((element: any) => {
+      //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
+      // })
+         console.log('SAVEGENERATEORDER',res);
+        this.isLoaded=false;
+       },
+       error =>{
+          this.isLoaded=false;
+         //console.log(error);
+         this.toastrService.error("Oops, Something went wrong.");
+       }
+     );
+  }
+  GETREQUESTDETAILS(DATA:any){
+    this.ORDER_PURCHASE_ID=DATA.ORDER_PURCHASE_ID;
+    this.ORDER_PURCHASE_NO=DATA.ORDER_PURCHASE_NO;
+    let data ={
+        USER_ID : JSON.parse(this.userInfo).USER_ID,
+        LOGIN_ID:JSON.parse(this.userInfo).USER_NAME,
+        ORDER_PURCHASE_NO:DATA.ORDER_PURCHASE_NO,
+        SUPERSTOCKIST_CODE:this.SUPERSTOCKIST_CODE,
+        ORDER_PURCHASE_ID:DATA.ORDER_PURCHASE_ID
+     } 
+          this.isLoaded=true;
+         this.isLoaded=true;
+         this.http.postnew(this.url.GETAHOCORDEREQUESTDETAILS, data).then(
+       (res:any)=>{
+        this.headerlist=res.HEADER_LIST;
+        this.SUPERSTOCKIST_CODE=res.HEADER_LIST[0].SUPERSTOCKIST_CODE;
+        this.ORDER_DATE=new Date(res.HEADER_LIST[0].ORDER_DATE);
+         this.ORDER_STATUS=res.HEADER_LIST[0].STATUS;
+        this.PRODUCT_LIST=res.DETAIL_LIST;
+        this.detailviewFlag=true;
+        this.toListFlag=false;
+        //  if(res.FLAG==true){
+        //   this.toastrService.success(res.MSG);
+        //    this.isLoaded=false;
+        // }else{
+        //   this.toastrService.error(res.MSG);
+        //    this.isLoaded=false;
+        // }
+        // this.toastrService.success(res);
+      // const productlist = [...new Set(this.SAMPLE_PRODUCT_LIST.map((item: any) => item.PRODUCT_DESC))];
+      // productlist.forEach((element: any) => {
+      //   this.DROPDOWN_PRODUCT_LIST.push({ label: element, value: element })
+      // })
+         console.log('SAVEGENERATEORDER',res);
+        this.isLoaded=false;
+       },
+       error =>{
+          this.isLoaded=false;
+         //console.log(error);
+         this.toastrService.error("Oops, Something went wrong.");
+       }
+     );
+  }
 
 }

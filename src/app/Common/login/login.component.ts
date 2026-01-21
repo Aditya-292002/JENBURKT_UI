@@ -57,7 +57,7 @@ showPassword: boolean = false;
 
               this.router.navigate(["/dashboard"]);
             }else{
-               this.router.navigate(["/generateorder"]);
+               this.router.navigate(["/adhocorderequestlist"]);
             }
             this.EXPIRES_IN = (this.EXPIRES_IN * 1000) - bufferTime;
             console.log("⏳ Scheduling refresh in", this.EXPIRES_IN , "seconds");

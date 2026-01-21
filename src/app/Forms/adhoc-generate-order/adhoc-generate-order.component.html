@@ -9,12 +9,25 @@
         <div class="d-flex justify-content-start">
             <h5 class="mb-0 headers">Adhoc Generate Order</h5>
         </div>
-         <div class="buttonBox ml-auto">
-                       <!-- <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(0)" [disabled]="ORDER_STATUS">
+                 <!-- <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST('')" [disabled]="ORDER_STATUS">
                 Save As Draft
             </button> -->
-            <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
-                Submit
+         <div class="buttonBox ml-auto">
+                       <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="goToList()" *ngIf="!toListFlag">
+               List
+            </button>
+             <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="goToList()" *ngIf="toListFlag">
+               Back
+            </button>
+                         <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="addnew()" *ngIf="toListFlag">
+               Add New
+            </button>
+             <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST('0')" *ngIf="!toListFlag && !detailviewFlag || ORDER_STATUS=='0'">
+               Save as Draft
+            </button>
+
+            <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST('1')" *ngIf="!toListFlag && !detailviewFlag || ORDER_STATUS=='0'">
+                Save
             </button>
         </div>
 
@@ -22,7 +35,7 @@
 </div>
 <app-loader *ngIf="isLoaded"></app-loader>
 <div class="container-fluid">
-    <div class="card">
+    <div class="card"  *ngIf="!toListFlag">
         <div class="card-body">
             <div class="">
                                 <div class="row">
@@ -47,7 +60,7 @@
                                 <p-dropdown [options]="superStockistList" appendTo="body" optionLabel="SUPERSTOCKIST_NAME"
                                     optionValue="SUPERSTOCKIST_CODE" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
                                     placeholder="Please Select" [(ngModel)]="SUPERSTOCKIST_CODE"
-                                    [ngModelOptions]="{standalone:true}">
+                                    [ngModelOptions]="{standalone:true}" [disabled]="detailviewFlag">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -56,7 +69,7 @@
 
                    <div class="col-sm-12 col-md-12 col-lg-1 ">
                         <div class="buttonBox mt-4 ">
-                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()" *ngIf="!detailviewFlag">
                                 <!-- <i class="fa fa-spinner mr-2" aria-hidden="true"></i> -->
                                 Show
                             </button>
@@ -71,7 +84,7 @@
                             <div>
                                 <p-calendar [(ngModel)]="ORDER_DATE" appendTo="body" [showIcon]="true"
                                     dateFormat="dd.mm.yy" inputId="icon" placeholder="Order date"
-                                    ></p-calendar>
+                                    [disabled]="detailviewFlag"></p-calendar>
                             </div>
                         </div>
                     </div>
@@ -107,7 +120,7 @@
     </div>
 
 
-                    <div class="row">
+  <div class="row" *ngIf="!toListFlag">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="mb-2">
                             <label> </label>
@@ -209,6 +222,7 @@
                                                 <td class="width-2">
                                                      <input type="text" [(ngModel)]="data.TOTAL_QTY" class="form-control"
                                                     name="pincode"
+                                                    autocomplete="off"
                                                     placeholder="Enter Total Qty" 
                                                     appTwoDigitDecimaNumber>
                                               
@@ -226,5 +240,102 @@
                             </div>
                         </div>
                     </div>
+ </div>
+
+     <div class="card" *ngIf="toListFlag">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="mb-2">
+                        <label> </label>
+                        <div>
+                            <p-table [value]="ADHOC_ORDER_REQUEST_LIST" responsiveLayout="scroll" scrollHeight="420px"
+                                [globalFilterFields]="['REQUEST_ID', 'UNIT_PACK', 'POOL_COUNT', 'INNER_PACK','REQUESTED_PACK_QTY'
+                                        ,'POOL_HQCOUNT','TOTAL_REQ'
+                                    ]" #dt2>
+
+                                <ng-template pTemplate="caption">
+                                    <div class="row">
+                                        <div class="col-md-2 col-lg-2 col-sm-12 table-header text-center">
+                                            <!-- <div class="text-left">
+                                                <div style="display: flex;gap: 15px;align-items: center;">
+                                                    <div style="display: flex;text-align: center;">
+                                                        <p-checkbox [(ngModel)]="PENDINGFLAG" name="ispaymentlistview"
+                                                            (click)="ClickPaymentMode(1)" binary="true"
+                                                            inputId="pending_payment">
+                                                        </p-checkbox>
+                                                        <label for="ispaymentlistview">Pending</label>
+                                                    </div>
+
+                                                    <div style="display: flex;text-align: center;">
+                                                        <p-checkbox [(ngModel)]="APPROVEDFLAG" name="ispaymentlistview"
+                                                            (click)="ClickPaymentMode(0)" binary="true"
+                                                            inputId="received_payment">
+                                                        </p-checkbox>
+                                                        <label for="ispaymentlistview">Approved</label>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </div>
+
+
+                                    </div>
+
+
+                                </ng-template>
+                                <ng-template pTemplate="header">
+
+                                    <tr>
+                                        <!-- <th scope="col">Pool
+                                                <p-columnFilter class="column-filter" field="POOL_DESC"
+                                                    matchMode="equals" [showMenu]="false">
+                                                    <ng-template pTemplate="filter" let-value
+                                                        let-filter="filterCallback">
+                                                        <p-dropdown [ngModel]="value" [options]="POOL_LIST"
+                                                            (onChange)="filter($event.value)" [showClear]="true"
+                                                            appendTo="body" placeholder="Select" [filter]="true"
+                                                            [filterBy]="'label'">
+                                                            <ng-template let-option pTemplate="item">
+                                                                <span>{{option.label}}</span>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </ng-template>
+                                                </p-columnFilter>
+                                            </th> -->
+                                        <th>Order No</th>
+                                        <th>Order Date</th>
+                                        <th>Superstokist Name</th>
+                                         <th>Status</th>
+                                        <!-- <th scope="col">HQ Code</th>
+                                        <th>HQ Desc</th>
+                                        <th>Remarks</th>
+                                        <th>Status</th> -->
+
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                    <tr (click)="GETREQUESTDETAILS(data)">
+                                        <td class="width-2">{{ data.ORDER_PURCHASE_NO }}</td>
+                                        <td class="width-2">{{ data.ORDER_DATE | date:'dd-MMM-yyy' }}</td>
+                                        <td class="width-2">{{ data.SUPERSTOCKIST_NAME }}</td>
+                                         <td class="width-2">{{ data.STATUS }}</td>
+                                        <!-- <td class="width-2">{{ data.HQ_CODE }}</td>
+                                        <td class="width-2">{{ data.HQ_DESC }}</td>
+                                        <td class="width-2">{{ data.REMARKS }}</td>
+                                        <td> <span class="is-info">{{ data.STATUS }}</span> </td> -->
+
+                                        <td (click)="GETREQUESTDETAILS(data)"><i class="fa fa-edit " aria-hidden="true"></i></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
