@@ -248,6 +248,7 @@ export class URLService {
             public SAVEADHOCGENERATEORDER = this.sharedService.ApiUrl + '/api/SuperStockist/SAVEADHOCGENERATEORDER';
              public GETAHOCORDEREQUESTLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETAHOCORDEREQUESTLIST';
             public GETAHOCORDEREQUESTDETAILS = this.sharedService.ApiUrl + '/api/SuperStockist/GETAHOCORDEREQUESTDETAILS';
+            public GETCMEVALIDATED = this.sharedService.ApiUrl + '/api/Cme/GETCMEVALIDATED';
   
  
 }

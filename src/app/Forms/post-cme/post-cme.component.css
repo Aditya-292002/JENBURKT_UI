@@ -28,3 +28,6 @@
     background: green;
     cursor: pointer;
   }
+  .number-align{
+    text-align: right !important;
+  } 

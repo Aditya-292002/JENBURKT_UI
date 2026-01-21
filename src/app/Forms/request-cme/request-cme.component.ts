@@ -149,6 +149,9 @@ export class RequestCmeComponent implements OnInit {
   BANK_IFSC: any
   PAN_NO: any;
  UPDATEAFTERREJECTFLAG:boolean=false;
+  CME_VALIDATION_LIST: any;
+  VALIDATEFLAG: boolean=false;
+  popupvalidation: boolean=false;
 
   constructor(private authService: AuthService, private url: URLService, private http: HttpService,
     private toastrService: ToastrService, private common: CommonService, public datePipe: DatePipe, private router: Router, public httpclient: HttpClient) {
@@ -163,6 +166,7 @@ export class RequestCmeComponent implements OnInit {
     this.REQ_BY_USER_ID = this.userInfo.USER_ID;
     this.REQ_BY_USER_NAME = this.userInfo.USER_NAME;
     this.Today = new Date('04/01/2025');
+    this.GETCMEVALIDATED();
     if (this.CME_ID == null) {
       this.GETCMEMASTERLIST();
       this.CME_TIME_FROM = new Date();
@@ -1831,7 +1835,29 @@ UPDATEAFTERREJECT(){
 
   
 }
-
-
-
+GETCMEVALIDATED() {
+    let data = {
+      "USER_ID": this.userInfo.USER_ID
+    }
+    this.isLoaded = true;
+    this.http.postnew(this.url.GETCMEVALIDATED, data).then(
+      (res: any) => {
+        console.log('GETCMEVALIDATED res ->' , res)
+        this.CME_VALIDATION_LIST = res.VALIDAION_STATUS;
+        this.isLoaded = false;
+        this.VALIDATEFLAG = this.CME_VALIDATION_LIST[0]?.Is_Expired_Flag==1 ? true : false;
+        this.popupvalidation=this.VALIDATEFLAG
+        console.log(this.VALIDATEFLAG);
+        
+      },
+      error => {
+        console.log(error);
+        this.isLoaded = false;
+        this.toastrService.error("Oops, Something went wrong.");
+      }
+    );
+  }
+  cancelForValidation() {
+    this.popupvalidation = false;
+  } 
 }
