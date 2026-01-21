@@ -34,9 +34,9 @@ export class PostCmeComponent implements OnInit {
   ATTENDING_DOCTOR_LIST = [{ DOCTOR_NAME: '',DOCTOR_QUALIFICATION: '',DOCTOR_SPECIALIZATION:null,EMAIL_ID: '', MOBILE_NO: 0}]
   AttendingDoctorList = [{ ID: 1, DOCTOR_NAME: '',DOCTOR_QUALIFICATION: '',DOCTOR_SPECIALIZATION: null,EMAIL_ID: '', MOBILE_NO: 0}]
   AttendenceDoctorsList: any[] = [];
-  BILL_DETAILS_LIST:any=[{ BILL_NO: '',PARTICULARS: '',AMOUNT: 0}]
-  BillDetailsList: Array<{ BILL_NO: string; PARTICULARS: string; AMOUNT: number }> = [
-    { BILL_NO: '', PARTICULARS: '', AMOUNT: 0 }
+  BILL_DETAILS_LIST:any=[{ BILL_NO: '',PARTICULARS: '',AMOUNT: 0, GST: 0}]
+  BillDetailsList: Array<{ BILL_NO: string; PARTICULARS: string; AMOUNT: number; GST: number }> = [
+    { BILL_NO: '', PARTICULARS: '', AMOUNT: 0, GST: 0 }
   ];
   convertedJson:any = [];
   inputfileltext:any = "";
@@ -146,9 +146,12 @@ export class PostCmeComponent implements OnInit {
   BILL_DETAILS_TOTAL_AMOUNT:any = 0;
   GST:any;
   RECEIVED_AMOUNT:any;
+  WHOME_TO_PAY:any;
   ACTUAL_OUTSTANDING:any;
   ACTUAL_AMOUNT:any;
   BILL_STATUS: any;
+  typeoflist: string;
+  BILL_DETAILS_TOTAL_GST: any=0;
 
   constructor(private   url:URLService,private http:HttpService,private common:CommonService,
     private toastrService:ToastrService,private authService:AuthService,private router:Router,
@@ -283,6 +286,7 @@ export class PostCmeComponent implements OnInit {
       this.toastrService.error('Select a Time To')
       return
     }
+    if(val == 1){
 
     for(const  data of this.AttendingDoctorList){
       if(!this.common.isValid(data.DOCTOR_NAME)){
@@ -297,16 +301,17 @@ export class PostCmeComponent implements OnInit {
         this.toastrService.error('Select a Specialization')
         return
       }
-      if(!this.common.isValid(data.EMAIL_ID)){
-        this.toastrService.error('Enter a Email ID')
-        return
-      }
+      // if(!this.common.isValid(data.EMAIL_ID)){
+      //   this.toastrService.error('Enter a Email ID')
+      //   return
+      // }
       if(!this.common.isValid(data.MOBILE_NO)){
         this.toastrService.error('Enter a Mobile No ')
         return
       }
     }
-    if(this.BILL_STATUS ==1){
+  }
+    if(this.BILL_STATUS ==1 && val == 1){
     for(const  data of this.BillDetailsList){
       if(!this.common.isValid(data.BILL_NO)){
           this.toastrService.error('Enter a  Bill No')
@@ -320,7 +325,6 @@ export class PostCmeComponent implements OnInit {
         this.toastrService.error('Enter a Amount')
         return
       }
-   
     }
      }
     
@@ -468,7 +472,7 @@ var IS_UPDATE = 1
 }
 
   GETPOSTCMELISTBYUSERID(value: string){
-
+    this.typeoflist = value;
     let data = {
       "USER_ID": this.userInfo.USER_ID,
       "TYPE":value
@@ -489,6 +493,22 @@ var IS_UPDATE = 1
           this.formFieldsDisabled = false;
           this.isCompletedList=false;
         } else if (value === 'C') {
+          this.pendingList = this.POST_CME_LIST;
+          this.Pendingflag=true;
+          this.isPending = false;
+          this.isCompleted = true;
+          this.formFieldsDisabled = true;
+          this.isCompletedList=true;
+        }
+        else if (value === 'D') {
+          this.pendingList = this.POST_CME_LIST;
+          this.Pendingflag=true;
+          this.isPending = false;
+          this.isCompleted = true;
+          this.formFieldsDisabled = true;
+          this.isCompletedList=true;
+        }
+        else if (value === 'CL') {
           this.pendingList = this.POST_CME_LIST;
           this.Pendingflag=true;
           this.isPending = false;
@@ -521,7 +541,7 @@ var IS_UPDATE = 1
   }
 
   GetPreviewCmeReqFromCmeNo(data:any){
-    // console.log('data ->' , data)
+     console.log('data ->' , data)
     let todate = this.datePipe.transform(data.CME_DATE,"dd-MM-yyyy")
     let fromdate = this.datePipe.transform(data.DATE_FROM,"dd-MM-yyyy")
     let to_date = this.datePipe.transform(data.DATE_TO,"dd-MM-yyyy")
@@ -534,6 +554,7 @@ var IS_UPDATE = 1
     this.AMOUNT = (Math.round(data.AMOUNT * 100) / 100).toFixed(2);
     let received_amount = (data.OLD_PAID + data.OLD_TDS);
     this.RECEIVED_AMOUNT = (Math.round(received_amount * 100) / 100).toFixed(2);
+    this.WHOME_TO_PAY = data.WHOM_TO_PAY;
     this.GST = (Math.round(data.GST * 100) / 100).toFixed(2);
     this.ACTUAL_OUTSTANDING = (Math.round(data.OUT_STANDING * 100) / 100).toFixed(2);
     this.InstName=data.IS_INSITUTION_NAME;
@@ -595,8 +616,8 @@ var IS_UPDATE = 1
       this.isAdd=false;
       this.isPending = true;
       if(this.STATUS)
-    this.GETPOSTCMELISTBYUSERID('P')
-     this.AttendingDoctorList=[{
+      this.GETPOSTCMELISTBYUSERID('P')
+      this.AttendingDoctorList=[{
       ID:1,
       DOCTOR_NAME:"",
       DOCTOR_QUALIFICATION:"",
@@ -609,7 +630,7 @@ var IS_UPDATE = 1
       BILL_NO:"",
       PARTICULARS:"",
       AMOUNT:0,
-
+      GST:0,
       }
     ];
     this.UploadDocumentdetails = [];
@@ -994,7 +1015,7 @@ for (let  value of this.BillDetailsList) {
     return  
    }
  }
-const newDropdown1 = { ID: this.BillDetailsList.length + 1, BILL_NO: '',PARTICULARS:'',AMOUNT:0 };
+const newDropdown1 = { ID: this.BillDetailsList.length + 1, BILL_NO: '',PARTICULARS:'',AMOUNT:0, GST: 0 };
 this.BillDetailsList.push(newDropdown1);
 this.GetCalculateBillDetailsAmount();
 }
@@ -1060,10 +1081,18 @@ ViewPostList(data1:any) {
     .then((res: any) => {  
       if(data1.POST_CMESTATUS=="Draft"){
         this.IsAction =  true;
-        this.IsDraft = false;
+        this.IsDraft = true;
         this.isAdd = true;
         this.formFieldsDisabled=false;
-      }else{
+      }
+      // else if(data1.POST_CMESTATUS=="Pending"){
+      //   this.IsAction =  false; 
+      //   this.IsDraft = false;
+      //   this.isAdd = true;
+      //   this.formFieldsDisabled=true;
+      //   this.isViewClicked = false;
+      // }
+      else{
         this.IsAction =  false;
         this.IsDraft = false;
         this.isAdd = true;
@@ -1122,6 +1151,7 @@ ViewPostList(data1:any) {
 
 GetCalculateBillDetailsAmount(){
   this.BILL_DETAILS_TOTAL_AMOUNT = this.BillDetailsList.reduce((sum:any, item:any) => sum + Number(item.AMOUNT), 0); 
+   this.BILL_DETAILS_TOTAL_GST = this.BillDetailsList.reduce((sum:any, item:any) => sum + Number(item.GST), 0); 
 }
 
 clearForm() {
@@ -1147,7 +1177,8 @@ clearForm() {
   this.BillDetailsList = [{
       BILL_NO: "",
       PARTICULARS: "",
-      AMOUNT: 0
+      AMOUNT: 0,
+      GST: 0
   }];
   this.UPLOAD_DOCUMENT_LIST = [];
   this.UploadDocumentdetails = [];
@@ -1179,14 +1210,14 @@ clearGlobalFilter(input: HTMLInputElement) {
   input.value = '';
   // this.dt1.clear(); // clears all filters including global
 }
-  updatePostPoneCmeRequest(num: any) {
+  updatePostPoneCmeRequest() {
     // let datefrom = this.convertDate(this.CME_DATE_FROM);
     // let dateto = this.convertDate(this.CME_TO_DATE);
 
     let data = {
       "CME_ID": this.CME_ID,
       "USER_ID": this.userInfo.USER_ID,
-      "MODE": num == 1 ? 'POSTPONED' : 'CANCEL',
+      "MODE":'POST_CME_CANCEL',
       // "VENUE": this.VENUE,
       // "FROM_DATE": datefrom,
       // "TO_DATE": dateto,

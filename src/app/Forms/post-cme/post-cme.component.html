@@ -21,8 +21,8 @@
 <div class="container-fluid" *ngIf="!isAdd">
 <div class="card">
     <p-table #dt1 [value]="POST_CME_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll"
-        scrollHeight="420px" [globalFilterFields]="['CME_DATE', 'CME_NO', 'TOPIC']" stateStorage="session"
-        stateKey="statedemo-session5" (onLazyLoad)="loadDataLazily($event)" >
+        scrollHeight="420px" [globalFilterFields]="['CME_DATE', 'CME_NO', 'TOPIC']" 
+        (onLazyLoad)="loadDataLazily($event)" >
 
         <ng-template pTemplate="caption">
             <div class="d-flex justify-content-between">
@@ -34,7 +34,15 @@
                     </div>
                     <div class="form-check form-check-inline">
                         <input type="radio" id="inlineRadio3" name="status" value="C" (click)="GETPOSTCMELISTBYUSERID('C')">
-                        <label class="form-check-label ml-2" for="inlineRadio3">Completed/Draft</label>
+                        <label class="form-check-label ml-2" for="inlineRadio3">Completed</label>
+                    </div>
+                     <div class="form-check form-check-inline">
+                        <input type="radio" id="inlineRadio3" name="status" value="D" (click)="GETPOSTCMELISTBYUSERID('D')">
+                        <label class="form-check-label ml-2" for="inlineRadio3">Draft</label>
+                    </div>
+                       <div class="form-check form-check-inline">
+                        <input type="radio" id="inlineRadio3" name="status" value="CL" (click)="GETPOSTCMELISTBYUSERID('CL')">
+                        <label class="form-check-label ml-2" for="inlineRadio3">Cancelled</label>
                     </div>
                 </div>
                 <div class="table-header text-right">
@@ -55,7 +63,7 @@
                 <th pSortableColumn="HQ_DESC">HQ_CODE</th>
                 <th pSortableColumn="TOPIC">SM NAME</th>
                 <th pSortableColumn="TOPIC">TOPIC</th>
-                <th pSortableColumn="STATUS" *ngIf="this.IsView == 'C'">Status</th>
+                <th pSortableColumn="STATUS" *ngIf="this.IsView == 'D' || this.IsView == 'C' || this.IsView == 'CL'">Status</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
@@ -67,7 +75,7 @@
                 <td>{{ data.SM_NAME }}</td>
                 <td>{{ data.TOPIC }}</td>
             </tr>
-            <tr *ngIf="this.IsView == 'C'" (click)="ViewPostList(data)">
+            <tr *ngIf="this.IsView == 'D' || this.IsView == 'C'  || this.IsView == 'CL'" (click)="ViewPostList(data)">
                 <td>{{ data.CME_NO }}</td>
                 <td class="width-12">{{ data.CME_DATE | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ data.USER_NAME }}</td>
@@ -227,6 +235,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4" >
+                            <div class="mb-2">
+                                <label>Whom To Pay</label>
+                                <div>
+                                    <input type="text" class="form-control" [(ngModel)]="WHOME_TO_PAY"
+                                     placeholder="Pay to user" [ngModelOptions]="{standalone: true}" disabled>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-12 col-md-12 col-lg-4" *ngIf="this.IsView == 'C'">
                             <div class="mb-2">
                                 <label>Actual Amount</label>
@@ -336,6 +353,7 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" [(ngModel)]="item.MOBILE_NO"
+                             (click)="item.MOBILE_NO==0?item.MOBILE_NO='':''"
                                 [ngModelOptions]="{standalone: true}" placeholder="Please Enter Phone"
                                 pattern="[0-9]{10}" maxlength="10" minlength="10" required
                                 (input)="validateNumber($event)" [disabled]="formFieldsDisabled">
@@ -373,7 +391,8 @@
                                 <tr>
                                     <th pSortableColumn="Bill_No"> Bill No </th>
                                     <th pSortableColumn="Particulars"> Particulars </th>
-                                    <th pSortableColumn="Amount"> Amount </th>
+                                    <th pSortableColumn="Amount"> Amount </th> 
+                                    <th pSortableColumn="Amount"> GST </th>
                                     <th *ngIf="IsAction">Action</th>
                                 </tr>
                             </ng-template>
@@ -390,8 +409,15 @@
                                             [disabled]="formFieldsDisabled">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" [(ngModel)]="item.AMOUNT" numbersOnly
+                                        <input type="text" class="form-control number-align" [(ngModel)]="item.AMOUNT" numbersOnly
                                             [ngModelOptions]="{standalone: true}" placeholder="Please Enter"
+                                            (click)="item.AMOUNT==0?item.AMOUNT='':''"
+                                            [disabled]="formFieldsDisabled" (ngModelChange)="GetCalculateBillDetailsAmount()">
+                                    </td>
+                                      <td>
+                                        <input type="text" class="form-control number-align" [(ngModel)]="item.GST" numbersOnly
+                                            [ngModelOptions]="{standalone: true}" placeholder="Please Enter"
+                                              (click)="item.GST==0?item.GST='':''"
                                             [disabled]="formFieldsDisabled" (ngModelChange)="GetCalculateBillDetailsAmount()">
                                     </td>
                                     <td *ngIf="IsAction">
@@ -413,6 +439,7 @@
                                     <td>
                                        Total: &#8377;{{BILL_DETAILS_TOTAL_AMOUNT | number : '1.2-2' }}
                                     </td>
+                                    <td>Total: &#8377;{{BILL_DETAILS_TOTAL_GST | number : '1.2-2' }}</td>
                                     <td></td>
                                 </tr>
                             </ng-template>
@@ -470,18 +497,17 @@
     <div class="mt-2">
         <div class="d-flex justify-content-end mb-2">
             <div *ngIf="IsDraft">
-                <button type="submit" class="btn-success saveButton mr-2" (click)="SAVEREPORTFILE(0)">Save as
+                <button type="submit" class="btn-success saveButton mr-2" (click)="SAVEREPORTFILE(0)" *ngIf="typeoflist!='CL'">Save as
                     Draft</button>
             </div>
             <div *ngIf="IsAction">
-                <button type="submit" class="btn-success saveButton mr-2" (click)="SAVEREPORTFILE(1)">Save</button>
+                <button type="submit" class="btn-success saveButton mr-2" (click)="SAVEREPORTFILE(1)" *ngIf="typeoflist!='CL'">Save</button>
             </div>  
-              <!-- <div *ngIf="IsAction">
-                <button type="submit" class=" btn-danger cancelButton" (click)="updatePostPoneCmeRequest(2)">Event Cancellation</button>
-            </div>   -->
+              <div *ngIf="IsAction">
+                <button type="submit" class=" btn-danger cancelButton" (click)="updatePostPoneCmeRequest()" *ngIf="typeoflist!='CL'">Event Cancelled</button>
+            </div>  
         </div>
     </div>
-</div>
 
 <p-dialog header="Upload Document" [modal]="true" [(visible)]="UploadDocumentPopUp" [style]="{ width: '40rem' }">
     <div class="d-flex gap-3 justify-content-around">
