@@ -90,6 +90,8 @@ import { SuperstockistTransferComponent } from './Common/superstockist-transfer/
 import { generate } from 'rxjs';
 import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
 import { AdhocOrderRequestListComponent } from './Forms/adhoc-order-request-list/adhoc-order-request-list.component';
+import { OrderSummaryReportComponent } from './Forms/order-summary-report/order-summary-report.component';
+import { OrderDetailsReportComponent } from './Forms/order-details-report/order-details-report.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -183,7 +185,9 @@ const routes: Routes = [
       {path:'schemaupload',component:SchemaUploadComponent},
       {path:'superstockistransfer',component:SuperstockistTransferComponent},
       {path:'adhocgenerateorder',component:AdhocGenerateOrderComponent},
-      {path:'adhocorderequestlist',component:AdhocOrderRequestListComponent}
+      {path:'adhocorderequestlist',component:AdhocOrderRequestListComponent},
+      {path:'ordersummary',component:OrderSummaryReportComponent},
+      {path:'orderdetails',component:OrderDetailsReportComponent}
     ]
   },
 ];

@@ -121,6 +121,8 @@ import { ForgotPasswordComponent } from './Common/forgot-password/forgot-passwor
 import { SuperstockistTransferComponent } from './Common/superstockist-transfer/superstockist-transfer.component';
 import { AdhocGenerateOrderComponent } from './Forms/adhoc-generate-order/adhoc-generate-order.component';
 import { AdhocOrderRequestListComponent } from './Forms/adhoc-order-request-list/adhoc-order-request-list.component';
+import { OrderSummaryReportComponent } from './Forms/order-summary-report/order-summary-report.component';
+import { OrderDetailsReportComponent } from './Forms/order-details-report/order-details-report.component';
 
 registerLocaleData(localeIn);
 
@@ -218,7 +220,9 @@ registerLocaleData(localeIn);
     ForgotPasswordComponent,
     SuperstockistTransferComponent,
     AdhocGenerateOrderComponent,
-    AdhocOrderRequestListComponent
+    AdhocOrderRequestListComponent,
+    OrderSummaryReportComponent,
+    OrderDetailsReportComponent
   ],
   imports: [
     BrowserModule,

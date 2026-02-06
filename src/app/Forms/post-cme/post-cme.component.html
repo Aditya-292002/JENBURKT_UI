@@ -33,16 +33,16 @@
                         <label class="form-check-label ml-2" for="inlineRadio1"> Pending</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" id="inlineRadio3" name="status" value="C" (click)="GETPOSTCMELISTBYUSERID('C')">
-                        <label class="form-check-label ml-2" for="inlineRadio3">Completed</label>
+                        <input type="radio" id="inlineRadio2" name="status" value="C" (click)="GETPOSTCMELISTBYUSERID('C')">
+                        <label class="form-check-label ml-2" for="inlineRadio2">Completed</label>
                     </div>
                      <div class="form-check form-check-inline">
                         <input type="radio" id="inlineRadio3" name="status" value="D" (click)="GETPOSTCMELISTBYUSERID('D')">
                         <label class="form-check-label ml-2" for="inlineRadio3">Draft</label>
                     </div>
                        <div class="form-check form-check-inline">
-                        <input type="radio" id="inlineRadio3" name="status" value="CL" (click)="GETPOSTCMELISTBYUSERID('CL')">
-                        <label class="form-check-label ml-2" for="inlineRadio3">Cancelled</label>
+                        <input type="radio" id="inlineRadio4" name="status" value="CL" (click)="GETPOSTCMELISTBYUSERID('CL')">
+                        <label class="form-check-label ml-2" for="inlineRadio4">Cancelled</label>
                     </div>
                 </div>
                 <div class="table-header text-right">
@@ -381,7 +381,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <div class="mb-2">
-                        <h6 class="modal-title">Bill Details<span  *ngIf="IsAction" style="color: red;">*</span></h6>
+                        <h6 class="modal-title">Bill Details</h6>
                         <p-table [value]="BILL_DETAILS_LIST" responsiveLayout="scroll" [paginator]="false"
                             class="prime-table" [showCurrentPageReport]="true" [rows]="10"
                             [rowsPerPageOptions]="[10, 25, 50, 100]"
@@ -454,7 +454,7 @@
                     <div class="">
                         <div class="d-flex justify-content-between mb-2">
                             <div class="">
-                                <h6 class="modal-title">Document Details</h6>
+                                <h6 class="modal-title">Document Details<span style="color: red;">*</span></h6>
                             </div>
                             <div *ngIf="IsAction" >
                                 <button type="submit" class="btn-primary  formButton " (click)="OpenUploadDocumentPopUp()"

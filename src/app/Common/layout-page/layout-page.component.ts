@@ -85,9 +85,11 @@ export class LayoutPageComponent implements OnInit {
   customMenuSuperstockist_transfer:boolean;
   customMenuCycle_Super_Stockist: boolean;
   customMenuTrade_Offer_Diff_Report: boolean;
+  customMenuOrder_Summary:boolean;
   customMenuSchemaUpload:boolean;
   customMenuAdhoc_Generate_Order:boolean;
   customMenuAdhoc_request_List:boolean;
+  customMenuOrder_Details:boolean;
   constructor(private router: Router, private SharedService: SharedService, private AuthService: AuthService) {
     this.SharedService.isMenu.subscribe(state => this.menuList = state);
   }
@@ -268,9 +270,11 @@ export class LayoutPageComponent implements OnInit {
     this.customMenuSuperstockist_transfer=false
     this.customMenuCycle_Super_Stockist=false
     this.customMenuTrade_Offer_Diff_Report=false
+    this.customMenuOrder_Summary=false
     this.customMenuAdhoc_Generate_Order=false
     this.customMenuAdhoc_request_List=false
     this.customMenuSchemaUpload=false
+    this.customMenuOrder_Details=false
        if (data == 'Area') {
       this.customMenuArea = true;
     } else if (data == 'HQ') {
@@ -314,6 +318,9 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'Trade_Offer_Diff_Report') {
       this.customMenuTrade_Offer_Diff_Report = true;
+    }
+    else if (data == 'order_summary') {
+      this.customMenuOrder_Summary = true;
     }
         else if (data == 'Adhoc_Generate_Order') {
       this.customMenuAdhoc_Generate_Order = true;
@@ -437,6 +444,9 @@ export class LayoutPageComponent implements OnInit {
     }
     else if (data == 'adhoc_pmt_approval') {
       this.customMenuSample_adhoc_pmt_approval = true;
+    }
+    else if (data == 'order_details') {
+      this.customMenuOrder_Details = true;
     }
     // else{Upload_Mkt_Report
     //   this.customMenuClaim=false;

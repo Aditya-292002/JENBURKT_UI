@@ -286,6 +286,10 @@ export class PostCmeComponent implements OnInit {
       this.toastrService.error('Select a Time To')
       return
     }
+    if(this.UploadDocumentdetails.length == 0){
+        this.toastrService.error('Please Upload Document')
+        return
+      }
     if(val == 1){
 
     for(const  data of this.AttendingDoctorList){
@@ -682,10 +686,10 @@ var IS_UPDATE = 1
           this.toastrService.error('Select a Specialization')
           return  
          }
-         if(!this.common.isValid(value.EMAIL_ID)){
-          this.toastrService.error('Enter a Email Id')
-          return  
-         }
+        //  if(!this.common.isValid(value.EMAIL_ID)){
+        //   this.toastrService.error('Enter a Email Id')
+        //   return  
+        //  }
          if(!this.common.isValid(value.MOBILE_NO)){
           this.toastrService.error('Enter a Phone No')
           return  

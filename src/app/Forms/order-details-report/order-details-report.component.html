@@ -1,0 +1,134 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Order Details Report</li>
+    </ol>
+</nav>
+
+<div class="col-md-12">
+    <div class="d-flex mb-2">
+        <div class="d-flex justify-content-start">
+            <h5 class="mb-0 headers">Order Details Report</h5>
+        </div>
+         <div class="buttonBox ml-auto">
+                       <button type="submit"  class="btn btn-primary saveButton mr-2" (click)="exportExcel()">
+                Download Excel
+            </button>
+            <!-- <button type="submit"  class="btn-primary saveButton mr-2" (click)="SAVESUPERSTOCKIST(1)">
+                Submit
+            </button> -->
+        </div>
+
+    </div>
+</div>
+<app-loader *ngIf="isLoaded"></app-loader>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>Period<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                               <p-dropdown [options]="periodList" appendTo="body" optionLabel="PERIOD_DESC"
+                                    optionValue="PERIOD_ID" [filter]="true" filterBy="PERIOD_DESC"
+                                    placeholder="Please Select" [(ngModel)]="period"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+
+                        <div class="mb-2">
+                            <label>SuperStockist<span style="color: red;">*</span></label>
+                            <div [ngClass]="{'required-field':isHighLightSample === 'Yes'}">
+                                <p-dropdown [options]="superStockistList" appendTo="body" optionLabel="SUPERSTOCKIST_NAME"
+                                    optionValue="SUPERSTOCKIST_CODE" [filter]="true" filterBy="SUPERSTOCKIST_NAME"
+                                    placeholder="Please Select" [(ngModel)]="SUPERSTOCKIST_CODE"
+                                    [ngModelOptions]="{standalone:true}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+
+                   <div class="col-sm-12 col-md-12 col-lg-1 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
+                                <!-- <i class="fa fa-spinner mr-2" aria-hidden="true"></i> -->
+                                Show
+                            </button>
+                            
+
+                        </div>
+                    </div>
+
+                                                            <!-- <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="mb-3 ">
+                            <label>Order Date</label>
+                            <div>
+                                <p-calendar [(ngModel)]="ORDER_DATE" appendTo="body" [showIcon]="true"
+                                    dateFormat="dd.mm.yy" inputId="icon" placeholder="Order date"
+                                    ></p-calendar>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="mb-2">
+                            <label>Period</label>
+                            <div>
+                                <div>
+                                    <p-dropdown appendTo="body" [options]="periodList" [(ngModel)]="period"
+                                        [filter]="true" filterBy="PERIOD_DESC" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Please Select..." optionLabel="PERIOD_DESC" optionValue="PERIOD_ID"
+                                        >
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2 ">
+                        <div class="buttonBox mt-4 ">
+                            <button type="submit" class="btn-primary viewButton mr-2" (click)="generatedata()">
+                                <i class="fa fa-spinner mr-2" aria-hidden="true"></i>Show
+                            </button>
+                            
+
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+        </div>
+    </div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="mb-2">
+      <label></label>
+          <div class="bg-white">
+            <!-- *ngIf="onShowGrid" -->
+        <div class=" table-responsive card-responsive mt-2">
+            <table class="table opening-table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let col of REPORT_HEADERS">{{col.Column_Header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of REPORT_DATA">
+                        <td *ngFor="let col of REPORT_HEADERS">
+                            {{ row[col.Column_Header] }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>

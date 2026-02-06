@@ -249,6 +249,9 @@ export class URLService {
              public GETAHOCORDEREQUESTLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETAHOCORDEREQUESTLIST';
             public GETAHOCORDEREQUESTDETAILS = this.sharedService.ApiUrl + '/api/SuperStockist/GETAHOCORDEREQUESTDETAILS';
             public GETCMEVALIDATED = this.sharedService.ApiUrl + '/api/Cme/GETCMEVALIDATED';
+            public GETORDEREPORTMASTERLIST = this.sharedService.ApiUrl + '/api/SuperStockist/GETORDEREPORTMASTERLIST';
+           public GETORDERSUMMARYREPORTBYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETORDERSUMMARYREPORTBYPERIODID';
+           public GETORDERDETAILSREPORTBYPERIODID = this.sharedService.ApiUrl + '/api/SuperStockist/GETORDERDETAILSREPORTBYPERIODID';
   
  
 }

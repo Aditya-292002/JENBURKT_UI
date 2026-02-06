@@ -26,7 +26,7 @@
     <app-loader *ngIf="isLoaded" ></app-loader>
     <div class="card">
       <p-table   [value]="REQUEST_APPROVAL_CME_LIST" [(selection)]="selectedApprovalData" responsiveLayout="scroll" scrollHeight="420px"
-      [globalFilterFields]="['CME_DATE','CME_NO','TOPIC','CME_STATUS']"
+      [globalFilterFields]="['CME_DATE','CME_NO','TOPIC','CME_STATUS','SPK_NAME']"
      (onLazyLoad)="loadDataLazily($event)"  #dt1 >
         <ng-template pTemplate="caption">
           <div class="table-header text-right">
@@ -72,7 +72,8 @@
                 </th>
                 <!-- <th pSortableColumn="INVOICE_SALE_QTY">SM NAME </th> -->
                 <th pSortableColumn="INVOICE_SALE_QTY">STATUS </th>
-                <th pSortableColumn="INVOICE_SALE_QTY">TOPIC </th>
+                <th pSortableColumn="CLAIM_DATE" style="max-width: 200px;">TOPIC </th>
+                <th pSortableColumn="INVOICE_SALE_QTY">Speaker Name</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
@@ -91,7 +92,8 @@
                 <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.HQ_DESC }}</td>
                 <!-- <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.SM_NAME }}</td> -->
                 <td (click)="GetPreviewCmeReqFromCmeNo(data)" > <span class="is-info">{{ data.CME_STATUS }}</span> </td>
-                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.TOPIC }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)"  style="max-width: 200px;">{{ data.TOPIC }}</td>
+                <td (click)="GetPreviewCmeReqFromCmeNo(data)" >{{ data.SPK_NAME }}</td>
               </tr>
           </ng-template>
       </p-table>
